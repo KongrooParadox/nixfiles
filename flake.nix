@@ -20,6 +20,21 @@
             users.robot = { pkgs, ... }: {
               home.username = "robot";
               home.homeDirectory = "/home/robot";
+              home.file = {
+                "nvim" = {
+                  source = ./nvim;
+                  target = ".config/nvim";
+                  recursive = true;
+                };
+                "scripts" = {
+                  source = ./bin;
+                  target = ".local/bin";
+                };
+                "wireguard" = {
+                  source = ./wireguard;
+                  target = "../../wireguard";
+                };
+              };
               programs = {
                 alacritty = {
                   enable = true;
@@ -148,7 +163,7 @@
                   initExtra = ''
                     bindkey -s ^f "tmux-switcher\n"
                     bindkey -s '^[y' "tmux-switcher ~/personal/homelab\n"
-                    bindkey -s '^[u' "tmux-switcher ~/personal/dotfiles\n"
+                    bindkey -s '^[u' "tmux-switcher ~/nixfiles\n"
                     bindkey -s '^[i' "tmux-switcher ~/personal/kongroo.io\n"
                     bindkey -s '^[o' "tmux-switcher ~/personal/zellij\n"
                     autoload -U +X bashcompinit && bashcompinit

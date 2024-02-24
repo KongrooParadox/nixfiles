@@ -12,17 +12,19 @@
     ];
 
   # Bootloader.
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    useOSProber = true;
-    configurationLimit = 10;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    # grub = {
+    #   enable = true;
+    #   device = "nodev";
+    #   useOSProber = true;
+    #   configurationLimit = 10;
+    # };
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+    };
   };
-  boot.loader.efi.canTouchEfiVariables = true;
-  # boot.loader.systemd-boot = {
-  #   enable = true;
-  #   configurationLimit = 10;
-  # };
 
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {
@@ -123,6 +125,8 @@
       sansSerif = [ "SF Pro Text" ];
     };
   };
+
+  environment.localBinInPath = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
