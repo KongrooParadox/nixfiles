@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+PARAM_DIR=$1
+HEADER="Project directories"
+PROMPT="> "
+
+if [[ -z $PARAM_DIR ]]; then
+    dir=$(fd . ~/personal --min-depth 1 --max-depth 1 --type d | fzf --reverse --header "$HEADER" --prompt "$PROMPT")
+else
+    dir=$1
+fi
+
+if [[ -z $dir ]]; then
+    exit 0
+fi
+
+session_name=$(basename "$dir" | tr . _)
+tmux_processes=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_processes ]]; then
+    echo "no tmux"
+    tmux new-session -s $session_name -c $dir
+    exit 0
+fi
+
+if ! tmux has-session -t=$session_name 2> /dev/null; then
+    tmux new-session -ds $session_name -c $dir
+fi
+
+if [[ $TMUX ]]; then
+    tmux switch-client -t $session_name
+else
+    tmux attach-session -t $session_name
+fi
