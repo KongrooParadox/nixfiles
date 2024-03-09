@@ -5,14 +5,16 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, ... }: {
     nixosConfigurations.baldur-nix = nixpkgs.lib.nixosSystem {
       system = "x86-64-linux";
       modules = [
         ./configuration.nix
         ./greetd.nix
+        nixos-hardware.nixosModules.dell-inspiron-7405
         home-manager.nixosModules.home-manager {
           home-manager = {
             useGlobalPkgs = true;
@@ -29,10 +31,6 @@
                 "scripts" = {
                   source = ./bin;
                   target = ".local/bin";
-                };
-                "wireguard" = {
-                  source = ./wireguard;
-                  target = "../../wireguard";
                 };
               };
               programs = {
@@ -173,6 +171,7 @@
                 };
               };
               home.packages = with pkgs; [
+                ansible
                 cargo
                 cliphist
                 keepassxc
@@ -284,7 +283,7 @@
                       mode = "1920x1200@60Hz";
                       pos = "0 0";
                     };
-                    DP-2 = {
+                    DP-1 = {
                       scale = "1";
                       mode = "1920x1200@60Hz";
                       pos = "1477 -377";
@@ -298,7 +297,7 @@
                   workspaceOutputAssign = [
                   { workspace ="1"; output = "eDP-1"; }
                   { workspace ="2"; output = "HDMI-A-1"; }
-                  { workspace ="3"; output = "DP-2"; }
+                  { workspace ="3"; output = "DP-1"; }
                   ];
                 };
               };

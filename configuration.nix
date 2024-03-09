@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, callPackage, lib, ... }:
+{ pkgs, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -79,6 +79,13 @@
   nixpkgs.config.pulseaudio = true;
   hardware.pulseaudio.enable = true;
 
+  # bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+  services.blueman.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.light.enable = true;
   programs.zsh.enable = true;
@@ -133,7 +140,6 @@
   environment.systemPackages = with pkgs; [
     android-tools
     bat
-    blueman
     buildah
     cmake
     curl
