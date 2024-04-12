@@ -174,6 +174,7 @@
                 ansible
                 cargo
                 cliphist
+                filezilla
                 keepassxc
                 libreoffice
                 mako
