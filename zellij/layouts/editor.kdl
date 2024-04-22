@@ -1,0 +1,37 @@
+layout {
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/statusbar.wasm"
+        }
+    }
+
+    tab name="editor" focus=true {
+        pane focus=true
+        floating_panes {
+            pane name="build" {
+                x 1
+                y "100%"
+                width "100%"
+                height "30%"
+            }
+        }
+    }
+    tab name="terminal" {
+        pane stacked=true {
+            pane name="1"
+            pane name="2"
+        }
+    }
+}
+
+keybinds {
+    locked {
+        bind "Insert" { GoToTab 2; SwitchToMode "Normal"; }
+    }
+
+    shared_except "locked" {
+        bind "Insert" { GoToTab 1; SwitchToMode "Locked"; }
+        bind "Alt d" { Detach; }
+    }
+}

@@ -1,0 +1,17 @@
+# Systemd unit to enable xboxdrv driver for Xbox 360 controller
+# Usage:
+# save to /lib/systemd/system/xboxdrv.service
+# to start: sudo service xboxdrv start
+# to enable on boot: sudo systemctl enable xboxdrv
+
+[Unit]
+Description=Xbox controller driver daemon
+
+[Service]
+Type=forking
+User=root
+PIDFile=/var/run/xboxdrv.pid
+ExecStart=/usr/bin/xboxdrv --config /etc/xboxdrv/wiiu.xboxdrv --daemon --detach --pid-file /var/run/xboxdrv.pid --dbus disabled --silent
+
+[Install]
+WantedBy=multi-user.target
