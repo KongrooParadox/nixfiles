@@ -1,0 +1,47 @@
+[xboxdrv]
+evdev = /dev/input/event27
+mimic-xpad = true
+detach-kernel-driver = true
+
+deadzone=6000
+evdev-debug = false
+dpad-as-button=false
+trigger-as-button=true
+
+
+# Grabbing the device prevents other applications from accessing it,
+# this is needed most of the time te prevent applications from
+# receiving events twice.
+evdev-grab = true
+
+[evdev-absmap]
+ABS_X = X1
+ABS_Y = Y1
+
+ABS_RX = X2
+ABS_RY = Y2
+
+[evdev-keymap]
+KEY_#545 = DD
+KEY_#544 = DU
+KEY_#546 = DL
+KEY_#547 = DR
+BTN_MODE = GUIDE
+BTN_START = START
+BTN_SELECT = BACK
+BTN_A = A
+BTN_B = B
+BTN_X = Y
+BTN_Y = X
+BTN_TL = LB
+BTN_TR = RB
+BTN_TL2 = LT
+BTN_TR2 = RT
+BTN_THUMBL = TL
+BTN_THUMBR = TR
+
+[axismap]
+-Y1=Y1
+-Y2=Y2
+
+# EOF #
