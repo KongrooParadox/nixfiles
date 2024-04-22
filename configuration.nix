@@ -75,9 +75,13 @@
   };
 
   # audio
+    security.rtkit.enable = true;
     services.pipewire = {
     enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
     pulse.enable = true;
+    jack.enable = true;
   };
 
   # bluetooth
@@ -152,6 +156,7 @@
     fd
     fzf
     gcc
+    gnome.adwaita-icon-theme
     gnumake
     gnupg
     go
@@ -171,6 +176,7 @@
     nodejs_21
     openvpn
     parsec-bin
+    pavucontrol
     peek
     pkg-config
     podman
