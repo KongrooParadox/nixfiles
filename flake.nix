@@ -23,6 +23,10 @@
               home.username = "robot";
               home.homeDirectory = "/home/robot";
               home.file = {
+                "libvirt.conf" = {
+                  source = ./libvirt;
+                  target = ".config/libvirt";
+                };
                 "nvim" = {
                   source = ./nvim;
                   target = ".config/nvim";
