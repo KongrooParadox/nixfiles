@@ -87,7 +87,7 @@
                   enable = true;
                   profiles.default = {
                     id = 0;
-                    name = "Default";
+                    name = "default";
                     settings = {
                       "browser.startup.homepage" = "https://github.com/KongrooParadox";
                       "dom.security.https_only_mode" = true;
@@ -195,7 +195,29 @@
                 wl-clipboard
                 xdg-utils
               ];
-
+              editorconfig = {
+                enable = true;
+                settings = {
+                  "*" = {
+                    end_of_line = "lf";
+                    insert_final_newline = true;
+                    trim_trailing_whitespace = true;
+                    charset = "utf-8";
+                    indent_style = "space";
+                    indent_size = 4;
+                  };
+                  "Makefile" = {
+                    indent_style = "tab";
+                  };
+                  "*.{nix,yaml,yml,tf}" = {
+                    indent_size = 2;
+                  };
+                  "*.md" = {
+                    indent_size = 2;
+                    trim_trailing_whitespace = false;
+                  };
+                };
+              };
               wayland.windowManager.sway = {
                 enable = true;
                 wrapperFeatures.gtk = true;
