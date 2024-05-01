@@ -143,12 +143,32 @@
                 };
                 tmux = {
                   enable = true;
+                  escapeTime = 0;
+                  newSession = true;
                   keyMode = "vi";
                   shell = "${pkgs.zsh}/bin/zsh";
                   historyLimit = 100000;
-                  shortcut = "a";
+                  prefix = "C-a";
                   terminal = "screen-256color";
                   clock24 = true;
+                  baseIndex = 1;
+                  extraConfig = ''
+                    set -g status-style 'bg=#333333 fg=#5eacd3'
+                    bind -T copy-mode-vi v send-keys -X begin-selection
+                    bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
+                    bind -r ^ last-window
+                    bind -r k select-pane -U
+                    bind -r j select-pane -D
+                    bind -r h select-pane -L
+                    bind -r l select-pane -R
+                    bind-key -r f run-shell "tmux-switcher"
+                    bind-key -n M-y run-shell "tmux-switcher ~/personal/homelab"
+                    bind-key -n M-u run-shell "tmux-switcher ~/personal/nixfiles"
+                    bind-key -n M-i run-shell "tmux-switcher ~/personal/kongroo.io"
+                    bind-key -n M-o run-shell "tmux-switcher ~/personal/zellij"
+                    bind -n Insert next-window
+                    bind r source-file ~/.config/tmux/tmux.conf
+                  '';
                 };
                 zsh = {
                   enable = true;
