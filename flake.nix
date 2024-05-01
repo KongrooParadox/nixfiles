@@ -133,6 +133,7 @@
                   };
                 };
                 neovim = {
+                  defaultEditor = true;
                   enable = true;
                   vimAlias = true;
                 };
@@ -183,6 +184,7 @@
                     v         ="nvim";
                   };
                   initExtra = ''
+                    bindkey -e
                     bindkey -s ^f "tmux-switcher\n"
                     bindkey -s '^[y' "tmux-switcher ~/personal/homelab\n"
                     bindkey -s '^[u' "tmux-switcher ~/nixfiles\n"
