@@ -3,17 +3,33 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, ... }: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, sops-nix, ... }@inputs: {
     nixosConfigurations.baldur-nix = nixpkgs.lib.nixosSystem {
       system = "x86-64-linux";
+      specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
         ./greetd.nix
+        sops-nix.nixosModules.sops {
+          sops = {
+            age.keyFile = "/home/robot/.config/sops/age/keys.txt";
+            defaultSopsFile = ./secrets/secrets.yaml;
+            defaultSopsFormat = "yaml";
+            secrets."wireguard/casa-anita" = {};
+            secrets."wireguard/home" = {};
+          };
+        }
         nixos-hardware.nixosModules.dell-inspiron-7405
         home-manager.nixosModules.home-manager {
           home-manager = {

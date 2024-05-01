@@ -1,0 +1,5 @@
+keys:
+  - &robot age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
+creation_rules:
+  - path_regex: secrets/secrets\.yaml$
+    age: *robot

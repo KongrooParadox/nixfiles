@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -37,10 +37,42 @@
   # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
   nix.settings.auto-optimise-store = true;
 
-  networking.hostName = "baldur-nix";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  networking = {
+    networkmanager.enable = true;
+    hostName = "baldur-nix";
+    wg-quick.interfaces = {
+      wg-home = {
+        autostart = false;
+        privateKeyFile = config.sops.secrets."wireguard/home".path;
+        address = ["192.168.27.66/32"];
+        dns = ["212.27.38.253"];
+        mtu = 1360;
+        peers = [
+          {
+            publicKey = "0EzF1p0gwkm8mxMM8stqDwpsehl+HcuyFLgmlwbC1xU=";
+            endpoint = "88.174.237.209:56273";
+            allowedIPs = ["0.0.0.0/0" "192.168.27.64/27" "192.168.1.0/24" "::/0"];
+            persistentKeepalive = 25;
+          }
+        ];
+      };
+      wg-casa-anita = {
+        autostart = false;
+        privateKeyFile = config.sops.secrets."wireguard/casa-anita".path;
+        address = ["192.168.27.65/32"];
+        dns = ["212.27.38.253"];
+        mtu = 1360;
+        peers = [
+          {
+            publicKey = "aKfJbVgXBM+fJtbxNVmVYImtMwXQAFwlYNh4d6zo6TQ=";
+            endpoint = "91.171.231.205:33436";
+            allowedIPs = ["0.0.0.0/0" "192.168.27.64/27" "192.168.1.0/24" "::/0"];
+            persistentKeepalive = 25;
+          }
+        ];
+      };
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
@@ -143,6 +175,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    age
     android-tools
     bat
     buildah
@@ -188,6 +221,7 @@
     rsync
     samba
     screenkey
+    sops
     spotify
     subversion
     sudo
