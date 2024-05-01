@@ -208,7 +208,6 @@
     xournalpp
     youtube-dl
     yq
-    zsh
   ];
 
   programs.gnupg.agent = {
