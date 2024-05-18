@@ -180,7 +180,7 @@
                     bind -r l select-pane -R
                     bind-key -r f run-shell "tmux-switcher"
                     bind-key -n M-y run-shell "tmux-switcher ~/personal/homelab"
-                    bind-key -n M-u run-shell "tmux-switcher ~/personal/nixfiles"
+                    bind-key -n M-u run-shell "tmux-switcher ~/nixfiles"
                     bind-key -n M-i run-shell "tmux-switcher ~/personal/kongroo.io"
                     bind-key -n M-o run-shell "tmux-switcher ~/personal/zellij"
                     bind -n Insert next-window
