@@ -179,6 +179,7 @@
     android-tools
     bat
     buildah
+    cdrkit
     cmake
     curl
     direnv
@@ -204,7 +205,9 @@
     kubectl
     kubernetes-helm
     lftp
+    moonlight-qt
     nettools
+    networkmanagerapplet
     nmap
     nodejs_21
     openvpn
@@ -233,6 +236,7 @@
     unzip
     usbutils
     vagrant
+    virt-manager
     virtualenv
     vlc
     wget
