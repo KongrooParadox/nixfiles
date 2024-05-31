@@ -15,7 +15,6 @@
       evdi
   ];
 
-  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
   # Bootloader.
   boot.loader = {
@@ -113,21 +112,39 @@
   };
 
   # audio
-    security.rtkit.enable = true;
-    services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+  security.rtkit.enable = true;
+
+  services = {
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+      jack.enable = true;
+    };
+    blueman.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma6.enable = true;
+    xserver = {
+      enable = true;
+      videoDrivers = [ "displaylink" "modesetting" ];
+    };
   };
+
+  # KDE Plasma
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    plasma-browser-integration
+    konsole
+    oxygen
+  ];
 
   # bluetooth
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
   };
-  services.blueman.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.light.enable = true;
@@ -215,7 +232,7 @@
     nettools
     networkmanagerapplet
     nmap
-    nodejs_21
+    nodejs_22
     openvpn
     parsec-bin
     pavucontrol

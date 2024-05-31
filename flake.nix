@@ -2,9 +2,9 @@
   description = "flake for baldur-nix";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -20,7 +20,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
-        ./greetd.nix
+        # ./greetd.nix
         "${nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
         sops-nix.nixosModules.sops {
           sops = {
@@ -347,7 +347,7 @@
                 };
                 zsh = {
                   enable = true;
-                  enableAutosuggestions = true;
+                  autosuggestion.enable = true;
                   enableCompletion = true;
                   shellAliases = {
                     k         ="kubectl";
@@ -415,120 +415,120 @@
                   };
                 };
               };
-              wayland.windowManager.sway = {
-                enable = true;
-                wrapperFeatures.gtk = true;
-                extraConfig = ''
-                exec wl-paste --type image --watch cliphist store
-                exec wl-paste --type text --watch cliphist store
-                exec_always nm-applet --indicator
-                '';
-                config = rec {
-                  bars = [
-                    { command = "waybar"; }
-                  ];
-                  window = {
-                    titlebar = false;
-                    hideEdgeBorders = "smart";
-                  };
-                  floating = {
-                    titlebar = false;
-                  };
-                  terminal = "alacritty";
-                  modifier = "Mod4";
-                  input."type:keyboard" = {
-                    xkb_layout = "us";
-                    xkb_variant = ",qwerty,alt-intl";
-                    xkb_options = "caps:escape";
-                    xkb_numlock = "disabled";
-                  };
-                  menu = "rofi -show run";
-                  keybindings = {
-                    "XF86MonBrightnessDown" = "exec light -U 10";
-                    "XF86MonBrightnessUp" = "exec light -A 10";
-                    "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +1%";
-                    "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -1%";
-                    "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
-                    "${modifier}+1" = "workspace number 1";
-                    "${modifier}+2" = "workspace number 2";
-                    "${modifier}+3" = "workspace number 3";
-                    "${modifier}+4" = "workspace number 4";
-                    "${modifier}+5" = "workspace number 5";
-                    "${modifier}+6" = "workspace number 6";
-                    "${modifier}+7" = "workspace number 7";
-                    "${modifier}+8" = "workspace number 8";
-                    "${modifier}+9" = "workspace number 9";
-                    "${modifier}+0" = "workspace number 10";
-                    "${modifier}+Down" = "focus down";
-                    "${modifier}+Left" = "focus left";
-                    "${modifier}+Right" = "focus right";
-                    "${modifier}+Shift+1" = "move container to workspace number 1";
-                    "${modifier}+Shift+2" = "move container to workspace number 2";
-                    "${modifier}+Shift+3" = "move container to workspace number 3";
-                    "${modifier}+Shift+4" = "move container to workspace number 4";
-                    "${modifier}+Shift+5" = "move container to workspace number 5";
-                    "${modifier}+Shift+6" = "move container to workspace number 6";
-                    "${modifier}+Shift+7" = "move container to workspace number 7";
-                    "${modifier}+Shift+8" = "move container to workspace number 8";
-                    "${modifier}+Shift+9" = "move container to workspace number 9";
-                    "${modifier}+Shift+0" = "move container to workspace number 10";
-                    "${modifier}+Shift+Down" = "move down";
-                    "${modifier}+Shift+Left" = "move left";
-                    "${modifier}+Shift+Right" = "move right";
-                    "${modifier}+Shift+Up" = "move up";
-                    "${modifier}+Shift+c" = "reload";
-                    "${modifier}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
-                    "${modifier}+Shift+h" = "move left";
-                    "${modifier}+Shift+j" = "move down";
-                    "${modifier}+Shift+k" = "move up";
-                    "${modifier}+Shift+l" = "move right";
-                    "${modifier}+Shift+minus" = "move scratchpad";
-                    "${modifier}+Shift+q" = "kill";
-                    "${modifier}+Shift+space" = "floating toggle";
-                    "${modifier}+Shift+s" = "exec shotman -c region";
-                    "${modifier}+Up" = "focus up";
-                    "${modifier}+a" = "focus parent";
-                    "${modifier}+b" = "splith";
-                    "${modifier}+d" = "exec rofi -show run";
-                    "${modifier}+e" = "layout toggle split";
-                    "${modifier}+f" = "fullscreen toggle";
-                    "${modifier}+h" = "focus left";
-                    "${modifier}+j" = "focus down";
-                    "${modifier}+k" = "focus up";
-                    "${modifier}+l" = "focus right";
-                    "${modifier}+minus" = "scratchpad show";
-                    "${modifier}+r" = "mode resize";
-                    "${modifier}+s" = "layout stacking";
-                    "${modifier}+t" = "exec alacritty";
-                    "${modifier}+space" = "focus mode_toggle";
-                    "${modifier}+v" = "exec cliphist list | rofi -dmenu | cliphist decode | wl-copy";
-                    # "${modifier}+v" = "splitv";
-                    "${modifier}+w" = "layout tabbed";
-                  };
-                  output = {
-                    eDP-1 = {
-                      scale = "1.3";
-                      mode = "1920x1200@60Hz";
-                      pos = "0 0";
-                    };
-                    DP-1 = {
-                      scale = "1";
-                      mode = "1920x1200@60Hz";
-                      pos = "1477 -377";
-                    };
-                    HDMI-A-1 = {
-                      scale = "1";
-                      mode = "1920x1080@60Hz";
-                      pos = "3397 -346";
-                    };
-                  };
-                  workspaceOutputAssign = [
-                  { workspace ="1"; output = "eDP-1"; }
-                  { workspace ="2"; output = "HDMI-A-1"; }
-                  { workspace ="3"; output = "DP-1"; }
-                  ];
-                };
-              };
+              # wayland.windowManager.sway = {
+              #   enable = false;
+              #   wrapperFeatures.gtk = true;
+              #   extraConfig = ''
+              #   exec wl-paste --type image --watch cliphist store
+              #   exec wl-paste --type text --watch cliphist store
+              #   exec_always nm-applet --indicator
+              #   '';
+              #   config = rec {
+              #     bars = [
+              #       { command = "waybar"; }
+              #     ];
+              #     window = {
+              #       titlebar = false;
+              #       hideEdgeBorders = "smart";
+              #     };
+              #     floating = {
+              #       titlebar = false;
+              #     };
+              #     terminal = "alacritty";
+              #     modifier = "Mod4";
+              #     input."type:keyboard" = {
+              #       xkb_layout = "us";
+              #       xkb_variant = ",qwerty,alt-intl";
+              #       xkb_options = "caps:escape";
+              #       xkb_numlock = "disabled";
+              #     };
+              #     menu = "rofi -show run";
+              #     keybindings = {
+              #       "XF86MonBrightnessDown" = "exec light -U 10";
+              #       "XF86MonBrightnessUp" = "exec light -A 10";
+              #       "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +1%";
+              #       "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -1%";
+              #       "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+              #       "${modifier}+1" = "workspace number 1";
+              #       "${modifier}+2" = "workspace number 2";
+              #       "${modifier}+3" = "workspace number 3";
+              #       "${modifier}+4" = "workspace number 4";
+              #       "${modifier}+5" = "workspace number 5";
+              #       "${modifier}+6" = "workspace number 6";
+              #       "${modifier}+7" = "workspace number 7";
+              #       "${modifier}+8" = "workspace number 8";
+              #       "${modifier}+9" = "workspace number 9";
+              #       "${modifier}+0" = "workspace number 10";
+              #       "${modifier}+Down" = "focus down";
+              #       "${modifier}+Left" = "focus left";
+              #       "${modifier}+Right" = "focus right";
+              #       "${modifier}+Shift+1" = "move container to workspace number 1";
+              #       "${modifier}+Shift+2" = "move container to workspace number 2";
+              #       "${modifier}+Shift+3" = "move container to workspace number 3";
+              #       "${modifier}+Shift+4" = "move container to workspace number 4";
+              #       "${modifier}+Shift+5" = "move container to workspace number 5";
+              #       "${modifier}+Shift+6" = "move container to workspace number 6";
+              #       "${modifier}+Shift+7" = "move container to workspace number 7";
+              #       "${modifier}+Shift+8" = "move container to workspace number 8";
+              #       "${modifier}+Shift+9" = "move container to workspace number 9";
+              #       "${modifier}+Shift+0" = "move container to workspace number 10";
+              #       "${modifier}+Shift+Down" = "move down";
+              #       "${modifier}+Shift+Left" = "move left";
+              #       "${modifier}+Shift+Right" = "move right";
+              #       "${modifier}+Shift+Up" = "move up";
+              #       "${modifier}+Shift+c" = "reload";
+              #       "${modifier}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
+              #       "${modifier}+Shift+h" = "move left";
+              #       "${modifier}+Shift+j" = "move down";
+              #       "${modifier}+Shift+k" = "move up";
+              #       "${modifier}+Shift+l" = "move right";
+              #       "${modifier}+Shift+minus" = "move scratchpad";
+              #       "${modifier}+Shift+q" = "kill";
+              #       "${modifier}+Shift+space" = "floating toggle";
+              #       "${modifier}+Shift+s" = "exec shotman -c region";
+              #       "${modifier}+Up" = "focus up";
+              #       "${modifier}+a" = "focus parent";
+              #       "${modifier}+b" = "splith";
+              #       "${modifier}+d" = "exec rofi -show run";
+              #       "${modifier}+e" = "layout toggle split";
+              #       "${modifier}+f" = "fullscreen toggle";
+              #       "${modifier}+h" = "focus left";
+              #       "${modifier}+j" = "focus down";
+              #       "${modifier}+k" = "focus up";
+              #       "${modifier}+l" = "focus right";
+              #       "${modifier}+minus" = "scratchpad show";
+              #       "${modifier}+r" = "mode resize";
+              #       "${modifier}+s" = "layout stacking";
+              #       "${modifier}+t" = "exec alacritty";
+              #       "${modifier}+space" = "focus mode_toggle";
+              #       "${modifier}+v" = "exec cliphist list | rofi -dmenu | cliphist decode | wl-copy";
+              #       # "${modifier}+v" = "splitv";
+              #       "${modifier}+w" = "layout tabbed";
+              #     };
+              #     output = {
+              #       eDP-1 = {
+              #         scale = "1.3";
+              #         mode = "1920x1200@60Hz";
+              #         pos = "0 0";
+              #       };
+              #       DP-1 = {
+              #         scale = "1";
+              #         mode = "1920x1200@60Hz";
+              #         pos = "1477 -377";
+              #       };
+              #       HDMI-A-1 = {
+              #         scale = "1";
+              #         mode = "1920x1080@60Hz";
+              #         pos = "3397 -346";
+              #       };
+              #     };
+              #     workspaceOutputAssign = [
+              #     { workspace ="1"; output = "eDP-1"; }
+              #     { workspace ="2"; output = "HDMI-A-1"; }
+              #     { workspace ="3"; output = "DP-1"; }
+              #     ];
+              #   };
+              # };
               home.stateVersion = "23.11";
             };
           };
