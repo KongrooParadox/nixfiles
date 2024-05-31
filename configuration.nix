@@ -11,6 +11,12 @@
       ./hardware-configuration.nix
     ];
 
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+      evdi
+  ];
+
+  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+
   # Bootloader.
   boot.loader = {
     efi.canTouchEfiVariables = true;
