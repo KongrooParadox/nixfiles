@@ -94,6 +94,7 @@
                     };
                   };
                 };
+                chromium.enable = true;
                 direnv = {
                   enable = true;
                   enableZshIntegration = true;
