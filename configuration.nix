@@ -19,12 +19,6 @@
   # Bootloader.
   boot.loader = {
     efi.canTouchEfiVariables = true;
-    # grub = {
-    #   enable = true;
-    #   device = "nodev";
-    #   useOSProber = true;
-    #   configurationLimit = 10;
-    # };
     systemd-boot = {
       enable = true;
       configurationLimit = 10;
@@ -276,12 +270,6 @@
     enableSSHSupport = true;
   };
 
-  # List services that you want to enable:
-  programs.thunar.enable = true;
-  programs.xfconf.enable = true;
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
@@ -292,12 +280,6 @@
   # Enable emulation for ARM
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "23.11";
 
 }

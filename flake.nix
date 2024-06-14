@@ -40,16 +40,16 @@
               home.homeDirectory = "/home/robot";
               home.file = {
                 "libvirt.conf" = {
-                  source = ./libvirt;
+                  source = ./dotfiles/libvirt;
                   target = ".config/libvirt";
                 };
                 "nvim" = {
-                  source = ./nvim;
+                  source = ./dotfiles/nvim;
                   target = ".config/nvim";
                   recursive = true;
                 };
                 "scripts" = {
-                  source = ./bin;
+                  source = ./dotfiles/bin;
                   target = ".local/bin";
                 };
               };
