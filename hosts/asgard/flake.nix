@@ -2,7 +2,7 @@
   description = "A nixos home-assistant image";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
   };
 
   outputs = { self, nixpkgs }:
@@ -68,10 +68,14 @@
         networkmanager.enable = true;
       };
 
-      nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
+      nix.settings = {
+        trusted-users = [ "root" "ops" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+      };
+      system.stateVersion = "24.05";
     };
 
     asgard = nixpkgs.lib.nixosSystem {
