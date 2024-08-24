@@ -145,6 +145,7 @@
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
+    package = pkgs.bluez;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
