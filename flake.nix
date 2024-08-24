@@ -52,6 +52,9 @@
                   source = ./dotfiles/bin;
                   target = ".local/bin";
                 };
+                ".ssh/config" = {
+                  source = ./dotfiles/ssh/config;
+                };
               };
               programs = {
                 alacritty = {
