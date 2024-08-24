@@ -53,9 +53,14 @@
       users.users.ops = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
+        openssh.authorizedKeys.keys = [
+          (builtins.readFile ~/.ssh/id_ed25519.pub)
+          (builtins.readFile ~/.ssh/id_work.pub)
+        ];
       };
 
       networking = {
+        networkmanager.enable = true;
         hostName = "nixos-cloudinit";
       };
 
@@ -82,8 +87,6 @@
           chpasswd:
             expire: false
           cloud_init_modules:
-            - migrator
-            - seed_random
             - bootcmd
             - write-files
             - growpart
@@ -94,14 +97,12 @@
             - mounts
             - set-passwords
             - runcmd
-            - ssh
-          cloud_final_modules:
-            - rightscale_userdata
-            - ssh-authkey-fingerprints
           runcmd:
-            - [ sh, -c, 'sudo nixos-rebuild switch -I nixos-config=/etc/nixos/configuration.nix | tee -a /tmp/runcmd.log;sudo reboot now' ]
+            - sudo nixos-rebuild switch -I nixos-config=/etc/nixos/configuration.nix | sudo tee -a /tmp/runcmd.log;sudo reboot now'
         '';
       };
+
+      system.stateVersion = "24.05";
     };
 
     nixos = nixpkgs.lib.nixosSystem {
