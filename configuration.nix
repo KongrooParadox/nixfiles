@@ -5,24 +5,31 @@
 { pkgs, config, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "robot" ];
+  };
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-      evdi
-  ];
-
-
-  # Bootloader.
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 10;
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 10;
+        extraEntries."debian.conf" = ''
+          title Debian
+          efi   /efi/debian/shimx64.efi
+        '';
+      };
     };
+    extraModulePackages = with config.boot.kernelPackages; [
+      evdi
+    ];
+    supportedFilesystems = [ "ntfs" ];
   };
 
   # Perform garbage collection weekly to maintain low disk usage
@@ -207,6 +214,7 @@
     fd
     fzf
     gcc
+    gimp-with-plugins
     gnome.adwaita-icon-theme
     gnumake
     gnupg
@@ -279,6 +287,14 @@
 
   # Enable emulation for ARM
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  # Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
 
   system.stateVersion = "23.11";
 
