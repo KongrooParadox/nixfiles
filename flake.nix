@@ -2,9 +2,9 @@
   description = "flake for baldur-nix";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -12,9 +12,15 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # Neovim 0.10.1
+      inputs.neovim-src.url = "github:neovim/neovim?dir=contrib&rev=7e194f0d0c33a0a1b7ccfaf2baafdacf7f22fbb5";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, sops-nix, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, sops-nix, neovim-nightly-overlay, ... }@inputs: {
     nixosConfigurations.baldur-nix = nixpkgs.lib.nixosSystem {
       system = "x86-64-linux";
       specialArgs = { inherit inputs; };
@@ -166,6 +172,7 @@
                   };
                 };
                 neovim = {
+                  # package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
                   defaultEditor = true;
                   enable = true;
                   vimAlias = true;

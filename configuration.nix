@@ -101,7 +101,6 @@
   security.polkit.enable = true;
   hardware.opengl = {
     enable = true;
-    driSupport = true;
   };
 
   xdg.portal = {
@@ -204,9 +203,11 @@
     android-tools
     bat
     buildah
+    calibre
     cdrkit
     cmake
     curl
+    deluge-gtk
     direnv
     discord
     displaylink
@@ -243,6 +244,7 @@
     pkg-config
     podman
     protonmail-bridge
+    protonvpn-gui
     python3
     python311Packages.pip
     remmina
@@ -258,6 +260,7 @@
     terraform
     terraform-ls
     traceroute
+    transmission
     tree
     unzip
     usbutils
@@ -270,7 +273,6 @@
     xboxdrv
     xorg.xrandr
     xournalpp
-    youtube-dl
     yq
   ];
 
