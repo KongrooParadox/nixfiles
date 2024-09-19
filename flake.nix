@@ -233,6 +233,7 @@
                     autoload -U +X bashcompinit && bashcompinit
                     complete -F __start_kubectl k
                     complete -o nospace -C $(which terraform) terraform
+                    path+=('/home/robot/go/bin')
                   '';
                 };
               };
