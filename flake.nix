@@ -12,15 +12,9 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # Neovim 0.10.1
-      inputs.neovim-src.url = "github:neovim/neovim?dir=contrib&rev=7e194f0d0c33a0a1b7ccfaf2baafdacf7f22fbb5";
-    };
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, sops-nix, neovim-nightly-overlay, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, nixos-hardware, sops-nix, ... }@inputs: {
     nixosConfigurations.baldur-nix = nixpkgs.lib.nixosSystem {
       system = "x86-64-linux";
       specialArgs = { inherit inputs; };
@@ -172,7 +166,6 @@
                   };
                 };
                 neovim = {
-                  # package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
                   defaultEditor = true;
                   enable = true;
                   vimAlias = true;
@@ -235,6 +228,7 @@
                     complete -o nospace -C $(which terraform) terraform
                     path+=('/home/robot/go/bin')
                   '';
+                  # export LANG="en_GB.UTF-8"
                 };
               };
               home.packages = with pkgs; [
@@ -280,7 +274,7 @@
                   };
                 };
               };
-              home.stateVersion = "23.11";
+              home.stateVersion = "24.05";
             };
           };
         }

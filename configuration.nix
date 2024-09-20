@@ -84,24 +84,26 @@
   time.timeZone = "Europe/Paris";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "fr_FR.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "fr_FR.UTF-8";
-    LC_IDENTIFICATION = "fr_FR.UTF-8";
-    LC_MEASUREMENT = "fr_FR.UTF-8";
-    LC_MONETARY = "fr_FR.UTF-8";
-    LC_NAME = "fr_FR.UTF-8";
-    LC_NUMERIC = "fr_FR.UTF-8";
-    LC_PAPER = "fr_FR.UTF-8";
-    LC_TELEPHONE = "fr_FR.UTF-8";
-    LC_TIME = "fr_FR.UTF-8";
+  i18n = {
+    defaultLocale = "en_GB.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_GB.UTF-8";
+      LC_COLLATE = "en_GB.UTF-8";
+      LC_CTYPE = "en_GB.UTF-8";
+      LC_IDENTIFICATION = "en_GB.UTF-8";
+      LC_MEASUREMENT = "en_GB.UTF-8";
+      LC_MESSAGES = "en_GB.UTF-8";
+      LC_MONETARY = "en_GB.UTF-8";
+      LC_NAME = "en_GB.UTF-8";
+      LC_NUMERIC = "en_GB.UTF-8";
+      LC_PAPER = "en_GB.UTF-8";
+      LC_TELEPHONE = "en_GB.UTF-8";
+      LC_TIME = "en_GB.UTF-8";
+    };
   };
 
   security.polkit.enable = true;
-  hardware.opengl = {
-    enable = true;
-  };
+  hardware.graphics.enable = true;
 
   xdg.portal = {
     enable = true;
@@ -194,7 +196,13 @@
     };
   };
 
-  environment.localBinInPath = true;
+  environment = {
+    variables = {
+      LANG = "en_GB.UTF-8";
+      LC_ALL = "en_GB.UTF-8";
+    };
+    localBinInPath = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -217,7 +225,7 @@
     fzf
     gcc
     gimp-with-plugins
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     gnumake
     gnupg
     go
@@ -260,7 +268,7 @@
     terraform
     terraform-ls
     traceroute
-    transmission
+    transmission_4
     tree
     unzip
     usbutils
