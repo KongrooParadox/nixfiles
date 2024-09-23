@@ -7,7 +7,9 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    stylix.url = "github:danth/stylix";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,16 +32,13 @@
             secrets."wireguard/home" = {};
           };
         }
+        inputs.stylix.nixosModules.stylix
         nixos-hardware.nixosModules.dell-inspiron-7405
         home-manager.nixosModules.home-manager {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.robot = { pkgs, ... }: {
-              imports = [
-                ./home.nix
-              ];
-            };
+            users.robot = import ./home.nix;
           };
         }
       ];
