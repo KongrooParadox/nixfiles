@@ -1,6 +1,26 @@
 { pkgs, ... }:
 
 {
+  home.username = "robot";
+  home.homeDirectory = "/home/robot";
+
+  home.file = {
+    "libvirt.conf" = {
+      source = ./dotfiles/libvirt;
+      target = ".config/libvirt";
+    };
+    ".config/nvim" = {
+      source = ./dotfiles/nvim;
+      recursive = true;
+    };
+    "scripts" = {
+      source = ./dotfiles/bin;
+      target = ".local/bin";
+    };
+    ".ssh/config" = {
+      source = ./dotfiles/ssh/config;
+    };
+  };
 
   imports = [
     ./homeManagerModules/browser.nix
@@ -9,9 +29,6 @@
     ./homeManagerModules/hyprland.nix
     ./homeManagerModules/terminal.nix
   ];
-
-  home.username = "robot";
-  home.homeDirectory = "/home/robot";
 
   home.packages = with pkgs; [
     ansible
@@ -33,25 +50,6 @@
     wl-clipboard
     xdg-utils
   ];
-
-  home.file = {
-    "libvirt.conf" = {
-      source = ./dotfiles/libvirt;
-      target = ".config/libvirt";
-    };
-    "nvim" = {
-      source = ./dotfiles/nvim;
-      target = ".config/nvim";
-      recursive = true;
-    };
-    "scripts" = {
-      source = ./dotfiles/bin;
-      target = ".local/bin";
-    };
-    ".ssh/config" = {
-      source = ./dotfiles/ssh/config;
-    };
-  };
 
   home.stateVersion = "23.11";
 # Let Home Manager install and manage itself.

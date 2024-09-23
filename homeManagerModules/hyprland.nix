@@ -53,7 +53,6 @@ with lib;
             kb_layout = us
             kb_variant = qwerty,alt-intl
             kb_options = caps:escape
-            kb_numlock = disabled
             follow_mouse = 1
             touchpad {
               natural_scroll = true
@@ -120,10 +119,10 @@ with lib;
             preserve_split = true
           }
           bind = ${modifier},T,exec,alacritty
-          bind = ${modifier},D,Return,exec,rofi-launcher
+          bind = ${modifier},D,exec,rofi-launcher
           bind = ${modifier}SHIFT,W,exec,web-search
           bind = ${modifier}SHIFT,N,exec,swaync-client -rs
-          bind = ${modifier},F,exec,firefox
+          bind = ${modifier},B,exec,firefox
           bind = ${modifier},E,exec,emopicker9000
           bind = ${modifier},S,exec,screenshootin
           bind = ${modifier},C,exec,hyprpicker -a

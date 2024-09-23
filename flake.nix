@@ -38,7 +38,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.robot = import ./home.nix;
+            users.robot = { pkgs, ... } : { imports = [ ./home.nix ]; };
           };
         }
       ];
