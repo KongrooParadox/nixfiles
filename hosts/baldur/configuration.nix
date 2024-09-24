@@ -340,7 +340,7 @@
 
   stylix = {
     enable = true;
-    image = ./wallpapers/pawel-nolbert-62OK9xwVA0c-unsplash.jpg;
+    image = ../../wallpapers/pawel-nolbert-62OK9xwVA0c-unsplash.jpg;
     base16Scheme = {
       base00 = "232136";
       base01 = "2a273f";
