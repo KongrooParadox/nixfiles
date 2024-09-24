@@ -21,7 +21,7 @@
       system = "x86-64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix
+        ./hosts/baldur/configuration.nix
         "${nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
         sops-nix.nixosModules.sops {
           sops = {
@@ -38,7 +38,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.robot = { pkgs, ... } : { imports = [ ./home.nix ]; };
+            users.robot = { pkgs, ... } : { imports = [ ./hosts/baldur/home.nix ]; };
           };
         }
       ];
