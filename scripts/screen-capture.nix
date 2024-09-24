@@ -1,6 +1,6 @@
 { pkgs }:
 
 pkgs.writeShellScriptBin "screen-capture" ''
-  grim -g "$(slurp)" - | swappy -f -
+  ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f -
 ''
 
