@@ -305,7 +305,6 @@
     protonmail-bridge
     protonvpn-gui
     python3
-    python311Packages.pip
     remmina
     ripgrep
     rsync
@@ -315,6 +314,7 @@
     spotify
     subversion
     sudo
+    swaynotificationcenter
     tcpdump
     terraform
     terraform-ls

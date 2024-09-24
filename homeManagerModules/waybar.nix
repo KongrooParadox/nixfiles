@@ -17,19 +17,20 @@ with lib;
         modules-center = [ "hyprland/workspaces" ];
         modules-left = [
           "custom/startmenu"
-          "hyprland/window"
           "pulseaudio"
           "cpu"
           "memory"
-          "disk"
-          "idle_inhibitor"
+          # "disk"
+          # "idle_inhibitor"
+          "hyprland/window"
         ];
         modules-right = [
+          "custom/spotify"
           "custom/hyprbindings"
           "custom/notification"
           "custom/exit"
           "battery"
-          "network"
+          # "network"
           "tray"
           "clock"
         ];
@@ -38,15 +39,15 @@ with lib;
           format = "{icon}";
           format-icons = {
             "1" = "";
-            "2" = "";
-            "3" = "";
-            "4" = "";
-            "5" = "";
-            "6" = "";
-            "7" = "";
-            "8" = "🖌";
-            "9" = "";
-            "10" = "";
+            "2" = "";
+            "3" = "";
+            "4" = "";
+            "5" = "";
+            "6" = "";
+            "7" = "🖌";
+            "8" = "";
+            "9" = "";
+            "10" = "";
             urgent = "";
           };
           on-scroll-up = "hyprctl dispatch workspace e+1";
@@ -115,6 +116,21 @@ with lib;
             ];
           };
           on-click = "sleep 0.1 && pavucontrol";
+        };
+        "custom/spotify" = {
+          exec = "mediaplayer";
+          tooltip = true;
+          return-type = "json";
+          format-icons = {
+            Playing = "";
+            Paused = "";
+            Stopped = "⏹";
+          };
+          format = "{icon} {} ";
+          tooltip-format = "Song currently playing in Spotify";
+          on-click = "playerctl play-pause";
+          on-scroll-up = "playerctl next";
+          on-scroll-down = "playerctl previous";
         };
         "custom/exit" = {
           tooltip = false;
@@ -263,7 +279,7 @@ with lib;
           padding: 0px 30px 0px 15px;
           border-radius: 0px 0px 40px 0px;
         }
-        #custom-hyprbindings, #network, #battery,
+        #custom-hyprbindings, #network, #battery, #custom-spotify,
         #custom-notification, #tray, #custom-exit {
           font-weight: bold;
           background: #${config.stylix.base16Scheme.base0F};

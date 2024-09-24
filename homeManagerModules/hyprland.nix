@@ -180,6 +180,8 @@ with lib;
           bind = ,XF86AudioPrev, exec, playerctl previous
           bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-
           bind = ,XF86MonBrightnessUp,exec,brightnessctl set +5%
+          bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"
+          bindl = , switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, 1920x1200, 0x0, 0"
         ''
       ];
   };
