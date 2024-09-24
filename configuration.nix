@@ -283,6 +283,7 @@
     helm-ls
     htop
     hugo
+    hyprpicker
     inkscape
     ipcalc
     iptables

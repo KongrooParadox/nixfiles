@@ -61,6 +61,7 @@
     (import ./scripts/task-waybar.nix { inherit pkgs; })
     (import ./scripts/web-search.nix { inherit pkgs; })
     (import ./scripts/rofi-launcher.nix { inherit pkgs; })
+    (import ./scripts/rofi-clipboard-history.nix { inherit pkgs; })
     (import ./scripts/screen-capture.nix { inherit pkgs; })
     (import ./scripts/list-hypr-bindings.nix { inherit pkgs; })
   ];
