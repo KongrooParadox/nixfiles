@@ -21,6 +21,7 @@ with lib;
           "pulseaudio"
           "cpu"
           "memory"
+          "disk"
           "idle_inhibitor"
         ];
         modules-right = [
@@ -28,16 +29,25 @@ with lib;
           "custom/notification"
           "custom/exit"
           "battery"
+          "network"
           "tray"
           "clock"
         ];
 
         "hyprland/workspaces" = {
-          format = "{name}";
+          format = "{icon}";
           format-icons = {
-            default = " ";
-            active = " ";
-            urgent = " ";
+            "1" = "";
+            "2" = "";
+            "3" = "";
+            "4" = "";
+            "5" = "";
+            "6" = "";
+            "7" = "";
+            "8" = "🖌";
+            "9" = "";
+            "10" = "";
+            urgent = "";
           };
           on-scroll-up = "hyprctl dispatch workspace e+1";
           on-scroll-down = "hyprctl dispatch workspace e-1";
@@ -65,7 +75,7 @@ with lib;
           tooltip = true;
         };
         "disk" = {
-          format = " {free}";
+          format = " {percentage_used}%";
           tooltip = true;
         };
         "network" = {
@@ -192,8 +202,10 @@ with lib;
           margin: 4px 4px;
           padding: 5px 5px;
           border-radius: 16px;
+          min-height: 25px;
         }
         #workspaces button {
+          font-size: 20px;
           font-weight: bold;
           padding: 0px 5px;
           margin: 0px 3px;
@@ -202,6 +214,9 @@ with lib;
           background: linear-gradient(45deg, #${config.stylix.base16Scheme.base08}, #${config.stylix.base16Scheme.base0D});
           opacity: 0.5;
           transition: ${betterTransition};
+        }
+        #workspaces button label {
+          font-size: 25px;
         }
         #workspaces button.active {
           font-weight: bold;
@@ -215,6 +230,7 @@ with lib;
           min-width: 40px;
         }
         #workspaces button:hover {
+          font-size: 20px;
           font-weight: bold;
           border-radius: 16px;
           color: #${config.stylix.base16Scheme.base00};
@@ -230,7 +246,7 @@ with lib;
         tooltip label {
           color: #${config.stylix.base16Scheme.base08};
         }
-        #window, #pulseaudio, #cpu, #memory, #idle_inhibitor {
+        #window, #pulseaudio, #cpu, #memory, #disk, #idle_inhibitor {
           font-weight: bold;
           margin: 4px 0px;
           margin-left: 7px;
