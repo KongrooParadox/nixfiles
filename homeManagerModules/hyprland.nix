@@ -4,7 +4,7 @@ let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     dbus-update-activation-environment --systemd --all
     systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    killall -q swww;sleep .5 && ${pkgs.swww}/bin/swww init &
+    killall -q swww;sleep .5 && ${pkgs.swww}/bin/swww-daemon &
     killall -q waybar;sleep .5 && ${pkgs.waybar}/bin/waybar &
     killall -q swaync
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
@@ -123,13 +123,14 @@ with lib;
           bind = ${modifier}SHIFT,W,exec,web-search
           bind = ${modifier}SHIFT,N,exec,swaync-client -rs
           bind = ${modifier},B,exec,firefox
-          bind = ${modifier},E,exec,emopicker9000
-          bind = ${modifier},S,exec,screenshootin
           bind = ${modifier},C,exec,hyprpicker -a
+          bind = ${modifier},E,exec,emoji-picker
+          bind = ${modifier},F,fullscreen,
           bind = ${modifier},G,exec,gimp
+          bind = ${modifier}SHIFT,B,exec,list-hypr-bindings
+          bind = ${modifier},S,exec,screen-capture
           bind = ${modifier},Q,killactive,
           bind = ${modifier}SHIFT,I,togglesplit,
-          bind = ${modifier},F,fullscreen,
           bind = ${modifier}SHIFT,F,togglefloating,
           bind = ${modifier}SHIFT,C,exit,
           bind = ${modifier}SHIFT,h,movewindow,l

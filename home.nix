@@ -25,10 +25,19 @@
   imports = [
     ./homeManagerModules/browser.nix
     ./homeManagerModules/editor.nix
+    ./homeManagerModules/emoji.nix
     ./homeManagerModules/git.nix
     ./homeManagerModules/hyprland.nix
+    ./homeManagerModules/rofi.nix
+    ./homeManagerModules/swaync.nix
     ./homeManagerModules/terminal.nix
+    ./homeManagerModules/waybar.nix
+    ./homeManagerModules/wlogout.nix
   ];
+
+  stylix.targets.waybar.enable = false;
+  stylix.targets.rofi.enable = false;
+  stylix.targets.hyprland.enable = false;
 
   home.packages = with pkgs; [
     ansible
@@ -42,13 +51,18 @@
     neofetch
     playerctl
     pulseaudio
-    rofi
     rustc
     shotman
     starship
     texlive.combined.scheme-full
     wl-clipboard
     xdg-utils
+    (import ./scripts/emoji-picker.nix { inherit pkgs; })
+    (import ./scripts/task-waybar.nix { inherit pkgs; })
+    (import ./scripts/web-search.nix { inherit pkgs; })
+    (import ./scripts/rofi-launcher.nix { inherit pkgs; })
+    (import ./scripts/screen-capture.nix { inherit pkgs; })
+    (import ./scripts/list-hypr-bindings.nix { inherit pkgs; })
   ];
 
   home.stateVersion = "23.11";
