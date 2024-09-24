@@ -65,7 +65,7 @@
               "dummy"
               "mode-switcher"
             ];
-            background-image = mkLiteral ''url("../wallpapers/pawel-nolbert-62OK9xwVA0c-unsplash.jpg", width)'';
+            background-image = mkLiteral ''url("../wallpapers/bright-milky-way.jpg", width)'';
           };
           "entry" = {
             enabled = true;

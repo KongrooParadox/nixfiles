@@ -328,6 +328,12 @@
     enableSSHSupport = true;
   };
 
+  # Thunar
+  programs.thunar.enable = true;
+  programs.xfconf.enable = true;
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
@@ -340,7 +346,7 @@
 
   stylix = {
     enable = true;
-    image = ../../wallpapers/pawel-nolbert-62OK9xwVA0c-unsplash.jpg;
+    image = ../../wallpapers/dark-nebula.jpg;
     base16Scheme = {
       base00 = "232136";
       base01 = "2a273f";

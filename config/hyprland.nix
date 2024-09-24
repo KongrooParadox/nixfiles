@@ -9,7 +9,7 @@ let
     killall -q swaync
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
     ${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policylit-agent &
-    sleep 1.5 && ${pkgs.swww}/bin/swww img ${../wallpapers/pawel-nolbert-62OK9xwVA0c-unsplash.jpg} &
+    sleep 1.5 && ${pkgs.swww}/bin/swww img ${../wallpapers/dark-nebula.jpg} &
   '';
 in
 with lib;
