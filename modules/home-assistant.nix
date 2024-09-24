@@ -1,9 +1,6 @@
 {
   imports = [];
 
-  # options = {
-  #
-  # };
   config = {
     services = {
       mosquitto = {

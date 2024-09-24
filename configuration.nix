@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { pkgs, config, inputs, ... }:
 
 {
@@ -175,8 +171,6 @@
       jack.enable = true;
     };
     blueman.enable = true;
-    # displayManager.sddm.enable = true;
-    # desktopManager.plasma6.enable = true;
     xserver = {
       enable = true;
       videoDrivers = [ "displaylink" "modesetting" ];
@@ -191,12 +185,6 @@
     enable = true;
     package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   };
-  # KDE Plasma
-  # environment.plasma6.excludePackages = with pkgs.kdePackages; [
-  #   plasma-browser-integration
-  #   konsole
-  #   oxygen
-  # ];
 
   # bluetooth
   hardware.bluetooth = {
@@ -255,8 +243,6 @@
     localBinInPath = true;
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     age
     android-tools
