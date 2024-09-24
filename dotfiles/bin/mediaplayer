@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+while true; do
+    player_status=$(playerctl -p spotify status)
+    if [ $? -ne 0 ]; then
+        player_status='Stopped'
+    fi
+    artist=$(playerctl -p spotify metadata artist 2>/dev/null)
+    title=$(playerctl -p spotify metadata title 2>/dev/null)
+    # Escape special characters for JSON
+    artist=$(echo "$artist" | sed -e 's/&/&amp;/g' -e 's/</&lt;/g' -e 's/>/&gt;/g' -e "s/'/&apos;/g" -e 's/"/&quot;/g')
+    title=$(echo "$title" | sed -e 's/&/&amp;/g' -e 's/</&lt;/g' -e 's/>/&gt;/g' -e "s/'/&apos;/g" -e 's/"/&quot;/g')
+    if [ "$player_status" == "Stopped" ]; then
+        text="N/A"
+    else
+        text="$artist - $title"
+    fi
+    echo '{"text": "'"$text"'", "class": "'"$player_status"'", "alt": "'"$player_status"'"}'
+    sleep 3
+done
+
