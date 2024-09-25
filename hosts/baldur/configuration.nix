@@ -326,6 +326,10 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+    settings = {
+      default-cache-ttl = 7200;
+      max-cache-ttl = 43200;
+    };
   };
 
   # Thunar
