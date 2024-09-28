@@ -1,27 +1,48 @@
 -- LSP settings.
-
-return {
+local deps = {
     {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
-        event = { "BufReadPre", "BufNewFile" },
+        'neovim/nvim-lspconfig',
+    },
+    {
+        -- Additional lua configuration, makes nvim stuff amazing
+        'folke/neodev.nvim',
+        config = true,
+        lazy = true,
+    },
+    {
+        -- Automatically install LSPs to stdpath for neovim
+        'williamboman/mason.nvim',
+        config = true,
+    },
+    {
+        'williamboman/mason-lspconfig.nvim',
+    },
+    {
+        'hrsh7th/nvim-cmp',
         dependencies = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+            'L3MON4D3/LuaSnip',
+            'saadparwaiz1/cmp_luasnip',
+        },
+    },
+}
+
+-- Disable Mason on NixOS
+local handle = io.popen("lsb_release -i")
+local result
+if handle ~= nil then
+    result = handle:read("*a")
+    handle:close()
+    if result:match("NixOS") then
+        deps = {
             {
                 'neovim/nvim-lspconfig',
             },
             {
-                -- Additional lua configuration, makes nvim stuff amazing
                 'folke/neodev.nvim',
                 config = true,
                 lazy = true,
-            },
-            {
-                -- Automatically install LSPs to stdpath for neovim
-                'williamboman/mason.nvim',
-                config = true,
-            },
-            {
-                'williamboman/mason-lspconfig.nvim',
             },
             {
                 'hrsh7th/nvim-cmp',
@@ -32,21 +53,29 @@ return {
                     'saadparwaiz1/cmp_luasnip',
                 },
             },
-        },
+        }
+    end
+end
+
+return {
+    {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v2.x',
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = deps,
         config = function()
             local lsp = require("lsp-zero").preset({})
             lsp.ensure_installed({
                 "ansiblels",
                 "bashls",
-                "gopls",
                 "docker_compose_language_service",
                 "dockerls",
-                "terraformls",
-                "yamlls",
+                "gopls",
+                "lua_ls",
+                "pylsp",
                 "rust_analyzer",
-                "tsserver",
-                "eslint",
-                "lua_ls"
+                "terraformls",
+                "yamlls"
             })
 
             require("lspconfig").ansiblels.setup {
@@ -76,16 +105,28 @@ return {
                     },
                 },
             }
+            require("lspconfig").bashls.setup{}
+            require("lspconfig").docker_compose_language_service.setup{}
+            require("lspconfig").dockerls.setup{}
+            require("lspconfig").gopls.setup{}
+            require("lspconfig").pylsp.setup{}
+            require("lspconfig").rust_analyzer.setup{}
+            require("lspconfig").terraformls.setup{}
+            require("lspconfig").yamlls.setup{}
             require("neodev").setup()
             lsp.nvim_workspace()
 
             local cmp = require('cmp')
-            local cmp_select = {behavior = cmp.SelectBehavior.Select}
             local cmp_mappings = lsp.defaults.cmp_mappings({
-                ['<S-Tab>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<Tab>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
+                ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+                ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+                ['<C-y>'] = cmp.mapping(
+                    cmp.mapping.confirm {
+                        select = true,
+                        behavior = cmp.SelectBehavior.Insert,
+                    },
+                    { "i", "c" }
+                ),
             })
 
             lsp.setup_nvim_cmp({
@@ -93,7 +134,7 @@ return {
             })
 
             -- This function gets run when an LSP connects to a particular buffer.
-            lsp.on_attach(function(client, bufnr)
+            lsp.on_attach(function(_,bufnr)
                 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr, remap = false, desc = 'LSP: [R]e[n]ame' })
                 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, remap = false, desc = 'LSP: [C]ode [A]ction' })
                 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { buffer = bufnr, remap = false, desc = 'LSP: Diagnostics [O]pen [F]loat' })
