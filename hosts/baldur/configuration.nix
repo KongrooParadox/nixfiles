@@ -278,6 +278,7 @@
     kubectl
     kubernetes-helm
     lftp
+    lsb-release
     moonlight-qt
     nettools
     networkmanagerapplet
