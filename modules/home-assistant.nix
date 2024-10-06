@@ -25,7 +25,6 @@
           "mqtt"
           "tasmota"
           "google_translate"
-          "freebox"
         ];
         config = {
           default_config = {};
