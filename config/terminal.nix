@@ -41,12 +41,23 @@
       plugins = with pkgs; [
         tmuxPlugins.vim-tmux-navigator
         {
+          plugin = tmuxPlugins.catppuccin;
+          extraConfig = ''
+            set -g @catppuccin_window_default_fill "number"
+            set -g @catppuccin_window_default_text "#W"
+            set -g @catppuccin_window_current_fill "number"
+            set -g @catppuccin_window_current_text "#W"
+            set -g @catppuccin_status_modules_right "host session date_time"
+          '';
+        }
+        {
           plugin = tmuxPlugins.resurrect;
           extraConfig = "set -g @resurrect-strategy-nvim 'session'";
         }
       ];
       extraConfig = ''
-        set -g status-style 'bg=#333333 fg=#5eacd3'
+        set-option -sa terminal-overrides ",xterm*:Tc"
+        set -g status-left ""
         bind -T copy-mode-vi v send-keys -X begin-selection
         bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
         bind -r ^ last-window
