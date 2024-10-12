@@ -40,8 +40,16 @@
   nix.settings.auto-optimise-store = true;
 
   networking = {
+    firewall.trustedInterfaces = [
+      "wlan0"
+      "virbr1"
+    ];
     networkmanager.enable = true;
     hostName = "baldur-nix";
+    wireless.iwd = {
+      enable = true;
+      settings.General.EnableNetworkConfiguration = true;
+    };
     wg-quick.interfaces = {
       wg-home = {
         autostart = false;
