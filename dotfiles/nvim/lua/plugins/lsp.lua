@@ -112,6 +112,18 @@ return {
             require("lspconfig").pylsp.setup{}
             require("lspconfig").rust_analyzer.setup{}
             require("lspconfig").terraformls.setup{}
+            vim.api.nvim_create_autocmd({"BufEnter"}, {
+                pattern = {"*.tf", "*.tfvars"},
+                callback = function()
+                    vim.opt_local.filetype = 'terraform'
+                end,
+            })
+            vim.api.nvim_create_autocmd({"BufWritePre"}, {
+                pattern = {"*.tf", "*.tfvars"},
+                callback = function()
+                    vim.lsp.buf.format()
+                end,
+            })
             require("lspconfig").yamlls.setup{}
             require("neodev").setup()
             lsp.nvim_workspace()
