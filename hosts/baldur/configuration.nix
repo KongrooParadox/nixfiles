@@ -253,6 +253,7 @@
 
   environment.systemPackages = with pkgs; [
     age
+    teams-for-linux
     android-tools
     bat
     buildah
