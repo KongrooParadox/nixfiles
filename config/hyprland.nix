@@ -4,9 +4,9 @@ let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     dbus-update-activation-environment --systemd --all
     systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    killall -q swww;sleep .5 && ${pkgs.swww}/bin/swww-daemon &
-    killall -q waybar;sleep .5 && ${pkgs.waybar}/bin/waybar &
-    killall -q swaync
+    ${pkgs.killall}/bin/killall -q swww;sleep 1 && ${pkgs.swww}/bin/swww-daemon &
+    ${pkgs.killall}/bin/killall -q waybar;sleep 1 && ${pkgs.waybar}/bin/waybar &
+    ${pkgs.killall}/bin/killall -q swaync
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
     ${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policylit-agent &
     sleep 1.5 && ${pkgs.swww}/bin/swww img ${../wallpapers/dark-nebula.jpg} &
