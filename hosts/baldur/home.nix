@@ -64,6 +64,7 @@
     (import ../../scripts/rofi-clipboard-history.nix { inherit pkgs; })
     (import ../../scripts/screen-capture.nix { inherit pkgs; })
     (import ../../scripts/list-hypr-bindings.nix { inherit pkgs; })
+    (import ../../scripts/waybar-launcher.nix { inherit pkgs; })
   ];
 
   home.stateVersion = "23.11";
