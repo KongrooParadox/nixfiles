@@ -25,6 +25,7 @@ pkgs.writeShellScriptBin "list-hypr-bindings" ''
   " + S" "Take Screenshot" "screen-capture" \
   " + T" "Terminal" "alacritty" \
   " + V" "Search through clipboard history" "cliphist list" \
+  " + W" "Launch Waybar" "waybar" \
   " + 1-0" "Move To Workspace 1 - 10" "workspace,X" \
   " + SHIFT + 1-0" "Move Focused Window To Workspace 1 - 10" "movetoworkspace,X" \
   " + SHIFT + C" "Quit / Exit Hyprland" "exit" \

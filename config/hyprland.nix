@@ -5,7 +5,7 @@ let
     dbus-update-activation-environment --systemd --all
     systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     ${pkgs.killall}/bin/killall -q swww;sleep 1 && ${pkgs.swww}/bin/swww-daemon &
-    ${pkgs.killall}/bin/killall -q waybar;sleep 1 && ${pkgs.waybar}/bin/waybar &
+    ${pkgs.killall}/bin/killall -q waybar;sleep 1 && waybar-launcher &
     ${pkgs.killall}/bin/killall -q swaync
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
     ${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policylit-agent &
@@ -140,6 +140,7 @@ with lib;
           bind = ${modifier},SPACE,togglespecialworkspace
           bind = ${modifier},T,exec,alacritty
           bind = ${modifier},V,exec,rofi-clipboard-history
+          bind = ${modifier},W,exec,waybar-launcher
           bind = ${modifier},h,movefocus,l
           bind = ${modifier},j,movefocus,d
           bind = ${modifier},k,movefocus,u
