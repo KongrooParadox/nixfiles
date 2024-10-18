@@ -14,18 +14,19 @@ pkgs.writeShellScriptBin "list-hypr-bindings" ''
   --timeout-indicator=right \
   " = Super" "Modifier Key, used for keybindings" "Doesn't really execute anything by itself." \
   " + B" "Launch Web Browser" "firefox" \
-  " + D" "App Launcher" "rofi" \
-  " + E" "Launch Emoji Selector" "emoji-picker" \
+  " + E" "Lauch File Browser" "thunar" \
   " + F" "Toggle Focused Fullscreen" "fullscreen" \
   " + H" "Move Focus To Window On The Left" "movefocus,l" \
   " + J" "Move Focus To Window On The Down" "movefocus,d" \
   " + K" "Move Focus To Window On The Up" "movefocus,u" \
   " + L" "Move Focus To Window On The Right" "movefocus,r" \
   " + Q" "Kill Focused Window" "killactive" \
+  " + R" "App Launcher" "rofi" \
   " + S" "Take Screenshot" "screen-capture" \
   " + T" "Terminal" "alacritty" \
   " + V" "Search through clipboard history" "cliphist list" \
   " + W" "Launch Waybar" "waybar" \
+  " + ;" "Launch Emoji Selector" "emoji-picker" \
   " + 1-0" "Move To Workspace 1 - 10" "workspace,X" \
   " + SHIFT + 1-0" "Move Focused Window To Workspace 1 - 10" "movetoworkspace,X" \
   " + SHIFT + C" "Quit / Exit Hyprland" "exit" \

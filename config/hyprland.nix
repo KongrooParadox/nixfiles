@@ -131,13 +131,11 @@ with lib;
           bind = ${modifier},9,workspace,9
           bind = ${modifier},B,exec,firefox
           bind = ${modifier},C,exec,hyprpicker -a
-          bind = ${modifier},D,exec,rofi-launcher
-          bind = ${modifier},E,exec,emoji-picker
+          bind = ${modifier},E,exec,thunar
           bind = ${modifier},F,fullscreen,
-          bind = ${modifier},G,exec,gimp
           bind = ${modifier},Q,killactive,
+          bind = ${modifier},R,exec,rofi-launcher
           bind = ${modifier},S,exec,screen-capture
-          bind = ${modifier},SPACE,togglespecialworkspace
           bind = ${modifier},T,exec,alacritty
           bind = ${modifier},V,exec,rofi-clipboard-history
           bind = ${modifier},W,exec,waybar-launcher
@@ -145,6 +143,8 @@ with lib;
           bind = ${modifier},j,movefocus,d
           bind = ${modifier},k,movefocus,u
           bind = ${modifier},l,movefocus,r
+          bind = ${modifier},SPACE,togglespecialworkspace
+          bind = ${modifier},;,exec,emoji-picker
           bind = ${modifier},mouse_down,workspace, e+1
           bind = ${modifier},mouse_up,workspace, e-1
           bind = ${modifier}CONTROL,left,workspace,e-1
