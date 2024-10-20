@@ -3,14 +3,14 @@
 My messy nix config with flakes !
 
 Currently managed configs :
-- Laptop workstation
-- Raspberry Pi 3 home-assistant instance
+- Laptop workstation = baldur
+- Raspberry Pi 3 home-assistant instance = asgard
 - NixOS qemu VM templates with cloud-init (only for initial setup)
 
 ## Deploying config to Raspberry Pi 3
 
 ```shell
-NIX_SSHOPTS="-t" nixos-rebuild switch --flake ./hosts/pi3#rpi --target-host ops@nix-pi301.skynet.local --use-remote-sudo
+NIX_SSHOPTS="-t" nixos-rebuild switch --flake ./hosts/asgard#asgard --target-host ops@asgard.skynet.local --use-remote-sudo --impure
 ```
 
 ## Building VM template images
