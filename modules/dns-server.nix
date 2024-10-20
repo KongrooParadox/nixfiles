@@ -30,6 +30,8 @@
               "thor" = "192.168.1.101";
               "kronos.skynet.local" = "192.168.1.102";
               "kronos" = "192.168.1.102";
+              "yggdrasil.skynet.local" = "192.168.1.84";
+              "yggdrasil" = "192.168.1.84";
             };
           };
           blocking = {
