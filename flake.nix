@@ -1,8 +1,8 @@
 {
-  description = "flake for baldur-nix";
+  description = "flake for baldur";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,11 +17,12 @@
   };
 
   outputs = { nixpkgs, home-manager, nixos-hardware, sops-nix, ... }@inputs: {
-    nixosConfigurations.baldur-nix = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.baldur = nixpkgs.lib.nixosSystem {
       system = "x86-64-linux";
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/baldur/configuration.nix
+        ./modules/stylix.nix
         "${nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
         sops-nix.nixosModules.sops {
           sops = {
@@ -38,7 +39,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.robot = { pkgs, ... } : { imports = [ ./hosts/baldur/home.nix ]; };
+            users.robot = { ... } : { imports = [ ./hosts/baldur/home.nix ]; };
           };
         }
       ];
