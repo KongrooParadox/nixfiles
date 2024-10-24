@@ -1,0 +1,118 @@
+{ config, lib, pkgs, ... }:
+
+{
+  imports =
+    [
+      ./hardware-configuration.nix
+    ];
+
+  boot = {
+    loader = {
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+        mirroredBoots = [{
+          devices = [ "/dev/disk/by-uuid/5EAD-737C" ];
+          path = "/boot-fallback";
+        }];
+      };
+      efi.canTouchEfiVariables = true;
+    };
+
+    initrd.postDeviceCommands = lib.mkAfter ''
+      zfs rollback -r zroot/local/root@blank
+    '';
+    supportedFilesystems = [ "zfs" ];
+    zfs = {
+      forceImportAll = true;
+      forceImportRoot = true;
+      devNodes = "/dev/disk/by-path";
+    };
+  };
+
+  networking = {
+    hostId = "8bd9a73c";
+    hostName = "yggdrasil";
+    networkmanager.enable = true;
+  };
+
+  time.timeZone = "Europe/Paris";
+
+  security.sudo.wheelNeedsPassword = false;
+
+  users.users.ops = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    initialHashedPassword = "$y$j9T$hPF6s6mTZ/zrhpR53hLG/0$gYqOtNdDwJxrxn3uMEHULC3zwera8885UbzAnjymBQ3";
+    openssh.authorizedKeys.keys = [
+      (builtins.readFile ~/.ssh/id_ed25519.pub)
+    ];
+    # openssh.authorizedKeys.keys = [
+    #   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINS3jmx5Dy2UZufV4QBCOs+ok6gEW9sbmRPFQibv1Lbg robot@baldur-nix"
+    # ];
+  };
+
+  # Impermanence state
+  environment.etc."NetworkManager/system-connections" = {
+    source = "/persist/etc/NetworkManager/system-connections/";
+  };
+
+  systemd.tmpfiles.rules = [
+    "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
+  ];
+
+  services.openssh = {
+    enable = true;
+    hostKeys = [
+      {
+        path = "/persist/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+      {
+        path = "/persist/ssh/ssh_host_rsa_key";
+        type = "rsa";
+        bits = 4096;
+      }
+    ];
+  };
+
+  nix = {
+    # Perform garbage collection weekly to maintain low disk usage
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 1m";
+    };
+    settings = {
+      trusted-users = [ "root" "ops" ];
+      experimental-features = [
+        "nix-command"
+          "flakes"
+      ];
+      # Optimize storage
+      # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
+      auto-optimise-store = true;
+    };
+  };
+
+    # packages = with pkgs; [
+    #   tree
+    #   vim
+    # ];
+    environment.systemPackages = with pkgs; [
+      git
+      hddtemp # monitor hdd temp during burn in
+      ksh # required for burn in script bht
+      lsscsi # required for burn in script bht
+      lvm2 # required for burn in script bht
+      mailutils # required for burn in script bht
+      smartmontools # required for burn in script bht
+      sysstat # required for burn in script bht
+      tmux
+      tree
+      vim
+    ];
+
+  system.stateVersion = "24.05";
+}
