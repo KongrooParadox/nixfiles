@@ -4,7 +4,9 @@ My messy nix config with flakes !
 
 Currently managed configs :
 - Laptop workstation = baldur
-- Raspberry Pi 3 home-assistant instance = asgard
+- Raspberry Pi 3 home-assistant & dns instance = asgard
+- NAS running ZFS raidz2 = yggdrasil
+- M1 Mac mini hypervisor (libvirt) = heimdall
 - NixOS qemu VM templates with cloud-init (only for initial setup)
 
 ## Deploying config to Raspberry Pi 3
