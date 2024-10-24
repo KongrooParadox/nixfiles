@@ -1,33 +1,6 @@
 { pkgs, ... }:
 
 {
-  programs = {
-    neovim = {
-      defaultEditor = true;
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-    };
-  };
-
-  home.packages = with pkgs; [
-    ansible-language-server
-    bash-language-server
-    docker-compose-language-service
-    dockerfile-language-server-nodejs
-    vscode-langservers-extracted
-    gopls
-    lua-language-server
-    nil
-    nixpkgs-fmt
-    rust-analyzer
-    terraform-ls
-    typescript-language-server
-    yaml-language-server
-    python312Packages.python-lsp-server
-  ];
-
   editorconfig = {
     enable = true;
     settings = {
@@ -51,4 +24,32 @@
       };
     };
   };
+
+  home.packages = with pkgs; [
+    ansible-language-server
+    bash-language-server
+    docker-compose-language-service
+    dockerfile-language-server-nodejs
+    vscode-langservers-extracted
+    gopls
+    lua-language-server
+    nixd
+    nixpkgs-fmt
+    rust-analyzer
+    terraform-ls
+    typescript-language-server
+    yaml-language-server
+    python312Packages.python-lsp-server
+  ];
+
+  programs = {
+    neovim = {
+      defaultEditor = true;
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+    };
+  };
+
 }

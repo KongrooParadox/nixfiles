@@ -1,10 +1,15 @@
 { pkgs, config, inputs, ... }:
 
 {
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    trusted-users = [ "root" "robot" ];
+  nix = {
+    # sets NIX_PATH to flake input for nixd
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "robot" ];
+    };
   };
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
