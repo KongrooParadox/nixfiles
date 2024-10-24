@@ -72,6 +72,7 @@ return {
                 "dockerls",
                 "gopls",
                 "lua_ls",
+                "nixd",
                 "pylsp",
                 "rust_analyzer",
                 "terraformls",
@@ -109,6 +110,25 @@ return {
             require("lspconfig").docker_compose_language_service.setup{}
             require("lspconfig").dockerls.setup{}
             require("lspconfig").gopls.setup{}
+            require("lspconfig").nixd.setup({
+                cmd = { "nixd" },
+                settings = {
+                    nixd = {
+                        nixpkgs = {
+                            -- expr = "import <nixpkgs> { }",
+                            expr = "import (builtins.getFlake \"~/nixfiles/\".inputs.nixpkgs { }",
+                        },
+                        formatting = {
+                            command = { "nixfmt" },
+                        },
+                        options = {
+                            nixos = {
+                                expr = '(builtins.getFlake \"~/nixfiles/\".nixosConfigurations.baldur.options',
+                            },
+                        },
+                    },
+                },
+            })
             require("lspconfig").pylsp.setup{}
             require("lspconfig").rust_analyzer.setup{}
             require("lspconfig").terraformls.setup{}
