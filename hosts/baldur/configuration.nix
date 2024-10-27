@@ -51,10 +51,6 @@
     ];
     networkmanager.enable = true;
     hostName = "baldur";
-    wireless.iwd = {
-      enable = true;
-      settings.General.EnableNetworkConfiguration = true;
-    };
     wg-quick.interfaces = {
       wg-home = {
         autostart = false;
