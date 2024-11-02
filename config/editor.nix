@@ -32,6 +32,7 @@
     dockerfile-language-server-nodejs
     vscode-langservers-extracted
     gopls
+    helm-ls
     lua-language-server
     nixd
     nixpkgs-fmt

@@ -26,6 +26,10 @@ local deps = {
             'saadparwaiz1/cmp_luasnip',
         },
     },
+    {
+        'towolf/vim-helm',
+        ft = 'helm'
+    },
 }
 
 -- Disable Mason on NixOS
@@ -53,6 +57,10 @@ if handle ~= nil then
                     'saadparwaiz1/cmp_luasnip',
                 },
             },
+            {
+                'towolf/vim-helm',
+                ft = 'helm'
+            },
         }
     end
 end
@@ -65,12 +73,14 @@ return {
         dependencies = deps,
         config = function()
             local lsp = require("lsp-zero").preset({})
+            local lspconfig = require("lspconfig")
             lsp.ensure_installed({
                 "ansiblels",
                 "bashls",
                 "docker_compose_language_service",
                 "dockerls",
                 "gopls",
+                "helm-ls",
                 "lua_ls",
                 "nixd",
                 "pylsp",
@@ -79,7 +89,7 @@ return {
                 "yamlls"
             })
 
-            require("lspconfig").ansiblels.setup {
+            lspconfig.ansiblels.setup {
                 filetypes = {
                     "yaml.ansible"
                 },
@@ -106,11 +116,20 @@ return {
                     },
                 },
             }
-            require("lspconfig").bashls.setup{}
-            require("lspconfig").docker_compose_language_service.setup{}
-            require("lspconfig").dockerls.setup{}
-            require("lspconfig").gopls.setup{}
-            require("lspconfig").nixd.setup({
+            lspconfig.bashls.setup{}
+            lspconfig.docker_compose_language_service.setup{}
+            lspconfig.dockerls.setup{}
+            lspconfig.helm_ls.setup{
+                settings = {
+                    ['helm-ls'] = {
+                        yamlls = {
+                            enabled = false,
+                        }
+                    }
+                }
+            }
+            lspconfig.gopls.setup{}
+            lspconfig.nixd.setup({
                 cmd = { "nixd" },
                 settings = {
                     nixd = {
@@ -129,9 +148,9 @@ return {
                     },
                 },
             })
-            require("lspconfig").pylsp.setup{}
-            require("lspconfig").rust_analyzer.setup{}
-            require("lspconfig").terraformls.setup{}
+            lspconfig.pylsp.setup{}
+            lspconfig.rust_analyzer.setup{}
+            lspconfig.terraformls.setup{}
             vim.api.nvim_create_autocmd({"BufEnter"}, {
                 pattern = {"*.tf", "*.tfvars"},
                 callback = function()
@@ -144,7 +163,7 @@ return {
                     vim.lsp.buf.format()
                 end,
             })
-            require("lspconfig").yamlls.setup{}
+            lspconfig.yamlls.setup{}
             require("neodev").setup()
             lsp.nvim_workspace()
 
@@ -195,7 +214,7 @@ return {
                 end, { buffer = bufnr, remap = false, desc = 'LSP: [W]orkspace [L]ist Folders' })
             end)
 
-            require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
+            lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
             lsp.setup()
         end

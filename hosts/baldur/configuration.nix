@@ -277,6 +277,7 @@
     gnupg
     go
     helm-ls
+    helmfile
     htop
     hugo
     hyprpicker
