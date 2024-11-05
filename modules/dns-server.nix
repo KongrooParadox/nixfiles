@@ -24,6 +24,14 @@
             mapping = {
               "asgard.skynet.local" = "192.168.1.10";
               "asgard" = "192.168.1.10";
+              "tasmota-desk.skynet.local" = "192.168.1.11";
+              "tasmota-desk" = "192.168.1.11";
+              "tasmota-window.skynet.local" = "192.168.1.12";
+              "tasmota-window" = "192.168.1.12";
+              "tasmota-nas.skynet.local" = "192.168.1.13";
+              "tasmota-nas" = "192.168.1.13";
+              "tasmota-tv.skynet.local" = "192.168.1.14";
+              "tasmota-tv" = "192.168.1.14";
               "heimdall.skynet.local" = "192.168.1.100";
               "heimdall" = "192.168.1.100";
               "thor.skynet.local" = "192.168.1.101";
