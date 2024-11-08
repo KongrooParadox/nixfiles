@@ -38,13 +38,26 @@ scp hosts/yggdrasil/* root@yggdrasil:/mnt/etc/nixos/
 Install NixOs
 
 ```shell
-# On yggdrasil as root
+scp hosts/yggdrasil/* nixos@yggdrasil:~
+ssh ops@yggdrasil
+sudo su
+mkdir -p /mnt/etc/nixos
+mv ./* /mnt/etc/nixos/
 cd /mnt/etc/nixos/
-nixos-generate-config --no-filesystems --root /mnt
 nixos-install --root /mnt --flake '/mnt/etc/nixos#yggdrasil'
 ```
 
-## bht 
+Add log mirror to zfs pool
+
+```shell
+sudo fdisk /dev/nvme0n1
+sudo fdisk /dev/nvme1n1
+zpool add rust log mirror nvme0n1p1 nvme1n1p1
+sudo zpool add rust log mirror nvme0n1p1 nvme1n1p1
+zpool status
+```
+
+## bht : Burn in HDD
 
 ### Launch test
 
@@ -64,40 +77,4 @@ iostat -p /dev/sd[a-b] /dev/sd[e-h] -h;hddtemp /dev/sd[a-b] /dev/sd[e-h] -q -uC
 ```
 
 [root@yggdrasil:/home/ops]# ksh bht/bht -d ~/bht-data --status
-ST12000NM0127_ZJV3ZE40:
-        badblocks[Reading and comparing Pass completed, 0 bad blocks found. (0/0/0 errors)]
-        HDD Type:[SATA]
-        SMART:[Reallocated_Sector_Ct=64]
-        SMART:[Power_On_Hours=216]
-        SMART:[Multi_Zone_Error_Rate=0]
-ST12000NM0127_ZJV3ZCZA:
-        badblocks[Reading and comparing Pass completed, 0 bad blocks found. (0/0/0 errors)]
-        HDD Type:[SATA]
-        SMART:[Reallocated_Sector_Ct=0]
-        SMART:[Power_On_Hours=212]
-        SMART:[Multi_Zone_Error_Rate=0]
-ST12000NM0127_ZJV3RSWV:
-        badblocks[Reading and comparing Pass completed, 0 bad blocks found. (0/0/0 errors)]
-        HDD Type:[SATA]
-        SMART:[Reallocated_Sector_Ct=0]
-        SMART:[Power_On_Hours=142]
-        SMART:[Multi_Zone_Error_Rate=0]
-ST12000NM0127_ZJV55VXG:
-        badblocks[Reading and comparing Pass completed, 0 bad blocks found. (0/0/0 errors)]
-        HDD Type:[SATA]
-        SMART:[Reallocated_Sector_Ct=0]
-        SMART:[Power_On_Hours=166]
-        SMART:[Multi_Zone_Error_Rate=0]
-ST12000NM0127_ZJV4AA2D:
-        badblocks[Reading and comparing Pass completed, 0 bad blocks found. (0/0/0 errors)]
-        HDD Type:[SATA]
-        SMART:[Reallocated_Sector_Ct=0]
-        SMART:[Power_On_Hours=215]
-        SMART:[Multi_Zone_Error_Rate=0]
-ST12000NM0127_ZJV2PS6W:
-        badblocks[Reading and comparing Pass completed, 0 bad blocks found. (0/0/0 errors)]
-        HDD Type:[SATA]
-        SMART:[Reallocated_Sector_Ct=0]
-        SMART:[Power_On_Hours=216]
-        SMART:[Multi_Zone_Error_Rate=0]
 ```

@@ -12,16 +12,22 @@
         enable = true;
         efiSupport = true;
         device = "nodev";
-        mirroredBoots = [{
-          devices = [ "/dev/disk/by-uuid/5EAD-737C" ];
-          path = "/boot-fallback";
-        }];
+        mirroredBoots = [
+          {
+            devices = [ "/dev/disk/by-path/pci-0000:00:14.0-usb-0:2:1.0-scsi-0:0:0:0-part1" ];
+            path = "/boot";
+          }
+          {
+            devices = [ "/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1" ];
+            path = "/boot-fallback";
+          }
+        ];
       };
       efi.canTouchEfiVariables = true;
     };
 
     initrd.postDeviceCommands = lib.mkAfter ''
-      zfs rollback -r zroot/local/root@blank
+      zfs rollback -r root/local/root@blank
     '';
     supportedFilesystems = [ "zfs" ];
     zfs = {
@@ -37,6 +43,11 @@
     networkmanager.enable = true;
   };
 
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+  };
+
   time.timeZone = "Europe/Paris";
 
   security.sudo.wheelNeedsPassword = false;
@@ -46,11 +57,8 @@
     extraGroups = [ "wheel" ];
     initialHashedPassword = "$y$j9T$hPF6s6mTZ/zrhpR53hLG/0$gYqOtNdDwJxrxn3uMEHULC3zwera8885UbzAnjymBQ3";
     openssh.authorizedKeys.keys = [
-      (builtins.readFile ~/.ssh/id_ed25519.pub)
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINS3jmx5Dy2UZufV4QBCOs+ok6gEW9sbmRPFQibv1Lbg robot@baldur-nix"
     ];
-    # openssh.authorizedKeys.keys = [
-    #   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINS3jmx5Dy2UZufV4QBCOs+ok6gEW9sbmRPFQibv1Lbg robot@baldur-nix"
-    # ];
   };
 
   # Impermanence state
@@ -90,25 +98,19 @@
         "nix-command"
           "flakes"
       ];
-      # Optimize storage
-      # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
       auto-optimise-store = true;
     };
   };
 
-    # packages = with pkgs; [
-    #   tree
-    #   vim
-    # ];
     environment.systemPackages = with pkgs; [
       git
-      hddtemp # monitor hdd temp during burn in
-      ksh # required for burn in script bht
-      lsscsi # required for burn in script bht
-      lvm2 # required for burn in script bht
-      mailutils # required for burn in script bht
-      smartmontools # required for burn in script bht
-      sysstat # required for burn in script bht
+      # hddtemp # monitor hdd temp during burn in
+      # ksh # required for burn in script bht
+      # lsscsi # required for burn in script bht
+      # lvm2 # required for burn in script bht
+      # mailutils # required for burn in script bht
+      # smartmontools # required for burn in script bht
+      # sysstat # required for burn in script bht
       tmux
       tree
       vim
