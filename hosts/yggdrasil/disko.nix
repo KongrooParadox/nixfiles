@@ -21,7 +21,7 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zroot";
+                pool = "root";
               };
             };
           };
@@ -47,111 +47,112 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zroot";
+                pool = "root";
               };
             };
           };
         };
       };
-      # hdd-1 = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-path/pci-0000:02:00.0-ata-1";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zmain";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
-      # hdd-2 = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-path/pci-0000:02:00.0-ata-3";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zmain";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
-      # hdd-3 = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-path/pci-0000:02:00.0-ata-4";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zmain";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
-      # hdd-4 = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-path/pci-0000:02:00.0-ata-5";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zmain";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
-      # ssd-1 = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-path/pci-0000:02:00.0-ata-2";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zmain";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
-      # ssd-2 = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-path/pci-0000:00:17.0-ata-2";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       zfs = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zmain";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
+      hdd-1 = {
+        type = "disk";
+        device = "/dev/disk/by-path/pci-0000:00:17.0-ata-2";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "rust";
+              };
+            };
+          };
+        };
+      };
+      hdd-2 = {
+        type = "disk";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-1";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "rust";
+              };
+            };
+          };
+        };
+      };
+      hdd-3 = {
+        type = "disk";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-2";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "rust";
+              };
+            };
+          };
+        };
+      };
+      # 128 Go SSD for L2ARC Cache
+      cache = {
+        type = "disk";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-3";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "rust";
+              };
+            };
+          };
+        };
+      };
+      ssd-1 = {
+        type = "disk";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-4";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "fast";
+              };
+            };
+          };
+        };
+      };
+      ssd-2 = {
+        type = "disk";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-5";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "fast";
+              };
+            };
+          };
+        };
+      };
       # nvme0 = {
       #   type = "disk";
-      #   device = "/dev/nvme0n1";
+      #   device = "/dev/disk/by-path/pci-0000:01:00.0-nvme-1";
       #   content = {
       #     type = "gpt";
       #     partitions = {
@@ -159,7 +160,7 @@
       #         size = "100%";
       #         content = {
       #           type = "zfs";
-      #           pool = "zmain";
+      #           pool = "rust";
       #         };
       #       };
       #     };
@@ -167,7 +168,7 @@
       # };
       # nvme1 = {
       #   type = "disk";
-      #   device = "/dev/nvme1n1";
+      #   device = "/dev/disk/by-path/pci-0000:03:00.0-nvme-1";
       #   content = {
       #     type = "gpt";
       #     partitions = {
@@ -175,7 +176,7 @@
       #         size = "100%";
       #         content = {
       #           type = "zfs";
-      #           pool = "zmain";
+      #           pool = "rust";
       #         };
       #       };
       #     };
@@ -183,8 +184,16 @@
       # };
     };
     zpool = {
-      zroot = {
+      root = {
         type = "zpool";
+        rootFsOptions = {
+          # https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS
+          acltype = "posixacl";
+          atime = "off";
+          compression = "zstd";
+          mountpoint = "none";
+          xattr = "sa";
+        };
         mode = {
           topology = {
             type = "topology";
@@ -196,19 +205,10 @@
             ];
           };
         };
-        options.cachefile = "none";
-        rootFsOptions = {
-          # https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS
-          acltype = "posixacl";
-          atime = "off";
-          compression = "zstd";
-          mountpoint = "none";
-          xattr = "sa";
+        options = {
+          ashift = "12";
+          cachefile = "none";
         };
-        # Replace with 9 for disks with 512 byte physical sectors
-        # Run 'lsblk -S -o NAME,PHY-SEC' to check (SATA/SCSI)
-        # Run 'nvme id-ns /dev/nvmeXnY -H | grep "LBA Format"' (NVME)
-        options.ashift = "12";
 
         datasets = {
           "local" = {
@@ -235,64 +235,90 @@
             type = "zfs_fs";
             mountpoint = "/";
             options."com.sun:auto-snapshot" = "false";
-            postCreateHook = "zfs snapshot zroot/local/root@blank";
+            # postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^root/local/root@blank$' || zfs snapshot root/local/root@blank";
+            postCreateHook = "zfs snapshot root/local/root@blank";
           };
         };
       };
-      # zmain = {
-      #   type = "zpool";
-      #   mode = {
-      #     topology = {
-      #       type = "topology";
-      #       vdev = [
-      #         {
-      #           mode = "raidz2";
-      #           members = [ "hdd-1" "hdd-2" "hdd-3" "hdd-4" ];
-      #         }
-      #       ];
-      #       cache = [ "ssd-1" "ssd-2" ];
-      #       # log = {
-      #       #   mode = "mirror";
-      #       #   members = [ "nvme0" "nvme1" ];
-      #       # };
-      #     };
-      #   };
-      #   options.cachefile = "none";
-      #   rootFsOptions = {
-      #     # https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS
-      #     acltype = "posixacl";
-      #     atime = "off";
-      #     compression = "zstd";
-      #     mountpoint = "none";
-      #     xattr = "sa";
-      #   };
-      #   # Replace with 9 for disks with 512 byte physical sectors
-      #   # Run 'lsblk -S -o NAME,PHY-SEC' to check (SATA/SCSI)
-      #   # Run 'nvme id-ns /dev/nvmeXnY -H | grep "LBA Format"' (NVME)
-      #   options.ashift = "12";
-      #
-      #   datasets = {
-      #     "data" = {
-      #       type = "zfs_fs";
-      #       options.mountpoint = "none";
-      #     };
-      #     "data/backup" = {
-      #       type = "zfs_fs";
-      #       mountpoint = "/mnt/backup";
-      #       options."com.sun:auto-snapshot" = "false";
-      #     };
-      #     "data/compute" = {
-      #       type = "zfs_fs";
-      #       mountpoint = "/mnt/compute";
-      #       options."com.sun:auto-snapshot" = "true";
-      #     };
-      #     "data/media" = {
-      #       type = "zfs_fs";
-      #       mountpoint = "/mnt/media";
-      #       options."com.sun:auto-snapshot" = "true";
-      #     };
-      #   };
-      # };
+      fast = {
+        type = "zpool";
+        mode = {
+          topology = {
+            type = "topology";
+            vdev = [
+              {
+                mode = "mirror";
+                members = [ "ssd-1" "ssd-2" ];
+              }
+            ];
+          };
+        };
+        options = {
+          ashift = "9";
+          cachefile = "none";
+        };
+
+        datasets = {
+          "fast" = {
+            type = "zfs_fs";
+            options.mountpoint = "none";
+          };
+          "fast/vm" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/vm";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+        };
+      };
+      rust = {
+        type = "zpool";
+        mode = {
+          topology = {
+            type = "topology";
+            vdev = [
+              {
+                mode = "raidz1";
+                members = [ "hdd-1" "hdd-2" "hdd-3" ];
+              }
+            ];
+            cache = [ "cache" ];
+          };
+        };
+        options = {
+          ashift = "12";
+          cachefile = "none";
+        };
+
+        datasets = {
+          "data" = {
+            type = "zfs_fs";
+            options.mountpoint = "none";
+          };
+          "data/backup" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/backup";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
+          };
+          "data/compute" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/compute";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
+          };
+          "data/media" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/media";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
+          };
+        };
+      };
     };
   };
 }
