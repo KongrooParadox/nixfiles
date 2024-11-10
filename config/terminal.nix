@@ -47,9 +47,10 @@
             set -g @catppuccin_window_default_text "#W"
             set -g @catppuccin_window_current_fill "number"
             set -g @catppuccin_window_current_text "#W"
-            set -g @catppuccin_status_modules_right "host session date_time"
+            set -g @catppuccin_status_modules_right "host session battery date_time"
           '';
         }
+        tmuxPlugins.battery
         {
           plugin = tmuxPlugins.resurrect;
           extraConfig = "set -g @resurrect-strategy-nvim 'session'";
