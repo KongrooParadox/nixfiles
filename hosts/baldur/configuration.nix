@@ -268,6 +268,7 @@
     discord
     displaylink
     dnsutils
+    element-desktop
     evolution
     fd
     fzf
