@@ -253,6 +253,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    acpi
     age
     teams-for-linux
     android-tools
