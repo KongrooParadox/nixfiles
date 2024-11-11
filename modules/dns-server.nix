@@ -20,7 +20,7 @@
           customDNS = {
             customTTL = "1h";
             filterUnmappedTypes = true;
-            rewrite."kongroo.co" = "skynet.local";
+            rewrite."kongroo.ovh" = "skynet.local";
             mapping = {
               "asgard.skynet.local" = "192.168.1.10";
               "asgard" = "192.168.1.10";
