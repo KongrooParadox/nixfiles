@@ -315,6 +315,7 @@
     spotify
     subversion
     sudo
+    ssh-to-age
     swaynotificationcenter
     tcpdump
     terraform
@@ -354,6 +355,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.tailscale.enable = true;
 
   # virtualisation
   virtualisation.libvirtd.enable = true;

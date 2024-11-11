@@ -26,7 +26,9 @@
         "${nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
         sops-nix.nixosModules.sops {
           sops = {
-            age.keyFile = "/home/robot/.config/sops/age/keys.txt";
+            age = {
+              sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" "/home/robot/.ssh/id_ed25519" ];
+            };
             defaultSopsFile = ./secrets/secrets.yaml;
             defaultSopsFormat = "yaml";
             secrets."wireguard/casa-anita" = {};
