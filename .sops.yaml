@@ -2,7 +2,7 @@ keys:
   - &asgard age1hjtz6r4xzf9cqdzsmvuthxksk48hstcp55kkpm25998j7vmn9yps02xtzy
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
-  - &yggdrasil age1r0kuaprvapt7lkrp5nqfs0j88av55nr0ha9tgrey7kq2a25skfnqdfvedj
+  - &yggdrasil age106vxxflmfcfazjsvcepgulvft4saq26krft0qfa04mlwh3dcjamqrm7pvf
 creation_rules:
   - path_regex: secrets/.*\.(yaml|json)$
     key_groups:

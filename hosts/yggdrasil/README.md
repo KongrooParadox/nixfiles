@@ -1,62 +1,5 @@
 # NAS ZFS install via Disko
 
-## Partition
-
-SSH in :
-
-```shell
-lsblk ```
-
-Create /tmp/disko.nix with correct devices (watch out for disk id changes)
-
-```shell
-# On yggdrasil as root
-nix \
-  --experimental-features "nix-command flakes" \
-  run github:nix-community/disko -- \
-  --mode disko /tmp/disko.nix
-```
-
-How to mount zfs partitions manually (if not done automagically by disko)
-
-```shell
-# On yggdrasil as root
-mount -t zfs -o zfsutil zroot/local/{persist,nix,home} /mnt/{persist,nix,home}
-mount -t zfs -o zfsutil zroot/local/root /mnt/
-# Adapt following device names with boot devices
-mount /dev/sdc1 /mnt/boot
-mount /dev/sdd1 /mnt/boot-fallback
-```
-
-Copy nixconfig from workstation
-
-```shell
-ssh root@yggdrasil 'mkdir -p /mnt/etc/nixos'
-scp hosts/yggdrasil/* root@yggdrasil:/mnt/etc/nixos/
-```
-
-Install NixOs
-
-```shell
-scp hosts/yggdrasil/* nixos@yggdrasil:~
-ssh ops@yggdrasil
-sudo su
-mkdir -p /mnt/etc/nixos
-mv ./* /mnt/etc/nixos/
-cd /mnt/etc/nixos/
-nixos-install --root /mnt --flake '/mnt/etc/nixos#yggdrasil'
-```
-
-Add log mirror to zfs pool
-
-```shell
-sudo fdisk /dev/nvme0n1
-sudo fdisk /dev/nvme1n1
-zpool add rust log mirror nvme0n1p1 nvme1n1p1
-sudo zpool add rust log mirror nvme0n1p1 nvme1n1p1
-zpool status
-```
-
 ## bht : Burn in HDD
 
 ### Launch test
@@ -73,8 +16,65 @@ ksh bht/bht -d ~/bht-data --status
 iostat -p /dev/sd[a-b] /dev/sd[e-h] -h;hddtemp /dev/sd[a-b] /dev/sd[e-h] -q -uC
 ```
 
-### Final output (run 1)
+## Partition & install
+
+Setup ssh-key:
+```shell
+ssh-copy-id root@yggdrasil
 ```
 
-[root@yggdrasil:/home/ops]# ksh bht/bht -d ~/bht-data --status
+Copy zfs dataset secrets to yggdrasil
+```shell
+sops --decrypt --extract "['zfs-dataset']['root.key']" secrets/secrets.yaml > root.key
+sops --decrypt --extract "['zfs-dataset']['fast.key']" secrets/secrets.yaml > fast.key
+sops --decrypt --extract "['zfs-dataset']['rust.key']" secrets/secrets.yaml > rust.key
+ssh root@yggdrasil 'mkdir -p /run/secrets/zfs-dataset/'
+scp *.key root@yggdrasil:/run/secrets/zfs-dataset/
+rm *.key
+```
+
+How to mount zfs partitions manually (if not done automagically by disko)
+
+```shell
+# On yggdrasil as root
+mount -t zfs -o zfsutil zroot/local/{persist,nix,home} /mnt/{persist,nix,home}
+mount -t zfs -o zfsutil zroot/local/root /mnt/
+# Adapt following device names with boot devices
+mount /dev/sdc1 /mnt/boot
+mount /dev/sdd1 /mnt/boot-fallback
+```
+
+Copy nixconfig from workstation & partition using disko
+
+```shell
+scp hosts/yggdrasil/disko.nix root@yggdrasil:/tmp/
+# On yggdrasil as root
+nix \
+  --experimental-features "nix-command flakes" \
+  run github:nix-community/disko -- \
+  --mode disko /tmp/disko.nix
+```
+
+Install NixOs
+
+```shell
+ssh root@yggdrasil 'mkdir -p /mnt/etc/nixos'
+scp hosts/yggdrasil/* root@yggdrasil:/mnt/etc/nixos/
+scp secrets/secrets.yaml root@yggdrasil:/mnt/etc/nixos/
+scp .sops.yaml root@yggdrasil:/mnt/etc/nixos/
+ssh root@yggdrasil 'mkdir -p /root/.config/ /mnt/root/.config/'
+ssh root@yggdrasil 'sed -e 's#../../secrets#.#' -e 's#~/.config#/root/.config#' /mnt/etc/nixos/flake.nix -i'
+scp ~/.config/age.txt root@yggdrasil:/root/.config/
+scp ~/.config/age.txt root@yggdrasil:/mnt/root/.config/
+# On yggdrasil as root
+nixos-install --root /mnt --flake '/mnt/etc/nixos#yggdrasil'
+```
+
+Add log mirror to zfs pool
+
+```shell
+fdisk /dev/nvme0n1 # d, n, then w
+fdisk /dev/nvme1n1 # d, n, then w
+zpool add rust log mirror nvme0n1p1 nvme1n1p1
+zpool status
 ```

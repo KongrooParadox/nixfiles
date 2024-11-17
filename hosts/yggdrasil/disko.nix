@@ -213,13 +213,16 @@
         datasets = {
           "local" = {
             type = "zfs_fs";
-            options.mountpoint = "none";
+            options = {
+              mountpoint = "none";
+            };
           };
           "local/home" = {
             type = "zfs_fs";
             mountpoint = "/home";
-            # Used by services.zfs.autoSnapshot options.
-            options."com.sun:auto-snapshot" = "true";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
           };
           "local/nix" = {
             type = "zfs_fs";
@@ -229,13 +232,14 @@
           "local/persist" = {
             type = "zfs_fs";
             mountpoint = "/persist";
-            options."com.sun:auto-snapshot" = "false";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
           };
           "local/root" = {
             type = "zfs_fs";
             mountpoint = "/";
             options."com.sun:auto-snapshot" = "false";
-            # postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^root/local/root@blank$' || zfs snapshot root/local/root@blank";
             postCreateHook = "zfs snapshot root/local/root@blank";
           };
         };
@@ -261,7 +265,12 @@
         datasets = {
           "fast" = {
             type = "zfs_fs";
-            options.mountpoint = "none";
+            options = {
+              mountpoint = "none";
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "file:///run/secrets/zfs-dataset/fast.key";
+            };
           };
           "fast/vm" = {
             type = "zfs_fs";
@@ -294,7 +303,12 @@
         datasets = {
           "data" = {
             type = "zfs_fs";
-            options.mountpoint = "none";
+            options = {
+              mountpoint = "none";
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "file:///run/secrets/zfs-dataset/rust.key";
+            };
           };
           "data/backup" = {
             type = "zfs_fs";
@@ -321,4 +335,5 @@
       };
     };
   };
+  fileSystems."/persist".neededForBoot = true;
 }
