@@ -31,8 +31,8 @@
     '';
     supportedFilesystems = [ "zfs" ];
     zfs = {
-      forceImportAll = true;
-      forceImportRoot = true;
+      # forceImportAll = true;
+      # forceImportRoot = true;
       devNodes = "/dev/disk/by-path";
     };
   };
@@ -64,6 +64,13 @@
   # Impermanence state
   environment.etc."NetworkManager/system-connections" = {
     source = "/persist/etc/NetworkManager/system-connections/";
+  };
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+    ];
   };
 
   systemd.tmpfiles.rules = [
@@ -102,19 +109,21 @@
     };
   };
 
-    environment.systemPackages = with pkgs; [
-      git
-      # hddtemp # monitor hdd temp during burn in
-      # ksh # required for burn in script bht
-      # lsscsi # required for burn in script bht
-      # lvm2 # required for burn in script bht
-      # mailutils # required for burn in script bht
-      # smartmontools # required for burn in script bht
-      # sysstat # required for burn in script bht
-      tmux
-      tree
-      vim
-    ];
+    environment = {
+      systemPackages = with pkgs; [
+        git
+        # hddtemp # monitor hdd temp during burn in
+        # ksh # required for burn in script bht
+        # lsscsi # required for burn in script bht
+        # lvm2 # required for burn in script bht
+        # mailutils # required for burn in script bht
+        # smartmontools # required for burn in script bht
+        # sysstat # required for burn in script bht
+        tmux
+        tree
+        vim
+      ];
+    };
 
   system.stateVersion = "24.05";
 }
