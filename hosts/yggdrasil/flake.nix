@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/f7ad229b11c0717601c7ad070795580ff5196165";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,12 +20,14 @@
             };
             defaultSopsFile = ../../secrets/secrets.yaml;
             defaultSopsFormat = "yaml";
+            secrets."acme-ovh" = {};
             secrets."zfs-dataset/root.key" = {};
             secrets."zfs-dataset/fast.key" = {};
             secrets."zfs-dataset/rust.key" = {};
           };
         }
         ./disko.nix
+        ../../modules/immich.nix
       ];
     };
   };
