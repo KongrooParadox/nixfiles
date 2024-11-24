@@ -336,7 +336,12 @@
     xournalpp
     yad
     yq
+    # usb drivers for apple mobile devices
+    libimobiledevice
+    ifuse # optional, to mount using 'ifuse'
   ];
+
+  services.usbmuxd.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
