@@ -11,7 +11,6 @@
         host = "0.0.0.0";
         mediaLocation = "/mnt/media/immich";
         openFirewall = true;
-        # settings.server.externalDomain = "kongroo.ovh";
       };
       nginx = {
         enable = true;
