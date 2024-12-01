@@ -1,13 +1,15 @@
 keys:
   - &asgard age1hjtz6r4xzf9cqdzsmvuthxksk48hstcp55kkpm25998j7vmn9yps02xtzy
-  - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
+  - &njord age19t76glewv5zzykd8c6k7v7yaajr48kesdlrdsdf3mcdjpx4tcsmsz80eth
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
+  - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
   - &yggdrasil age106vxxflmfcfazjsvcepgulvft4saq26krft0qfa04mlwh3dcjamqrm7pvf
 creation_rules:
   - path_regex: secrets/.*\.(yaml|json)$
     key_groups:
       - age:
+        - *asgard
+        - *njord
         - *robot
         - *spare
         - *yggdrasil
-        - *asgard
