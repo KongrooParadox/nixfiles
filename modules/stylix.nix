@@ -1,5 +1,11 @@
-{pkgs, ...}:
+{pkgs, inputs, ...}:
 
+let
+  monospacePackage = if builtins.substring 0 5 inputs.nixpkgs.lib.version >= "25.05"
+    then pkgs.nerd-fonts.jetbrains-mono
+    else pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+
+in
 {
   stylix = {
     enable = true;
@@ -50,7 +56,7 @@
     cursor.size = 24;
     fonts = {
       monospace = {
-        package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+        package = monospacePackage;
         name = "JetBrainsMono Nerd Font Mono";
       };
       sansSerif = {

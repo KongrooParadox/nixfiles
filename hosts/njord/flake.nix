@@ -23,7 +23,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
-        ../../modules/stylix-unstable.nix
+        ../../modules/stylix.nix
         apple-silicon.nixosModules.default
         "${nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
         sops-nix.nixosModules.sops {
