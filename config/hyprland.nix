@@ -9,12 +9,24 @@ let
     ${pkgs.killall}/bin/killall -q swaync
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
     ${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policylit-agent &
-    sleep 1.5 && ${pkgs.swww}/bin/swww img ${../wallpapers/dark-nebula.jpg} &
     wl-paste --watch cliphist store &
   '';
 in
 with lib;
 {
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = "off";
+      splash = false;
+      splash_offset = 2.0;
+      preload =
+        [ "${../wallpapers/dark-nebula.jpg}" ];
+      wallpaper = [
+        ",${../wallpapers/dark-nebula.jpg}"
+      ];
+    };
+  };
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -40,6 +52,10 @@ with lib;
           env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
           env = SDL_VIDEODRIVER, x11
           env = MOZ_ENABLE_WAYLAND, 1
+          # monitor=DVI-I-2,preferred,auto,1
+          # monitor=DVI-I-1,preferred,auto,1
+          # monitor=eDP-1,preferred,1200x1500,1.25
+          monitor=eDP-1,preferred,auto,1.25
           monitor=,preferred,auto,1
           general {
             gaps_in = 6
@@ -180,7 +196,7 @@ with lib;
           bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-
           bind = ,XF86MonBrightnessUp,exec,brightnessctl set +5%
           bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"
-          bindl = , switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, 1920x1200, 0x0, 0"
+          bindl = , switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, 2560x1600@60.0, auto, 1.25"
         ''
       ];
   };
