@@ -79,9 +79,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "sudo" "libvirtd" ];
     packages = with pkgs; [ tree ];
-    openssh.authorizedKeys.keys = [
-      (builtins.readFile ~/.ssh/id_ed25519.pub)
-    ];
+    openssh.authorizedKeys.keys = (import ../../modules/ssh.nix).keys;
   };
 
   security.sudo.wheelNeedsPassword = false;

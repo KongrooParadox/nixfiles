@@ -56,9 +56,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     initialHashedPassword = "$y$j9T$hPF6s6mTZ/zrhpR53hLG/0$gYqOtNdDwJxrxn3uMEHULC3zwera8885UbzAnjymBQ3";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINS3jmx5Dy2UZufV4QBCOs+ok6gEW9sbmRPFQibv1Lbg robot@baldur-nix"
-    ];
+    openssh.authorizedKeys.keys = (import ../../modules/ssh.nix).keys;
   };
 
   # Impermanence state
