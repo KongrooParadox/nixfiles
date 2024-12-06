@@ -54,7 +54,7 @@
 
   users.users.ops = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "networkmanager" ];
     initialHashedPassword = "$y$j9T$hPF6s6mTZ/zrhpR53hLG/0$gYqOtNdDwJxrxn3uMEHULC3zwera8885UbzAnjymBQ3";
     openssh.authorizedKeys.keys = (import ../../modules/ssh.nix).keys;
   };
