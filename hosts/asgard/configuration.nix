@@ -38,9 +38,7 @@
   users.users.ops = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [
-      (builtins.readFile ~/.ssh/id_ed25519.pub)
-    ];
+    openssh.authorizedKeys.keys = (import ../../modules/ssh.nix).keys;
   };
 
   networking = {
