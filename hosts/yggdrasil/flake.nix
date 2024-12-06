@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/f7ad229b11c0717601c7ad070795580ff5196165";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";

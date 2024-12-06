@@ -276,6 +276,7 @@
             type = "zfs_fs";
             mountpoint = "/mnt/vm";
             options = {
+              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "true";
             };
           };
@@ -314,6 +315,7 @@
             type = "zfs_fs";
             mountpoint = "/mnt/backup";
             options = {
+              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
             };
           };
@@ -321,6 +323,7 @@
             type = "zfs_fs";
             mountpoint = "/mnt/compute";
             options = {
+              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
             };
           };
@@ -328,6 +331,7 @@
             type = "zfs_fs";
             mountpoint = "/mnt/media";
             options = {
+              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
             };
           };
