@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, lib, ... }:
+{ pkgs, config, inputs, ... }:
 
 {
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -257,7 +257,7 @@
     curl
     deluge-gtk
     direnv
-    #discord
+    #discord #broken for aarch64
     displaylink
     dnsutils
     element-desktop
@@ -265,7 +265,7 @@
     fd
     fzf
     gcc
-    gimp#-with-plugins
+    gimp#-with-plugins # broken for aarch64
     adwaita-icon-theme
     gnumake
     gnupg
@@ -361,13 +361,13 @@
 
   # Enable emulation for x86
   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-# Steam
-#  programs.steam = {
-#    enable = true;
-#    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-#    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-#    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-#  };
+  # Steam currently not working on aarch64
+  #  programs.steam = {
+  #    enable = true;
+  #    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  #    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  #    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  #  };
 
   system.stateVersion = "24.11";
 
