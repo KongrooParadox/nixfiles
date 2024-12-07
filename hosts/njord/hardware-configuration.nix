@@ -5,7 +5,9 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
+      ../../modules/asahi
     ];
 
   boot.initrd.availableKernelModules = [ "uas" ];
@@ -14,13 +16,6 @@
   boot.extraModulePackages = [ ];
 
   hardware = {
-    asahi = {
-      experimentalGPUInstallMode = "replace";
-      peripheralFirmwareDirectory = ./firmware;
-      useExperimentalGPUDriver = true;
-      withRust = true;
-      setupAsahiSound = true;
-    };
     bluetooth = {
       enable = true;
       powerOnBoot = true;

@@ -1,27 +1,14 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
+
+  imports =
+    [
+      ./hardware-configuration.nix
+    ];
+
   nixpkgs.config.allowUnfree = true;
-  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
 
-  hardware.asahi.extractPeripheralFirmware = false;
-  fileSystems."/" =
-  { device = "/dev/disk/by-uuid/5328e256-31a8-4bce-8d40-87babc7857af";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" =
-  { device = "/dev/disk/by-uuid/83A5-1612";
-    fsType = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
-  };
-
-  swapDevices = [ ];
-
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
     systemd-boot.enable = true;
@@ -31,12 +18,13 @@
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "ops" ];
       auto-optimise-store = true;
     };
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 1m";
+      options = "--delete-older-than 1w";
     };
   };
 
