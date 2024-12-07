@@ -29,8 +29,7 @@
         sops-nix.nixosModules.sops {
           sops = {
             age = {
-              keyFile = "/home/robot/.config/age/key.txt";
-              # sshKeyPaths = [ "/home/robot/.ssh/id_ed25519" ];
+              sshKeyPaths = [ "/home/robot/.ssh/id_ed25519" ];
             };
             defaultSopsFile = ../../secrets/secrets.yaml;
             defaultSopsFormat = "yaml";
