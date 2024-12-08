@@ -41,7 +41,7 @@
       nginx = {
         enable = true;
         recommendedProxySettings = true;
-        virtualHosts."asgard.kongroo.ovh" = {
+        virtualHosts."asgard.tavel.kongroo.ovh" = {
           enableACME = true;
           acmeRoot = null;
           forceSSL = true;
@@ -57,8 +57,8 @@
     };
     security.acme = {
       acceptTerms = true;
-      certs."asgard.kongroo.ovh" = {
-        domain = "*.kongroo.ovh";
+      certs."asgard.tavel.kongroo.ovh" = {
+        domain = "*.tavel.kongroo.ovh";
         dnsProvider = "ovh";
         environmentFile = config.sops.secrets."acme-ovh".path;
       };
