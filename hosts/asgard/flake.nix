@@ -19,10 +19,18 @@
             defaultSopsFile = ../../secrets/secrets.yaml;
             defaultSopsFormat = "yaml";
             secrets."acme-ovh" = {};
+            secrets."tailscale/server-key" = {};
           };
         }
         ../../modules/home-assistant.nix
         ../../modules/dns-server.nix
+        ../../modules/tailscale.nix {
+          tailscale = {
+            enable = true;
+            ssh = true;
+            subnetRouter = true;
+          };
+        }
         ./configuration.nix
         ];
 

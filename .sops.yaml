@@ -1,5 +1,6 @@
 keys:
   - &asgard age1hjtz6r4xzf9cqdzsmvuthxksk48hstcp55kkpm25998j7vmn9yps02xtzy
+  - &heimdall age15cm7dfq97c4ullxlh0tlx8mxfqh5gdlyv5ck7rf9mmwf2v995dvs8lan9r
   - &njord age19t76glewv5zzykd8c6k7v7yaajr48kesdlrdsdf3mcdjpx4tcsmsz80eth
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
@@ -9,6 +10,7 @@ creation_rules:
     key_groups:
       - age:
         - *asgard
+        - *heimdall
         - *njord
         - *robot
         - *spare
