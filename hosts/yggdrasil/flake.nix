@@ -24,6 +24,14 @@
             secrets."zfs-dataset/root.key" = {};
             secrets."zfs-dataset/fast.key" = {};
             secrets."zfs-dataset/rust.key" = {};
+            secrets."tailscale/server-key" = {};
+          };
+        }
+        ../../modules/tailscale.nix {
+          tailscale = {
+            enable = true;
+            ssh = true;
+            subnetRouter = false;
           };
         }
         ./disko.nix

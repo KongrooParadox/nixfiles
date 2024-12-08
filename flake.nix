@@ -33,6 +33,14 @@
             defaultSopsFormat = "yaml";
             secrets."wireguard/casa-anita" = {};
             secrets."wireguard/home" = {};
+            secrets."tailscale/server-key" = {};
+          };
+        }
+        modules/tailscale.nix {
+          tailscale = {
+            enable = true;
+            ssh = true;
+            subnetRouter = false;
           };
         }
         inputs.stylix.nixosModules.stylix
