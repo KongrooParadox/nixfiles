@@ -20,7 +20,7 @@
           customDNS = {
             customTTL = "1h";
             filterUnmappedTypes = true;
-            rewrite."kongroo.ovh" = "skynet.local";
+            rewrite."tavel.kongroo.ovh" = "skynet.local";
             mapping = {
               "tasmota-desk.skynet.local" = "10.10.1.11";
               "tasmota-desk" = "10.10.1.11";

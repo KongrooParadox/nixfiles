@@ -15,7 +15,7 @@
       nginx = {
         enable = true;
         recommendedProxySettings = true;
-        virtualHosts."yggdrasil.kongroo.ovh" = {
+        virtualHosts."yggdrasil.tavel.kongroo.ovh" = {
           enableACME = true;
           acmeRoot = null;
           forceSSL = true;
@@ -23,7 +23,7 @@
             proxy_buffering off;
           '';
           locations."/" = {
-            proxyPass = "http://yggdrasil.kongroo.ovh:2283";
+            proxyPass = "http://yggdrasil.tavel.kongroo.ovh:2283";
             proxyWebsockets = true;
           };
         };
@@ -32,8 +32,8 @@
 
     security.acme = {
       acceptTerms = true;
-      certs."yggdrasil.kongroo.ovh" = {
-        domain = "*.kongroo.ovh";
+      certs."yggdrasil.tavel.kongroo.ovh" = {
+        domain = "*.tavel.kongroo.ovh";
         dnsProvider = "ovh";
         environmentFile = config.sops.secrets."acme-ovh".path;
       };
