@@ -138,7 +138,7 @@ return {
                             expr = "import (builtins.getFlake \"~/nixfiles/\".inputs.nixpkgs { }",
                         },
                         formatting = {
-                            command = { "nixfmt" },
+                            command = { "alejandra" },
                         },
                         options = {
                             nixos = {

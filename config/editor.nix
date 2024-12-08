@@ -26,21 +26,23 @@
   };
 
   home.packages = with pkgs; [
+    alejandra
     ansible-language-server
     bash-language-server
     docker-compose-language-service
     dockerfile-language-server-nodejs
-    vscode-langservers-extracted
     gopls
     helm-ls
     lua-language-server
     nixd
+    nixfmt-rfc-style
     nixpkgs-fmt
+    python312Packages.python-lsp-server
     rust-analyzer
     terraform-ls
     typescript-language-server
+    vscode-langservers-extracted
     yaml-language-server
-    python312Packages.python-lsp-server
   ];
 
   programs = {
