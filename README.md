@@ -10,10 +10,10 @@ Currently managed configs :
 - M1 Mac mini hypervisor (libvirt) = heimdall
 - NixOS qemu VM templates with cloud-init (only for initial setup)
 
-## Rebuild asgard config
+## Rebuild baldur config
 
 ```shell
-nixos-rebuild switch --flake .#asgard --use-remote-sudo
+nixos-rebuild switch --flake .#baldur --use-remote-sudo
 ```
 
 ## Rebuild njord config
@@ -37,7 +37,7 @@ TARGET="asgard";NIX_SSHOPTS="-t" nixos-rebuild switch --flake ./hosts/$TARGET#$T
 ## Deploying config to NAS
 
 ```shell
-TARGET="yggdrasil";NIX_SSHOPTS="-t" nixos-rebuild switch --flake ./hosts/$TARGET#$TARGET --build-host ops@$TARGET --target-host ops@$TARGET --use-remote-sudo
+TARGET="yggdrasil";NIX_SSHOPTS="-t -T" nixos-rebuild switch --flake ./hosts/$TARGET#$TARGET --build-host ops@$TARGET --target-host ops@$TARGET --use-remote-sudoo
 ```
 
 ## Building VM template images
