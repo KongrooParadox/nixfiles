@@ -1,6 +1,4 @@
 {
-  # imports = [];
-  #
   config = {
     networking = {
       firewall = {
@@ -8,7 +6,6 @@
         allowedUDPPorts = [ 53 ];
       };
     };
-
     services = {
       blocky = {
         enable = true;
@@ -61,7 +58,6 @@
       unbound = {
         enable = true;
         resolveLocalQueries = false;
-
         settings = {
           server = {
             interface = "127.0.0.1@5353";
@@ -71,6 +67,5 @@
         };
       };
     };
-
   };
 }
