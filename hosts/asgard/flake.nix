@@ -27,6 +27,7 @@
         ../../modules/tailscale.nix {
           tailscale = {
             enable = true;
+            exitNode = false;
             ssh = true;
             subnetRouter = true;
           };
