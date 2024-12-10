@@ -129,20 +129,28 @@ return {
                 }
             }
             lspconfig.gopls.setup{}
+            local nixpkgs_expr
+            local nixos_expr
+            if vim.fn.hostname == "baldur" then
+                nixpkgs_expr = 'import (builtins.getFlake \"~/nixfiles/\".inputs.nixpkgs { }'
+                nixos_expr = '(builtins.getFlake \"~/nixfiles\".nixosConfigurations.baldur.options'
+            elseif vim.fn.hostname == "njord" then
+                nixpkgs_expr = 'import (builtins.getFlake \"~/nixfiles/hosts/njord\".inputs.nixpkgs { }'
+                nixos_expr = '(builtins.getFlake \"~/nixfiles/hosts/njord\".nixosConfigurations.njord.options'
+            end
             lspconfig.nixd.setup({
                 cmd = { "nixd" },
                 settings = {
                     nixd = {
                         nixpkgs = {
-                            -- expr = "import <nixpkgs> { }",
-                            expr = "import (builtins.getFlake \"~/nixfiles/\".inputs.nixpkgs { }",
+                            expr = nixpkgs_expr,
                         },
                         formatting = {
                             command = { "alejandra" },
                         },
                         options = {
                             nixos = {
-                                expr = '(builtins.getFlake \"~/nixfiles/\".nixosConfigurations.baldur.options',
+                                expr = nixos_expr,
                             },
                         },
                     },
