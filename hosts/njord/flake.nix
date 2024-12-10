@@ -47,6 +47,18 @@
         }
         inputs.stylix.nixosModules.stylix
         home-manager.nixosModules.home-manager {
+          home-manager.sharedModules = [
+            sops-nix.homeManagerModules.sops {
+              sops = {
+                age = {
+                  sshKeyPaths = [ "/home/robot/.ssh/id_ed25519" ];
+                };
+                defaultSopsFile = ../../secrets/secrets.yaml;
+                defaultSopsFormat = "yaml";
+                secrets."anthropic-api-key" = {};
+              };
+            }
+          ];
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;

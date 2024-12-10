@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, ... }:
 {
   programs = {
     alacritty = {
@@ -116,6 +116,7 @@
         complete -F __start_kubectl k
         complete -o nospace -C $(which terraform) terraform
         path+=('/home/robot/go/bin')
+        export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
         '';
     };
   };
