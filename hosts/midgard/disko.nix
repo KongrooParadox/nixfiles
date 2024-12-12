@@ -1,9 +1,9 @@
 {
   disko.devices = {
     disk = {
-      boot-1 = {
+      boot = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:00:14.0-usbv3-0:2:1.0-scsi-0:0:0:0";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-nvme-1";
         content = {
           type = "gpt";
           partitions = {
@@ -27,35 +27,9 @@
           };
         };
       };
-      boot-2 = {
-        type = "disk";
-        device = "/dev/disk/by-path/pci-0000:00:14.0-usbv2-0:3:1.0-scsi-0:0:0:0";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              size = "1G";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot-fallback";
-                mountOptions = [ "umask=0077" ];
-              };
-            };
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "root";
-              };
-            };
-          };
-        };
-      };
       hdd-1 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:00:17.0-ata-2";
+        device = "/dev/disk/by-path/pci-0000:00:17.0-ata-5";
         content = {
           type = "gpt";
           partitions = {
@@ -71,7 +45,7 @@
       };
       hdd-2 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-1";
+        device = "/dev/disk/by-path/pci-0000:00:17.0-ata-6";
         content = {
           type = "gpt";
           partitions = {
@@ -87,7 +61,7 @@
       };
       hdd-3 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-2";
+        device = "/dev/disk/by-path/pci-0000:00:17.0-ata-7";
         content = {
           type = "gpt";
           partitions = {
@@ -101,10 +75,9 @@
           };
         };
       };
-      # 128 Go SSD for L2ARC Cache
-      cache = {
+      hdd-4 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-3";
+        device = "/dev/disk/by-path/pci-0000:00:17.0-ata-8";
         content = {
           type = "gpt";
           partitions = {
@@ -113,38 +86,6 @@
               content = {
                 type = "zfs";
                 pool = "rust";
-              };
-            };
-          };
-        };
-      };
-      ssd-1 = {
-        type = "disk";
-        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-4";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "fast";
-              };
-            };
-          };
-        };
-      };
-      ssd-2 = {
-        type = "disk";
-        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-5";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "fast";
               };
             };
           };
@@ -152,7 +93,7 @@
       };
       log-1 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:01:00.0-nvme-1";
+        device = "/dev/disk/by-path/pci-0000:05:00.0-ata-1";
         content = {
           type = "gpt";
           partitions = {
@@ -168,7 +109,7 @@
       };
       log-2 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:03:00.0-nvme-1";
+        device = "/dev/disk/by-path/pci-0000:05:00.0-ata-2";
         content = {
           type = "gpt";
           partitions = {
@@ -200,7 +141,7 @@
             vdev = [
               {
                 mode = "mirror";
-                members = [ "boot-1" "boot-2" ];
+                members = [ "boot" ];
               }
             ];
           };
@@ -244,44 +185,6 @@
           };
         };
       };
-      fast = {
-        type = "zpool";
-        mode = {
-          topology = {
-            type = "topology";
-            vdev = [
-              {
-                mode = "mirror";
-                members = [ "ssd-1" "ssd-2" ];
-              }
-            ];
-          };
-        };
-        options = {
-          ashift = "9";
-          cachefile = "none";
-        };
-
-        datasets = {
-          "fast" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "file:///run/secrets/zfs-dataset/yggdrasil/fast.key";
-            };
-          };
-          "fast/vm" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/vm";
-            options = {
-              mountpoint = "legacy";
-              "com.sun:auto-snapshot" = "true";
-            };
-          };
-        };
-      };
       rust = {
         type = "zpool";
         mode = {
@@ -290,10 +193,9 @@
             vdev = [
               {
                 mode = "raidz1";
-                members = [ "hdd-1" "hdd-2" "hdd-3" ];
+                members = [ "hdd-1" "hdd-2" "hdd-3" "hdd-4" ];
               }
             ];
-            cache = [ "cache" ];
             log = [
               {
                 mode = "mirror";
@@ -314,7 +216,7 @@
               mountpoint = "none";
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "file:///run/secrets/zfs-dataset/yggdrasil/rust.key";
+              keylocation = "file:///run/secrets/zfs-dataset/midgard/rust.key";
             };
           };
           "data/backup" = {
