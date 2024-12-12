@@ -21,9 +21,8 @@
             defaultSopsFile = ../../secrets/secrets.yaml;
             defaultSopsFormat = "yaml";
             secrets."acme-ovh" = {};
-            secrets."zfs-dataset/yggdrasil/root.key" = {};
-            secrets."zfs-dataset/yggdrasil/fast.key" = {};
-            secrets."zfs-dataset/yggdrasil/rust.key" = {};
+            secrets."zfs-dataset/midgard/root.key" = {};
+            secrets."zfs-dataset/midgard/rust.key" = {};
             secrets."tailscale/server-key" = {};
           };
         }
@@ -35,7 +34,13 @@
           };
         }
         ./disko.nix
-        ../../modules/immich.nix
+        ../../modules/immich.nix {
+          immich = {
+            enable = true;
+            hostname = "photos";
+            domain = "pernes.kongroo.ovh";
+          };
+        }
       ];
     };
   };
