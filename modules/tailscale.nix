@@ -36,6 +36,7 @@
       extraSetFlags = lib.optional config.tailscale.exitNode "--advertise-exit-node";
       extraUpFlags =
         (lib.optional config.tailscale.ssh "--ssh") ++
+        ["--accept-routes"] ++
         (lib.optional config.tailscale.subnetRouter "--advertise-routes=${builtins.concatStringsSep","config.tailscale.advertisedRoutes}");
       openFirewall = lib.mkDefault true;
       useRoutingFeatures = lib.mkDefault "both";
