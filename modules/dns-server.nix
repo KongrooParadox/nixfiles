@@ -1,4 +1,37 @@
+{ config, lib, ... }:
+
+let
+  cfg = config.dns-server;
+in
 {
+  options.dns-server = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = lib.mdDoc "Whether to enable DNS server.";
+    };
+
+    publicDomain = lib.mkOption {
+      type = lib.types.str;
+      default = "example.com";
+      description = lib.mdDoc "Public domain to rewrite";
+    };
+
+    localDomain = lib.mkOption {
+      type = lib.types.str;
+      default = "local";
+      description = lib.mdDoc "Local domain (destination of url rewrite)";
+    };
+
+    mapping = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = {
+        };
+      description = "Local dns A entries";
+    };
+
+  };
+
   config = {
     networking = {
       firewall = {
@@ -17,33 +50,8 @@
           customDNS = {
             customTTL = "1h";
             filterUnmappedTypes = true;
-            rewrite."tavel.kongroo.ovh" = "skynet.local";
-            mapping = {
-              "tasmota-desk.skynet.local" = "10.10.111.28";
-              "tasmota-desk" = "10.10.111.28";
-              "tasmota-window.skynet.local" = "10.10.111.29";
-              "tasmota-window" = "10.10.111.29";
-              "tasmota-nas.skynet.local" = "10.10.111.27";
-              "tasmota-nas" = "10.10.111.27";
-              "tasmota-tv.skynet.local" = "10.10.111.14";
-              "tasmota-tv" = "10.10.111.14";
-              "njord.skynet.local" = "10.10.111.26,10.10.111.31";
-              "njord" = "10.10.111.26,10.10.111.31";
-              "baldur.skynet.local" = "10.10.111.20,10.10.111.21,2a01:cb1d:824f:1000:7f0b:431c:2066:a6ce";
-              "baldur" = "10.10.111.20,10.10.111.21,2a01:cb1d:824f:1000:7f0b:431c:2066:a6ce";
-              "asgard.skynet.local" = "10.10.111.100,2a01:cb1d:824f:1000:44a0:293a:69fa:1c5f";
-              "asgard" = "10.10.111.100,2a01:cb1d:824f:1000:44a0:293a:69fa:1c5f";
-              "yggdrasil.skynet.local" = "10.10.111.101,2a01:cb1d:824f:1000:24d1:69f:4b2c:78b9";
-              "yggdrasil" = "10.10.111.101,2a01:cb1d:824f:1000:24d1:69f:4b2c:78b9";
-              "heimdall.skynet.local" = "10.10.111.102";
-              "heimdall" = "10.10.111.102";
-              "kronos.skynet.local" = "10.10.111.103";
-              "kronos" = "10.10.111.103";
-              "thor.skynet.local" = "10.10.111.104";
-              "thor" = "10.10.111.104";
-              "livebox.skynet.local" = "10.10.111.254";
-              "livebox" = "10.10.111.254";
-            };
+            rewrite.${cfg.publicDomain} = cfg.localDomain;
+            mapping = cfg.mapping;
           };
           blocking = {
             blackLists = {

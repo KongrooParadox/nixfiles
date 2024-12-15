@@ -5,6 +5,7 @@ keys:
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
   - &yggdrasil age106vxxflmfcfazjsvcepgulvft4saq26krft0qfa04mlwh3dcjamqrm7pvf
+  - &vili age104q6tnfc63532y8e820sgn9an4zuwcxmpje6wzkca5pvgfyxd5jq94fpns
 creation_rules:
   - path_regex: secrets/.*\.(yaml|json)$
     key_groups:
@@ -15,3 +16,4 @@ creation_rules:
         - *robot
         - *spare
         - *yggdrasil
+        - *vili
