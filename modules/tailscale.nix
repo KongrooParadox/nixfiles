@@ -3,6 +3,12 @@
     tailscale = {
       enable = lib.mkEnableOption "Enable Tailscale VPN service";
 
+      acceptRoutes = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Whether this node should accept DNS routes from the tailnet";
+      };
+
       exitNode = lib.mkOption {
         type = lib.types.bool;
         default = false;
@@ -23,7 +29,7 @@
 
       advertisedRoutes = lib.mkOption {
         type = lib.types.listOf lib.types.str;
-        default = [ "10.10.111.0/24" ];
+        default = [];
         description = "List of subnets to advertise when acting as a subnet router";
       };
     };
@@ -36,7 +42,7 @@
       extraSetFlags = lib.optional config.tailscale.exitNode "--advertise-exit-node";
       extraUpFlags =
         (lib.optional config.tailscale.ssh "--ssh") ++
-        ["--accept-routes"] ++
+        (lib.optional config.tailscale.acceptRoutes "--accept-routes") ++
         (lib.optional config.tailscale.subnetRouter "--advertise-routes=${builtins.concatStringsSep","config.tailscale.advertisedRoutes}");
       openFirewall = lib.mkDefault true;
       useRoutingFeatures = lib.mkDefault "both";
