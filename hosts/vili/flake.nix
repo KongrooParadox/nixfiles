@@ -44,6 +44,7 @@
         ../../modules/tailscale.nix {
           tailscale = {
             enable = true;
+            acceptRoutes = true;
             advertisedRoutes = [ "192.168.1.0/24" ];
             exitNode = false;
             ssh = true;

@@ -8,7 +8,7 @@
           type = "gpt";
           partitions = {
             ESP = {
-              size = "1G";
+              size = "5G";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -128,24 +128,23 @@
       root = {
         type = "zpool";
         rootFsOptions = {
-          # https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS
           acltype = "posixacl";
           atime = "off";
           compression = "zstd";
           mountpoint = "none";
           xattr = "sa";
         };
-        mode = {
-          topology = {
-            type = "topology";
-            vdev = [
-              {
-                mode = "mirror";
-                members = [ "boot" ];
-              }
-            ];
-          };
-        };
+        # mode = {
+        #   topology = {
+        #     type = "topology";
+        #     vdev = [
+        #       {
+        #         mode = "mirror";
+        #         members = [ "boot" ];
+        #       }
+        #     ];
+        #   };
+        # };
         options = {
           ashift = "12";
           cachefile = "none";
@@ -192,7 +191,7 @@
             type = "topology";
             vdev = [
               {
-                mode = "raidz1";
+                mode = "raidz2";
                 members = [ "hdd-1" "hdd-2" "hdd-3" "hdd-4" ];
               }
             ];

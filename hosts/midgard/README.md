@@ -9,11 +9,9 @@ ssh-copy-id root@midgard
 
 Copy zfs dataset secrets to midgard
 ```shell
-sops --decrypt --extract "['zfs-dataset']['root.key']" secrets/secrets.yaml > root.key
-sops --decrypt --extract "['zfs-dataset']['fast.key']" secrets/secrets.yaml > fast.key
-sops --decrypt --extract "['zfs-dataset']['rust.key']" secrets/secrets.yaml > rust.key
-ssh root@midgard 'mkdir -p /run/secrets/zfs-dataset/'
-scp *.key root@midgard:/run/secrets/zfs-dataset/
+sops --decrypt --extract "['zfs-dataset']['midgard']['rust.key']" secrets/secrets.yaml > rust.key
+ssh root@midgard 'mkdir -p /run/secrets/zfs-dataset/midgard/'
+scp *.key root@midgard:/run/secrets/zfs-dataset/midgard/
 rm *.key
 ```
 
