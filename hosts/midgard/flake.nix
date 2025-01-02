@@ -8,11 +8,12 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
   outputs = inputs@{ self, sops-nix, nixpkgs, ... }: {
-    nixosConfigurations.yggdrasil = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.midgard = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
         inputs.disko.nixosModules.disko
+        ./hardware-configuration.nix
         sops-nix.nixosModules.sops {
           sops = {
             age = {
@@ -20,6 +21,7 @@
             };
             defaultSopsFile = ../../secrets/secrets.yaml;
             defaultSopsFormat = "yaml";
+            validateSopsFiles = false;
             secrets."acme-ovh" = {};
             secrets."zfs-dataset/midgard/root.key" = {};
             secrets."zfs-dataset/midgard/rust.key" = {};
@@ -30,15 +32,15 @@
           tailscale = {
             enable = true;
             ssh = true;
-            subnetRouter = false;
+            subnetRouter = true;
           };
         }
         ./disko.nix
         ../../modules/immich.nix {
           immich = {
             enable = true;
-            hostname = "photos";
-            domain = "pernes.kongroo.ovh";
+            hostname = "midgard.pernes.kongroo.ovh";
+            acme.domain = "pernes.kongroo.ovh";
           };
         }
       ];

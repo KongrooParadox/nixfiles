@@ -1,27 +1,9 @@
-{ lib, pkgs, ... }:
-
-{
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+{ lib, pkgs, ... }: {
 
   boot = {
     loader = {
-      grub = {
+      systemd-boot = {
         enable = true;
-        efiSupport = true;
-        device = "nodev";
-        mirroredBoots = [
-          {
-            devices = [ "/dev/disk/by-path/pci-0000:00:14.0-usb-0:2:1.0-scsi-0:0:0:0-part1" ];
-            path = "/boot";
-          }
-          {
-            devices = [ "/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1" ];
-            path = "/boot-fallback";
-          }
-        ];
       };
       efi.canTouchEfiVariables = true;
     };
@@ -31,16 +13,25 @@
     '';
     supportedFilesystems = [ "zfs" ];
     zfs = {
-      # forceImportAll = true;
-      # forceImportRoot = true;
+      forceImportAll = true;
+      forceImportRoot = true;
       devNodes = "/dev/disk/by-path";
     };
   };
 
   networking = {
-    hostId = "8bd9a73c";
-    hostName = "yggdrasil";
+    hostId = "c9e13eac";
+    hostName = "midgard";
     networkmanager.enable = true;
+    firewall = {
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 80 443 ];
+        };
+      };
+      # Make sure checkReversePath is disabled for subnet routing
+      checkReversePath = lib.mkForce false;
+    };
   };
 
   powerManagement = {
@@ -51,6 +42,10 @@
   time.timeZone = "Europe/Paris";
 
   security.sudo.wheelNeedsPassword = false;
+
+  users.users.root = {
+    openssh.authorizedKeys.keys = (import ../../modules/ssh.nix).keys;
+  };
 
   users.users.ops = {
     isNormalUser = true;
@@ -95,7 +90,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 1m";
+      options = "--delete-older-than 1w";
     };
     settings = {
       trusted-users = [ "root" "ops" ];
@@ -110,18 +105,12 @@
     environment = {
       systemPackages = with pkgs; [
         git
-        # hddtemp # monitor hdd temp during burn in
-        # ksh # required for burn in script bht
-        # lsscsi # required for burn in script bht
-        # lvm2 # required for burn in script bht
-        # mailutils # required for burn in script bht
-        # smartmontools # required for burn in script bht
-        # sysstat # required for burn in script bht
+        curl
         tmux
         tree
         vim
       ];
     };
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }

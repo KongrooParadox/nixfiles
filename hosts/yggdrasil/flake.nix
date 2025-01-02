@@ -35,7 +35,13 @@
           };
         }
         ./disko.nix
-        ../../modules/immich.nix
+        ../../modules/immich.nix {
+          immich = {
+            enable = true;
+            hostname = "yggdrasil.tavel.kongroo.ovh";
+            acme.domain = "tavel.kongroo.ovh";
+          };
+        }
       ];
     };
   };
