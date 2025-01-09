@@ -34,14 +34,25 @@
       # forceImportAll = true;
       # forceImportRoot = true;
       devNodes = "/dev/disk/by-path";
+      # extraPools = [ "rust" "fast" ];
     };
   };
 
   networking = {
     hostId = "8bd9a73c";
     hostName = "yggdrasil";
-    networkmanager.enable = true;
+    useDHCP = false;
+    networkmanager.enable = false;
   };
+
+systemd.network = {
+  enable = true;
+  networks."70-enp7s0" = {
+    matchConfig.Name = "enp7s0";
+    networkConfig.DHCP = "yes";
+    linkConfig.RequiredForOnline = "yes";
+  };
+};
 
   powerManagement = {
     enable = true;
@@ -54,14 +65,9 @@
 
   users.users.ops = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" ];
     initialHashedPassword = "$y$j9T$hPF6s6mTZ/zrhpR53hLG/0$gYqOtNdDwJxrxn3uMEHULC3zwera8885UbzAnjymBQ3";
     openssh.authorizedKeys.keys = (import ../../modules/ssh.nix).keys;
-  };
-
-  # Impermanence state
-  environment.etc."NetworkManager/system-connections" = {
-    source = "/persist/etc/NetworkManager/system-connections/";
   };
 
   hardware.graphics = {
