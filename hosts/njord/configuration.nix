@@ -290,7 +290,6 @@
     vlc
     wget
     wireguard-tools
-    xboxdrv
     xorg.xrandr
     xournalpp
     yad
