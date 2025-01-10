@@ -36,9 +36,10 @@
             secrets."tailscale/server-key" = {};
           };
         }
-        modules/tailscale.nix {
+        ./modules/tailscale.nix {
           tailscale = {
             enable = true;
+            acceptRoutes = true;
             ssh = true;
             subnetRouter = false;
           };
