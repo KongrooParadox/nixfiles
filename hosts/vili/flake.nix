@@ -1,5 +1,5 @@
 {
-  description = "DNS servers & Home assistant instance for Pernes";
+  description = "DNS server & Home assistant instance for Pernes";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
