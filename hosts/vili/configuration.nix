@@ -1,4 +1,4 @@
-{ lib, ...}:
+{ lib, pkgs, ...}:
 {
   nixpkgs.hostPlatform = "aarch64-linux";
 
@@ -53,7 +53,18 @@
     hostName = "vili";
   };
 
-  systemd.network.enable = true;
+  systemd.services.ethtool-config = {
+    description = "Configure ethtool UDP GRO forwarding";
+    after = [ "NetworkManager.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = ''
+        ${pkgs.ethtool}/bin/ethtool -K enp0s3 rx-udp-gro-forwarding on rx-gro-list off
+      '';
+    };
+  };
 
   nix = {
     settings = {
