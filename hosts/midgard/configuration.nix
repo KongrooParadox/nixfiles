@@ -19,18 +19,20 @@
     };
   };
 
+
   networking = {
     hostId = "c9e13eac";
     hostName = "midgard";
-    networkmanager.enable = true;
-    firewall = {
-      interfaces = {
-        "tailscale0" = {
-          allowedTCPPorts = [ 80 443 ];
-        };
-      };
-      # Make sure checkReversePath is disabled for subnet routing
-      checkReversePath = lib.mkForce false;
+    useDHCP = false;
+    networkmanager.enable = false;
+  };
+
+  systemd.network = {
+    enable = true;
+    networks."40-enp4s0" = {
+      matchConfig.Name = "enp4s0";
+      networkConfig.DHCP = "yes";
+      linkConfig.RequiredForOnline = "yes";
     };
   };
 
@@ -49,14 +51,9 @@
 
   users.users.ops = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" ];
     initialHashedPassword = "$y$j9T$hPF6s6mTZ/zrhpR53hLG/0$gYqOtNdDwJxrxn3uMEHULC3zwera8885UbzAnjymBQ3";
     openssh.authorizedKeys.keys = (import ../../modules/ssh.nix).keys;
-  };
-
-  # Impermanence state
-  environment.etc."NetworkManager/system-connections" = {
-    source = "/persist/etc/NetworkManager/system-connections/";
   };
 
   hardware.graphics = {
@@ -104,8 +101,10 @@
 
     environment = {
       systemPackages = with pkgs; [
-        git
         curl
+        dig
+        git
+        jq
         tmux
         tree
         vim

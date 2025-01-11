@@ -39,7 +39,7 @@
         ./modules/tailscale.nix {
           tailscale = {
             enable = true;
-            acceptRoutes = true;
+            acceptRoutes = false;
             ssh = true;
             subnetRouter = false;
           };
