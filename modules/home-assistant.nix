@@ -13,64 +13,32 @@ in
 
     hostname = lib.mkOption {
       type = lib.types.str;
-      default = "asgard.tavel.kongroo.ovh";
+      example = "my-server.example.org";
       description = lib.mdDoc ''
         Hostname for the HA instance.
-        This will be used for NGINX virtual host configuration.
+        This will be used as the base url for NGINX reverse proxy.
       '';
     };
 
-    acme = {
-      enable = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = lib.mdDoc "Whether to enable ACME SSL certificate management.";
-      };
-
-      email = lib.mkOption {
-        type = lib.types.str;
-        default = "acme@kongroo.anonaddy.com";
-        description = lib.mdDoc "Email address for ACME registration and notifications.";
-      };
-
-      environmentFile  = lib.mkOption {
-        type = lib.types.str;
-        default = config.sops.secrets."acme-ovh".path;
-        description = lib.mdDoc "Credentials for DNS provider";
-      };
-
-      dnsProvider = lib.mkOption {
-        type = lib.types.str;
-        default = "ovh";
-        description = lib.mdDoc "DNS provider for ACME DNS-01 challenge.";
-      };
-
-      # OVH-specific options
-      useWildcardDomain = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = lib.mdDoc "Whether to use wildcard domain for OVH (*.domain.tld).";
-      };
-
-      domain = lib.mkOption {
-        type = lib.types.str;
-        default = "tavel.kongroo.ovh";
-        description = lib.mdDoc "Base domain for the certificate. If useWildcardDomain is true, will use *.domain.";
-      };
-    };
-
-    nginx = {
-      enable = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = lib.mdDoc ''
-          Whether to configure and enable nginx as a reverse proxy for HA.
+    subdomain = lib.mkOption {
+      type = lib.types.str;
+      default = "home-assistant";
+      description = lib.mdDoc ''
+        Subdomain name for the HA instance.
+        This will be used as the subdomain of NGINX reverse proxy
         '';
-      };
     };
   };
 
   config = {
+    reverseProxy = {
+      hostname = cfg.hostname;
+      services.home-assistant = {
+        port = 8123;
+        subdomain = cfg.subdomain;
+        allowTailscale = true;
+      };
+    };
     services = {
       mosquitto = {
         enable = true;
@@ -105,38 +73,10 @@ in
           mqtt = {};
         };
       };
-      nginx = {
-        enable = cfg.nginx.enable;
-        recommendedProxySettings = true;
-        virtualHosts.${cfg.hostname} = {
-          enableACME = cfg.acme.enable;
-          acmeRoot = null;
-          forceSSL = true;
-          extraConfig = ''
-            proxy_buffering off;
-          '';
-          locations."/" = {
-            proxyPass = "http://[::1]:8123";
-            proxyWebsockets = true;
-          };
-        };
-      };
     };
-      security.acme = {
-        acceptTerms = true;
-        defaults.email = cfg.acme.email;
-
-        certs.${cfg.hostname} = {
-          domain = if cfg.acme.useWildcardDomain
-            then "*.${cfg.acme.domain}"
-            else cfg.hostname;
-          dnsProvider = cfg.acme.dnsProvider;
-          environmentFile = cfg.acme.environmentFile;
-        };
-      };
     security.sudo.wheelNeedsPassword = false;
     networking = {
-      firewall.allowedTCPPorts = [ 443 1883 22 ];
+      firewall.allowedTCPPorts = [ 1883 ];
     };
 
   };

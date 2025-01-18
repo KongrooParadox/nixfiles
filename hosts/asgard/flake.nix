@@ -22,11 +22,11 @@
             secrets."tailscale/server-key" = {};
           };
         }
+        ../../modules/reverseProxy.nix
         ../../modules/home-assistant.nix {
           home-assistant = {
             enable = true;
             hostname = "asgard.tavel.kongroo.ovh";
-            acme.domain = "tavel.kongroo.ovh";
           };
         }
         ../../modules/dns-server.nix {
