@@ -36,7 +36,6 @@ in
       services.home-assistant = {
         port = 8123;
         subdomain = cfg.subdomain;
-        allowTailscale = true;
       };
     };
     services = {
