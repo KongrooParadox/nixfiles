@@ -42,6 +42,12 @@
             hostname = "yggdrasil.tavel.kongroo.ovh";
           };
         }
+        ../../modules/arr.nix {
+          arr = {
+            enable = true;
+            hostname = "yggdrasil.tavel.kongroo.ovh";
+          };
+        }
       ];
     };
   };
