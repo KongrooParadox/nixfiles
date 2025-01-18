@@ -78,7 +78,6 @@ in
       services.immich = {
         port = config.services.immich.port;
         subdomain = cfg.subdomain;
-        allowTailscale = true;
       };
     };
 

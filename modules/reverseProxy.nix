@@ -13,12 +13,13 @@ let
 
       subdomain = lib.mkOption {
         type = lib.types.str;
+        default = name;
         description = lib.mdDoc "Subdomain for the service (e.g. 'photos' for photos.example.com)";
       };
 
       allowTailscale = lib.mkOption {
         type = lib.types.bool;
-        default = false;
+        default = true;
         description = lib.mdDoc "Whether to allow Tailscale network access";
       };
     };
