@@ -44,6 +44,7 @@
   home.packages = with pkgs; [
     ansible
     ansible-lint
+    brightnessctl
     cargo
     cliphist
     filezilla

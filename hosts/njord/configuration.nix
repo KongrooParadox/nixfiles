@@ -201,7 +201,9 @@
   };
 
   environment = {
-    sessionVariables.WLR_DRM_DEVICES = "/dev/dri/card0";
+    sessionVariables = {
+      AQ_DRM_DEVICES = "/dev/dri/card0";
+    };
     variables = {
       LANG = "en_GB.UTF-8";
       LC_ALL = "en_GB.UTF-8";
