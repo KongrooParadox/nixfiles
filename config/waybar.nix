@@ -17,20 +17,20 @@ with lib;
         modules-center = [ "hyprland/workspaces" ];
         modules-left = [
           "custom/startmenu"
+          "backlight"
+          # "backlight#2"
           "pulseaudio"
           "cpu"
           "memory"
-          # "disk"
-          # "idle_inhibitor"
           "hyprland/window"
         ];
         modules-right = [
-          "custom/spotify"
+          # "custom/spotify"
           "custom/hyprbindings"
           "custom/notification"
           "custom/exit"
           "battery"
-          # "network"
+          "network"
           "tray"
           "clock"
         ];
@@ -142,6 +142,23 @@ with lib;
           format = "";
           on-click = "sleep 0.1 && rofi-launcher";
         };
+        "backlight" = {
+          tooltip = false;
+          format = "{percent}% {icon}";
+          format-icons = ["" ""];
+          on-click = "brightnessctl s 1%+";
+          on-click-right = "brightnessctl s 1%-";
+          };
+        # Waybar module doesn't support kbd_backlight :
+        # https://github.com/Alexays/Waybar/issues/2848
+        # "backlight#2" = {
+        #   device = "kbd_backlight";
+        #   tooltip = false;
+        #   format = "{percent}% {icon}";
+        #   format-icons = [""];
+        #   on-click = "brightnessctl s 1%+";
+        #   on-click-right = "brightnessctl s 1%-";
+        #   };
         "custom/hyprbindings" = {
           tooltip = false;
           format = "󱕴";
@@ -261,7 +278,7 @@ with lib;
         tooltip label {
           color: #${config.stylix.base16Scheme.base08};
         }
-        #window, #pulseaudio, #cpu, #memory, #disk, #idle_inhibitor {
+        #window, #backlight, #pulseaudio, #cpu, #memory, #disk, #idle_inhibitor {
           font-weight: bold;
           margin: 4px 0px;
           margin-left: 7px;
