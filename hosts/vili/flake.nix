@@ -23,11 +23,11 @@
             secrets."tailscale/server-key" = {};
           };
         }
+        ../../modules/reverseProxy.nix
         ../../modules/home-assistant.nix {
           home-assistant = {
             enable = true;
             hostname = "vili.pernes.kongroo.ovh";
-            acme.domain = "pernes.kongroo.ovh";
           };
         }
         ../../modules/dns-server.nix {

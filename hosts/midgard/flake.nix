@@ -38,11 +38,11 @@
           };
         }
         ./disko.nix
+        ../../modules/reverseProxy.nix
         ../../modules/immich.nix {
           immich = {
             enable = true;
             hostname = "midgard.pernes.kongroo.ovh";
-            acme.domain = "pernes.kongroo.ovh";
           };
         }
       ];
