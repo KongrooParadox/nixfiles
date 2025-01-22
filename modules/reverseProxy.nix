@@ -75,6 +75,7 @@ in
     services.nginx = {
       enable = true;
       recommendedProxySettings = true;
+      clientMaxBodySize = "0"; # Allow large file uploads
 
       # Create virtual host for each service subdomain
       virtualHosts = lib.mapAttrs' (name: service: lib.nameValuePair
