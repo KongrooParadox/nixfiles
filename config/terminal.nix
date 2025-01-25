@@ -20,6 +20,7 @@
       enable = true;
       enableZshIntegration = true;
       enableBashIntegration = true;
+      nix-direnv.enable = true;
     };
     starship = {
       enable = true;
