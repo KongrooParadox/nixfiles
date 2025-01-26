@@ -2,7 +2,8 @@
   description = "flake for njord : m2 laptop";
 
   inputs = {
-    apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    # apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/kernel-6.12.10-2";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
