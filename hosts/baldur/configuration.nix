@@ -199,7 +199,7 @@
     packages = with pkgs; [
       font-awesome
       twitter-color-emoji
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      nerd-fonts.fira-code
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
@@ -297,7 +297,6 @@
     vlc
     wget
     wireguard-tools
-    xboxdrv
     xorg.xrandr
     xournalpp
     yad
