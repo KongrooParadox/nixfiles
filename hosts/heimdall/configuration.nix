@@ -84,6 +84,16 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.apcupsd = {
+    enable = true;
+    configText = ''
+      UPSTYPE usb
+      NISIP 0.0.0.0
+      BATTERYLEVEL 30
+      MINUTES 3
+    '';
+  };
+
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
