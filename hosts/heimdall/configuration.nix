@@ -29,10 +29,13 @@
   };
 
   networking = {
-    firewall.trustedInterfaces = [
-      "wlan0"
-      "br0"
-    ];
+    firewall = {
+        trustedInterfaces = [
+        "wlan0"
+        "br0"
+      ];
+      allowedTCPPorts = [ 3551 ];
+    };
     hostName = "heimdall";
     networkmanager.enable = true;
     useDHCP = false;
