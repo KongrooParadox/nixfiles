@@ -113,21 +113,21 @@
     };
   };
 
-    environment = {
-      systemPackages = with pkgs; [
-        git
-        # hddtemp # monitor hdd temp during burn in
-        # ksh # required for burn in script bht
-        # lsscsi # required for burn in script bht
-        # lvm2 # required for burn in script bht
-        # mailutils # required for burn in script bht
-        # smartmontools # required for burn in script bht
-        # sysstat # required for burn in script bht
-        tmux
-        tree
-        vim
-      ];
-    };
+  environment = {
+    systemPackages = with pkgs; [
+      git
+      # hddtemp # monitor hdd temp during burn in
+      # ksh # required for burn in script bht
+      # lsscsi # required for burn in script bht
+      # lvm2 # required for burn in script bht
+      # mailutils # required for burn in script bht
+      # smartmontools # required for burn in script bht
+      # sysstat # required for burn in script bht
+      tmux
+      tree
+      vim
+    ];
+  };
 
   system.stateVersion = "24.05";
 }
