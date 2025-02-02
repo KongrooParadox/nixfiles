@@ -101,11 +101,6 @@
       '';
     };
 
-    pam.services.swaylock = {
-      text = ''
-        auth include login
-      '';
-    };
   };
 
   xdg.portal = {

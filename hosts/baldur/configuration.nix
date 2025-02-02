@@ -96,11 +96,6 @@
       '';
     };
 
-    pam.services.swaylock = {
-      text = ''
-        auth include login
-      '';
-    };
   };
 
   hardware.graphics.enable = true;
