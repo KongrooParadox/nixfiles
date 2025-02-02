@@ -48,6 +48,7 @@
             hostname = "yggdrasil.tavel.kongroo.ovh";
           };
         }
+        ../../modules/storage.nix
       ];
     };
   };
