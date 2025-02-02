@@ -52,6 +52,7 @@
     keepassxc
     libreoffice
     mako
+    mumble
     neofetch
     playerctl
     pulseaudio
