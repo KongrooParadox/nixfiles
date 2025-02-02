@@ -29,6 +29,7 @@
     ../../config/git.nix
     ../../config/hyprland.nix
     ../../config/rofi.nix
+    ../../config/hyprlock.nix
     ../../config/swaync.nix
     ../../config/terminal.nix
     ../../config/waybar.nix
