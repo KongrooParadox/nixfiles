@@ -1,12 +1,12 @@
 keys:
-  - &asgard age1hjtz6r4xzf9cqdzsmvuthxksk48hstcp55kkpm25998j7vmn9yps02xtzy
-  - &heimdall age15cm7dfq97c4ullxlh0tlx8mxfqh5gdlyv5ck7rf9mmwf2v995dvs8lan9r
+  - &asgard age1uqltjql96ttngvw4peylxtg2fnkgtlqxld9naeda34mp9l3zf3jsndncy5
+  - &heimdall age1jvc7p6m0dz8a2p8k8yv38z94a50sypsunpnxg7w4mfm565vv3caqwumktk
   - &midgard age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
   - &njord age19t76glewv5zzykd8c6k7v7yaajr48kesdlrdsdf3mcdjpx4tcsmsz80eth
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
-  - &yggdrasil age106vxxflmfcfazjsvcepgulvft4saq26krft0qfa04mlwh3dcjamqrm7pvf
-  - &vili age104q6tnfc63532y8e820sgn9an4zuwcxmpje6wzkca5pvgfyxd5jq94fpns
+  - &yggdrasil age1e8g7ly7st0ytc6lst86yw8y02hl5yu880607jacdxzwd7wksn9vszvqtfw
+  - &vili age15p5yhymr8u29jlxhrwx40fmmdrswqc65fxnk0va59cf8z0clkq9s78fz0j
 creation_rules:
   - path_regex: secrets/.*\.(yaml|json)$
     key_groups:

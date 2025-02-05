@@ -1,71 +1,124 @@
 {
-  description = "flake for baldur";
+  description = "flake for my NixOS machines";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager = {
+    # apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/kernel-6.12";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    stylix-unstable = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:danth/stylix/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    stylix.url = "github:danth/stylix";
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, nixos-hardware, sops-nix, ... }@inputs: {
-    nixosConfigurations.baldur = nixpkgs.lib.nixosSystem {
-      system = "x86-64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hosts/baldur/configuration.nix
-        ./modules/stylix.nix
-        "${nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
-        sops-nix.nixosModules.sops {
-          sops = {
-            age = {
-              sshKeyPaths = [ "/home/robot/.ssh/id_ed25519" ];
-            };
-            defaultSopsFile = ./secrets/secrets.yaml;
-            defaultSopsFormat = "yaml";
-            secrets."wireguard/casa-anita" = {};
-            secrets."wireguard/home" = {};
-            secrets."tailscale/server-key" = {};
-          };
-        }
-        ./modules/tailscale.nix {
-          tailscale = {
-            enable = true;
-            acceptRoutes = false;
-            ssh = true;
-            subnetRouter = false;
-          };
-        }
-        inputs.stylix.nixosModules.stylix
-        nixos-hardware.nixosModules.dell-inspiron-7405
-        home-manager.nixosModules.home-manager {
-          home-manager.sharedModules = [
-            sops-nix.homeManagerModules.sops {
-              sops = {
-                age = {
-                  sshKeyPaths = [ "/home/robot/.ssh/id_ed25519" ];
-                };
-                defaultSopsFile = ./secrets/secrets.yaml;
-                defaultSopsFormat = "yaml";
-                secrets."anthropic-api-key" = {};
-              };
-            }
-          ];
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.robot = { ... } : { imports = [ ./hosts/baldur/home.nix ]; };
-          };
-        }
-      ];
+  outputs = { nixpkgs, nixpkgs-unstable, self, ... }@inputs: {
+    nixosConfigurations = {
+      asgard = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {
+          host = "asgard";
+          username = "ops";
+          stateVersion = "24.05";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nixos
+        ];
+      };
+      baldur = nixpkgs-unstable.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          host = "baldur";
+          username = "robot";
+          stateVersion = "23.11";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nixos
+        ];
+      };
+      heimdall = nixpkgs-unstable.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {
+          host = "heimdall";
+          username = "ops";
+          stateVersion = "24.05";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nixos
+        ];
+      };
+      midgard = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          host = "midgard";
+          username = "ops";
+          stateVersion = "24.11";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nixos
+        ];
+      };
+      njord = nixpkgs-unstable.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {
+          host = "njord";
+          username = "robot";
+          stateVersion = "24.11";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nixos
+        ];
+      };
+      vili = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {
+          host = "vili";
+          username = "ops";
+          stateVersion = "24.11";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nixos
+        ];
+      };
+      yggdrasil = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          host = "yggdrasil";
+          username = "ops";
+          stateVersion = "24.05";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nixos
+        ];
+      };
     };
   };
 }

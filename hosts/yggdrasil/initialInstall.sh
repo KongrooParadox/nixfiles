@@ -7,9 +7,9 @@ if $INIT; then
     # Init SSH
     ssh-copy-id root@yggdrasil
     # Partition drives using disko
-    sops --decrypt --extract "['zfs-dataset']['root.key']" secrets/secrets.yaml > root.key
-    sops --decrypt --extract "['zfs-dataset']['fast.key']" secrets/secrets.yaml > fast.key
-    sops --decrypt --extract "['zfs-dataset']['rust.key']" secrets/secrets.yaml > rust.key
+    sops --decrypt --extract "['zfs-dataset']['yggdrasil']['root.key']" secrets/secrets.yaml > root.key
+    sops --decrypt --extract "['zfs-dataset']['yggdrasil']['fast.key']" secrets/secrets.yaml > fast.key
+    sops --decrypt --extract "['zfs-dataset']['yggdrasil']['rust.key']" secrets/secrets.yaml > rust.key
     ssh root@yggdrasil 'mkdir -p /run/secrets/zfs-dataset/'
     scp ./*.key root@yggdrasil:/run/secrets/zfs-dataset/
     rm ./*.key

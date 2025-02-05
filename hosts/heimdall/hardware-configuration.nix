@@ -4,9 +4,9 @@
   imports =
     [
       (modulesPath + "/installer/scan/not-detected.nix")
-      ../../modules/asahi
     ];
 
+  asahi.enable = true;
   boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
