@@ -1,6 +1,9 @@
 { config, lib, pkgs, username, ... }:
 let
   cfg = config.virtualization;
+  currentArchitecture = if lib.versions.majorMinor lib.version == "25.05"
+  then config.nixpkgs.hostPlatform
+  else config.nixpkgs.hostPlatform.system;
 in
 {
   options.virtualization = {
@@ -33,6 +36,6 @@ in
     users.users.${username}.extraGroups = [ "libvirtd" ];
 
     # Enable emulation for other architectures
-    boot.binfmt.emulatedSystems = lib.lists.remove config.nixpkgs.hostPlatform.system [ "x86_64-linux" "aarch64-linux" ];
+    boot.binfmt.emulatedSystems = lib.lists.remove currentArchitecture [ "x86_64-linux" "aarch64-linux" ];
   };
 }

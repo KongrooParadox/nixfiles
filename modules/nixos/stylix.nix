@@ -1,11 +1,18 @@
 { inputs, lib, pkgs, ...}:
-
+let
+  isUnstable = lib.versions.majorMinor lib.version == "25.05";
+  nixCfg = if isUnstable then {
+    monoPkg = pkgs.nerd-fonts.jetbrains-mono;
+    stylixModule = [ inputs.stylix-unstable.nixosModules.stylix ];
+  }
+  else {
+    monoPkg = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+    stylixModule = [ inputs.stylix.nixosModules.stylix ];
+  };
+  inherit (nixCfg) monoPkg stylixModule;
+in
 {
-  imports = if lib.version < "25.05"
-    then
-      [ inputs.stylix.nixosModules.stylix ]
-    else
-      [ inputs.stylix-unstable.nixosModules.stylix ];
+  imports = stylixModule;
 
   config = {
     stylix = {
@@ -38,7 +45,7 @@
       cursor.size = 24;
       fonts = {
         monospace = {
-          package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+          package = monoPkg;
           name = "JetBrainsMono Nerd Font Mono";
         };
         sansSerif = {

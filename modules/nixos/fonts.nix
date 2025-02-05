@@ -1,6 +1,6 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, lib, ... }:
 let
-  firacodePkg = if builtins.substring 0 5 lib.version >= "25.05"
+  firacodePkg = if lib.versions.majorMinor lib.version == "25.05"
     then pkgs.nerd-fonts.fira-code
     else pkgs.fira-code-nerdfont;
 in

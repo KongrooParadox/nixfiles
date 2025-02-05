@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   imports = [
     inputs.apple-silicon.nixosModules.default
@@ -6,7 +6,11 @@
     ./hardware-configuration.nix
   ];
 
-  powerManagement.cpuFreqGovernor = "performance";
+  powerManagement = {
+    enable = true;
+    powertop.enable = lib.mkForce false;
+    cpuFreqGovernor = "performance";
+  };
 
   desktop.enable = true;
   virtualization.enable = true;
