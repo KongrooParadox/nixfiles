@@ -4,11 +4,9 @@ let
   desktop = config.desktop;
 in
 {
-  imports = if lib.version < "25.05"
-    then
-      [ inputs.home-manager.nixosModules.home-manager ]
-    else
-      [ inputs.home-manager-unstable.nixosModules.home-manager ];
+  imports = if lib.versions.majorMinor lib.version == "25.05"
+    then [ inputs.home-manager-unstable.nixosModules.home-manager ]
+    else [ inputs.home-manager.nixosModules.home-manager ];
 
   options.hm = {
     enable = lib.mkOption {
