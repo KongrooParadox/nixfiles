@@ -4,7 +4,7 @@ HEADER="Project directories"
 PROMPT="> "
 
 if [[ -z $PARAM_DIR ]]; then
-    dir=$({ echo /home/robot/nixfiles; fd . ~/personal --min-depth 1 --max-depth 1 --type d ; } | fzf --reverse --header "$HEADER" --prompt "$PROMPT")
+    dir=$({ echo ~/nixfiles; fd . ~/personal --min-depth 1 --max-depth 1 --type d ; } | fzf --reverse --header "$HEADER" --prompt "$PROMPT")
 else
     dir=$1
 fi
@@ -18,16 +18,16 @@ tmux_processes=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_processes ]]; then
     echo "no tmux"
-    tmux new-session -s $session_name -c $dir
+    tmux new-session -s "$session_name" -c "$dir"
     exit 0
 fi
 
-if ! tmux has-session -t=$session_name 2> /dev/null; then
-    tmux new-session -ds $session_name -c $dir
+if ! tmux has-session -t="$session_name" 2> /dev/null; then
+    tmux new-session -ds "$session_name" -c "$dir"
 fi
 
 if [[ $TMUX ]]; then
-    tmux switch-client -t $session_name
+    tmux switch-client -t "$session_name"
 else
-    tmux attach-session -t $session_name
+    tmux attach-session -t "$session_name"
 fi

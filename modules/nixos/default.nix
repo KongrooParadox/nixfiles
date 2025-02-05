@@ -1,0 +1,28 @@
+{ host, inputs, self, ... }:
+{
+  imports = [
+    "${inputs.nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
+    "${self}/hosts/${host}"
+    ./arr.nix
+    ./audio.nix
+    ./boot.nix
+    ./desktop.nix
+    ./dns-server.nix
+    ./fonts.nix
+    ./home-assistant.nix
+    ./home-manager.nix
+    ./immich.nix
+    ./networking.nix
+    ./reverseProxy.nix
+    ./security.nix
+    ./sops.nix
+    ./steam.nix
+    ./storage.nix
+    ./stylix.nix
+    ./system.nix
+    ./tailscale.nix
+    ./users.nix
+    ./virtualization.nix
+    ./wayland.nix
+  ];
+}
