@@ -79,7 +79,7 @@ in
           forceSSL = true;
 
           locations."/" = {
-            proxyPass = "http://localhost:${toString service.port}";
+            proxyPass = "http://127.0.0.1:${toString service.port}";
             proxyWebsockets = true;
           };
         }
