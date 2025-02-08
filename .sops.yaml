@@ -5,7 +5,8 @@ keys:
   - &njord age19t76glewv5zzykd8c6k7v7yaajr48kesdlrdsdf3mcdjpx4tcsmsz80eth
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
-  - &yggdrasil age1e8g7ly7st0ytc6lst86yw8y02hl5yu880607jacdxzwd7wksn9vszvqtfw
+  - &yggdrasil-ops age1e8g7ly7st0ytc6lst86yw8y02hl5yu880607jacdxzwd7wksn9vszvqtfw
+  - &yggdrasil-root age106vxxflmfcfazjsvcepgulvft4saq26krft0qfa04mlwh3dcjamqrm7pvf
   - &vili age15p5yhymr8u29jlxhrwx40fmmdrswqc65fxnk0va59cf8z0clkq9s78fz0j
 creation_rules:
   - path_regex: secrets/.*\.(yaml|json)$
@@ -17,5 +18,6 @@ creation_rules:
         - *njord
         - *robot
         - *spare
-        - *yggdrasil
+        - *yggdrasil-ops
+        - *yggdrasil-root
         - *vili
