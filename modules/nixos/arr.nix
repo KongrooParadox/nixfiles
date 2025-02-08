@@ -60,6 +60,14 @@ in
         description = lib.mdDoc "Whether to enable lidarr.";
       };
     };
+
+    sabnzbd = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = lib.mdDoc "Whether to enable Sabnzbd.";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -78,6 +86,7 @@ in
         radarr.port = 7878;
         readarr.port = 8787;
         lidarr.port = 8686;
+        sabnzbd.port = 8080;
       };
     };
 
@@ -107,6 +116,11 @@ in
       lidarr = {
         dataDir = "/mnt/media/lidarr/.config/Lidarr";
         enable = cfg.lidarr.enable;
+        group = "media";
+        openFirewall = true;
+      };
+      sabnzbd = {
+        enable = cfg.sabnzbd.enable;
         group = "media";
         openFirewall = true;
       };
