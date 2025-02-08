@@ -39,6 +39,7 @@
     nixpkgs-fmt
     python312Packages.python-lsp-server
     rust-analyzer
+    terraform
     terraform-ls
     typescript-language-server
     vscode-langservers-extracted
