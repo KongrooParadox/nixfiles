@@ -1,9 +1,7 @@
 { config, lib, pkgs, username, ... }:
 let
   cfg = config.virtualization;
-  currentArchitecture = if lib.versions.majorMinor lib.version == "25.05"
-  then config.nixpkgs.hostPlatform
-  else config.nixpkgs.hostPlatform.system;
+  currentArchitecture = config.nixpkgs.hostPlatform.system;
 in
 {
   options.virtualization = {
