@@ -61,10 +61,18 @@ in
       };
     };
 
-    sabnzbd = {
+    nzbget = {
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
+        description = lib.mdDoc "Whether to enable Nzbget.";
+      };
+    };
+
+    sabnzbd = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
         description = lib.mdDoc "Whether to enable Sabnzbd.";
       };
     };
@@ -86,7 +94,8 @@ in
         radarr.port = 7878;
         readarr.port = 8787;
         lidarr.port = 8686;
-        sabnzbd.port = 8080;
+        nzbget.port = 6789;
+        # sabnzbd.port = 8080;
       };
     };
 
@@ -119,11 +128,30 @@ in
         group = "media";
         openFirewall = true;
       };
-      sabnzbd = {
+      nzbget = lib.mkIf cfg.nzbget.enable {
+        enable = true;
+        group = "media";
+        settings = {
+          MainDir = "/mnt/media/downloads";
+          "Server1.Name" = "Newshosting";
+          "Server1.Host" = "news.newshosting.com";
+          "Server1.Port" = "563";
+          "Server1.Username" = config.sops.secrets."newshosting/username".path;
+          "Server1.Password" = config.sops.secrets."newshosting/password".path;
+        };
+      };
+      sabnzbd = lib.mkIf cfg.sabnzbd.enable {
         enable = cfg.sabnzbd.enable;
         group = "media";
         openFirewall = true;
       };
+    };
+    sops = lib.mkIf cfg.nzbget.enable {
+      secrets."newshosting/username" = {};
+      secrets."newshosting/password" = {};
+    };
+    networking = {
+      firewall.allowedTCPPorts = lib.mkIf cfg.nzbget.enable [ 6789 ];
     };
   };
 }
