@@ -1,5 +1,5 @@
 
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.arr;
@@ -10,6 +10,14 @@ in
       type = lib.types.bool;
       default = false;
       description = lib.mdDoc "Whether to enable the arr suite (Prowlarr, Radarr, Sonarr, Readarr, Lidarr).";
+    };
+
+    deluge = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = lib.mdDoc "Whether to enable Deluge torrent download client.";
+      };
     };
 
     hostname = lib.mkOption {
@@ -79,6 +87,63 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets = lib.mkMerge [
+      (lib.mkIf cfg.nzbget.enable {
+        "newshosting/username" = {};
+        "newshosting/password" = {};
+       })
+      (lib.mkIf cfg.deluge.enable {
+        "deluge-auth" = {
+            mode = "0440";
+            group = "media";
+          };
+        "wireguard/proton/ch-fr-1" = {};
+        "wireguard/proton/is-fr-1" = {};
+      })
+    ];
+
+    systemd.services = {
+      deluged = lib.mkIf cfg.deluge.enable {
+        serviceConfig.NetworkNamespacePath = "/var/run/netns/deluge";
+        # Make sure WireGuard starts before deluged
+        after = [ "wg-quick-wg-ch-fr-1.service" "deluge-netns.service" ];
+        requires = [ "deluge-netns.service"];
+      };
+      # The web interface service should also use the same namespace
+      # delugeweb = {
+      #   serviceConfig.NetworkNamespacePath = "/var/run/netns/deluge";
+      #   after = [ "wg-quick-wg-ch-fr-1.service" "deluged.service" ];
+      #   requires = [ "wg-quick-wg-ch-fr-1.service" "deluged.service" ];
+      # };
+      deluge-netns = lib.mkIf cfg.deluge.enable {
+        description = "Setup Deluge Network Namespace";
+        before = [ "deluged.service" ];
+        after = [ "wg-quick-wg-ch-fr-1.service" ];
+        bindsTo = [ "wg-quick-wg-ch-fr-1.service" ];
+        wantedBy = [ "multi-user.target" ];  # Add this to ensure it starts on boot
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        script = ''
+          # Clean up any existing namespace first
+          ${pkgs.iproute2}/bin/ip netns del deluge || true
+          sleep 1  # Give system time to clean up
+          # Ensure WireGuard interface is up
+          ${pkgs.systemd}/bin/systemctl restart wireguard-wg-ch-fr-1.service
+          sleep 4  # Give WireGuard time to establish
+
+          ${pkgs.iproute2}/bin/ip netns add deluge || true
+          ${pkgs.iproute2}/bin/ip -n deluge link set lo up
+          # Move WireGuard interface to namespace
+          ${pkgs.iproute2}/bin/ip link set wg-ch-fr-1 netns deluge
+          # Configure DNS in the namespace
+          mkdir -p /etc/netns/deluge
+          echo "nameserver 1.1.1.1" > /etc/netns/deluge/resolv.conf
+          '';
+      };
+    };
+
     # https://github.com/NixOS/nixpkgs/issues/360592 - Sonar still uses EOL .net 6.0
     nixpkgs.config.permittedInsecurePackages = [
       "dotnet-sdk-6.0.428"
@@ -89,45 +154,75 @@ in
     reverseProxy = {
       hostname = cfg.hostname;
       services = {
-        prowlarr.port = 9696;
-        sonarr.port = 8989;
-        radarr.port = 7878;
-        readarr.port = 8787;
+        deluge.port = 8112;
         lidarr.port = 8686;
         nzbget.port = 6789;
+        prowlarr.port = 9696;
+        radarr.port = 7878;
+        readarr.port = 8787;
         # sabnzbd.port = 8080;
+        sonarr.port = 8989;
       };
     };
 
     services = {
-      prowlarr = {
-        enable = cfg.prowlarr.enable;
+      deluge = lib.mkIf cfg.deluge.enable {
+        authFile = config.sops.secrets."deluge-auth".path;
+        config = {
+          allow_remote = false;
+          download_location = "/mnt/media/downloads/torrents/current";
+          max_half_open_connections = 100;
+          max_connections_per_second = 100;
+          move_completed = true;
+          move_completed_path = "/mnt/media/downloads/torrents/completed";
+          pre_allocate_storage = false; # ZFS doesn't support fallocate
+          torrentfiles_location = "/mnt/media/downloads/torrents/files";
+        };
+        dataDir = "/mnt/media/deluge/";
+        declarative = true;
+        enable = true;
+        group = "media";
+        openFilesLimit = 2000;
+        openFirewall = true;
+        web = {
+          enable = true;
+          openFirewall = true;
+        };
+      };
+
+      prowlarr = lib.mkIf cfg.prowlarr.enable {
+        enable = true;
         openFirewall = true;
       };
-      radarr = {
+
+      radarr = lib.mkIf cfg.radarr.enable {
         dataDir = "/mnt/media/radarr/.config/Radarr";
-        enable = cfg.radarr.enable;
+        enable = true;
         group = "media";
         openFirewall = true;
       };
-      readarr = {
+
+      readarr = lib.mkIf cfg.readarr.enable {
         dataDir = "/mnt/media/readarr/.config/Readarr";
-        enable = cfg.readarr.enable;
+        enable = true;
         group = "media";
         openFirewall = true;
       };
-      sonarr = {
+
+      sonarr = lib.mkIf cfg.sonarr.enable {
         dataDir = "/mnt/media/sonarr/.config/Sonarr";
-        enable = cfg.sonarr.enable;
+        enable = true;
         group = "media";
         openFirewall = true;
       };
-      lidarr = {
+
+      lidarr = lib.mkIf cfg.lidarr.enable {
         dataDir = "/mnt/media/lidarr/.config/Lidarr";
-        enable = cfg.lidarr.enable;
+        enable = true;
         group = "media";
         openFirewall = true;
       };
+
       nzbget = lib.mkIf cfg.nzbget.enable {
         enable = true;
         group = "media";
@@ -140,18 +235,49 @@ in
           "Server1.Password" = config.sops.secrets."newshosting/password".path;
         };
       };
+
       sabnzbd = lib.mkIf cfg.sabnzbd.enable {
-        enable = cfg.sabnzbd.enable;
+        enable = true;
         group = "media";
         openFirewall = true;
       };
     };
-    sops = lib.mkIf cfg.nzbget.enable {
-      secrets."newshosting/username" = {};
-      secrets."newshosting/password" = {};
-    };
+
     networking = {
-      firewall.allowedTCPPorts = lib.mkIf cfg.nzbget.enable [ 6789 ];
+      firewall = {
+        allowedUDPPorts = [ 51820 ]; # Clients and peers can use the same port, see listenport
+        allowedTCPPorts = lib.mkIf cfg.nzbget.enable [ 6789 ];
+      };
+      wg-quick.interfaces = lib.mkIf cfg.deluge.enable {
+        wg-ch-fr-1 = {
+          address = [ "10.2.0.2/32" ];
+          autostart = true;
+          dns = [ "10.2.0.1" ];
+          privateKeyFile = config.sops.secrets."wireguard/proton/ch-fr-1".path;
+          peers = [
+            {
+              publicKey = "fEUJZ0KAOb0U8O4+wNYYlVBgtN6AOS2bbXyM07Dnvxk=";
+              allowedIPs = [ "0.0.0.0/0" ];
+              endpoint = "79.135.104.97:51820";
+              persistentKeepalive = 25;
+            }
+          ];
+        };
+        wg-is-fr-1 = {
+          address = [ "10.2.0.2/32" ];
+          autostart = false;
+          dns = [ "10.2.0.1" ];
+          privateKeyFile = config.sops.secrets."wireguard/proton/is-fr-1".path;
+          peers = [
+            {
+              publicKey = "fEUJZ0KAOb0U8O4+wNYYlVBgtN6AOS2bbXyM07Dnvxk=";
+              allowedIPs = [ "0.0.0.0/0" ];
+              endpoint = "185.159.158.245:51820";
+              persistentKeepalive = 25;
+            }
+          ];
+        };
+      };
     };
   };
 }
