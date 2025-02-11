@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
   imports = [
     inputs.apple-silicon.nixosModules.default
@@ -8,7 +8,6 @@
 
   powerManagement = {
     enable = true;
-    powertop.enable = lib.mkForce false;
     cpuFreqGovernor = "performance";
   };
 
