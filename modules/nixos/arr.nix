@@ -1,5 +1,5 @@
 
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   cfg = config.arr;
@@ -17,6 +17,12 @@ in
         type = lib.types.bool;
         default = true;
         description = lib.mdDoc "Whether to enable Deluge torrent download client.";
+      };
+
+      wireguardInterface = lib.mkOption {
+        type = lib.types.str;
+        default = "wg-p2p";
+        description = lib.mdDoc "Name of Wireguard interface to use for deluge traffic";
       };
     };
 
@@ -97,52 +103,9 @@ in
             mode = "0440";
             group = "media";
           };
-        "wireguard/proton/ch-fr-1" = {};
-        "wireguard/proton/is-fr-1" = {};
+        "wireguard/proton/p2p" = {};
       })
     ];
-
-    systemd.services = {
-      deluged = lib.mkIf cfg.deluge.enable {
-        serviceConfig.NetworkNamespacePath = "/var/run/netns/deluge";
-        # Make sure WireGuard starts before deluged
-        after = [ "wg-quick-wg-ch-fr-1.service" "deluge-netns.service" ];
-        requires = [ "deluge-netns.service"];
-      };
-      # The web interface service should also use the same namespace
-      # delugeweb = {
-      #   serviceConfig.NetworkNamespacePath = "/var/run/netns/deluge";
-      #   after = [ "wg-quick-wg-ch-fr-1.service" "deluged.service" ];
-      #   requires = [ "wg-quick-wg-ch-fr-1.service" "deluged.service" ];
-      # };
-      deluge-netns = lib.mkIf cfg.deluge.enable {
-        description = "Setup Deluge Network Namespace";
-        before = [ "deluged.service" ];
-        after = [ "wg-quick-wg-ch-fr-1.service" ];
-        bindsTo = [ "wg-quick-wg-ch-fr-1.service" ];
-        wantedBy = [ "multi-user.target" ];  # Add this to ensure it starts on boot
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-        };
-        script = ''
-          # Clean up any existing namespace first
-          ${pkgs.iproute2}/bin/ip netns del deluge || true
-          sleep 1  # Give system time to clean up
-          # Ensure WireGuard interface is up
-          ${pkgs.systemd}/bin/systemctl restart wireguard-wg-ch-fr-1.service
-          sleep 4  # Give WireGuard time to establish
-
-          ${pkgs.iproute2}/bin/ip netns add deluge || true
-          ${pkgs.iproute2}/bin/ip -n deluge link set lo up
-          # Move WireGuard interface to namespace
-          ${pkgs.iproute2}/bin/ip link set wg-ch-fr-1 netns deluge
-          # Configure DNS in the namespace
-          mkdir -p /etc/netns/deluge
-          echo "nameserver 1.1.1.1" > /etc/netns/deluge/resolv.conf
-          '';
-      };
-    };
 
     # https://github.com/NixOS/nixpkgs/issues/360592 - Sonar still uses EOL .net 6.0
     nixpkgs.config.permittedInsecurePackages = [
@@ -175,6 +138,7 @@ in
           max_connections_per_second = 100;
           move_completed = true;
           move_completed_path = "/mnt/media/downloads/torrents/completed";
+          outgoing_interface = cfg.deluge.wireguardInterface;
           pre_allocate_storage = false; # ZFS doesn't support fallocate
           torrentfiles_location = "/mnt/media/downloads/torrents/files";
         };
@@ -249,30 +213,16 @@ in
         allowedTCPPorts = lib.mkIf cfg.nzbget.enable [ 6789 ];
       };
       wg-quick.interfaces = lib.mkIf cfg.deluge.enable {
-        wg-ch-fr-1 = {
+        wg-p2p = {
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [ "10.2.0.1" ];
-          privateKeyFile = config.sops.secrets."wireguard/proton/ch-fr-1".path;
+          privateKeyFile = config.sops.secrets."wireguard/proton/p2p".path;
           peers = [
             {
-              publicKey = "fEUJZ0KAOb0U8O4+wNYYlVBgtN6AOS2bbXyM07Dnvxk=";
+              publicKey = "VEtFeCo88R26OwlJ+F1hwNOPhewYNJHL+S078L477Gk=";
               allowedIPs = [ "0.0.0.0/0" ];
-              endpoint = "79.135.104.97:51820";
-              persistentKeepalive = 25;
-            }
-          ];
-        };
-        wg-is-fr-1 = {
-          address = [ "10.2.0.2/32" ];
-          autostart = false;
-          dns = [ "10.2.0.1" ];
-          privateKeyFile = config.sops.secrets."wireguard/proton/is-fr-1".path;
-          peers = [
-            {
-              publicKey = "fEUJZ0KAOb0U8O4+wNYYlVBgtN6AOS2bbXyM07Dnvxk=";
-              allowedIPs = [ "0.0.0.0/0" ];
-              endpoint = "185.159.158.245:51820";
+              endpoint = "79.127.169.59:51820";
               persistentKeepalive = 25;
             }
           ];
