@@ -53,43 +53,12 @@ in
     services.tailscale = {
       extraSetFlags = lib.optional config.tailscale.exitNode "--advertise-exit-node";
       enable = true;
+      openFirewall = true;
       useRoutingFeatures = if cfg.subnetRouter then "server" else "client";
       extraUpFlags = lib.optional cfg.ssh "--ssh" ++
         lib.optional cfg.acceptDns "--accept-dns" ++
         lib.optional cfg.acceptRoutes "--accept-routes" ++
         lib.optional cfg.subnetRouter "--advertise-routes=${lib.concatStringsSep "," cfg.advertisedRoutes}";
-    };
-
-    # Configure networking for multi-subnet setup
-    networking = {
-      firewall = {
-        # Allow Tailscale traffic
-        trustedInterfaces = [ "tailscale0" ];
-        # Allow incoming connections from other subnets via Tailscale
-        allowedUDPPorts = [ config.services.tailscale.port ];
-        # If this is a subnet router, ensure IP forwarding is enabled
-        checkReversePath = lib.mkIf cfg.subnetRouter false;
-      };
-
-      # Enable IP forwarding if this is a subnet router
-      nat = lib.mkIf cfg.subnetRouter {
-        enable = true;
-        # Enable IP masquerading for subnet routing
-        externalInterface = "tailscale0";
-      };
-    };
-
-    # Enable IP forwarding at the kernel level
-    boot.kernel.sysctl = lib.mkIf cfg.subnetRouter {
-      "net.ipv4.ip_forward" = 1;
-      "net.ipv6.conf.all.forwarding" = 1;
-    };
-
-    # Ensure tailscale is started before dependent services
-    systemd.services.tailscaled = {
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
     };
   };
 }
