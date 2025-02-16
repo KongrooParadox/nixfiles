@@ -38,6 +38,7 @@ in
   };
   reverseProxy.enable = true;
   storage.enable = true;
+  tailscale.enable = false;
 
   boot = {
     loader = {
