@@ -12,6 +12,7 @@
     ./home-assistant.nix
     ./home-manager.nix
     ./immich.nix
+    ./media.nix
     ./networking.nix
     ./reverseProxy.nix
     ./security.nix
