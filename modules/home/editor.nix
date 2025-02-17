@@ -25,6 +25,8 @@
     };
   };
 
+  nixpkgs.config.allowUnfreePredicate = (pkg: true);
+
   home.packages = with pkgs; [
     alejandra
     ansible-language-server

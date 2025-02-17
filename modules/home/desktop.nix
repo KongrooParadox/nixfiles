@@ -6,7 +6,7 @@
       cliphist
       filezilla
       keepassxc
-      libreoffice
+      # libreoffice
       mumble
       playerctl
       pulseaudio
