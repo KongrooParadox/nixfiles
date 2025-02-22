@@ -141,6 +141,7 @@ in
           outgoing_interface = cfg.deluge.wireguardInterface;
           pre_allocate_storage = false; # ZFS doesn't support fallocate
           torrentfiles_location = "/mnt/media/downloads/torrents/files";
+          enabled_plugins = [ "Label" ];
         };
         dataDir = "/mnt/media/deluge/";
         declarative = true;
