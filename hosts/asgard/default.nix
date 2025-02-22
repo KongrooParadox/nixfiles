@@ -36,7 +36,7 @@
       "baldur.skynet.local" = "10.10.111.20,10.10.111.21";
       "asgard.skynet.local" = "10.10.111.100";
       "yggdrasil.skynet.local" = "10.10.111.101";
-      "heimdall.skynet.local" = "10.10.111.102";
+      "heimdall.skynet.local" = "10.10.111.102,10.10.111.43";
       "kronos.skynet.local" = "10.10.111.103";
       "thor.skynet.local" = "10.10.111.104";
       "pi401.skynet.local" = "10.10.111.123";
