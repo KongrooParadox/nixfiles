@@ -11,6 +11,7 @@
       playerctl
       pulseaudio
       texlive.combined.scheme-full
+      vlc
       wl-clipboard
       xdg-utils
       (import ../../scripts/emoji-picker.nix { inherit pkgs; })
