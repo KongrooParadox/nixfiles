@@ -1,10 +1,19 @@
-{ host, inputs, lib, pkgs, ... }: {
+{ host, inputs, lib, pkgs, ... }:
+
+let
+  fqdnHostname = "${host}.pernes.kongroo.ovh";
+in
+{
 
   imports = [
     inputs.disko.nixosModules.disko
     ./disks.nix
     ./hardware-configuration.nix
   ];
+
+  powerManagement = {
+    cpuFreqGovernor = "powersave";
+  };
 
   sops = {
     age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
@@ -17,18 +26,20 @@
   reverseProxy.enable = true;
   arr = {
     enable = true;
-    hostname = "${host}.pernes.kongroo.ovh";
+    hostname = fqdnHostname;
   };
   immich = {
     enable = true;
-    hostname = "${host}.pernes.kongroo.ovh";
+    hostname = fqdnHostname;
+    mediaPath = "/mnt/media/gallery";
+    subdomain = "gallery";
+  };
+  media-player = {
+    enable = true;
+    hostname = fqdnHostname;
   };
 
-  tailscale = {
-    acceptRoutes = false;
-    exitNode = false;
-    subnetRouter = false;
-  };
+  tailscale.enable = false;
 
   boot = {
     initrd.postDeviceCommands = lib.mkAfter ''

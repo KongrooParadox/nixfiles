@@ -1,7 +1,8 @@
 keys:
   - &asgard age1uqltjql96ttngvw4peylxtg2fnkgtlqxld9naeda34mp9l3zf3jsndncy5
   - &heimdall age1jvc7p6m0dz8a2p8k8yv38z94a50sypsunpnxg7w4mfm565vv3caqwumktk
-  - &midgard age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
+  - &midgard-ops age17zv30v64zrxslhtkzc8qzguwyrzlryk9a2c55m4fmguhrjz8fsjsc3pycx
+  - &midgard-root age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
   - &njord age19t76glewv5zzykd8c6k7v7yaajr48kesdlrdsdf3mcdjpx4tcsmsz80eth
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
@@ -14,7 +15,8 @@ creation_rules:
       - age:
         - *asgard
         - *heimdall
-        - *midgard
+        - *midgard-ops
+        - *midgard-root
         - *njord
         - *robot
         - *spare
