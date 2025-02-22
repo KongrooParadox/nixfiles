@@ -143,7 +143,7 @@ in
           torrentfiles_location = "/mnt/media/downloads/torrents/files";
           enabled_plugins = [ "Label" ];
         };
-        dataDir = "/mnt/media/deluge/";
+        dataDir = "/mnt/compute/deluge/";
         declarative = true;
         enable = true;
         group = "media";
@@ -161,28 +161,28 @@ in
       };
 
       radarr = lib.mkIf cfg.radarr.enable {
-        dataDir = "/mnt/media/radarr/.config/Radarr";
+        dataDir = "/mnt/compute/radarr/.config/Radarr";
         enable = true;
         group = "media";
         openFirewall = true;
       };
 
       readarr = lib.mkIf cfg.readarr.enable {
-        dataDir = "/mnt/media/readarr/.config/Readarr";
+        dataDir = "/mnt/compute/readarr/.config/Readarr";
         enable = true;
         group = "media";
         openFirewall = true;
       };
 
       sonarr = lib.mkIf cfg.sonarr.enable {
-        dataDir = "/mnt/media/sonarr/.config/Sonarr";
+        dataDir = "/mnt/compute/sonarr/.config/Sonarr";
         enable = true;
         group = "media";
         openFirewall = true;
       };
 
       lidarr = lib.mkIf cfg.lidarr.enable {
-        dataDir = "/mnt/media/lidarr/.config/Lidarr";
+        dataDir = "/mnt/compute/lidarr/.config/Lidarr";
         enable = true;
         group = "media";
         openFirewall = true;

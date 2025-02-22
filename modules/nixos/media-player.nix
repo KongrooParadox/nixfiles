@@ -1,9 +1,9 @@
 { config, lib, ... }:
 let
-  cfg = config.media;
+  cfg = config.media-player;
 in
 {
-  options.media = {
+  options.media-player = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
