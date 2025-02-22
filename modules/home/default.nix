@@ -9,6 +9,7 @@
     ./hyprland.nix
     ./rofi.nix
     ./hyprlock.nix
+    ./rclone.nix
     ./swaync.nix
     ./terminal.nix
     ./waybar.nix
