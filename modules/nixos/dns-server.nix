@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, domain, lib, ... }:
 
 let
   cfg = config.dns-server;
@@ -13,7 +13,8 @@ in
 
     publicDomain = lib.mkOption {
       type = lib.types.str;
-      default = "example.com";
+      default = domain;
+      example = "example.com";
       description = lib.mdDoc "Public domain to rewrite";
     };
 
@@ -25,9 +26,14 @@ in
 
     mapping = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
-      default = {
-        };
+      default = {};
       description = "Local dns A entries";
+    };
+
+    zone = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "Local zone file";
     };
 
   };
@@ -52,6 +58,7 @@ in
             filterUnmappedTypes = true;
             rewrite.${cfg.publicDomain} = cfg.localDomain;
             mapping = cfg.mapping;
+            zone = cfg.zone;
           };
           blocking = {
             blackLists = {

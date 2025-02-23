@@ -38,6 +38,7 @@
       asgard = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = {
+          domain = "tavel.kongroo.ovh";
           host = "asgard";
           username = "ops";
           stateVersion = "24.05";
@@ -50,6 +51,7 @@
       baldur = nixpkgs-unstable.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
+          domain = "tavel.kongroo.ovh";
           host = "baldur";
           username = "robot";
           stateVersion = "23.11";
@@ -62,6 +64,7 @@
       heimdall = nixpkgs-unstable.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = {
+          domain = "tavel.kongroo.ovh";
           host = "heimdall";
           username = "ops";
           stateVersion = "24.05";
@@ -74,6 +77,7 @@
       midgard = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
+          domain = "pernes.kongroo.ovh";
           host = "midgard";
           username = "ops";
           stateVersion = "24.11";
@@ -86,6 +90,7 @@
       njord = nixpkgs-unstable.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = {
+          domain = "tavel.kongroo.ovh";
           host = "njord";
           username = "robot";
           stateVersion = "24.11";
@@ -98,6 +103,7 @@
       vili = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         specialArgs = {
+          domain = "pernes.kongroo.ovh";
           host = "vili";
           username = "ops";
           stateVersion = "24.11";
@@ -110,6 +116,7 @@
       yggdrasil = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
+          domain = "tavel.kongroo.ovh";
           host = "yggdrasil";
           username = "ops";
           stateVersion = "24.05";

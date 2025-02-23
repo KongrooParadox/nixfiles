@@ -1,8 +1,5 @@
-{ host, inputs, lib, pkgs, ... }:
+{ inputs, lib, pkgs, ... }:
 
-let
-  fqdnHostname = "${host}.pernes.kongroo.ovh";
-in
 {
 
   imports = [
@@ -24,22 +21,13 @@ in
   };
 
   reverseProxy.enable = true;
-  arr = {
-    enable = true;
-    hostname = fqdnHostname;
-  };
+  arr.enable = true;
+  media-player.enable = true;
+  tailscale.enable = false;
   immich = {
     enable = true;
-    hostname = fqdnHostname;
     mediaPath = "/mnt/media/gallery";
-    subdomain = "gallery";
   };
-  media-player = {
-    enable = true;
-    hostname = fqdnHostname;
-  };
-
-  tailscale.enable = false;
 
   boot = {
     initrd.postDeviceCommands = lib.mkAfter ''

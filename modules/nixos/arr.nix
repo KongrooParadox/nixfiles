@@ -1,5 +1,4 @@
-
-{ config, lib, ... }:
+{ config, domain, lib, ... }:
 
 let
   cfg = config.arr;
@@ -26,11 +25,12 @@ in
       };
     };
 
-    hostname = lib.mkOption {
+    domain = lib.mkOption {
       type = lib.types.str;
+      default = domain;
       example = "my-server.example.org";
       description = lib.mdDoc ''
-        FQDN Hostname of arr server.
+        FQDN domain of arr server.
         This will be used as the base url for NGINX reverse proxy.
         '';
     };
@@ -115,7 +115,7 @@ in
     users.groups.media = {};
 
     reverseProxy = {
-      hostname = cfg.hostname;
+      domain = cfg.domain;
       services = {
         deluge.port = 8112;
         lidarr.port = 8686;

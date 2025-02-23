@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, host, lib, ... }:
 
 let
   cfg = config.reverseProxy;
@@ -27,9 +27,10 @@ in
       description = lib.mdDoc "Whether to enable the reverse proxy service";
     };
 
-    hostname = lib.mkOption {
+    domain = lib.mkOption {
       type = lib.types.str;
-      description = lib.mdDoc "Base hostname for the reverse proxy (e.g. example.com)";
+      description = lib.mdDoc "Base domain for the reverse proxy";
+      example = "example.org";
     };
 
     services = lib.mkOption {
@@ -73,9 +74,9 @@ in
 
       # Create virtual host for each service subdomain
       virtualHosts = lib.mapAttrs' (name: service: lib.nameValuePair
-        "${service.subdomain}.${cfg.hostname}" {
+        "${service.subdomain}.${cfg.domain}" {
           enableACME = false; # Disable per-host ACME
-          useACMEHost = cfg.hostname; # Use the wildcard cert
+          useACMEHost = cfg.domain; # Use the wildcard cert
           forceSSL = true;
 
           locations."/" = {
@@ -96,13 +97,14 @@ in
         dnsProvider = cfg.acme.dnsProvider;
         environmentFile = cfg.acme.environmentFile;
         dnsPropagationCheck = true;
+        dnsResolver = "9.9.9.9:53";
         group = "nginx";
       };
 
       # Single wildcard cert for all subdomains
-      certs.${cfg.hostname} = {
-        domain = cfg.hostname;
-        extraDomainNames = [ "*.${cfg.hostname}" ];
+      certs.${cfg.domain} = {
+        domain =  "*.${cfg.domain}";
+        extraDomainNames = [ "*.${host}.${cfg.domain}" ];
         dnsProvider = cfg.acme.dnsProvider;
         environmentFile = cfg.acme.environmentFile;
         group = "nginx";
