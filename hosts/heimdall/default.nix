@@ -24,7 +24,12 @@
   services.apcupsd = {
     enable = true;
     configText = ''
+      UPSNAME ups-server
+      UPSCABLE usb
       UPSTYPE usb
+      #DEVICE
+      NETSERVER on
+      NISPORT 3551
       NISIP 0.0.0.0
       BATTERYLEVEL 30
       MINUTES 3
