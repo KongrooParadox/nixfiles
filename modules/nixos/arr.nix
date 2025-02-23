@@ -104,6 +104,7 @@ in
             group = "media";
           };
         "wireguard/proton/p2p" = {};
+        "wireguard/proton/p2p-2" = {};
       })
     ];
 
@@ -214,7 +215,7 @@ in
         allowedTCPPorts = lib.mkIf cfg.nzbget.enable [ 6789 ];
       };
       wg-quick.interfaces = lib.mkIf cfg.deluge.enable {
-        wg-p2p = {
+        wg-p2p = lib.mkIf (cfg.deluge.wireguardInterface == "wg-p2p") {
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [ "10.10.1.100" "192.168.1.100" ];
@@ -224,6 +225,20 @@ in
               publicKey = "VEtFeCo88R26OwlJ+F1hwNOPhewYNJHL+S078L477Gk=";
               allowedIPs = [ "0.0.0.0/0" "::/0" ];
               endpoint = "79.127.169.59:51820";
+              persistentKeepalive = 25;
+            }
+          ];
+        };
+        wg-p2p-2 = lib.mkIf (cfg.deluge.wireguardInterface == "wg-p2p-2") {
+          address = [ "10.2.0.2/32" ];
+          autostart = true;
+          dns = [ "10.10.1.100" "192.168.1.100" ];
+          privateKeyFile = config.sops.secrets."wireguard/proton/p2p-2".path;
+          peers = [
+            {
+              publicKey = "JsWZdbNQ38Enz3AYGJLI6HVF5I5RqfrIkkcwsznAGSs=";
+              allowedIPs = [ "0.0.0.0/0" "::/0" ];
+              endpoint = "146.70.194.50:51820";
               persistentKeepalive = 25;
             }
           ];

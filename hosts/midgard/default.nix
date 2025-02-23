@@ -21,7 +21,10 @@
   };
 
   reverseProxy.enable = true;
-  arr.enable = true;
+  arr = {
+    enable = true;
+    deluge.wireguardInterface = "wg-p2p-2";
+  };
   media-player.enable = true;
   tailscale.enable = false;
   immich = {
