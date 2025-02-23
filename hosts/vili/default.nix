@@ -80,6 +80,10 @@
       enable = true;
       dns = "none"; # Prevent NetworkManager from managing resolv.conf
     };
+    firewall = {
+      allowedUDPPortRanges = [ { from = 40000; to = 40010; } ];
+      allowedTCPPortRanges = [ { from = 40000; to = 40010; } ];
+    };
   };
 
   systemd.services.ethtool-config = {
