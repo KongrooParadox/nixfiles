@@ -31,6 +31,11 @@ in
       };
     };
 
+    networking.firewall = {
+      allowedUDPPortRanges = [ { from = 40000; to = 40010; } ];
+      allowedTCPPortRanges = [ { from = 40000; to = 40010; } ];
+    };
+
     services.jellyfin = {
       enable = true;
       group = "media";

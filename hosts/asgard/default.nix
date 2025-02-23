@@ -61,6 +61,11 @@
     '';
   };
 
+  networking.firewall = {
+    allowedUDPPortRanges = [ { from = 40000; to = 40010; } ];
+    allowedTCPPortRanges = [ { from = 40000; to = 40010; } ];
+  };
+
   tailscale = {
     advertisedRoutes = [ "10.10.111.0/24" ];
     exitNode = false;
