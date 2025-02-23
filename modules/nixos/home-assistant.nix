@@ -1,4 +1,4 @@
-{ config, lib, ...}:
+{ config, domain, lib, ...}:
 let
   cfg = config.home-assistant;
 in
@@ -10,31 +10,22 @@ in
       description = lib.mdDoc "Whether to enable HA instance.";
     };
 
-    hostname = lib.mkOption {
+    domain = lib.mkOption {
       type = lib.types.str;
-      example = "my-server.example.org";
+      default = domain;
+      example = "example.org";
       description = lib.mdDoc ''
-        Hostname for the HA instance.
+        FQDN domain for the HA instance.
         This will be used as the base url for NGINX reverse proxy.
       '';
-    };
-
-    subdomain = lib.mkOption {
-      type = lib.types.str;
-      default = "home-assistant";
-      description = lib.mdDoc ''
-        Subdomain name for the HA instance.
-        This will be used as the subdomain of NGINX reverse proxy
-        '';
     };
   };
 
   config = lib.mkIf cfg.enable {
     reverseProxy = {
-      hostname = cfg.hostname;
+      domain = cfg.domain;
       services.home-assistant = {
         port = 8123;
-        subdomain = cfg.subdomain;
       };
     };
     services = {
@@ -54,6 +45,7 @@ in
       home-assistant = {
         enable = cfg.enable;
         extraComponents = [
+          "apcupsd"
           "esphome"
           "met"
           "radio_browser"
@@ -64,8 +56,8 @@ in
         config = {
           default_config = {};
           http = {
-            server_host = "::1";
-            trusted_proxies = [ "::1" ];
+            server_host = [ "127.0.0.1" "::1" ];
+            trusted_proxies = [ "127.0.0.1" "::1" ];
             use_x_forwarded_for = true;
           };
           mqtt = {};

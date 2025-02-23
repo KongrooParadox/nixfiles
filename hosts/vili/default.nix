@@ -1,4 +1,5 @@
-{ host, lib, modulesPath, pkgs, ...}:
+{ lib, modulesPath, pkgs, ...}:
+
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -7,17 +8,33 @@
   reverseProxy.enable = true;
   home-assistant = {
     enable = true;
-    hostname = "${host}.pernes.kongroo.ovh";
   };
 
   dns-server = {
     enable = true;
-    publicDomain = "pernes.kongroo.ovh";
     localDomain = "casa-anita.local";
-    mapping = {
-      "vili.casa-anita.local" = "192.168.1.100";
-      "midgard.casa-anita.local" = "192.168.1.101";
-    };
+    zone = ''
+      $ORIGIN casa-anita.local.
+      $TTL 3600 ; default expiration time (in seconds) of all RRs without their own TTL value
+      casa-anita.local.  IN  SOA   vili.casa-anita.local. noreply.kongroo.anonaddy.com. ( 2020091025 7200 3600 1209600 3600 )
+      casa-anita.local.  IN  NS    vili
+      casa-anita.local.  IN  NS    freebox
+      vili               IN  A     192.168.1.100
+                         IN  AAAA  2a01:e0a:2f9:f360:a581:82c2:9906:f301
+      home-assistant     IN  CNAME vili
+      midgard            IN  A     192.168.1.101
+                         IN  AAAA  2a01:e0a:2f9:f360:7656:3cff:feaf:217f
+      deluge             IN  CNAME midgard
+      gallery            IN  CNAME midgard
+      jellyfin           IN  CNAME midgard
+      lidarr             IN  CNAME midgard
+      nzbget             IN  CNAME midgard
+      prowlarr           IN  CNAME midgard
+      radarr             IN  CNAME midgard
+      readarr            IN  CNAME midgard
+      sonarr             IN  CNAME midgard
+      freebox            IN  A     192.168.1.254
+    '';
   };
 
   tailscale = {

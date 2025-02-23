@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, domain, lib, pkgs, ... }:
 
 let
 cfg = config.immich;
@@ -29,18 +29,19 @@ in
         '';
     };
 
-    hostname = lib.mkOption {
+    domain = lib.mkOption {
       type = lib.types.str;
-      example = "my-server.example.org";
+      default = domain;
+      example = "example.org";
       description = lib.mdDoc ''
-        FQDN Hostname of Immich server.
+        FQDN domain of Immich server.
         This will be used as the base url for NGINX reverse proxy.
         '';
     };
 
     subdomain = lib.mkOption {
       type = lib.types.str;
-      default = "photos";
+      default = "gallery";
       description = lib.mdDoc ''
         Subdomain name for the Immich instance.
         This will be used as the subdomain of NGINX reverse proxy
@@ -74,7 +75,7 @@ in
 
     # Configure reverse proxy for Immich web interface
     reverseProxy = {
-      hostname = cfg.hostname;
+      domain = cfg.domain;
       services.immich = {
         port = config.services.immich.port;
         subdomain = cfg.subdomain;

@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, domain, lib, ... }:
 let
   cfg = config.media-player;
 in
@@ -10,11 +10,12 @@ in
       description = lib.mdDoc "Whether to enable the media suite (Jellyfin & co).";
     };
 
-    hostname = lib.mkOption {
+    domain = lib.mkOption {
       type = lib.types.str;
-      example = "my-server.example.org";
+      default = domain;
+      example = "example.org";
       description = lib.mdDoc ''
-        FQDN Hostname of Jellyfin server.
+        FQDN domain of Jellyfin server.
         This will be used as the base url for NGINX reverse proxy.
         '';
     };
@@ -24,7 +25,7 @@ in
     users.groups.media = {};
 
     reverseProxy = {
-      hostname = cfg.hostname;
+      domain = cfg.domain;
       services = {
         jellyfin.port = 8096;
       };

@@ -1,8 +1,5 @@
-{ host, lib, inputs, ... }:
+{ lib, inputs, ... }:
 
-let
-  fqdnHostname = "${host}.tavel.kongroo.ovh";
-in
 {
   imports =
     [
@@ -24,18 +21,9 @@ in
     };
   };
 
-  immich = {
-    enable = true;
-    hostname = fqdnHostname;
-  };
-  arr = {
-    enable = true;
-    hostname = fqdnHostname;
-  };
-  media = {
-    enable = true;
-    hostname = fqdnHostname;
-  };
+  immich.enable = true;
+  arr.enable = true;
+  media-player.enable = true;
   reverseProxy.enable = true;
   storage.enable = true;
   tailscale.enable = false;
