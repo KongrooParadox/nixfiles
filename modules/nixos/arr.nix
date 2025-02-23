@@ -217,12 +217,12 @@ in
         wg-p2p = {
           address = [ "10.2.0.2/32" ];
           autostart = true;
-          dns = [ "10.2.0.1" ];
+          dns = [ "10.10.1.100" "192.168.1.100" ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p".path;
           peers = [
             {
               publicKey = "VEtFeCo88R26OwlJ+F1hwNOPhewYNJHL+S078L477Gk=";
-              allowedIPs = [ "0.0.0.0/0" ];
+              allowedIPs = [ "0.0.0.0/0" "::/0" ];
               endpoint = "79.127.169.59:51820";
               persistentKeepalive = 25;
             }
