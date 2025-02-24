@@ -218,7 +218,7 @@ in
         wg-p2p = lib.mkIf (cfg.deluge.wireguardInterface == "wg-p2p") {
           address = [ "10.2.0.2/32" ];
           autostart = true;
-          dns = [ "10.10.1.100" "192.168.1.100" ];
+          dns = [ "10.10.111.100" "192.168.1.100" ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p".path;
           peers = [
             {
@@ -232,7 +232,7 @@ in
         wg-p2p-2 = lib.mkIf (cfg.deluge.wireguardInterface == "wg-p2p-2") {
           address = [ "10.2.0.2/32" ];
           autostart = true;
-          dns = [ "10.10.1.100" "192.168.1.100" ];
+          dns = [ "10.10.111.100" "192.168.1.100" ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p-2".path;
           peers = [
             {
