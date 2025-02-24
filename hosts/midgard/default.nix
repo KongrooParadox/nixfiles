@@ -38,6 +38,7 @@
     enable = true;
     mediaPath = "/mnt/media/gallery";
   };
+  samba.enable = true;
 
   boot = {
     initrd = {
