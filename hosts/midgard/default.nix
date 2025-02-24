@@ -1,11 +1,18 @@
-{ inputs, lib, pkgs, ... }:
+{ config, inputs, lib, ... }:
 
 {
 
   imports = [
     inputs.disko.nixosModules.disko
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     ./disks.nix
     ./hardware-configuration.nix
+  ];
+
+  nixpkgs.overlays = [
+    (self: super: {
+      btop = super.btop.override { cudaSupport = true; };
+    })
   ];
 
   powerManagement = {
@@ -33,9 +40,13 @@
   };
 
   boot = {
-    initrd.postDeviceCommands = lib.mkAfter ''
-      zfs rollback -r root/local/root@blank
-    '';
+    initrd = {
+      postDeviceCommands = lib.mkAfter ''
+        zfs rollback -r root/local/root@blank
+      '';
+      kernelModules = [ "nvidia" "i915" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+    };
+    kernelParams = [ "nvidia-drm.fbdev=1" ];
     supportedFilesystems = [ "zfs" ];
     zfs = {
       forceImportAll = true;
@@ -60,28 +71,46 @@
     };
   };
 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-    ];
+  hardware = {
+    graphics = {
+      enable = true;
+    };
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      open = false;
+      nvidiaSettings = true;
+      prime = {
+        nvidiaBusId = "PCI:1:0:0";
+        offload = {
+          enable = false;
+          enableOffloadCmd = false;
+        };
+      };
+      package = config.boot.kernelPackages.nvidiaPackages.production;
+      forceFullCompositionPipeline = true;
+    };
   };
 
   systemd.tmpfiles.rules = [
     "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
   ];
 
-  services.openssh = {
-    hostKeys = [
-      {
-        path = "/persist/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-      {
-        path = "/persist/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-        bits = 4096;
-      }
-    ];
+  services = {
+    openssh = {
+      hostKeys = [
+        {
+          path = "/persist/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+        {
+          path = "/persist/etc/ssh/ssh_host_rsa_key";
+          type = "rsa";
+          bits = 4096;
+        }
+      ];
+    };
+    xserver.videoDrivers = [ "nvidia" ];
   };
 }
