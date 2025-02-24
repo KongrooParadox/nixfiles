@@ -42,6 +42,7 @@
           host = "asgard";
           username = "ops";
           stateVersion = "24.05";
+          workgroup = "SKYNET";
           inherit self inputs;
         };
         modules = [
@@ -55,6 +56,7 @@
           host = "baldur";
           username = "robot";
           stateVersion = "23.11";
+          workgroup = "SKYNET";
           inherit self inputs;
         };
         modules = [
@@ -68,6 +70,7 @@
           host = "heimdall";
           username = "ops";
           stateVersion = "24.05";
+          workgroup = "SKYNET";
           inherit self inputs;
         };
         modules = [
@@ -81,6 +84,7 @@
           host = "midgard";
           username = "ops";
           stateVersion = "24.11";
+          workgroup = "CASA_ANITA";
           inherit self inputs;
         };
         modules = [
@@ -94,6 +98,7 @@
           host = "njord";
           username = "robot";
           stateVersion = "24.11";
+          workgroup = "SKYNET";
           inherit self inputs;
         };
         modules = [
@@ -107,6 +112,7 @@
           host = "vili";
           username = "ops";
           stateVersion = "24.11";
+          workgroup = "CASA_ANITA";
           inherit self inputs;
         };
         modules = [
@@ -120,6 +126,7 @@
           host = "yggdrasil";
           username = "ops";
           stateVersion = "24.05";
+          workgroup = "SKYNET";
           inherit self inputs;
         };
         modules = [

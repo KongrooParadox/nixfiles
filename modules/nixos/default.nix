@@ -15,6 +15,7 @@
     ./media-player.nix
     ./networking.nix
     ./reverseProxy.nix
+    ./samba.nix
     ./security.nix
     ./sops.nix
     ./steam.nix
