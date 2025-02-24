@@ -28,7 +28,7 @@ return {
                 { desc = '[A]dd file to harpoon list'}
             )
             vim.keymap.set("n", "<leader>h", ui.toggle_quick_menu,
-                { desc = '[E]dit harpoon list'}
+                { desc = 'Edit [H]arpoon list'}
             )
             vim.keymap.set("n", "<C-H>", function() ui.nav_file(1) end,
                 { desc = 'Go to 1st file in harpoon list'}

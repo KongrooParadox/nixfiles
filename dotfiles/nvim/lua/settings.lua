@@ -15,7 +15,7 @@ vim.opt.mouse = 'a'
 
 vim.opt.smartindent = true
 vim.opt.breakindent = true
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 -- Save undo history
 vim.opt.undofile = true
