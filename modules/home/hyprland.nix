@@ -55,9 +55,10 @@ in
             env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
             env = SDL_VIDEODRIVER, x11
             env = MOZ_ENABLE_WAYLAND, 1
-            monitor=DVI-I-1,1920x1080@60.0,4610x345,1.0
-            monitor=DVI-I-2,1920x1200@59.95,2690x225,1.0
-            monitor=eDP-1,2560x1600@60.0,3785x1425,1.6
+            monitor=eDP-1,2560x1600@60.0,4290x1685,1.6
+            monitor=DVI-I-1,1920x1200@59.95,2410x105,1.0
+            monitor=DVI-I-1,transform,1
+            monitor=DVI-I-2,2560x1440@59.95,3610x245,1.0
             monitor=,preferred,auto,1
             general {
               gaps_in = 6
