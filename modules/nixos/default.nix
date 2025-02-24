@@ -23,6 +23,7 @@
     ./stylix.nix
     ./system.nix
     ./tailscale.nix
+    ./ups.nix
     ./users.nix
     ./virtualization.nix
     ./wayland.nix
