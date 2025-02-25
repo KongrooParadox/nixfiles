@@ -3,7 +3,7 @@
     disk = {
       boot-1 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:00:14.0-usbv3-0:2:1.0-scsi-0:0:0:0";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-4";
         content = {
           type = "gpt";
           partitions = {
@@ -29,7 +29,7 @@
       };
       boot-2 = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:00:14.0-usbv2-0:3:1.0-scsi-0:0:0:0";
+        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-5";
         content = {
           type = "gpt";
           partitions = {
@@ -113,38 +113,6 @@
               content = {
                 type = "zfs";
                 pool = "rust";
-              };
-            };
-          };
-        };
-      };
-      ssd-1 = {
-        type = "disk";
-        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-4";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "fast";
-              };
-            };
-          };
-        };
-      };
-      ssd-2 = {
-        type = "disk";
-        device = "/dev/disk/by-path/pci-0000:02:00.0-ata-5";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "fast";
               };
             };
           };
@@ -241,44 +209,6 @@
             mountpoint = "/";
             options."com.sun:auto-snapshot" = "false";
             postCreateHook = "zfs snapshot root/local/root@blank";
-          };
-        };
-      };
-      fast = {
-        type = "zpool";
-        mode = {
-          topology = {
-            type = "topology";
-            vdev = [
-              {
-                mode = "mirror";
-                members = [ "ssd-1" "ssd-2" ];
-              }
-            ];
-          };
-        };
-        options = {
-          ashift = "9";
-          cachefile = "none";
-        };
-
-        datasets = {
-          "fast" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "file:///run/secrets/zfs-dataset/yggdrasil/fast.key";
-            };
-          };
-          "fast/vm" = {
-            type = "zfs_fs";
-            mountpoint = "/mnt/vm";
-            options = {
-              mountpoint = "legacy";
-              "com.sun:auto-snapshot" = "true";
-            };
           };
         };
       };

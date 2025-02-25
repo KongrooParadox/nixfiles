@@ -13,19 +13,19 @@
   };
 
   sops = {
-    age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
+    age = {
+      sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
+    };
     secrets = {
       "zfs-dataset/yggdrasil/root.key" = {};
-      "zfs-dataset/yggdrasil/fast.key" = {};
       "zfs-dataset/yggdrasil/rust.key" = {};
     };
   };
 
   immich.enable = true;
-  arr.enable = true;
-  media-player.enable = true;
   reverseProxy.enable = true;
   storage.enable = true;
+  samba.server.enable = true;
   tailscale.enable = false;
 
   boot = {
