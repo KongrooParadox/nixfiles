@@ -19,4 +19,6 @@
     nssmdns4 = true;
     openFirewall = true;
   };
+
+  samba.client.enable = true;
 }

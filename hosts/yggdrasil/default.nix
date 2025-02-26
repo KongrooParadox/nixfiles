@@ -36,11 +36,11 @@
         device = "nodev";
         mirroredBoots = [
           {
-            devices = [ "/dev/disk/by-path/pci-0000:00:14.0-usb-0:2:1.0-scsi-0:0:0:0-part1" ];
+            devices = [ "/dev/disk/by-path/pci-0000:02:00.0-ata-4" ];
             path = "/boot";
           }
           {
-            devices = [ "/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1" ];
+            devices = [ "/dev/disk/by-path/pci-0000:02:00.0-ata-5" ];
             path = "/boot-fallback";
           }
         ];
