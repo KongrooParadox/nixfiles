@@ -1,7 +1,7 @@
-{ pkgs, config, desktop, lib, ... }:
+{ pkgs, config, ... }:
 
 {
-  config = lib.mkIf desktop.enable {
+  config = {
     stylix.targets.rofi.enable = false;
     programs = {
       rofi = {
@@ -67,7 +67,7 @@
                 "dummy"
                 "mode-switcher"
               ];
-              background-image = mkLiteral ''url("../../wallpapers/bright-milky-way.jpg", width)'';
+              background-image = mkLiteral ''url("../../../wallpapers/bright-milky-way.jpg", width)'';
             };
             "entry" = {
               enabled = true;

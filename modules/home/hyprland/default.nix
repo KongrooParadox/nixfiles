@@ -1,5 +1,4 @@
-{ config, desktop, lib, pkgs, ... }:
-
+{ config, lib, pkgs, ... }:
 let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     dbus-update-activation-environment --systemd --all
@@ -13,8 +12,30 @@ let
   '';
 in
 {
-  config = lib.mkIf desktop.enable {
+  imports = [
+    ./emoji.nix
+    ./rofi.nix
+    ./swaync.nix
+    ./waybar.nix
+    ./wlogout.nix
+  ];
+
+  config = {
+    home.packages = with pkgs; [
+      cliphist
+      wl-clipboard
+      (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
+      (import ../../../scripts/task-waybar.nix { inherit pkgs; })
+      (import ../../../scripts/web-search.nix { inherit pkgs; })
+      (import ../../../scripts/rofi-launcher.nix { inherit pkgs; })
+      (import ../../../scripts/rofi-clipboard-history.nix { inherit pkgs; })
+      (import ../../../scripts/screen-capture.nix { inherit pkgs; })
+      (import ../../../scripts/list-hypr-bindings.nix { inherit pkgs; })
+      (import ../../../scripts/waybar-launcher.nix { inherit pkgs; })
+    ];
+
     stylix.targets.hyprland.enable = false;
+    programs.hyprlock.enable = true;
     services = {
       hyprpaper = {
         enable = true;
@@ -23,9 +44,9 @@ in
           splash = false;
           splash_offset = 2.0;
           preload =
-            [ "${../../wallpapers/dark-nebula.jpg}" ];
+            [ "${../../../wallpapers/dark-nebula.jpg}" ];
           wallpaper = [
-            ",${../../wallpapers/dark-nebula.jpg}"
+            ",${../../../wallpapers/dark-nebula.jpg}"
           ];
         };
       };

@@ -9,6 +9,11 @@ in
       default = false;
       description = lib.mdDoc "Whether to enable desktop-specific config";
     };
+    environment = lib.mkOption {
+      type = lib.types.enum [ "hyprland" "plasma" ];
+      default = "hyprland";
+      description = lib.mdDoc "Which Desktop Environment to install (hyprland or plasma)";
+    };
   };
 
   config = lib.mkIf cfg.enable {
