@@ -12,6 +12,7 @@
   };
 
   desktop.enable = true;
+  podman.enable = true;
   virtualization.enable = true;
 
   services.avahi = {

@@ -14,6 +14,7 @@
     ./immich.nix
     ./media-player.nix
     ./networking.nix
+    ./podman.nix
     ./reverseProxy.nix
     ./samba.nix
     ./security.nix
