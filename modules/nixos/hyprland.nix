@@ -9,6 +9,8 @@
         enable = true;
         package = inputs.hyprland.packages."${pkgs.system}".hyprland;
       };
+      thunar.enable = true;
+      xfconf.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
@@ -26,6 +28,8 @@
           };
         };
       };
+      gvfs.enable = true; # Mount, trash, and other functionalities
+      tumbler.enable = true; # Thumbnail support for images
     };
 
     xdg.portal.configPackages = [

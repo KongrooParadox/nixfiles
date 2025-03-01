@@ -11,5 +11,10 @@
     title Debian
     efi   /efi/debian/shimx64.efi'';
 
+  desktop = {
+    enable = true;
+    environment = "plasma";
+  };
+
   virtualization.enable = true;
 }
