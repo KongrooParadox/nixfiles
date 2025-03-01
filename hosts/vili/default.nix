@@ -33,6 +33,7 @@
       radarr             IN  CNAME midgard
       readarr            IN  CNAME midgard
       sonarr             IN  CNAME midgard
+      svrmmd             IN  A     192.168.1.128
       freebox            IN  A     192.168.1.254
     '';
   };
