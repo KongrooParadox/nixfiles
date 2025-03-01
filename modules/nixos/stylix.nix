@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, ...}:
+{ config, inputs, lib, pkgs, ...}:
 let
   isUnstable = lib.versions.majorMinor lib.version == "25.05";
   nixCfg = if isUnstable then {
@@ -14,7 +14,7 @@ in
 {
   imports = stylixModule;
 
-  config = {
+  config = lib.mkIf (config.desktop.enable && (config.desktop.environment == "hyprland")) {
     stylix = {
       enable = true;
       autoEnable = true;

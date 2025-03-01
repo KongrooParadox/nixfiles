@@ -1,9 +1,11 @@
-{ config, desktop, lib, pkgs, ... }:
+{ desktop, lib, pkgs, ... }:
 {
+  imports = lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland;
+
   config = lib.mkIf desktop.enable {
     home.packages = with pkgs; [
+      # General desktop packages
       brightnessctl
-      cliphist
       filezilla
       keepassxc
       # libreoffice
@@ -12,16 +14,7 @@
       pulseaudio
       texlive.combined.scheme-full
       vlc
-      wl-clipboard
       xdg-utils
-      (import ../../scripts/emoji-picker.nix { inherit pkgs; })
-      (import ../../scripts/task-waybar.nix { inherit pkgs; })
-      (import ../../scripts/web-search.nix { inherit pkgs; })
-      (import ../../scripts/rofi-launcher.nix { inherit pkgs; })
-      (import ../../scripts/rofi-clipboard-history.nix { inherit pkgs; })
-      (import ../../scripts/screen-capture.nix { inherit pkgs; })
-      (import ../../scripts/list-hypr-bindings.nix { inherit pkgs; })
-      (import ../../scripts/waybar-launcher.nix { inherit pkgs; })
     ];
   };
 }

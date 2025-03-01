@@ -1,7 +1,7 @@
-{ config, desktop, lib, ... }:
+{ config, ... }:
 
 {
-  config = lib.mkIf desktop.enable {
+  config = {
     programs.wlogout = {
       enable = true;
       layout = [

@@ -11,6 +11,7 @@
     ./fonts.nix
     ./home-assistant.nix
     ./home-manager.nix
+    ./hyprland.nix
     ./immich.nix
     ./media-player.nix
     ./networking.nix
@@ -27,6 +28,5 @@
     ./ups.nix
     ./users.nix
     ./virtualization.nix
-    ./wayland.nix
   ];
 }

@@ -1,6 +1,6 @@
 { config, inputs, lib, pkgs, username, ... }:
 {
-  config = lib.mkIf config.desktop.enable {
+  config = lib.mkIf (config.desktop.enable && (config.desktop.environment == "hyprland")) {
     environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card0";
 
     programs = {
@@ -18,7 +18,7 @@
         settings = {
           default_session = {
             user = username;
-            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland"; # start Hyprland with a TUI login manager
+            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland --remember-user-session --user-menu";
           };
         };
       };

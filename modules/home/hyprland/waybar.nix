@@ -1,4 +1,4 @@
-{ pkgs, lib, config, desktop, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
@@ -6,7 +6,7 @@ let
 in
 with lib;
 {
-  config = lib.mkIf desktop.enable {
+  config = {
     stylix.targets.waybar.enable = false;
     programs.waybar = {
       enable = true;

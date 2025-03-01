@@ -4,16 +4,9 @@
     ./browser.nix
     ./desktop.nix
     ./editor.nix
-    ./emoji.nix
     ./git.nix
-    ./hyprland.nix
-    ./rofi.nix
-    ./hyprlock.nix
     ./rclone.nix
-    ./swaync.nix
     ./terminal.nix
-    ./waybar.nix
-    ./wlogout.nix
   ];
 
   home = {
