@@ -24,10 +24,9 @@ in
       systemPackages = with pkgs; [
         adwaita-icon-theme
         android-tools
-        buildah
         calibre
         deluge-gtk
-        #discord #broken for aarch64
+        # discord #broken for aarch64
         displaylink
         element-desktop
         evolution
@@ -39,6 +38,7 @@ in
         hyprpicker
         ifuse # optional, to mount using 'ifuse'
         inkscape
+        kooha
         krita
         kubectl
         kubernetes-helm
@@ -51,16 +51,13 @@ in
         nodejs_22
         parsec-bin
         pavucontrol
-        peek
         pkg-config
-        podman
         protonmail-bridge
         protonvpn-gui
         python3
         remmina
         samba
         screenkey
-        swaynotificationcenter
         teams-for-linux
         transmission_4
         usbutils

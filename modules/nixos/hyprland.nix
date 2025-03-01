@@ -11,6 +11,10 @@
       };
     };
 
+    environment.systemPackages = with pkgs; [
+      swaynotificationcenter
+    ];
+
     services = {
       greetd = {
         enable = true;

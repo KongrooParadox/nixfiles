@@ -22,6 +22,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
+      buildah
       dive
       podman-tui
       # docker-compose

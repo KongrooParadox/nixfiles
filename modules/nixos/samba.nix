@@ -57,10 +57,10 @@ in
           group = cfg.server.group;
           };
           ${username} = {
-              hashedPasswordFile = config.sops.secrets."users/${username}/password".path;
-              extraGroups = [ "media" ];
-              isNormalUser = true;
-              group = cfg.server.group;
+            hashedPasswordFile = config.sops.secrets."users/${username}/password".path;
+            extraGroups = [ "media" ];
+            isNormalUser = true;
+            group = cfg.server.group;
           };
           ${cfg.server.user} = {
             extraGroups = [ "media" ];
