@@ -1,5 +1,7 @@
 keys:
   - &asgard age1uqltjql96ttngvw4peylxtg2fnkgtlqxld9naeda34mp9l3zf3jsndncy5
+  - &baldur-root age1qva0v8ka9pnh748fswd60y52luum5hthf7t5fh483xm7wn5al5hslejace
+  - &baldur-robot age1q6a6qcuczj26e900mh4she2n0ezlze0297usjarpddzvdhst7yhshg9cds
   - &heimdall age1jvc7p6m0dz8a2p8k8yv38z94a50sypsunpnxg7w4mfm565vv3caqwumktk
   - &midgard-ops age17zv30v64zrxslhtkzc8qzguwyrzlryk9a2c55m4fmguhrjz8fsjsc3pycx
   - &midgard-root age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
@@ -14,6 +16,8 @@ creation_rules:
     key_groups:
       - age:
         - *asgard
+        - *baldur-root
+        - *baldur-robot
         - *heimdall
         - *midgard-ops
         - *midgard-root
