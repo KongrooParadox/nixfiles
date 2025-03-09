@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, ... }:
 {
   programs = {
     alacritty = {
@@ -116,7 +116,7 @@
         autoload -U +X bashcompinit && bashcompinit
         complete -F __start_kubectl k
         complete -o nospace -C $(which terraform) terraform
-        path+=('/home/${username}/go/bin')
+        path+=('/home/${config.home.username}/go/bin')
         export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
         '';
     };

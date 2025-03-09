@@ -1,4 +1,4 @@
-{ config, host, inputs, lib, stateVersion, username, ...}:
+{ config, host, inputs, lib, stateVersion, users, ...}:
 let
   cfg = config.hm;
   desktop = config.desktop;
@@ -14,15 +14,18 @@ in
       default = true;
       description = lib.mdDoc "Whether to enable home-manager modules";
     };
+    users = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = users;
+      description = lib.mdDoc "List of users to enable home-manager for";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     home-manager.sharedModules = [
       inputs.sops-nix.homeManagerModules.sops {
         sops = {
-          age.sshKeyPaths = [
-            "/home/${username}/.ssh/id_ed25519"
-          ];
+          age.sshKeyPaths = map (user: "/home/${user}/.ssh/id_ed25519") users;
           defaultSopsFile = ../../secrets/secrets.yaml;
           defaultSopsFormat = "yaml";
           secrets."anthropic-api-key" = {};
@@ -31,17 +34,16 @@ in
     ];
     home-manager = {
       useUserPackages = true;
-      extraSpecialArgs = { inherit inputs username host desktop; };
-      users.${username} = {
+      extraSpecialArgs = { inherit inputs host desktop users; };
+      users = lib.genAttrs users (name: {
         imports = [ ../home ];
         home = {
-          username = "${username}";
-          homeDirectory = lib.mkForce "/home/${username}";
+          username = name;
+          homeDirectory = lib.mkForce "/home/${name}";
           stateVersion = stateVersion;
         };
         programs.home-manager.enable = true;
-      };
+      });
     };
-
   };
 }
