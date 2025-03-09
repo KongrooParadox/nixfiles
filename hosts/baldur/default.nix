@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   imports =
@@ -18,6 +18,12 @@
       devNodes = "/dev/disk/by-path";
     };
   };
+
+  services.xserver.xkb.layout = lib.mkForce "fr(azerty),ara(azerty),us";
+
+  home-manager.users.fatiha.home.packages = [
+    pkgs.zoom-us
+  ];
 
   # Because zfs tries to load encryption keys before sops secret is available
   systemd.services.zfs-mount.serviceConfig.ExecStartPre = ''
