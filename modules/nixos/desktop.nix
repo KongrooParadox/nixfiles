@@ -92,6 +92,5 @@ in
         pkgs.xdg-desktop-portal
       ];
     };
-
   };
 }
