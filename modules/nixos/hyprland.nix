@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, username, ... }:
+{ config, inputs, lib, pkgs, users, ... }:
 {
   config = lib.mkIf (config.desktop.enable && (config.desktop.environment == "hyprland")) {
     environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card0";
@@ -23,7 +23,7 @@
         vt = 3;
         settings = {
           default_session = {
-            user = username;
+            user = lib.lists.head users; # First user in list is the default
             command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland --remember";
           };
         };

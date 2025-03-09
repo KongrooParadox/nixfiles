@@ -1,4 +1,4 @@
-{ host, username, ... }:
+{ host, users, ... }:
 {
   networking = {
     firewall = {
@@ -13,5 +13,10 @@
     hostName = host;
   };
 
-  users.users.${username}.extraGroups = [ "networkmanager" ];
+  users.users = builtins.listToAttrs (
+    map (user: {
+      name = user;
+      value.extraGroups = [ "networkmanager" ];
+    }) users
+  );
 }

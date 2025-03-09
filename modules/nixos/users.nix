@@ -1,17 +1,27 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, users, ... }:
 {
-  sops.secrets."users/${username}/password".neededForUsers = true;
-  sops.secrets."users/root/password".neededForUsers = true;
+  sops.secrets = builtins.listToAttrs (
+    map (user: {
+      name = "users/${user}/password";
+      value = { neededForUsers = true; };
+      }) users
+    ) // {
+    "users/root/password".neededForUsers = true;
+  };
 
-  users.users = {
-    ${username} = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      description = "${username}";
-      extraGroups = [ "wheel" "video" ];
-      hashedPasswordFile = config.sops.secrets."users/${username}/password".path;
-      openssh.authorizedKeys.keys = (import ./ssh.nix).keys;
-    };
+  users.users = builtins.listToAttrs (
+    map (user: {
+      name = user;
+      value = {
+        isNormalUser = true;
+        shell = pkgs.zsh;
+        description = user;
+        extraGroups = [ "wheel" "video" ];
+        hashedPasswordFile = config.sops.secrets."users/${user}/password".path;
+        openssh.authorizedKeys.keys = (import ./ssh.nix).keys;
+      };
+      }) users
+  ) // {
     root = {
       hashedPasswordFile = config.sops.secrets."users/root/password".path;
       openssh.authorizedKeys.keys = (import ./ssh.nix).keys;

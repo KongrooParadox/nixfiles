@@ -40,7 +40,7 @@
         specialArgs = {
           domain = "tavel.kongroo.ovh";
           host = "asgard";
-          username = "ops";
+          users = [ "ops" ];
           stateVersion = "24.05";
           workgroup = "SKYNET";
           inherit self inputs;
@@ -54,7 +54,7 @@
         specialArgs = {
           domain = "tavel.kongroo.ovh";
           host = "baldur";
-          username = "robot";
+          users = [ "fatiha" "robot" ];
           stateVersion = "23.11";
           workgroup = "SKYNET";
           inherit self inputs;
@@ -68,7 +68,7 @@
         specialArgs = {
           domain = "tavel.kongroo.ovh";
           host = "heimdall";
-          username = "ops";
+          users = [ "ops" ];
           stateVersion = "24.05";
           workgroup = "SKYNET";
           inherit self inputs;
@@ -82,7 +82,7 @@
         specialArgs = {
           domain = "pernes.kongroo.ovh";
           host = "midgard";
-          username = "ops";
+          users = [ "ops" ];
           stateVersion = "24.11";
           workgroup = "CASA_ANITA";
           inherit self inputs;
@@ -96,7 +96,7 @@
         specialArgs = {
           domain = "tavel.kongroo.ovh";
           host = "njord";
-          username = "robot";
+          users = [ "robot" ];
           stateVersion = "24.11";
           workgroup = "SKYNET";
           inherit self inputs;
@@ -110,7 +110,7 @@
         specialArgs = {
           domain = "pernes.kongroo.ovh";
           host = "vili";
-          username = "ops";
+          users = [ "ops" ];
           stateVersion = "24.11";
           workgroup = "CASA_ANITA";
           inherit self inputs;
@@ -124,7 +124,7 @@
         specialArgs = {
           domain = "tavel.kongroo.ovh";
           host = "yggdrasil";
-          username = "ops";
+          users = [ "ops" ];
           stateVersion = "24.05";
           workgroup = "SKYNET";
           inherit self inputs;

@@ -42,18 +42,6 @@
     };
     secrets = {
       "zfs-dataset/baldur/encrypted.key" = {};
-      "users/fatiha/password".neededForUsers = true;
-    };
-  };
-
-  users.users = {
-    fatiha = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      description = "Fatiha";
-      extraGroups = [ "wheel" "video" ];
-      hashedPasswordFile = config.sops.secrets."users/fatiha/password".path;
-      openssh.authorizedKeys.keys = (import ../../modules/nixos/ssh.nix).keys;
     };
   };
 
@@ -71,5 +59,6 @@
     ];
   };
 
+  system.language = "fr_FR";
   virtualization.enable = true;
 }

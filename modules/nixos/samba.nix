@@ -1,9 +1,9 @@
-{ config, domain, host, lib, pkgs, username, workgroup, ... }:
+{ config, domain, host, lib, pkgs, users, workgroup, ... }:
 
 let
   cfg = config.samba;
-  automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,uid=1000,gid=100,credentials=${config.sops.secrets."smb/${username}".path}";
-  # ^ prevents hanging on network split
+  # Prevent hanging on network split
+  automount_opts = user: "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,uid=1000,gid=100,credentials=${config.sops.secrets."smb/${user}".path}";
 in
 {
   options.samba = {
@@ -37,13 +37,28 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.server.enable {
-      sops.secrets = {
+      sops.secrets = (builtins.listToAttrs (
+        map (user: {
+          name = "users/${user}/password";
+          value.neededForUsers = true;
+        }) users
+      )) // {
         "users/michel/password".neededForUsers = true;
         "users/robot/password".neededForUsers = true;
-        "users/${username}/password".neededForUsers = true;
       };
+
       users = {
-        users = {
+        users = (builtins.listToAttrs (
+          map (user: {
+            name = user;
+            value = {
+              hashedPasswordFile = config.sops.secrets."users/${user}/password".path;
+              extraGroups = [ "media" ];
+              isNormalUser = true;
+              group = cfg.server.group;
+            };
+          }) users
+        )) // {
           michel = {
             hashedPasswordFile = config.sops.secrets."users/michel/password".path;
             extraGroups = [ "media" ];
@@ -51,13 +66,7 @@ in
             group = cfg.server.group;
           };
           robot = {
-          hashedPasswordFile = config.sops.secrets."users/robot/password".path;
-          extraGroups = [ "media" ];
-          isNormalUser = true;
-          group = cfg.server.group;
-          };
-          ${username} = {
-            hashedPasswordFile = config.sops.secrets."users/${username}/password".path;
+            hashedPasswordFile = config.sops.secrets."users/robot/password".path;
             extraGroups = [ "media" ];
             isNormalUser = true;
             group = cfg.server.group;
@@ -139,25 +148,44 @@ in
       };
     })
     (lib.mkIf cfg.client.enable {
-      sops.secrets."smb/${username}" = {};
+      sops.secrets = builtins.listToAttrs (
+        map (user: {
+          name = "smb/${user}";
+          value = {};
+        }) users
+      );
+
       environment.systemPackages = [ pkgs.cifs-utils ];
-      fileSystems = {
-        "/mnt/share/backup" = {
-          device = "//smb.${domain}/backup";
-          fsType = "cifs";
-          options = ["${automount_opts}" ];
-        };
-        "/mnt/share/compute" = {
-          device = "//smb.${domain}/compute";
-          fsType = "cifs";
-          options = ["${automount_opts}" ];
-        };
-        "/mnt/share/media" = {
-          device = "//smb.${domain}/media";
-          fsType = "cifs";
-          options = ["${automount_opts}" ];
-        };
-      };
+
+      fileSystems = builtins.listToAttrs (
+        builtins.concatMap (user: [
+          {
+            name = "/mnt/share/${user}/backup";
+            value = {
+              device = "//smb.${domain}/backup";
+              fsType = "cifs";
+              options = [ (automount_opts user) ];
+            };
+          }
+          {
+            name = "/mnt/share/${user}/compute";
+            value = {
+              device = "//smb.${domain}/compute";
+              fsType = "cifs";
+              options = [ (automount_opts user) ];
+            };
+          }
+          {
+            name = "/mnt/share/${user}/media";
+            value = {
+              device = "//smb.${domain}/media";
+              fsType = "cifs";
+              options = [ (automount_opts user) ];
+            };
+          }
+        ]) users
+      );
     })
   ];
 }
+

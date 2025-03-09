@@ -1,109 +1,126 @@
-{ inputs, pkgs, stateVersion, ... }:
+{ config, inputs, lib, pkgs, stateVersion, ... }:
+let
+  cfg = config.system;
+in
 {
-  system.stateVersion = stateVersion;
-
-  nix = {
-    # sets NIX_PATH to flake input for nixd
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "@wheel" ];
+  options.system = {
+    encoding = lib.mkOption {
+      type = lib.types.str;
+      default = "UTF-8";
+      description = "Encoding to be used throughout the system";
     };
-    # Perform garbage collection weekly to maintain low disk usage
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    settings.auto-optimise-store = true;
-  };
-
-  powerManagement = {
-    enable = true;
-    powertop.enable = true;
-  };
-
-  # Set your time zone.
-  time.timeZone = "Europe/Paris";
-
-  # Select internationalisation properties.
-  i18n = {
-    defaultLocale = "en_GB.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "en_GB.UTF-8";
-      LC_COLLATE = "en_GB.UTF-8";
-      LC_CTYPE = "en_GB.UTF-8";
-      LC_IDENTIFICATION = "en_GB.UTF-8";
-      LC_MEASUREMENT = "en_GB.UTF-8";
-      LC_MESSAGES = "en_GB.UTF-8";
-      LC_MONETARY = "en_GB.UTF-8";
-      LC_NAME = "en_GB.UTF-8";
-      LC_NUMERIC = "en_GB.UTF-8";
-      LC_PAPER = "en_GB.UTF-8";
-      LC_TELEPHONE = "en_GB.UTF-8";
-      LC_TIME = "en_GB.UTF-8";
+    language = lib.mkOption {
+      type = lib.types.str;
+      default = "en_GB";
+      description = "Language to be used throughout the system";
     };
   };
 
-  environment = {
-    variables = {
-      LANG = "en_GB.UTF-8";
-      LC_ALL = "en_GB.UTF-8";
+  config = {
+    system.stateVersion = stateVersion;
+
+    nix = {
+      # sets NIX_PATH to flake input for nixd
+      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+      settings = {
+        experimental-features = [ "nix-command" "flakes" ];
+        trusted-users = [ "root" "@wheel" ];
+      };
+      # Perform garbage collection weekly to maintain low disk usage
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
+      settings.auto-optimise-store = true;
     };
-    localBinInPath = true;
-    systemPackages = with pkgs; [
-      acpi
-      age
-      bat
-      btop
-      cmake
-      curl
-      direnv
-      dnsutils
-      fd
-      fzf
-      gcc
-      gnumake
-      ipcalc
-      iptables
-      jq
-      lftp
-      lsb-release
-      nettools
-      nmap
-      ripgrep
-      rsync
-      sops
-      sudo
-      ssh-to-age
-      tcpdump
-      traceroute
-      tree
-      unzip
-      virtualenv
-      wget
-      yad
-      yq
-    ];
-  };
 
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-    settings = {
-      default-cache-ttl = 7200;
-      max-cache-ttl = 43200;
+    powerManagement = {
+      enable = true;
+      powertop.enable = true;
     };
+
+    # Set your time zone.
+    time.timeZone = "Europe/Paris";
+
+    # Select internationalisation properties.
+    i18n = {
+      defaultLocale = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+      extraLocaleSettings = lib.mkDefault {
+        LC_ADDRESS = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_COLLATE = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_CTYPE = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_IDENTIFICATION = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_MEASUREMENT = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_MESSAGES = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_MONETARY = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_NAME = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_NUMERIC = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_PAPER = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_TELEPHONE = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_TIME = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+      };
+    };
+
+    environment = {
+      variables = {
+        LANG = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+        LC_ALL = lib.mkDefault "${cfg.language}.${cfg.encoding}";
+      };
+      localBinInPath = true;
+      systemPackages = with pkgs; [
+        acpi
+        age
+        bat
+        btop
+        cmake
+        curl
+        direnv
+        dnsutils
+        fd
+        fzf
+        gcc
+        gnumake
+        ipcalc
+        iptables
+        jq
+        lftp
+        lsb-release
+        nettools
+        nmap
+        ripgrep
+        rsync
+        sops
+        sudo
+        ssh-to-age
+        tcpdump
+        traceroute
+        tree
+        unzip
+        virtualenv
+        wget
+        yad
+        yq
+        ];
+    };
+
+    # Enable the OpenSSH daemon.
+    services.openssh = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      settings = {
+        default-cache-ttl = 7200;
+        max-cache-ttl = 43200;
+      };
+    };
+
+    programs.zsh.enable = true;
+    # Allow unfree packages
+    nixpkgs.config.allowUnfree = true;
   };
-
-  programs.zsh.enable = true;
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
 }

@@ -1,4 +1,7 @@
-{ desktop, lib, pkgs, ... }:
+{ config, desktop, lib, pkgs, ... }:
+let
+  currentArchitecture = config.nixpkgs.system;
+in
 {
   imports = lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland;
 
@@ -8,13 +11,14 @@
       brightnessctl
       filezilla
       keepassxc
-      # libreoffice
       mumble
       playerctl
       pulseaudio
       texlive.combined.scheme-full
       vlc
       xdg-utils
+    ]++ lib.optionals (currentArchitecture == "x86_64-linux") [
+      libreoffice
     ];
   };
 }

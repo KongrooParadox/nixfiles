@@ -1,7 +1,7 @@
-{ config, lib, pkgs, username, ... }:
+{ config, lib, pkgs, users, ... }:
 let
   cfg = config.virtualization;
-  currentArchitecture = config.nixpkgs.hostPlatform.system;
+  currentArchitecture = config.nixpkgs.system;
 in
 {
   options.virtualization = {
@@ -31,7 +31,12 @@ in
 
     programs.virt-manager.enable = true;
 
-    users.users.${username}.extraGroups = [ "libvirtd" ];
+    users.users = builtins.listToAttrs (
+      map (user: {
+        name = user;
+        value.extraGroups = [ "libvirtd" ];
+      }) users
+    );
 
     # Enable emulation for other architectures
     boot.binfmt.emulatedSystems = lib.lists.remove currentArchitecture [ "x86_64-linux" "aarch64-linux" ];
