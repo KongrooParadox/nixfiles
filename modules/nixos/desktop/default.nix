@@ -10,11 +10,13 @@ in
       description = lib.mdDoc "Whether to enable desktop-specific config";
     };
     environment = lib.mkOption {
-      type = lib.types.enum [ "hyprland" "plasma" ];
+      type = lib.types.enum [ "hyprland" "plasma" "gnome" ];
       default = "hyprland";
-      description = lib.mdDoc "Which Desktop Environment to install (hyprland or plasma)";
+      description = lib.mdDoc "Which Desktop Environment to install (hyprland, plasma or gnome)";
     };
   };
+
+  imports = [ ./gnome.nix ./hyprland.nix ./plasma.nix ];
 
   config = lib.mkIf cfg.enable {
     system.stateVersion = stateVersion;
