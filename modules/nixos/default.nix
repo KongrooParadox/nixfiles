@@ -6,16 +6,14 @@
     ./arr.nix
     ./audio.nix
     ./boot.nix
-    ./desktop.nix
+    ./desktop
     ./dns-server.nix
     ./fonts.nix
     ./home-assistant.nix
     ./home-manager.nix
-    ./hyprland.nix
     ./immich.nix
     ./media-player.nix
     ./networking.nix
-    ./plasma.nix
     ./podman.nix
     ./reverseProxy.nix
     ./samba.nix

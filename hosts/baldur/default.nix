@@ -19,7 +19,7 @@
     };
   };
 
-  services.xserver.xkb.layout = lib.mkForce "fr(azerty),ara(azerty),us";
+  services.xserver.xkb.layout = lib.mkForce "fr,ara,us";
 
   home-manager.users.fatiha.home.packages = [
     pkgs.zoom-us
@@ -32,7 +32,7 @@
 
   desktop = {
     enable = true;
-    environment = "plasma";
+    environment = "gnome";
   };
 
   networking = {
