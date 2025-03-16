@@ -160,7 +160,7 @@ in
       fileSystems = builtins.listToAttrs (
         builtins.concatMap (user: [
           {
-            name = "/mnt/share/${user}/backup";
+            name = "/mnt/share/backup";
             value = {
               device = "//smb.${domain}/backup";
               fsType = "cifs";
@@ -168,7 +168,7 @@ in
             };
           }
           {
-            name = "/mnt/share/${user}/compute";
+            name = "/mnt/share/compute";
             value = {
               device = "//smb.${domain}/compute";
               fsType = "cifs";
@@ -176,7 +176,7 @@ in
             };
           }
           {
-            name = "/mnt/share/${user}/media";
+            name = "/mnt/share/media";
             value = {
               device = "//smb.${domain}/media";
               fsType = "cifs";
