@@ -131,6 +131,7 @@
         };
         modules = [
           ./modules/nixos
+          impermanence.nixosModules.impermanence
         ];
       };
     };

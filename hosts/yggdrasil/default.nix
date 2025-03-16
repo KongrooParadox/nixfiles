@@ -48,7 +48,7 @@
       systemd-boot.enable = lib.mkForce false;
     };
 
-    initrd.postDeviceCommands = lib.mkAfter ''
+    initrd.postResumeCommands = lib.mkAfter ''
       zfs rollback -r root/local/root@blank
     '';
     supportedFilesystems = [ "zfs" ];
@@ -57,9 +57,21 @@
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
-  ];
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    directories = [
+      "/var/log"
+      "/var/lib/acme"
+      "/var/lib/nixos"
+      "/var/lib/postgresql"
+      "/var/lib/redis-immich/"
+      "/var/lib/samba"
+      "/var/lib/systemd/coredump"
+    ];
+    files = [
+      "/etc/machine-id"
+    ];
+  };
 
   services.openssh = {
     hostKeys = [
