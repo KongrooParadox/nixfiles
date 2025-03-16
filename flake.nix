@@ -28,12 +28,11 @@
     };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-    };
+    sops-nix.url = "github:Mic92/sops-nix";
+    impermanence.url = "github:nix-community/impermanence";
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, self, ... }@inputs: {
+  outputs = { nixpkgs, nixpkgs-unstable, impermanence, self, ... }@inputs: {
     nixosConfigurations = {
       asgard = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
@@ -61,6 +60,7 @@
         };
         modules = [
           ./modules/nixos
+          impermanence.nixosModules.impermanence
         ];
       };
       heimdall = nixpkgs-unstable.lib.nixosSystem {
