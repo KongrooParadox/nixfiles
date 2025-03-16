@@ -1,13 +1,12 @@
 { pkgs, lib, inputs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      inputs.disko.nixosModules.disko
-      ./disks.nix
-      inputs.nixos-hardware.nixosModules.dell-inspiron-7405
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    inputs.disko.nixosModules.disko
+    ./disks.nix
+    inputs.nixos-hardware.nixosModules.dell-inspiron-7405
+    ./hardware-configuration.nix
+  ];
 
   boot = {
     initrd.postResumeCommands = lib.mkAfter ''
