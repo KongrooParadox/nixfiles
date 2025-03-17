@@ -3,7 +3,7 @@
 let
   cfg = config.samba;
   # Prevent hanging on network split
-  automount_opts = user: "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,uid=1000,gid=100,credentials=${config.sops.secrets."smb/${user}".path}";
+  automount_opts = user: "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${config.sops.secrets."smb/${user}".path}";
 in
 {
   options.samba = {
@@ -31,6 +31,18 @@ in
         type = lib.types.bool;
         default = false;
         description = lib.mdDoc "Whether to enable Samba client";
+      };
+
+      uid = lib.mkOption {
+        type = lib.types.str;
+        default = "1000";
+        description = lib.mdDoc "UID of user to own samba mountpoint";
+      };
+
+      gid = lib.mkOption {
+        type = lib.types.str;
+        default = "100";
+        description = lib.mdDoc "ID of group to own samba mountpoint";
       };
     };
   };

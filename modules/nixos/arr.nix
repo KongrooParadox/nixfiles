@@ -35,6 +35,24 @@ in
         '';
     };
 
+    mediaBasePath = lib.mkOption {
+      type = lib.types.str;
+      default = "/mnt/media";
+      example = "/var/lib/media";
+      description = lib.mdDoc ''
+        Base path of media folder (used for downloads).
+        '';
+    };
+
+    computeBasePath = lib.mkOption {
+      type = lib.types.str;
+      default = "${cfg.computeBasePath}";
+      example = "/var/lib/compute";
+      description = lib.mdDoc ''
+        Base path for arr apps (aka compute path).
+        '';
+    };
+
     prowlarr = {
       enable = lib.mkOption {
         type = lib.types.bool;
@@ -124,7 +142,6 @@ in
         prowlarr.port = 9696;
         radarr.port = 7878;
         readarr.port = 8787;
-        # sabnzbd.port = 8080;
         sonarr.port = 8989;
       };
     };
@@ -134,17 +151,17 @@ in
         authFile = config.sops.secrets."deluge-auth".path;
         config = {
           allow_remote = false;
-          download_location = "/mnt/media/downloads/torrents/current";
+          download_location = "${cfg.mediaBasePath}/downloads/torrents/current";
           max_half_open_connections = 100;
           max_connections_per_second = 100;
           move_completed = true;
-          move_completed_path = "/mnt/media/downloads/torrents/completed";
+          move_completed_path = "${cfg.mediaBasePath}/downloads/torrents/completed";
           outgoing_interface = cfg.deluge.wireguardInterface;
           pre_allocate_storage = false; # ZFS doesn't support fallocate
-          torrentfiles_location = "/mnt/media/downloads/torrents/files";
+          torrentfiles_location = "${cfg.mediaBasePath}/downloads/torrents/files";
           enabled_plugins = [ "Label" ];
         };
-        dataDir = "/mnt/compute/deluge/";
+        dataDir = "${cfg.computeBasePath}/deluge/";
         declarative = true;
         enable = true;
         group = "media";
@@ -162,28 +179,28 @@ in
       };
 
       radarr = lib.mkIf cfg.radarr.enable {
-        dataDir = "/mnt/compute/radarr/.config/Radarr";
+        dataDir = "${cfg.computeBasePath}/radarr/.config/Radarr";
         enable = true;
         group = "media";
         openFirewall = true;
       };
 
       readarr = lib.mkIf cfg.readarr.enable {
-        dataDir = "/mnt/compute/readarr/.config/Readarr";
+        dataDir = "${cfg.computeBasePath}/readarr/.config/Readarr";
         enable = true;
         group = "media";
         openFirewall = true;
       };
 
       sonarr = lib.mkIf cfg.sonarr.enable {
-        dataDir = "/mnt/compute/sonarr/.config/Sonarr";
+        dataDir = "${cfg.computeBasePath}/sonarr/.config/Sonarr";
         enable = true;
         group = "media";
         openFirewall = true;
       };
 
       lidarr = lib.mkIf cfg.lidarr.enable {
-        dataDir = "/mnt/compute/lidarr/.config/Lidarr";
+        dataDir = "${cfg.computeBasePath}/lidarr/.config/Lidarr";
         enable = true;
         group = "media";
         openFirewall = true;
@@ -193,7 +210,7 @@ in
         enable = true;
         group = "media";
         settings = {
-          MainDir = "/mnt/media/downloads";
+          MainDir = "${cfg.mediaBasePath}/downloads";
           "Server1.Name" = "Newshosting";
           "Server1.Host" = "news.newshosting.com";
           "Server1.Port" = "563";
