@@ -20,6 +20,18 @@
     interfaces."br0".useDHCP = true;
   };
 
+  samba.client = {
+    enable = true;
+    uid = "1001";
+    gid = "990";
+  };
   ups.enable = true;
+  reverseProxy.enable = true;
+  arr = {
+    enable = true;
+    mediaBasePath = "/mnt/share/media";
+    computeBasePath = "/var/lib";
+  };
+  media-player.enable = true;
 
 }
