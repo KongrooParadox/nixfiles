@@ -13,6 +13,7 @@ in
       keepassxc
       mumble
       playerctl
+      prusa-slicer
       pulseaudio
       texlive.combined.scheme-full
       vlc
