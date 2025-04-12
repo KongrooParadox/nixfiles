@@ -1,6 +1,7 @@
-{ config, lib, pkgs, stateVersion, ... }:
+{ config, inputs, lib, pkgs, stateVersion, ... }:
 let
   cfg = config.desktop;
+  nixpkgs-stable = inputs.nixpkgs.legacyPackages.${pkgs.system};
 in
 {
   options.desktop = {
@@ -26,7 +27,7 @@ in
       systemPackages = with pkgs; [
         adwaita-icon-theme
         android-tools
-        calibre
+        nixpkgs-stable.calibre
         deluge-gtk
         # discord #broken for aarch64
         displaylink
@@ -46,7 +47,6 @@ in
         kubernetes-helm
         libimobiledevice # usb drivers for apple mobile devices
         mesa
-        mesa.drivers
         moonlight-qt
         networkmanagerapplet
         nixos-anywhere

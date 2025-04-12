@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+{ config, inputs, pkgs, ... }:
+let
+  nixpkgsStable = inputs.nixpkgs.legacyPackages.${pkgs.system};
+in
 {
   programs = {
     alacritty = {
@@ -40,9 +43,9 @@
       baseIndex = 1;
       aggressiveResize = true;
       plugins = with pkgs; [
-        tmuxPlugins.vim-tmux-navigator
+        nixpkgsStable.tmuxPlugins.vim-tmux-navigator
         {
-          plugin = tmuxPlugins.catppuccin;
+          plugin = nixpkgsStable.tmuxPlugins.catppuccin;
           extraConfig = ''
             set -g @catppuccin_window_default_fill "number"
             set -g @catppuccin_window_default_text "#W"
@@ -51,9 +54,9 @@
             set -g @catppuccin_status_modules_right "host session battery date_time"
           '';
         }
-        tmuxPlugins.battery
+        nixpkgsStable.tmuxPlugins.battery
         {
-          plugin = tmuxPlugins.resurrect;
+          plugin = nixpkgsStable.tmuxPlugins.resurrect;
           extraConfig = "set -g @resurrect-strategy-nvim 'session'";
         }
       ];
