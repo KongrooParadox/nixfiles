@@ -88,6 +88,7 @@ in
         lsb-release
         nettools
         nmap
+        openssl
         ripgrep
         rsync
         sops

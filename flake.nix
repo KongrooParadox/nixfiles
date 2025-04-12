@@ -2,7 +2,8 @@
   description = "flake for my NixOS machines";
 
   inputs = {
-    apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    apple-silicon.url = "github:tpwrules/nixos-apple-silicon?rev=f51de44b1d720ac23e838db8e0cf13fadb7942b8";
+    # Remove ^ pin once MR is merged : https://github.com/tpwrules/nixos-apple-silicon/pull/284
     # apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/kernel-6.12";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager-unstable = {

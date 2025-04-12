@@ -103,13 +103,13 @@ in
               sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
               accel_profile = flat
             }
-            windowrule = noborder,^(wofi)$
-            windowrule = center,^(wofi)$
-            windowrule = center,^(steam)$
-            windowrule = float, nm-connection-editor|blueman-manager
-            windowrule = float, swayimg|vlc|Viewnior|pavucontrol
-            windowrule = float, nwg-look|qt5ct|mpv
-            windowrule = float, zoom
+            windowrulev2 = noborder,class:^(wofi)$
+            windowrulev2 = center,class:^(wofi)$
+            windowrulev2 = center,class:^(steam)$
+            windowrulev2 = float, class:nm-connection-editor|blueman-manager
+            windowrulev2 = float, class:swayimg|vlc|Viewnior|pavucontrol
+            windowrulev2 = float, class:nwg-look|qt5ct|mpv
+            windowrulev2 = float, class:zoom
             windowrulev2 = stayfocused, title:^()$,class:^(steam)$
             windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
             windowrulev2 = opacity 0.9 0.7, class:^(Firefox)$
