@@ -45,6 +45,7 @@ in
         krita
         kubectl
         kubernetes-helm
+        k9s
         libimobiledevice # usb drivers for apple mobile devices
         mesa
         moonlight-qt
@@ -60,6 +61,7 @@ in
         remmina
         samba
         screenkey
+        talosctl
         teams-for-linux
         transmission_4
         usbutils

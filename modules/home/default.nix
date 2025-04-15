@@ -15,6 +15,10 @@
         source = ../../dotfiles/libvirt;
         target = ".config/libvirt";
       };
+      ".config/k9s" = {
+        source = ../../dotfiles/k9s;
+        recursive = true;
+      };
       ".config/nvim" = {
         source = ../../dotfiles/nvim;
         recursive = true;
