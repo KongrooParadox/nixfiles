@@ -44,6 +44,7 @@ in
         kooha
         krita
         kubectl
+        kubectx
         kubernetes-helm
         k9s
         libimobiledevice # usb drivers for apple mobile devices
