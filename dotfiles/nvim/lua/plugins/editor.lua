@@ -78,6 +78,9 @@ return {
         'lucidph3nx/nvim-sops',
         event = { 'BufEnter' },
         opts = {
+            defaults = {
+                ageSshPrivateKeyFile = '~/.ssh/id_ed25519',
+            },
             keys = {
                 { '<leader>ef', vim.cmd.SopsEncrypt, desc = '[E]ncrypt [F]ile' },
                 { '<leader>df', vim.cmd.SopsDecrypt, desc = '[D]ecrypt [F]ile' },
