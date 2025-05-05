@@ -1,0 +1,5 @@
+   34  git status
+   35  git log
+   36  sudo nix run 'github:nix-community/disko/latest#disko-install' --extra-experimental-features nix-command --extra-experimental-features flakes -- --flake .#njord --disk root /dev/disk/by-partuuid/123a0f8d-23d0-4c3c-8a05-7807915bc897 
+   37  history 
+   38  history  | tail -n5 > hist

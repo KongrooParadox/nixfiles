@@ -30,32 +30,6 @@
     };
   };
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/20500965-093f-4ce7-b83f-79b73f3b2ee6";
-      fsType = "btrfs";
-      options = [ "subvol=@" ];
-    };
-
-  boot.initrd.luks.devices."nixos-root".device = "/dev/disk/by-uuid/93305040-d520-4794-8a1e-bcd1776f44be";
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/FA5E-1D08";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/20500965-093f-4ce7-b83f-79b73f3b2ee6";
-      fsType = "btrfs";
-      options = [ "subvol=@home" ];
-    };
-
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/20500965-093f-4ce7-b83f-79b73f3b2ee6";
-      fsType = "btrfs";
-      options = [ "subvol=@nix" ];
-    };
-
   swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
