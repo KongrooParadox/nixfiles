@@ -43,6 +43,7 @@
 
   sops = {
     age = {
+      keyFile = "/.age.txt";
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
     };
     secrets = {
@@ -61,6 +62,7 @@
     ];
     files = [
       "/etc/machine-id"
+      "/.age.txt"
     ];
   };
 
