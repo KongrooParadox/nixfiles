@@ -103,6 +103,7 @@
         };
         modules = [
           ./modules/nixos
+          impermanence.nixosModules.impermanence
         ];
       };
       vili = nixpkgs.lib.nixosSystem {

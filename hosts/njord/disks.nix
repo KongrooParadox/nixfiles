@@ -1,22 +1,31 @@
 {
   disko.devices = {
     disk = {
-      boot = {
+      # boot = {
+      #   type = "disk";
+      #   device = "/dev/disk/by-partuuid/73a3358a-1ded-4c94-8212-20f64758010c";
+      #   content = {
+      #     type = "gpt";
+      #     partitions = {
+      #       ESP = {
+      #         size = "500M";
+      #         type = "EF00";
+      #         content = {
+      #           type = "filesystem";
+      #           format = "vfat";
+      #           mountpoint = "/boot";
+      #           mountOptions = [ "umask=0077" ];
+      #         };
+      #       };
+      #     };
+      #   };
+      # };
+      root = {
         type = "disk";
-        device = "/dev/disk/by-path/pci-0000:01:00.0-nvme-1";
+        device = "/dev/disk/by-partuuid/123a0f8d-23d0-4c3c-8a05-7807915bc897";
         content = {
           type = "gpt";
           partitions = {
-            ESP = {
-              size = "5G";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
-              };
-            };
             zfs = {
               size = "100%";
               content = {
@@ -34,8 +43,11 @@
         rootFsOptions = {
           acltype = "posixacl";
           atime = "off";
-          compression = "zstd";
           mountpoint = "none";
+          encryption = "aes-256-gcm";
+          keyformat = "passphrase";
+          keylocation = "prompt";
+          compression = "zstd";
           xattr = "sa";
         };
         options = {
@@ -62,16 +74,7 @@
             options."com.sun:auto-snapshot" = "false";
             postCreateHook = "zfs snapshot zroot/root@blank";
           };
-          "encrypted" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "file:///run/secrets/zfs-dataset/njord/encrypted.key";
-            };
-          };
-          "encrypted/home" = {
+          "home" = {
             type = "zfs_fs";
             mountpoint = "/home";
             options = {
