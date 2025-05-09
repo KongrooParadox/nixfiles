@@ -1,13 +1,12 @@
-{ inputs, lib, pkgs, ... }:
+{ apple-silicon, disko, lib, pkgs, ... }:
 {
   imports = [
-    inputs.disko.nixosModules.disko
+    disko.nixosModules.disko
     ./disks.nix
-    inputs.apple-silicon.nixosModules.default
+    apple-silicon.nixosModules.default
     ../../modules/nixos/asahi
     ./hardware-configuration.nix
   ];
-
   boot = {
     initrd.postResumeCommands = lib.mkAfter ''
       zfs rollback -r zroot/root@blank
@@ -24,18 +23,8 @@
   '';
 
   nixpkgs.overlays = [
-    (final: prev: {
-      linuxPackages_latest = prev.linuxPackages_latest // {
-        zfs = prev.linuxPackages_latest.zfs.overrideAttrs (oldAttrs: rec {
-          meta.broken = false;
-          version = "2.3.2";
-          src = prev.fetchurl {
-            url = "https://github.com/openzfs/zfs/releases/download/zfs-${version}/zfs-${version}.tar.gz";
-            hash = "sha256-lnjRCfHbpmINgo7QK02vaZ81+0mQC9QrpuK3Zv59MZA=";
-          };
-        });
-      };
-    })
+    apple-silicon.overlays.apple-silicon-overlay
+    (import ./zfs-overlay.nix)
   ];
 
   powerManagement = {
