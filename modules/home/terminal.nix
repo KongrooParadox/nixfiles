@@ -119,7 +119,8 @@ in
         autoload -U +X bashcompinit && bashcompinit
         complete -F __start_kubectl k
         complete -o nospace -C $(which terraform) terraform
-        path+=('/home/${config.home.username}/go/bin')
+        path+=('${config.home.homeDirectory}/go/bin')
+        path+=('${config.home.homeDirectory}/.local/bin')
         export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
         '';
     };

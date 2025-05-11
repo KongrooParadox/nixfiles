@@ -8,6 +8,7 @@ keys:
   - &midgard-root age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
   - &njord age1n78wzny3xlzukd8m09jr589sn95fwz3ug65wu7408cymx0unn9ssgrwkz6
   - &njord-host age1wsdqdexlqzmzs8muh8t4rvxhudn4eentw0jp2mtk0ftm4p4yesfqj72kfs
+  - &njord-mac age1s72rue0que3ecjzzc7mwhegd8gjemjqnyzws8fwrs3qlgc47pc2q3380nj
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
   - &yggdrasil-ops age154vpafvshynw9jwp6gkege9eph8jwspfch3sd8vcuq2rt00zv50s4y806k
@@ -26,6 +27,7 @@ creation_rules:
         - *midgard-root
         - *njord
         - *njord-host
+        - *njord-mac
         - *robot
         - *spare
         - *yggdrasil-ops

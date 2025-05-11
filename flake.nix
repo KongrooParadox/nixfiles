@@ -30,9 +30,28 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix.url = "github:Mic92/sops-nix";
     impermanence.url = "github:nix-community/impermanence";
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, impermanence, self, ... }@inputs: {
+  outputs = { nixpkgs, nixpkgs-unstable, impermanence, nix-darwin, self, ... }@inputs: {
+    darwinConfigurations = {
+      njord-mac = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = {
+          domain = "tavel.kongroo.ovh";
+          host = "njord-mac";
+          users = [ "robot" ];
+          stateVersion = "25.05";
+          inherit self inputs;
+        };
+        modules = [
+          ./modules/nix-darwin
+        ];
+      };
+    };
     nixosConfigurations = {
       asgard = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
