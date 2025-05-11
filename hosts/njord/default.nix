@@ -1,30 +1,22 @@
-{ apple-silicon, disko, lib, pkgs, ... }:
+{ inputs, ... }:
 {
   imports = [
-    disko.nixosModules.disko
+    inputs.disko.nixosModules.disko
     ./disks.nix
-    apple-silicon.nixosModules.default
+    inputs.apple-silicon.nixosModules.default
     ../../modules/nixos/asahi
     ./hardware-configuration.nix
   ];
   boot = {
-    initrd.postResumeCommands = lib.mkAfter ''
-      zfs rollback -r zroot/root@blank
-    '';
-    supportedFilesystems = [ "zfs" ];
-    zfs = {
-      devNodes = "/dev/disk/by-path";
+    supportedFilesystems = [ "bcachefs" ];
+    initrd = {
+      supportedFilesystems = ["bcachefs"];
+      availableKernelModules = ["bcache"];
     };
   };
 
-  # Because zfs tries to load encryption keys before sops secret is available
-  systemd.services.zfs-mount.serviceConfig.ExecStartPre = ''
-    ${pkgs.zfs}/bin/zfs load-key -a
-  '';
-
   nixpkgs.overlays = [
-    apple-silicon.overlays.apple-silicon-overlay
-    (import ./zfs-overlay.nix)
+    inputs.apple-silicon.overlays.apple-silicon-overlay
   ];
 
   powerManagement = {
@@ -32,7 +24,8 @@
     cpuFreqGovernor = "performance";
   };
 
-  desktop.enable = true;
+  desktop.enable = false;
+  hm.enable = false;
   podman.enable = true;
   virtualization.enable = true;
 
@@ -42,16 +35,9 @@
     openFirewall = true;
   };
 
-  networking = {
-    hostId = "720320e5";
-  };
-
   sops = {
     age = {
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
-    };
-    secrets = {
-      "zfs-dataset/njord/encrypted.key" = {};
     };
   };
 
