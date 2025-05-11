@@ -5,21 +5,22 @@ in
 {
   imports = lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland;
 
-  config = lib.mkIf desktop.enable {
+  config = lib.mkIf (desktop.enable && desktop.environment != "macos") {
     home.packages = with pkgs; [
       # General desktop packages
-      brightnessctl
       filezilla
       keepassxc
       mumble
-      playerctl
       prusa-slicer
       pulseaudio
-      texlive.combined.scheme-full
       vlc
-      xdg-utils
     ]++ lib.optionals (currentArchitecture == "x86_64-linux") [
       libreoffice
+    ]++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
+      brightnessctl
+      playerctl
+      texlive.combined.scheme-full
+      xdg-utils
     ];
   };
 }
