@@ -26,61 +26,54 @@
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            bcachefs_root = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zroot";
+                type = "bcachefs";
+                # This refers to a filesystem in the `bcachefs_filesystems` attrset below.
+                filesystem = "mounted_subvolumes_single_disk";
+                label = "group_a.root";
+                extraFormatArgs = [
+                  "--discard"
+                ];
               };
             };
           };
         };
       };
     };
-    zpool = {
-      zroot = {
-        type = "zpool";
-        rootFsOptions = {
-          acltype = "posixacl";
-          atime = "off";
-          mountpoint = "none";
-          encryption = "aes-256-gcm";
-          keyformat = "passphrase";
-          keylocation = "prompt";
-          compression = "zstd";
-          xattr = "sa";
-        };
-        options = {
-          ashift = "12";
-          cachefile = "none";
-        };
 
-        datasets = {
-          "nix" = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options."com.sun:auto-snapshot" = "false";
-          };
-          "persist" = {
-            type = "zfs_fs";
-            mountpoint = "/persist";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
-          };
-          "root" = {
-            type = "zfs_fs";
+    bcachefs_filesystems = {
+      # Example showing mounted subvolumes in a single-disk configuration.
+      mounted_subvolumes_single_disk = {
+        type = "bcachefs_filesystem";
+	uuid = "8b8c4eda-8537-4424-92b0-ff83263e0af9";
+        passwordFile = "/tmp/secret.key";
+        extraFormatArgs = [
+          "--compression=zstd"
+        ];
+        subvolumes = {
+          # Subvolume name is different from mountpoint.
+          "subvolumes/root" = {
             mountpoint = "/";
-            options."com.sun:auto-snapshot" = "false";
-            postCreateHook = "zfs snapshot zroot/root@blank";
+            mountOptions = [
+              "verbose"
+            ];
           };
-          "home" = {
-            type = "zfs_fs";
+          # Subvolume name is the same as the mountpoint.
+          "subvolumes/home" = {
             mountpoint = "/home";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-              mountpoint = "legacy";
-            };
+          };
+          # Nested subvolume doesn't need a mountpoint as its parent is mounted.
+          "subvolumes/home/robot" = {
+          };
+          # Parent is not mounted so the mountpoint must be set.
+          "subvolumes/nix" = {
+            mountpoint = "/nix";
+          };
+          # Subvolume name is the same as the mountpoint.
+          "subvolumes/persist" = {
+            mountpoint = "/persist";
           };
         };
       };
