@@ -1,79 +1,106 @@
 {
   disko.devices = {
     disk = {
-      # boot = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-partuuid/73a3358a-1ded-4c94-8212-20f64758010c";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       ESP = {
-      #         size = "500M";
-      #         type = "EF00";
-      #         content = {
-      #           type = "filesystem";
-      #           format = "vfat";
-      #           mountpoint = "/boot";
-      #           mountOptions = [ "umask=0077" ];
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
-      root = {
+      boot = {
         type = "disk";
-        device = "/dev/disk/by-partuuid/123a0f8d-23d0-4c3c-8a05-7807915bc897";
+        destroy = false;
+        device = "/dev/disk/by-id/nvme-APPLE_SSD_AP0512Z_0ba018e3a2b8f229-part4";
         content = {
           type = "gpt";
           partitions = {
-            bcachefs_root = {
+            ESP = {
+              size = "500M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+          };
+        };
+      };
+      swap = {
+        type = "disk";
+        device = "/dev/disk/by-id/nvme-APPLE_SSD_AP0512Z_0ba018e3a2b8f229-part5";
+        content = {
+          type = "gpt";
+          partitions = {
+            swap = {
+              size = "5G";
+              content = {
+                type = "swap";
+                discardPolicy = "both";
+                randomEncryption = true;
+                priority = 100; # prefer to encrypt as long as we have space for it
+              };
+            };
+          };
+        };
+      };
+      root = {
+        type = "disk";
+        destroy = false;
+        device = "/dev/disk/by-id/nvme-APPLE_SSD_AP0512Z_0ba018e3a2b8f229-part6";
+        content = {
+          type = "gpt";
+          partitions = {
+            zfs = {
               size = "100%";
               content = {
-                type = "bcachefs";
-                # This refers to a filesystem in the `bcachefs_filesystems` attrset below.
-                filesystem = "mounted_subvolumes_single_disk";
-                label = "group_a.root";
-                extraFormatArgs = [
-                  "--discard"
-                ];
+                type = "zfs";
+                pool = "zpool";
               };
             };
           };
         };
       };
     };
+    zpool = {
+      zpool = {
+        type = "zpool";
+        rootFsOptions = {
+          acltype = "posixacl";
+          atime = "off";
+          mountpoint = "none";
+          encryption = "aes-256-gcm";
+          keyformat = "passphrase";
+          keylocation = "prompt";
+          compression = "zstd";
+          xattr = "sa";
+        };
+        options = {
+          ashift = "12";
+          cachefile = "none";
+        };
 
-    bcachefs_filesystems = {
-      # Example showing mounted subvolumes in a single-disk configuration.
-      mounted_subvolumes_single_disk = {
-        type = "bcachefs_filesystem";
-	uuid = "8b8c4eda-8537-4424-92b0-ff83263e0af9";
-        passwordFile = "/tmp/secret.key";
-        extraFormatArgs = [
-          "--compression=zstd"
-        ];
-        subvolumes = {
-          # Subvolume name is different from mountpoint.
-          "subvolumes/root" = {
-            mountpoint = "/";
-            mountOptions = [
-              "verbose"
-            ];
-          };
-          # Subvolume name is the same as the mountpoint.
-          "subvolumes/home" = {
-            mountpoint = "/home";
-          };
-          # Nested subvolume doesn't need a mountpoint as its parent is mounted.
-          "subvolumes/home/robot" = {
-          };
-          # Parent is not mounted so the mountpoint must be set.
-          "subvolumes/nix" = {
+        datasets = {
+          "nix" = {
+            type = "zfs_fs";
             mountpoint = "/nix";
+            options."com.sun:auto-snapshot" = "false";
           };
-          # Subvolume name is the same as the mountpoint.
-          "subvolumes/persist" = {
+          "persist" = {
+            type = "zfs_fs";
             mountpoint = "/persist";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+          "root" = {
+            type = "zfs_fs";
+            mountpoint = "/";
+            options."com.sun:auto-snapshot" = "false";
+            postCreateHook = "zfs snapshot zpool/root@blank";
+          };
+          "home" = {
+            type = "zfs_fs";
+            mountpoint = "/home";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+              mountpoint = "legacy";
+            };
           };
         };
       };
