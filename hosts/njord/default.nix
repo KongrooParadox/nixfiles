@@ -7,16 +7,26 @@
     ../../modules/nixos/asahi
     ./hardware-configuration.nix
   ];
+  
   boot = {
-    supportedFilesystems = [ "bcachefs" ];
-    initrd = {
-      supportedFilesystems = ["bcachefs"];
-      availableKernelModules = ["bcache"];
+    initrd.postResumeCommands = lib.mkAfter ''
+      zfs rollback -r zroot/root@blank
+    '';
+    supportedFilesystems = [ "zfs" ];
+    zfs = {
+      devNodes = "/dev/disk/by-path";
     };
   };
 
+  # Because zfs tries to load encryption keys before sops secret is available
+  systemd.services.zfs-mount.serviceConfig.ExecStartPre = ''
+    ${pkgs.zfs}/bin/zfs load-key -a
+  '';
+
+
   nixpkgs.overlays = [
     inputs.apple-silicon.overlays.apple-silicon-overlay
+    (import ./zfs-overlay.nix)
   ];
 
   powerManagement = {
@@ -38,6 +48,9 @@
   sops = {
     age = {
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
+    };
+    secrets = {
+      "zfs-dataset/njord/encrypted.key" = {};
     };
   };
 
