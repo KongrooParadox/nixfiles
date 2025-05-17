@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   imports = [
     inputs.disko.nixosModules.disko
@@ -7,11 +7,14 @@
     ../../modules/nixos/asahi
     ./hardware-configuration.nix
   ];
+
   boot = {
-    supportedFilesystems = [ "bcachefs" ];
-    initrd = {
-      supportedFilesystems = ["bcachefs"];
-      availableKernelModules = ["bcache"];
+    initrd.postResumeCommands = lib.mkAfter ''
+      zfs rollback -r zpool/root@blank
+    '';
+    supportedFilesystems = [ "zfs" ];
+    zfs = {
+      devNodes = "/dev/disk/by-id";
     };
   };
 
@@ -28,6 +31,8 @@
   hm.enable = false;
   podman.enable = true;
   virtualization.enable = true;
+
+  networking.hostId = "720320e5";
 
   services.avahi = {
     enable = true;
