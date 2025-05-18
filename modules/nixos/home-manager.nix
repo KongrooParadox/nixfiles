@@ -4,7 +4,7 @@ let
   desktop = config.desktop;
 in
 {
-  imports = if lib.versions.majorMinor lib.version == "25.05"
+  imports = if lib.versions.majorMinor lib.version >= "25.05"
     then [ inputs.home-manager-unstable.nixosModules.home-manager ]
     else [ inputs.home-manager.nixosModules.home-manager ];
 

@@ -92,7 +92,7 @@ in
             }
             input {
               kb_layout = us
-              kb_variant = qwerty,alt-intl
+              kb_variant = alt-intl
               kb_options = caps:escape
               follow_mouse = 1
               touchpad {
