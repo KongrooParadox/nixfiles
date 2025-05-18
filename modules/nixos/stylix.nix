@@ -1,6 +1,6 @@
 { config, inputs, lib, pkgs, ...}:
 let
-  isUnstable = lib.versions.majorMinor lib.version == "25.05";
+  isUnstable = lib.versions.majorMinor lib.version >= "25.05";
   nixCfg = if isUnstable then {
     monoPkg = pkgs.nerd-fonts.jetbrains-mono;
     stylixModule = [ inputs.stylix-unstable.nixosModules.stylix ];
