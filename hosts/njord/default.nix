@@ -27,8 +27,8 @@
     cpuFreqGovernor = "performance";
   };
 
-  desktop.enable = false;
-  hm.enable = false;
+  desktop.enable = true;
+  hm.enable = true;
   podman.enable = true;
   virtualization.enable = true;
 
