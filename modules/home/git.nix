@@ -9,7 +9,7 @@
       signing = {
         signByDefault = true;
         gpgPath = "/run/current-system/sw/bin/gpg";
-        key = if (host == "njord") then "5D3DEDAD1658565D" else "E1FFAC5C39F79113";
+        key = "2CD046115D337861";
       };
       lfs.enable = true;
       extraConfig = {
