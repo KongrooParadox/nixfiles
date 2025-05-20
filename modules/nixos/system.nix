@@ -92,9 +92,10 @@ in
         ripgrep
         rsync
         sops
-        sudo
         ssh-to-age
+        sudo
         tcpdump
+        tldr
         traceroute
         tree
         unzip
@@ -102,7 +103,7 @@ in
         wget
         yad
         yq
-        ];
+      ];
     };
 
     # Enable the OpenSSH daemon.
