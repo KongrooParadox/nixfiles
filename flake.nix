@@ -3,7 +3,7 @@
 
   inputs = {
     # apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
-    apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/kernel-updates";
+    apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/zfs-kernel";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
@@ -13,13 +13,13 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
-      url = "github:danth/stylix/release-24.11";
+      url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {
