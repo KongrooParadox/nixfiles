@@ -129,32 +129,38 @@ return {
                 }
             }
             lspconfig.gopls.setup{}
-            local nixpkgs_expr
-            local nixos_expr
-            if vim.fn.hostname == "baldur" then
-                nixpkgs_expr = 'import (builtins.getFlake \"~/nixfiles/\".inputs.nixpkgs { }'
-                nixos_expr = '(builtins.getFlake \"~/nixfiles\".nixosConfigurations.baldur.options'
-            elseif vim.fn.hostname == "njord" then
-                nixpkgs_expr = 'import (builtins.getFlake \"~/nixfiles/hosts/njord\".inputs.nixpkgs { }'
-                nixos_expr = '(builtins.getFlake \"~/nixfiles/hosts/njord\".nixosConfigurations.njord.options'
-            end
+            local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
             lspconfig.nixd.setup({
                 cmd = { "nixd" },
                 settings = {
                     nixd = {
                         nixpkgs = {
-                            expr = nixpkgs_expr,
+                            expr = 'import (builtins.getFlake \"github:KongrooParadox/nixfiles\".inputs.nixpkgs-unstable { }',
                         },
                         formatting = {
-                            command = { "alejandra" },
+                            command = { "nixfmt" },
                         },
                         options = {
                             nixos = {
-                                expr = nixos_expr,
+                                expr = '(builtins.getFlake \"github:KongrooParadox/nixfiles\".nixosConfigurations.njord.options',
                             },
+                            -- home_manager = {
+                            --     expr = '(builtins.getFlake \"github:KongrooParadox/nixfiles\".homeConfigurations.njord.options',
+                            -- },
                         },
                     },
                 },
+                on_attach = function(client, bufnr)
+                if client.supports_method("textDocument/formatting") then
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                    vim.api.nvim_create_autocmd({"BufWritePre"}, {
+                        pattern = {"*.nix"},
+                        callback = function()
+                            vim.lsp.buf.format()
+                        end,
+                    })
+                    end
+                end,
             })
             lspconfig.pylsp.setup{}
             lspconfig.rust_analyzer.setup{}
