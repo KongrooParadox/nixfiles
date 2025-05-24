@@ -200,11 +200,10 @@ return {
 
             -- This function gets run when an LSP connects to a particular buffer.
             lsp.on_attach(function(_,bufnr)
+                vim.diagnostic.config({ jump = { float = true }})
                 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr, remap = false, desc = 'LSP: [R]e[n]ame' })
                 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, remap = false, desc = 'LSP: [C]ode [A]ction' })
                 vim.keymap.set('n', '<leader>df', vim.diagnostic.open_float, { buffer = bufnr, remap = false, desc = 'LSP: Diagnostics [O]pen [F]loat' })
-                vim.keymap.set('n', '[d', vim.diagnostic.goto_next, { buffer = bufnr, remap = false, desc = 'LSP: Diagnostics Next' })
-                vim.keymap.set('n', ']d', vim.diagnostic.goto_prev, { buffer = bufnr, remap = false, desc = 'LSP: Diagnostics Previous' })
 
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, remap = false, desc ='LSP: [G]oto [D]efinition' })
                 vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = bufnr, remap = false, desc ='LSP: [G]oto [R]eferences' })
