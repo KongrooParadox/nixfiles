@@ -1,7 +1,12 @@
-{ config, domain, lib, pkgs, ... }:
-
+{
+  config,
+  domain,
+  lib,
+  pkgs,
+  ...
+}:
 let
-cfg = config.immich;
+  cfg = config.immich;
 in
 {
   options.immich = {
@@ -17,7 +22,7 @@ in
       description = lib.mdDoc ''
         Port for machine learning service.
         Must be accessible from the main Immich service.
-        '';
+      '';
     };
 
     mediaPath = lib.mkOption {
@@ -26,7 +31,7 @@ in
       description = lib.mdDoc ''
         Path to media library root directory.
         This directory must exist and be writable by the immich user.
-        '';
+      '';
     };
 
     domain = lib.mkOption {
@@ -36,7 +41,7 @@ in
       description = lib.mdDoc ''
         FQDN domain of Immich server.
         This will be used as the base url for NGINX reverse proxy.
-        '';
+      '';
     };
 
     subdomain = lib.mkOption {
@@ -45,7 +50,7 @@ in
       description = lib.mdDoc ''
         Subdomain name for the Immich instance.
         This will be used as the subdomain of NGINX reverse proxy
-        '';
+      '';
     };
   };
 
@@ -55,11 +60,14 @@ in
     };
 
     users.users.immich = {
-      extraGroups = [ "video" "render" ];
+      extraGroups = [
+        "video"
+        "render"
+      ];
       isSystemUser = true;
       group = lib.mkForce "media";
     };
-    users.groups.media = {};
+    users.groups.media = { };
 
     services.immich = {
       enable = cfg.enable;

@@ -1,5 +1,4 @@
 { pkgs }:
-
 pkgs.writeShellScriptBin "rofi-launcher" ''
   if pgrep -x "rofi" > /dev/null; then
     # Rofi is running, kill it
@@ -8,4 +7,3 @@ pkgs.writeShellScriptBin "rofi-launcher" ''
   fi
   rofi -show drun
 ''
-

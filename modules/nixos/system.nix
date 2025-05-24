@@ -1,4 +1,11 @@
-{ config, inputs, lib, pkgs, stateVersion, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  stateVersion,
+  ...
+}:
 let
   cfg = config.system;
 in
@@ -23,8 +30,14 @@ in
       # sets NIX_PATH to flake input for nixd
       nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
       settings = {
-        experimental-features = [ "nix-command" "flakes" ];
-        trusted-users = [ "root" "@wheel" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
       };
       # Perform garbage collection weekly to maintain low disk usage
       gc = {

@@ -1,23 +1,29 @@
-{ config, host, lib, ... }:
-
+{
+  config,
+  host,
+  lib,
+  ...
+}:
 let
   cfg = config.reverseProxy;
 
   # Sub-module for service definitions
-  serviceOpts = { name, ... }: {
-    options = {
-      port = lib.mkOption {
-        type = lib.types.port;
-        description = lib.mdDoc "Local port the service is running on";
-      };
+  serviceOpts =
+    { name, ... }:
+    {
+      options = {
+        port = lib.mkOption {
+          type = lib.types.port;
+          description = lib.mdDoc "Local port the service is running on";
+        };
 
-      subdomain = lib.mkOption {
-        type = lib.types.str;
-        default = name;
-        description = lib.mdDoc "Subdomain for the service (e.g. 'photos' for photos.example.com)";
+        subdomain = lib.mkOption {
+          type = lib.types.str;
+          default = name;
+          description = lib.mdDoc "Subdomain for the service (e.g. 'photos' for photos.example.com)";
+        };
       };
     };
-  };
 in
 {
   options.reverseProxy = {
@@ -35,7 +41,7 @@ in
 
     services = lib.mkOption {
       type = lib.types.attrsOf (lib.types.submodule serviceOpts);
-      default = {};
+      default = { };
       description = lib.mdDoc "Attribute set of services to proxy";
     };
 
@@ -73,8 +79,9 @@ in
       clientMaxBodySize = "0"; # Allow large file uploads
 
       # Create virtual host for each service subdomain
-      virtualHosts = lib.mapAttrs' (name: service: lib.nameValuePair
-        "${service.subdomain}.${cfg.domain}" {
+      virtualHosts = lib.mapAttrs' (
+        name: service:
+        lib.nameValuePair "${service.subdomain}.${cfg.domain}" {
           enableACME = false; # Disable per-host ACME
           useACMEHost = cfg.domain; # Use the wildcard cert
           forceSSL = true;
@@ -103,7 +110,7 @@ in
 
       # Single wildcard cert for all subdomains
       certs.${cfg.domain} = {
-        domain =  "*.${cfg.domain}";
+        domain = "*.${cfg.domain}";
         extraDomainNames = [ "*.${host}.${cfg.domain}" ];
         dnsProvider = cfg.acme.dnsProvider;
         environmentFile = cfg.acme.environmentFile;
@@ -112,7 +119,10 @@ in
     };
 
     networking.firewall = {
-      allowedTCPPorts = [ 80 443 ];
+      allowedTCPPorts = [
+        80
+        443
+      ];
     };
   };
 }

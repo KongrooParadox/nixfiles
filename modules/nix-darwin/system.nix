@@ -1,16 +1,12 @@
-{
-  pkgs,
-  ...
-}:
-
+{ pkgs, ... }:
 {
   environment = {
     systemPackages = with pkgs; [
       adwaita-icon-theme
       android-tools
-      discord #broken for aarch64
+      discord # broken for aarch64
       element-desktop
-      gimp#-with-plugins # broken for aarch64
+      gimp # -with-plugins # broken for aarch64
       gnupg
       go
       helmfile
@@ -56,5 +52,4 @@
       yq
     ];
   };
-
 }

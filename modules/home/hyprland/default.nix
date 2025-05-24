@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     dbus-update-activation-environment --systemd --all
@@ -43,8 +48,7 @@ in
           ipc = "off";
           splash = false;
           splash_offset = 2.0;
-          preload =
-            [ "${../../../wallpapers/dark-nebula.jpg}" ];
+          preload = [ "${../../../wallpapers/dark-nebula.jpg}" ];
           wallpaper = [
             ",${../../../wallpapers/dark-nebula.jpg}"
           ];
