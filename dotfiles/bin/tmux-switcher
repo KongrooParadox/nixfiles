@@ -17,8 +17,10 @@ session_name=$(basename "$dir" | tr . _)
 tmux_processes=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_processes ]]; then
-    echo "no tmux"
-    tmux new-session -s "$session_name" -c "$dir"
+    tmux new-session -ds "$session_name" -c "$dir"
+    # Remove the default session created by tmux
+    tmux kill-session -t 0
+    tmux attach-session -t "$session_name"
     exit 0
 fi
 
