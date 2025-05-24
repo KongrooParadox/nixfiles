@@ -1,20 +1,27 @@
-{ config, inputs, lib, pkgs, ...}:
+{ config, inputs, lib, pkgs, system, ...}:
 let
   isUnstable = lib.versions.majorMinor lib.version == "25.05";
+  isLinux = lib.strings.hasSuffix "linux" system;
+  needsStylix = (config.desktop.environment == "hyprland" || config.desktop.environment == "macos");
+
   nixCfg = if isUnstable then {
     monoPkg = pkgs.nerd-fonts.jetbrains-mono;
-    stylixModule = [ inputs.stylix-unstable.darwinModules.stylix ];
-  }
-  else {
+    stylixModule =
+      if isLinux then [ inputs.stylix-unstable.nixosModules.stylix ]
+      else [ inputs.stylix-unstable.darwinModules.stylix ];
+  } else {
     monoPkg = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-    stylixModule = [ inputs.stylix.darwinModules.stylix ];
+    stylixModule =
+      if isLinux then [ inputs.stylix.nixosModules.stylix ]
+      else [ inputs.stylix.darwinModules.stylix ];
   };
+
   inherit (nixCfg) monoPkg stylixModule;
 in
 {
   imports = stylixModule;
 
-  config = lib.mkIf (config.desktop.enable && (config.desktop.environment == "macos")) {
+  config = lib.mkIf (config.desktop.enable && needsStylix) {
     stylix = {
       enable = true;
       autoEnable = true;
@@ -40,6 +47,9 @@ in
       };
       polarity = "dark";
       opacity.terminal = 0.8;
+      cursor.package = pkgs.bibata-cursors;
+      cursor.name = "Bibata-Modern-Ice";
+      cursor.size = 24;
       fonts = {
         monospace = {
           package = monoPkg;

@@ -1,26 +1,19 @@
-{ config, host, inputs, lib, stateVersion, users, ...}:
+{ config, host, inputs, lib, stateVersion, users, system, ...}:
 let
   cfg = config.hm;
   desktop = config.desktop;
+  isLinux = lib.strings.hasSuffix "linux" system;
 in
 {
   imports = if lib.versions.majorMinor lib.version == "25.05"
-    then [ inputs.home-manager-unstable.darwinModules.home-manager ]
-    else [ inputs.home-manager.darwinModules.home-manager ];
+    then
+      if isLinux then [ inputs.home-manager-unstable.nixosModules.home-manager ]
+        else [ inputs.home-manager-unstable.darwinModules.home-manager ]
+    else
+      if isLinux then [ inputs.home-manager.nixosModules.home-manager ]
+        else [ inputs.home-manager.darwinModules.home-manager ];
 
   options = {
-    desktop = {
-      enable = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = lib.mdDoc "Whether to enable desktop specific settings & programs";
-      };
-      environment = lib.mkOption {
-        type = lib.types.str;
-        default = "macos";
-        description = lib.mdDoc "Desktop environment";
-      };
-    };
     hm = {
       enable = lib.mkOption {
         type = lib.types.bool;
@@ -32,6 +25,11 @@ in
         default = users;
         description = lib.mdDoc "List of users to enable home-manager for";
       };
+      homeBaseDirectory = lib.mkOption {
+        type = lib.types.str;
+        default = "/home";
+        description = lib.mdDoc "Base directory for users (default is linux path)";
+      };
     };
   };
 
@@ -39,7 +37,7 @@ in
     home-manager.sharedModules = [
       inputs.sops-nix.homeManagerModules.sops {
         sops = {
-          age.sshKeyPaths = map (user: "/Users/${user}/.ssh/id_ed25519") users;
+          age.sshKeyPaths = map (user: "${cfg.homeBaseDirectory}/${user}/.ssh/id_ed25519") users;
           defaultSopsFile = ../../secrets/secrets.yaml;
           defaultSopsFormat = "yaml";
           secrets."anthropic-api-key" = {};
@@ -54,7 +52,7 @@ in
         imports = [ ../home ];
         home = {
           username = name;
-          homeDirectory = lib.mkForce "/Users/${name}";
+          homeDirectory = lib.mkForce "${cfg.homeBaseDirectory}/${name}";
           stateVersion = stateVersion;
         };
         programs.home-manager.enable = true;
