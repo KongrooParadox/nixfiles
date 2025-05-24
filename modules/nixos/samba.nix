@@ -1,9 +1,21 @@
-{ config, domain, host, lib, pkgs, users, workgroup, ... }:
-
+{
+  config,
+  domain,
+  host,
+  lib,
+  pkgs,
+  users,
+  workgroup,
+  ...
+}:
 let
   cfg = config.samba;
   # Prevent hanging on network split
-  automount_opts = user: "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${config.sops.secrets."smb/${user}".path}";
+  automount_opts =
+    user:
+    "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${
+      config.sops.secrets."smb/${user}".path
+    }";
 in
 {
   options.samba = {
@@ -49,47 +61,51 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.server.enable {
-      sops.secrets = (builtins.listToAttrs (
-        map (user: {
-          name = "users/${user}/password";
-          value.neededForUsers = true;
-        }) users
-      )) // {
-        "users/michel/password".neededForUsers = true;
-        "users/robot/password".neededForUsers = true;
-      };
+      sops.secrets =
+        (builtins.listToAttrs (
+          map (user: {
+            name = "users/${user}/password";
+            value.neededForUsers = true;
+          }) users
+        ))
+        // {
+          "users/michel/password".neededForUsers = true;
+          "users/robot/password".neededForUsers = true;
+        };
 
       users = {
-        users = (builtins.listToAttrs (
-          map (user: {
-            name = user;
-            value = {
-              hashedPasswordFile = config.sops.secrets."users/${user}/password".path;
+        users =
+          (builtins.listToAttrs (
+            map (user: {
+              name = user;
+              value = {
+                hashedPasswordFile = config.sops.secrets."users/${user}/password".path;
+                extraGroups = [ "media" ];
+                isNormalUser = true;
+                group = cfg.server.group;
+              };
+            }) users
+          ))
+          // {
+            michel = {
+              hashedPasswordFile = config.sops.secrets."users/michel/password".path;
               extraGroups = [ "media" ];
               isNormalUser = true;
               group = cfg.server.group;
             };
-          }) users
-        )) // {
-          michel = {
-            hashedPasswordFile = config.sops.secrets."users/michel/password".path;
-            extraGroups = [ "media" ];
-            isNormalUser = true;
-            group = cfg.server.group;
+            robot = {
+              hashedPasswordFile = config.sops.secrets."users/robot/password".path;
+              extraGroups = [ "media" ];
+              isNormalUser = true;
+              group = cfg.server.group;
+            };
+            ${cfg.server.user} = {
+              extraGroups = [ "media" ];
+              isSystemUser = true;
+              group = cfg.server.group;
+            };
           };
-          robot = {
-            hashedPasswordFile = config.sops.secrets."users/robot/password".path;
-            extraGroups = [ "media" ];
-            isNormalUser = true;
-            group = cfg.server.group;
-          };
-          ${cfg.server.user} = {
-            extraGroups = [ "media" ];
-            isSystemUser = true;
-            group = cfg.server.group;
-          };
-        };
-        groups.${cfg.server.group} = {};
+        groups.${cfg.server.group} = { };
       };
 
       services = {
@@ -163,7 +179,7 @@ in
       sops.secrets = builtins.listToAttrs (
         map (user: {
           name = "smb/${user}";
-          value = {};
+          value = { };
         }) users
       );
 
@@ -200,4 +216,3 @@ in
     })
   ];
 }
-

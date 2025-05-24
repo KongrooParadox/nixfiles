@@ -1,5 +1,9 @@
-{ config, domain, lib, ... }:
-
+{
+  config,
+  domain,
+  lib,
+  ...
+}:
 let
   cfg = config.arr;
 in
@@ -32,7 +36,7 @@ in
       description = lib.mdDoc ''
         FQDN domain of arr server.
         This will be used as the base url for NGINX reverse proxy.
-        '';
+      '';
     };
 
     mediaBasePath = lib.mkOption {
@@ -41,7 +45,7 @@ in
       example = "/var/lib/media";
       description = lib.mdDoc ''
         Base path of media folder (used for downloads).
-        '';
+      '';
     };
 
     computeBasePath = lib.mkOption {
@@ -50,7 +54,7 @@ in
       example = "/var/lib/compute";
       description = lib.mdDoc ''
         Base path for arr apps (aka compute path).
-        '';
+      '';
     };
 
     prowlarr = {
@@ -113,16 +117,16 @@ in
   config = lib.mkIf cfg.enable {
     sops.secrets = lib.mkMerge [
       (lib.mkIf cfg.nzbget.enable {
-        "newshosting/username" = {};
-        "newshosting/password" = {};
-       })
+        "newshosting/username" = { };
+        "newshosting/password" = { };
+      })
       (lib.mkIf cfg.deluge.enable {
         "deluge-auth" = {
-            mode = "0440";
-            group = "media";
-          };
-        "wireguard/proton/p2p" = {};
-        "wireguard/proton/p2p-2" = {};
+          mode = "0440";
+          group = "media";
+        };
+        "wireguard/proton/p2p" = { };
+        "wireguard/proton/p2p-2" = { };
       })
     ];
 
@@ -131,7 +135,7 @@ in
       "dotnet-sdk-6.0.428"
       "aspnetcore-runtime-6.0.36"
     ];
-    users.groups.media = {};
+    users.groups.media = { };
 
     reverseProxy = {
       domain = cfg.domain;
@@ -235,12 +239,18 @@ in
         wg-p2p = lib.mkIf (cfg.deluge.wireguardInterface == "wg-p2p") {
           address = [ "10.2.0.2/32" ];
           autostart = true;
-          dns = [ "10.10.111.100" "192.168.1.100" ];
+          dns = [
+            "10.10.111.100"
+            "192.168.1.100"
+          ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p".path;
           peers = [
             {
               publicKey = "VEtFeCo88R26OwlJ+F1hwNOPhewYNJHL+S078L477Gk=";
-              allowedIPs = [ "0.0.0.0/0" "::/0" ];
+              allowedIPs = [
+                "0.0.0.0/0"
+                "::/0"
+              ];
               endpoint = "79.127.169.59:51820";
               persistentKeepalive = 25;
             }
@@ -249,12 +259,18 @@ in
         wg-p2p-2 = lib.mkIf (cfg.deluge.wireguardInterface == "wg-p2p-2") {
           address = [ "10.2.0.2/32" ];
           autostart = true;
-          dns = [ "10.10.111.100" "192.168.1.100" ];
+          dns = [
+            "10.10.111.100"
+            "192.168.1.100"
+          ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p-2".path;
           peers = [
             {
               publicKey = "JsWZdbNQ38Enz3AYGJLI6HVF5I5RqfrIkkcwsznAGSs=";
-              allowedIPs = [ "0.0.0.0/0" "::/0" ];
+              allowedIPs = [
+                "0.0.0.0/0"
+                "::/0"
+              ];
               endpoint = "146.70.194.50:51820";
               persistentKeepalive = 25;
             }

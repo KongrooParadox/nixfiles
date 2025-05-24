@@ -192,13 +192,21 @@
             vdev = [
               {
                 mode = "raidz2";
-                members = [ "hdd-1" "hdd-2" "hdd-3" "hdd-4" ];
+                members = [
+                  "hdd-1"
+                  "hdd-2"
+                  "hdd-3"
+                  "hdd-4"
+                ];
               }
             ];
             log = [
               {
                 mode = "mirror";
-                members = [ "log-1" "log-2" ];
+                members = [
+                  "log-1"
+                  "log-2"
+                ];
               }
             ];
           };

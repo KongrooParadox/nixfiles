@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 {
   programs = {
     alacritty = {
@@ -96,19 +100,19 @@
         bind-key -T copy-mode-vi 'M-k' select-pane -U
         bind-key -T copy-mode-vi 'M-l' select-pane -R
         bind-key -T copy-mode-vi 'M-\' select-pane -l
-        '';
+      '';
     };
     zsh = {
       enable = true;
       autosuggestion.enable = true;
       enableCompletion = true;
       shellAliases = {
-        k         ="kubectl";
-        l         ="ls -lra --color=auto";
-        ls        ="ls --color=auto";
-        ll        ="ls --color=auto -lh";
-        lll       ="ls --color=auto -lh | less";
-        v         ="nvim";
+        k = "kubectl";
+        l = "ls -lra --color=auto";
+        ls = "ls --color=auto";
+        ll = "ls --color=auto -lh";
+        lll = "ls --color=auto -lh | less";
+        v = "nvim";
       };
       initExtra = ''
         bindkey -e
@@ -123,7 +127,7 @@
         path+=('${config.home.homeDirectory}/go/bin')
         path+=('${config.home.homeDirectory}/.local/bin')
         export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
-        '';
+      '';
     };
   };
 }

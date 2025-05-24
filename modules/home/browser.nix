@@ -1,14 +1,21 @@
-{ config, desktop, lib, pkgs, ... }:
+{
+  config,
+  desktop,
+  lib,
+  pkgs,
+  ...
+}:
 let
   currentArchitecture = config.nixpkgs.system;
 in
 {
   config = lib.mkIf desktop.enable {
-
-    home.packages = with pkgs;
-    [ ] ++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
-      chromium
-    ];
+    home.packages =
+      with pkgs;
+      [ ]
+      ++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
+        chromium
+      ];
     programs = {
       firefox = {
         enable = true;

@@ -1,7 +1,4 @@
-{
-  lib,
-  ...
-}:
+{ lib, ... }:
 {
   options.desktop = {
     enable = lib.mkOption {
@@ -15,5 +12,4 @@
       description = lib.mdDoc "Which Desktop Environment to install (macos)";
     };
   };
-
 }

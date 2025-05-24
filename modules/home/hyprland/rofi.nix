@@ -1,5 +1,8 @@
-{ pkgs, config, ... }:
-
+{
+  pkgs,
+  config,
+  ...
+}:
 {
   config = {
     stylix.targets.rofi.enable = false;

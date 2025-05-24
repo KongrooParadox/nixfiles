@@ -1,12 +1,14 @@
-{ lib, inputs, ... }:
-
 {
-  imports =
-    [
-      inputs.disko.nixosModules.disko
-      ./disks.nix
-      ./hardware-configuration.nix
-    ];
+  lib,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    inputs.disko.nixosModules.disko
+    ./disks.nix
+    ./hardware-configuration.nix
+  ];
 
   powerManagement = {
     cpuFreqGovernor = "powersave";
@@ -17,8 +19,8 @@
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
     };
     secrets = {
-      "zfs-dataset/yggdrasil/root.key" = {};
-      "zfs-dataset/yggdrasil/rust.key" = {};
+      "zfs-dataset/yggdrasil/root.key" = { };
+      "zfs-dataset/yggdrasil/rust.key" = { };
     };
   };
 

@@ -1,20 +1,32 @@
-{ config, inputs, lib, pkgs, system, ...}:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  system,
+  ...
+}:
 let
   isUnstable = lib.versions.majorMinor lib.version == "25.11";
   isLinux = lib.strings.hasSuffix "linux" system;
-  needsStylix = (config.desktop.environment == "hyprland" || config.desktop.environment == "macos");
+  needsStylix = config.desktop.environment == "hyprland" || config.desktop.environment == "macos";
 
-  nixCfg = if isUnstable then {
-    monoPkg = pkgs.nerd-fonts.jetbrains-mono;
-    stylixModule =
-      if isLinux then [ inputs.stylix-unstable.nixosModules.stylix ]
-      else [ inputs.stylix-unstable.darwinModules.stylix ];
-  } else {
-    monoPkg = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-    stylixModule =
-      if isLinux then [ inputs.stylix.nixosModules.stylix ]
-      else [ inputs.stylix.darwinModules.stylix ];
-  };
+  nixCfg =
+    if isUnstable then
+      {
+        monoPkg = pkgs.nerd-fonts.jetbrains-mono;
+        stylixModule =
+          if isLinux then
+            [ inputs.stylix-unstable.nixosModules.stylix ]
+          else
+            [ inputs.stylix-unstable.darwinModules.stylix ];
+      }
+    else
+      {
+        monoPkg = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+        stylixModule =
+          if isLinux then [ inputs.stylix.nixosModules.stylix ] else [ inputs.stylix.darwinModules.stylix ];
+      };
 
   inherit (nixCfg) monoPkg stylixModule;
 in

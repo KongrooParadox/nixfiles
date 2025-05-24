@@ -1,4 +1,9 @@
-{ host, inputs, self, ... }:
+{
+  host,
+  inputs,
+  self,
+  ...
+}:
 {
   imports = [
     "${inputs.nixpkgs}/nixos/modules/hardware/video/displaylink.nix"

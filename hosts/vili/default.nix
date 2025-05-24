@@ -1,5 +1,9 @@
-{ lib, modulesPath, pkgs, ...}:
-
+{
+  lib,
+  modulesPath,
+  pkgs,
+  ...
+}:
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
@@ -82,8 +86,18 @@
       dns = "none"; # Prevent NetworkManager from managing resolv.conf
     };
     firewall = {
-      allowedUDPPortRanges = [ { from = 40000; to = 40010; } ];
-      allowedTCPPortRanges = [ { from = 40000; to = 40010; } ];
+      allowedUDPPortRanges = [
+        {
+          from = 40000;
+          to = 40010;
+        }
+      ];
+      allowedTCPPortRanges = [
+        {
+          from = 40000;
+          to = 40010;
+        }
+      ];
     };
   };
 

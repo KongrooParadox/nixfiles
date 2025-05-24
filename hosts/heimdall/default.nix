@@ -33,5 +33,4 @@
     computeBasePath = "/var/lib";
   };
   media-player.enable = true;
-
 }

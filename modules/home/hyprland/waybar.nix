@@ -1,5 +1,9 @@
-{ pkgs, lib, config, ... }:
-
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   betterTransition = "all 0.3s cubic-bezier(.55,-0.68,.48,1.682)";
   clock24h = true;
@@ -145,10 +149,13 @@ with lib;
           "backlight" = {
             tooltip = false;
             format = "{percent}% {icon}";
-            format-icons = ["" ""];
+            format-icons = [
+              ""
+              ""
+            ];
             on-click = "brightnessctl s 1%+";
             on-click-right = "brightnessctl s 1%-";
-            };
+          };
           # Waybar module doesn't support kbd_backlight :
           # https://github.com/Alexays/Waybar/issues/2848
           # "backlight#2" = {
@@ -318,4 +325,3 @@ with lib;
     };
   };
 }
-

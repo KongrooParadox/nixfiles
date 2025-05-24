@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   editorconfig = {
     enable = true;
@@ -25,7 +24,7 @@
     };
   };
 
-  nixpkgs.config.allowUnfreePredicate = (pkg: true);
+  nixpkgs.config.allowUnfreePredicate = pkg: true;
 
   home.packages = with pkgs; [
     alejandra
@@ -57,5 +56,4 @@
       vimdiffAlias = true;
     };
   };
-
 }

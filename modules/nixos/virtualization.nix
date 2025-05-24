@@ -1,4 +1,10 @@
-{ config, lib, pkgs, users, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  users,
+  ...
+}:
 let
   cfg = config.virtualization;
   currentArchitecture = config.nixpkgs.system;
@@ -21,10 +27,12 @@ in
         swtpm.enable = true;
         ovmf = {
           enable = true;
-          packages = [(pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-            }).fd];
+          packages = [
+            (pkgs.OVMF.override {
+              secureBoot = true;
+              tpmSupport = true;
+            }).fd
+          ];
         };
       };
     };
@@ -39,6 +47,9 @@ in
     );
 
     # Enable emulation for other architectures
-    boot.binfmt.emulatedSystems = lib.lists.remove currentArchitecture [ "x86_64-linux" "aarch64-linux" ];
+    boot.binfmt.emulatedSystems = lib.lists.remove currentArchitecture [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
   };
 }

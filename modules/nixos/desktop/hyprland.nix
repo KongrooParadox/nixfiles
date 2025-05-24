@@ -1,4 +1,11 @@
-{ config, inputs, lib, pkgs, users, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  users,
+  ...
+}:
 {
   config = lib.mkIf (config.desktop.enable && (config.desktop.environment == "hyprland")) {
     environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card0";

@@ -168,7 +168,10 @@
             vdev = [
               {
                 mode = "mirror";
-                members = [ "boot-1" "boot-2" ];
+                members = [
+                  "boot-1"
+                  "boot-2"
+                ];
               }
             ];
           };
@@ -220,14 +223,21 @@
             vdev = [
               {
                 mode = "raidz1";
-                members = [ "hdd-1" "hdd-2" "hdd-3" ];
+                members = [
+                  "hdd-1"
+                  "hdd-2"
+                  "hdd-3"
+                ];
               }
             ];
             cache = [ "cache" ];
             log = [
               {
                 mode = "mirror";
-                members = [ "log-1" "log-2" ];
+                members = [
+                  "log-1"
+                  "log-2"
+                ];
               }
             ];
           };
