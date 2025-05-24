@@ -5,7 +5,7 @@ let
   isLinux = lib.strings.hasSuffix "linux" system;
 in
 {
-  imports = if lib.versions.majorMinor lib.version == "25.05"
+  imports = if lib.versions.majorMinor lib.version == "25.11"
     then
       if isLinux then [ inputs.home-manager-unstable.nixosModules.home-manager ]
         else [ inputs.home-manager-unstable.darwinModules.home-manager ]

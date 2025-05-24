@@ -1,6 +1,6 @@
 { config, inputs, lib, pkgs, system, ...}:
 let
-  isUnstable = lib.versions.majorMinor lib.version == "25.05";
+  isUnstable = lib.versions.majorMinor lib.version == "25.11";
   isLinux = lib.strings.hasSuffix "linux" system;
   needsStylix = (config.desktop.environment == "hyprland" || config.desktop.environment == "macos");
 
