@@ -29,7 +29,7 @@ in
     hm = {
       enable = lib.mkOption {
         type = lib.types.bool;
-        default = true;
+        default = false;
         description = lib.mdDoc "Whether to enable home-manager modules";
       };
       users = lib.mkOption {
