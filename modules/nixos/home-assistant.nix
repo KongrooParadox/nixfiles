@@ -1,4 +1,9 @@
-{ config, domain, lib, ...}:
+{
+  config,
+  domain,
+  lib,
+  ...
+}:
 let
   cfg = config.home-assistant;
 in
@@ -32,14 +37,14 @@ in
       mosquitto = {
         enable = true;
         listeners = [
-        {
-          users.mosquitto = {
-            acl = [
-              "readwrite #"
-            ];
-            hashedPassword = "$7$101$zZowRHVB/HcjcgnJ$q4L1Vgw+riu3UBpBpjSPzS6P0hOrodx/bf1lWqEH5TR0aqYz2sl71eG04ksY/II98rGi1kFHndS9O3KsNLrbtw==";
-          };
-        }
+          {
+            users.mosquitto = {
+              acl = [
+                "readwrite #"
+              ];
+              hashedPassword = "$7$101$zZowRHVB/HcjcgnJ$q4L1Vgw+riu3UBpBpjSPzS6P0hOrodx/bf1lWqEH5TR0aqYz2sl71eG04ksY/II98rGi1kFHndS9O3KsNLrbtw==";
+            };
+          }
         ];
       };
       home-assistant = {
@@ -54,13 +59,19 @@ in
           "google_translate"
         ];
         config = {
-          default_config = {};
+          default_config = { };
           http = {
-            server_host = [ "127.0.0.1" "::1" ];
-            trusted_proxies = [ "127.0.0.1" "::1" ];
+            server_host = [
+              "127.0.0.1"
+              "::1"
+            ];
+            trusted_proxies = [
+              "127.0.0.1"
+              "::1"
+            ];
             use_x_forwarded_for = true;
           };
-          mqtt = {};
+          mqtt = { };
         };
       };
     };

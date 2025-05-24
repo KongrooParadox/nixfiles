@@ -1,4 +1,4 @@
-{ host, pkgs, ... }:
+{ pkgs, ... }:
 {
   programs = {
     git = {

@@ -1,5 +1,9 @@
-{ pkgs, lib, inputs, ... }:
-
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 {
   imports = [
     inputs.disko.nixosModules.disko
@@ -47,7 +51,7 @@
       sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
     };
     secrets = {
-      "zfs-dataset/baldur/encrypted.key" = {};
+      "zfs-dataset/baldur/encrypted.key" = { };
     };
   };
 

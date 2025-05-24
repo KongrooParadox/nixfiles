@@ -1,4 +1,9 @@
-{ config, domain, lib, ... }:
+{
+  config,
+  domain,
+  lib,
+  ...
+}:
 let
   cfg = config.media-player;
 in
@@ -17,12 +22,12 @@ in
       description = lib.mdDoc ''
         FQDN domain of Jellyfin server.
         This will be used as the base url for NGINX reverse proxy.
-        '';
+      '';
     };
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.media = {};
+    users.groups.media = { };
 
     reverseProxy = {
       domain = cfg.domain;
@@ -32,8 +37,18 @@ in
     };
 
     networking.firewall = {
-      allowedUDPPortRanges = [ { from = 40000; to = 40010; } ];
-      allowedTCPPortRanges = [ { from = 40000; to = 40010; } ];
+      allowedUDPPortRanges = [
+        {
+          from = 40000;
+          to = 40010;
+        }
+      ];
+      allowedTCPPortRanges = [
+        {
+          from = 40000;
+          to = 40010;
+        }
+      ];
     };
 
     services.jellyfin = {

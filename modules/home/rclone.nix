@@ -1,7 +1,11 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 {
   sops.secrets = {
-    "rclone.conf" = {};
+    "rclone.conf" = { };
   };
   home.packages = with pkgs; [
     rclone

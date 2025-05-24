@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 pkgs.writeShellScriptBin "list-hypr-bindings" ''
   yad --width=800 --height=650 \
   --center \
@@ -44,4 +43,3 @@ pkgs.writeShellScriptBin "list-hypr-bindings" ''
   "ALT + TAB" "Cycle Window Focus + Bring To Front" "cyclenext & bringactivetotop" \
   ""
 ''
-

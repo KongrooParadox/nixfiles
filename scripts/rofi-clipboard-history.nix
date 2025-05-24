@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 pkgs.writeShellScriptBin "rofi-clipboard-history" ''
   if pgrep -x "rofi" > /dev/null; then
     # Rofi is running, kill it

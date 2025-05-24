@@ -1,5 +1,8 @@
-{ config, lib, ... }:
-
+{
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.tailscale;
 in
@@ -43,7 +46,7 @@ in
 
     advertisedRoutes = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [];
+      default = [ ];
       example = [ "192.168.1.0/24" ];
       description = lib.mdDoc "Routes to advertise when acting as a subnet router";
     };
@@ -55,10 +58,11 @@ in
       enable = true;
       openFirewall = true;
       useRoutingFeatures = if cfg.subnetRouter then "server" else "client";
-      extraUpFlags = lib.optional cfg.ssh "--ssh" ++
-        lib.optional cfg.acceptDns "--accept-dns" ++
-        lib.optional cfg.acceptRoutes "--accept-routes" ++
-        lib.optional cfg.subnetRouter "--advertise-routes=${lib.concatStringsSep "," cfg.advertisedRoutes}";
+      extraUpFlags =
+        lib.optional cfg.ssh "--ssh"
+        ++ lib.optional cfg.acceptDns "--accept-dns"
+        ++ lib.optional cfg.acceptRoutes "--accept-routes"
+        ++ lib.optional cfg.subnetRouter "--advertise-routes=${lib.concatStringsSep "," cfg.advertisedRoutes}";
     };
   };
 }

@@ -1,4 +1,11 @@
-{ config, inputs, lib, pkgs, stateVersion, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  stateVersion,
+  ...
+}:
 let
   cfg = config.desktop;
   nixpkgs-stable = inputs.nixpkgs.legacyPackages.${pkgs.system};
@@ -11,13 +18,21 @@ in
       description = lib.mdDoc "Whether to enable desktop-specific config";
     };
     environment = lib.mkOption {
-      type = lib.types.enum [ "hyprland" "plasma" "gnome" ];
+      type = lib.types.enum [
+        "hyprland"
+        "plasma"
+        "gnome"
+      ];
       default = "hyprland";
       description = lib.mdDoc "Which Desktop Environment to install (hyprland, plasma or gnome)";
     };
   };
 
-  imports = [ ./gnome.nix ./hyprland.nix ./plasma.nix ];
+  imports = [
+    ./gnome.nix
+    ./hyprland.nix
+    ./plasma.nix
+  ];
 
   config = lib.mkIf cfg.enable {
     system.stateVersion = stateVersion;
@@ -33,7 +48,7 @@ in
         displaylink
         element-desktop
         evolution
-        gimp#-with-plugins # broken for aarch64
+        gimp # -with-plugins # broken for aarch64
         gnupg
         go
         helmfile
@@ -79,7 +94,10 @@ in
 
     services.xserver = {
       enable = true;
-      videoDrivers = [ "displaylink" "modesetting" ];
+      videoDrivers = [
+        "displaylink"
+        "modesetting"
+      ];
       xkb = {
         layout = "us";
         variant = "";

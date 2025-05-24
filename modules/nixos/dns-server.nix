@@ -1,5 +1,9 @@
-{ config, domain, lib, ... }:
-
+{
+  config,
+  domain,
+  lib,
+  ...
+}:
 let
   cfg = config.dns-server;
 in
@@ -26,7 +30,7 @@ in
 
     mapping = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
-      default = {};
+      default = { };
       description = "Local dns A entries";
     };
 
@@ -35,13 +39,16 @@ in
       default = "";
       description = "Local zone file";
     };
-
   };
 
   config = lib.mkIf cfg.enable {
     networking = {
       firewall = {
-        allowedTCPPorts = [ 22 53 5353 ];
+        allowedTCPPorts = [
+          22
+          53
+          5353
+        ];
         allowedUDPPorts = [ 53 ];
       };
     };
@@ -63,9 +70,12 @@ in
           blocking = {
             blackLists = {
               ads = [ "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" ];
-              adult = ["https://blocklistproject.github.io/Lists/porn.txt"];
+              adult = [ "https://blocklistproject.github.io/Lists/porn.txt" ];
             };
-            clientGroupsBlock.default = [ "ads" "adult" ];
+            clientGroupsBlock.default = [
+              "ads"
+              "adult"
+            ];
           };
           ports.dns = 53;
         };

@@ -1,7 +1,10 @@
-{ config, inputs, lib, ... }:
-
 {
-
+  config,
+  inputs,
+  lib,
+  ...
+}:
+{
   imports = [
     inputs.disko.nixosModules.disko
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia
@@ -22,8 +25,8 @@
   sops = {
     age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
-      "zfs-dataset/midgard/root.key" = {};
-      "zfs-dataset/midgard/rust.key" = {};
+      "zfs-dataset/midgard/root.key" = { };
+      "zfs-dataset/midgard/rust.key" = { };
     };
   };
 
@@ -45,7 +48,13 @@
       postDeviceCommands = lib.mkAfter ''
         zfs rollback -r root/local/root@blank
       '';
-      kernelModules = [ "nvidia" "i915" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+      kernelModules = [
+        "nvidia"
+        "i915"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+      ];
     };
     kernelParams = [ "nvidia-drm.fbdev=1" ];
     supportedFilesystems = [ "zfs" ];
@@ -55,7 +64,6 @@
       devNodes = "/dev/disk/by-path";
     };
   };
-
 
   networking = {
     hostId = "c9e13eac";

@@ -1,5 +1,4 @@
 { pkgs }:
-
 pkgs.writeShellScriptBin "waybar-launcher" ''
   if pgrep "waybar-wrapped" > /dev/null; then
     # Waybar is running, kill it
@@ -8,4 +7,3 @@ pkgs.writeShellScriptBin "waybar-launcher" ''
   sleep 0.2
   waybar
 ''
-

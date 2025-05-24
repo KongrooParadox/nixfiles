@@ -1,4 +1,8 @@
-{ host, users, ... }:
+{
+  host,
+  users,
+  ...
+}:
 {
   networking = {
     firewall = {
