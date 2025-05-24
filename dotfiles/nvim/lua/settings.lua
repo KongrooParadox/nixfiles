@@ -11,11 +11,11 @@ vim.opt.relativenumber = true
 vim.opt.number = true
 
 -- Enable mouse mode
-vim.opt.mouse = 'a'
+vim.opt.mouse = ''
 
 vim.opt.smartindent = true
 vim.opt.breakindent = true
-vim.opt.wrap = true
+vim.opt.wrap = false
 
 -- Save undo history
 vim.opt.undofile = true
