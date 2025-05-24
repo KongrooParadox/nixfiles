@@ -3,14 +3,13 @@
   imports = [
     "${inputs.nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
     "${self}/hosts/${host}"
+    "${self}/modules/common"
     ./arr.nix
     ./audio.nix
     ./boot.nix
     ./desktop
     ./dns-server.nix
-    ./fonts.nix
     ./home-assistant.nix
-    ./home-manager.nix
     ./immich.nix
     ./media-player.nix
     ./networking.nix
@@ -21,7 +20,6 @@
     ./sops.nix
     ./steam.nix
     ./storage.nix
-    ./stylix.nix
     ./system.nix
     ./tailscale.nix
     ./ups.nix

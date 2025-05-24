@@ -45,6 +45,7 @@
           host = "njord-mac";
           users = [ "robot" ];
           stateVersion = "25.05";
+          system = "aarch64-darwin";
           inherit self inputs;
         };
         modules = [
@@ -60,6 +61,7 @@
           host = "asgard";
           users = [ "ops" ];
           stateVersion = "24.05";
+          system = "aarch64-linux";
           workgroup = "SKYNET";
           inherit self inputs;
         };
@@ -74,6 +76,7 @@
           host = "baldur";
           users = [ "fatiha" "robot" ];
           stateVersion = "23.11";
+          system = "x86_64-linux";
           workgroup = "SKYNET";
           inherit self inputs;
         };
@@ -89,6 +92,7 @@
           host = "heimdall";
           users = [ "ops" ];
           stateVersion = "24.05";
+          system = "aarch64-linux";
           workgroup = "SKYNET";
           inherit self inputs;
         };
@@ -103,6 +107,7 @@
           host = "midgard";
           users = [ "ops" ];
           stateVersion = "24.11";
+          system = "x86_64-linux";
           workgroup = "CASA_ANITA";
           inherit self inputs;
         };
@@ -117,6 +122,7 @@
           host = "njord";
           users = [ "robot" ];
           stateVersion = "24.11";
+          system = "aarch64-linux";
           workgroup = "SKYNET";
           inherit self inputs;
         };
@@ -132,6 +138,7 @@
           host = "vili";
           users = [ "ops" ];
           stateVersion = "24.11";
+          system = "aarch64-linux";
           workgroup = "CASA_ANITA";
           inherit self inputs;
         };
@@ -146,6 +153,7 @@
           host = "yggdrasil";
           users = [ "ops" ];
           stateVersion = "24.05";
+          system = "x86_64-linux";
           workgroup = "SKYNET";
           inherit self inputs;
         };
