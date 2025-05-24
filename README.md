@@ -1,24 +1,19 @@
 # Nixfiles
 
-My messy nix config with flakes !
+My playground to experiment on my machines using Nix flakes.
 
-| host | NixOS version | cpu architecture | description |
+Having only played around with Nix for around a year, this is very much a work in progress !
+
+| Host | NixOS version | Cpu architecture | Description |
 | --- | --- | --- | --- |
-| baldur | 25.05 (unstable) | x86_64 | AMD Laptop |
-| njord | 25.05 (unstable) | aarch64 | M2 Macbook Air Laptop |
-| heimdall | 25.05 (unstable) | aarch64  | Mac Mini M1 server |
-| asgard | 24.11 | aarch64 | DNS for main site (Pi 3) |
-| yggdrasil | 24.11 | x86_64 | Main NAS |
-| midgard | 24.11 | x86_64 | Backup NAS |
-| vili | 24.11 | aarch64 | DNS for secondary site (VM) |
-
-Currently managed configs :
-- Laptop workstation = baldur
-- M2 Laptop workstation = njord
-- Raspberry Pi 3 home-assistant & dns instance = asgard
-- NAS running ZFS raidz2 = yggdrasil
-- M1 Mac mini hypervisor (libvirt) = heimdall
-- NixOS qemu VM templates with cloud-init (only for initial setup)
+| baldur | Unstable | x86_64 | AMD Laptop |
+| njord | Unstable | aarch64 | M2 Macbook Air Laptop |
+| heimdall | Unstable | aarch64  | Mac Mini M1 server |
+| asgard | 25.05 | aarch64 | DNS for main site (Pi 3) |
+| yggdrasil | 25.05 | x86_64 | Main NAS |
+| midgard | 25.05 | x86_64 | Backup NAS |
+| vili | 25.05 | aarch64 | DNS for secondary site (VM) |
+| vmTemplates | 25.05 | aarch64 | VM template using cloud-init |
 
 ## Rebuild baldur config
 
