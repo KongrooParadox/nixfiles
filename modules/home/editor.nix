@@ -27,7 +27,6 @@
   nixpkgs.config.allowUnfreePredicate = pkg: true;
 
   home.packages = with pkgs; [
-    alejandra
     ansible-language-server
     bash-language-server
     docker-compose-language-service
@@ -37,7 +36,6 @@
     lua-language-server
     nixd
     nixfmt-rfc-style
-    nixpkgs-fmt
     python312Packages.python-lsp-server
     rust-analyzer
     terraform
