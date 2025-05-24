@@ -12,4 +12,6 @@
       description = lib.mdDoc "Which Desktop Environment to install (macos)";
     };
   };
+
+  config.hm.enable = true;
 }
