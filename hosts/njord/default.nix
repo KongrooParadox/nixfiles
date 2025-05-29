@@ -1,15 +1,19 @@
 {
+  apple-silicon,
+  config,
   inputs,
   lib,
+  nix-ld,
   ...
 }:
 {
   imports = [
-    inputs.disko.nixosModules.disko
-    ./disks.nix
-    inputs.apple-silicon.nixosModules.default
     ../../modules/nixos/asahi
+    ./disks.nix
     ./hardware-configuration.nix
+    apple-silicon.nixosModules.default
+    inputs.disko.nixosModules.disko
+    nix-ld.nixosModules.nix-ld
   ];
 
   boot = {
@@ -23,8 +27,10 @@
   };
 
   nixpkgs.overlays = [
-    inputs.apple-silicon.overlays.apple-silicon-overlay
+    apple-silicon.overlays.apple-silicon-overlay
   ];
+
+  programs.nix-ld.dev.enable = true;
 
   powerManagement = {
     enable = true;
