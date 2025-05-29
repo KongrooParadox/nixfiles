@@ -11,6 +11,8 @@
     ./system.nix
   ];
 
+  hm.homeBaseDirectory = "/Users";
+
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = "nix-command flakes";

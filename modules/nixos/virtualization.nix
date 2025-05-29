@@ -3,11 +3,12 @@
   lib,
   pkgs,
   users,
+  system,
   ...
 }:
 let
   cfg = config.virtualization;
-  currentArchitecture = config.nixpkgs.system;
+  currentArchitecture = system;
 in
 {
   options.virtualization = {
