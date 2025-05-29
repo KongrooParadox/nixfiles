@@ -34,14 +34,21 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     {
+      apple-silicon,
+      disko,
       nixpkgs,
       nixpkgs-unstable,
       impermanence,
       nix-darwin,
+      nix-ld,
       self,
       ...
     }@inputs:
@@ -136,7 +143,12 @@
             stateVersion = "24.11";
             system = "aarch64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit
+              apple-silicon
+              inputs
+              nix-ld
+              self
+              ;
           };
           modules = [
             ./modules/nixos
