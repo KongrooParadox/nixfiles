@@ -36,7 +36,7 @@
     lua-language-server
     nixd
     nixfmt-rfc-style
-    python312Packages.python-lsp-server
+    python313Packages.python-lsp-server
     rust-analyzer
     terraform
     terraform-ls
