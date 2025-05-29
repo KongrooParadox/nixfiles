@@ -15,37 +15,31 @@ Having only played around with Nix for around a year, this is very much a work i
 | vili | 25.05 | aarch64 | DNS for secondary site (VM) |
 | vmTemplates | 25.05 | aarch64 | VM template using cloud-init |
 
-## Rebuild baldur config
+## Build config for current host
 
 ```shell
-nixos-rebuild switch --flake .#baldur --use-remote-sudo
+just build
 ```
 
-## Rebuild njord config
+## Switch to new config for current host
 
 ```shell
-nixos-rebuild switch --flake .#njord --use-remote-sudo
+just switch
 ```
 
-## Deploying config to Mac mini
+## Build config for remote host
 
 ```shell
-TARGET="heimdall";NIX_SSHOPTS="-t -T" nixos-rebuild switch --flake .#$TARGET --target-host ops@$TARGET --use-remote-sudo
+just build-remote HOSTNAME
 ```
 
-## Deploying config to Raspberry Pi 3
+## Switch to new config for remote host
 
 ```shell
-TARGET="asgard";NIX_SSHOPTS="-t -T" nixos-rebuild switch --flake .#$TARGET --target-host ops@$TARGET --use-remote-sudo
+just switch-remote FQDN
 ```
 
-## Deploying config to NAS
-
-```shell
-TARGET="yggdrasil";NIX_SSHOPTS="-t -T" nixos-rebuild switch --flake .#$TARGET --build-host $TARGET --target-host $TARGET --use-remote-sudoo
-```
-
-## Building VM template images
+## Building VM template image
 
 Based on [flake from voidus](https://gist.github.com/voidus/1230b200043b7f815e2513663d16353b)
 
