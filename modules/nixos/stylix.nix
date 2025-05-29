@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  ...
 }:
 let
   needsStylix = config.desktop.environment == "hyprland" || config.desktop.environment == "macos";
