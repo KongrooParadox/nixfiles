@@ -31,7 +31,7 @@ let
   inherit (nixCfg) monoPkg stylixModule;
 in
 {
-  imports = stylixModule;
+  imports = stylixModule ++ (lib.optional isLinux ../nixos/stylix.nix);
 
   config = lib.mkIf (config.desktop.enable && needsStylix) {
     stylix = {
@@ -59,9 +59,6 @@ in
       };
       polarity = "dark";
       opacity.terminal = 0.8;
-      cursor.package = pkgs.bibata-cursors;
-      cursor.name = "Bibata-Modern-Ice";
-      cursor.size = 24;
       fonts = {
         monospace = {
           package = monoPkg;

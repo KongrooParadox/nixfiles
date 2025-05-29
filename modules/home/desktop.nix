@@ -1,12 +1,12 @@
 {
-  config,
   desktop,
   lib,
   pkgs,
+  system,
   ...
 }:
 let
-  currentArchitecture = config.nixpkgs.system;
+  currentArchitecture = system;
 in
 {
   imports = lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland;

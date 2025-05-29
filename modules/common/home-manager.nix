@@ -59,12 +59,12 @@ in
     ];
     home-manager = {
       useUserPackages = true;
-      backupFileExtension = "backup";
       extraSpecialArgs = {
         inherit
-          inputs
-          host
           desktop
+          host
+          inputs
+          system
           users
           ;
       };
