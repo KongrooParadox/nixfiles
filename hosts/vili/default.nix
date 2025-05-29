@@ -107,7 +107,7 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = ''
-        ${pkgs.ethtool}/bin/ethtool -K enp0s3 rx-udp-gro-forwarding on rx-gro-list off
+        ${pkgs.ethtool}/bin/ethtool -K enp0s5 rx-udp-gro-forwarding on rx-gro-list off
       '';
     };
   };
