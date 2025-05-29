@@ -33,15 +33,18 @@
   reverseProxy.enable = true;
   arr = {
     enable = true;
+    computeBasePath = "/mnt/compute";
+    mediaBasePath = "/mnt/media";
     deluge.wireguardInterface = "wg-p2p-2";
   };
+  hm.enable = true;
   media-player.enable = true;
   tailscale.enable = false;
   immich = {
     enable = true;
     mediaPath = "/mnt/media/gallery";
   };
-  samba.enable = true;
+  samba.server.enable = true;
 
   boot = {
     initrd = {

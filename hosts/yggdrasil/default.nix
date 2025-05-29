@@ -24,6 +24,7 @@
     };
   };
 
+  hm.enable = true;
   immich.enable = true;
   reverseProxy.enable = true;
   storage.enable = true;
