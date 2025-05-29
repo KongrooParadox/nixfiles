@@ -24,7 +24,7 @@
         name = user;
         value = {
           isNormalUser = true;
-          shell = pkgs.zsh;
+          shell = if config.hm.enable then pkgs.zsh else pkgs.bash;
           description = user;
           extraGroups = [
             "wheel"
