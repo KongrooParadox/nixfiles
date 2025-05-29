@@ -34,6 +34,7 @@ return {
                 'hcl',
                 'html',
                 'javascript',
+                'just',
                 'json',
                 'lua',
                 'luadoc',

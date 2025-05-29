@@ -33,6 +33,9 @@
     dockerfile-language-server-nodejs
     gopls
     helm-ls
+    just
+    just-formatter
+    just-lsp
     lua-language-server
     nixd
     nixfmt-rfc-style
