@@ -4,6 +4,9 @@ keys:
   - &baldur-root age1qva0v8ka9pnh748fswd60y52luum5hthf7t5fh483xm7wn5al5hslejace
   - &baldur-robot age1q6a6qcuczj26e900mh4she2n0ezlze0297usjarpddzvdhst7yhshg9cds
   - &heimdall age1jvc7p6m0dz8a2p8k8yv38z94a50sypsunpnxg7w4mfm565vv3caqwumktk
+  - &lordi-biche age1amvvsl8a70hwnw3hsw0jpxj2mh7un88d3v2cd9d08m5trvgvvg7q62rksl
+  - &lordi-root age1zzgfc4fx8ju9g2z4ak8qjq5sed4guafdn33qmvne0flz8xe9759sav2lt5
+  - &lordi-robot age1xw7u99pjez0wjz8u607wt8xaa0x6h0stualezknh7zjctsa8r54sz0jev0
   - &midgard-ops age17zv30v64zrxslhtkzc8qzguwyrzlryk9a2c55m4fmguhrjz8fsjsc3pycx
   - &midgard-root age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
   - &njord age1n78wzny3xlzukd8m09jr589sn95fwz3ug65wu7408cymx0unn9ssgrwkz6
@@ -23,6 +26,9 @@ creation_rules:
         - *baldur-root
         - *baldur-robot
         - *heimdall
+        - *lordi-biche
+        - *lordi-root
+        - *lordi-robot
         - *midgard-ops
         - *midgard-root
         - *njord

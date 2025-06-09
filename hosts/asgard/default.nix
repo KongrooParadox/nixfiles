@@ -59,6 +59,7 @@
       radarr          IN  CNAME heimdall
       readarr         IN  CNAME heimdall
       sonarr          IN  CNAME heimdall
+      lordi           IN  A     10.10.111.18
       kronos          IN  A     10.10.111.103
       thor            IN  A     10.10.111.104
       pi401           IN  A     10.10.111.123
