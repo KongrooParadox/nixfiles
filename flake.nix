@@ -2,7 +2,7 @@
   description = "flake for my NixOS machines";
 
   inputs = {
-    # apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    # apple-silicon.url = "github:nix-community/nixos-apple-silicon";
     apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/zfs-kernel";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager-unstable = {
@@ -43,7 +43,6 @@
   outputs =
     {
       apple-silicon,
-      disko,
       nixpkgs,
       nixpkgs-unstable,
       impermanence,
