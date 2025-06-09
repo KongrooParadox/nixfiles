@@ -1,4 +1,4 @@
-Host baldur njord
+Host baldur njord lordi
     User robot
     Compression yes
     IdentityFile ~/.ssh/id_ed25519

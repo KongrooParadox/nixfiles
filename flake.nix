@@ -119,6 +119,24 @@
             ./modules/nixos
           ];
         };
+        lordi = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            domain = "tavel.kongroo.ovh";
+            host = "lordi";
+            users = [
+              "fatiha"
+              "robot"
+            ];
+            stateVersion = "25.05";
+            system = "x86_64-linux";
+            workgroup = "SKYNET";
+            inherit self inputs;
+          };
+          modules = [
+            ./modules/nixos
+          ];
+        };
         midgard = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
