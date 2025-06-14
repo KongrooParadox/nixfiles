@@ -113,6 +113,7 @@ in
         tree
         unzip
         virtualenv
+        w3m
         wget
         yad
         yq

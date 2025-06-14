@@ -31,6 +31,10 @@
       ".ssh/config" = {
         source = ../../dotfiles/ssh/config;
       };
+      ".w3m" = {
+        source = ../../dotfiles/w3m;
+        recursive = true;
+      };
     };
 
     packages = with pkgs; [
