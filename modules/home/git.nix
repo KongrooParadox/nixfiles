@@ -8,7 +8,7 @@
       userEmail = "7790572+KongrooParadox@users.noreply.github.com";
       signing = {
         signByDefault = true;
-        gpgPath = "/run/current-system/sw/bin/gpg";
+        signer = "/run/current-system/sw/bin/gpg";
         key = "2CD046115D337861";
       };
       lfs.enable = true;
