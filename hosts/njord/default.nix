@@ -41,6 +41,9 @@
   hm.enable = true;
   podman.enable = true;
   virtualization.enable = true;
+  tailscale = {
+    acceptRoutes = true;
+  };
 
   networking.hostId = "720320e5";
 
