@@ -16,7 +16,6 @@
         defaultSopsFile = ../../secrets/secrets.yaml;
         defaultSopsFormat = "yaml";
         secrets."acme-ovh" = { };
-        secrets."tailscale/server-key" = { };
       };
     }
   ];

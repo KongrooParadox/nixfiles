@@ -1,10 +1,13 @@
 {
   config,
+  domain,
   lib,
   ...
 }:
 let
   cfg = config.tailscale;
+  keyName =
+    if (domain == "tavel.kongroo.ovh") then "tailscale/keys/tavel" else "tailscale/keys/pernes";
 in
 {
   options.tailscale = {
@@ -53,16 +56,18 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets."${keyName}" = { };
     services.tailscale = {
-      extraSetFlags = lib.optional config.tailscale.exitNode "--advertise-exit-node";
+      authKeyFile = config.sops.secrets."${keyName}".path;
       enable = true;
-      openFirewall = true;
-      useRoutingFeatures = if cfg.subnetRouter then "server" else "client";
       extraUpFlags =
         lib.optional cfg.ssh "--ssh"
         ++ lib.optional cfg.acceptDns "--accept-dns"
         ++ lib.optional cfg.acceptRoutes "--accept-routes"
         ++ lib.optional cfg.subnetRouter "--advertise-routes=${lib.concatStringsSep "," cfg.advertisedRoutes}";
+      extraSetFlags = lib.optional config.tailscale.exitNode "--advertise-exit-node";
+      openFirewall = true;
+      useRoutingFeatures = if cfg.subnetRouter then "server" else "client";
     };
   };
 }
