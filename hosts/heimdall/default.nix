@@ -11,6 +11,7 @@
   virtualization.enable = true;
 
   networking = {
+    hostId = "a3c9f91c";
     useDHCP = false;
     bridges = {
       "br0" = {
