@@ -35,6 +35,9 @@
         source = ../../dotfiles/w3m;
         recursive = true;
       };
+      ".config/btop/themes" = {
+        source = ../../dotfiles/btop;
+      };
     };
 
     packages = with pkgs; [

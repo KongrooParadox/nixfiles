@@ -1,5 +1,4 @@
 k9s:
   ui:
-    # skin: catppuccin-mocha
     logoless: true
     skin: catppuccin-mocha-transparent
