@@ -30,5 +30,6 @@
     ./ups.nix
     ./users.nix
     ./virtualization.nix
+    ./wireguard.nix
   ];
 }

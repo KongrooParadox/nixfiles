@@ -44,6 +44,7 @@
   tailscale = {
     acceptRoutes = true;
   };
+  wireguard.enable = true;
 
   networking.hostId = "720320e5";
 
