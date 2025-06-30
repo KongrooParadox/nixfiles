@@ -58,6 +58,7 @@ in
       }
     ];
     home-manager = {
+      backupFileExtension = "backup";
       useUserPackages = true;
       extraSpecialArgs = {
         inherit
