@@ -5,7 +5,6 @@
     ./desktop.nix
     ./editor.nix
     ./git.nix
-    ./macos.nix
     ./rclone.nix
     ./terminal.nix
   ];
