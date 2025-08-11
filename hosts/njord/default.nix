@@ -3,7 +3,7 @@
   config,
   inputs,
   lib,
-  nix-ld,
+  # nix-ld,
   ...
 }:
 {
@@ -13,7 +13,7 @@
     ./hardware-configuration.nix
     apple-silicon.nixosModules.default
     inputs.disko.nixosModules.disko
-    nix-ld.nixosModules.nix-ld
+    # nix-ld.nixosModules.nix-ld
   ];
 
   boot = {
@@ -30,12 +30,7 @@
     apple-silicon.overlays.apple-silicon-overlay
   ];
 
-  programs.nix-ld.dev.enable = true;
-
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "performance";
-  };
+  # programs.nix-ld.dev.enable = true;
 
   desktop.enable = true;
   hm.enable = true;

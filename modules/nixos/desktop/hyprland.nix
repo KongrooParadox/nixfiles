@@ -27,7 +27,6 @@
     services = {
       greetd = {
         enable = true;
-        vt = 3;
         settings = {
           default_session = {
             user = lib.lists.head users; # First user in list is the default
