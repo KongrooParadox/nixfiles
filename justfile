@@ -3,6 +3,12 @@ architecture := `uname -a | awk '{ print $(NF-1) }'`
 build:
     nixos-rebuild build --flake .#
 
+build-iso-arm:
+    nix build .#nixosConfigurations.iso-arm.config.system.build.isoImage
+
+build-iso-x86:
+    nix build .#nixosConfigurations.iso-x86.config.system.build.isoImage
+
 build-remote HOSTNAME:
     nixos-rebuild build --flake .#{{HOSTNAME}}
 
