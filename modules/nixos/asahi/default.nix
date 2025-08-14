@@ -20,5 +20,8 @@ in
       peripheralFirmwareDirectory = ./firmware;
       setupAsahiSound = true;
     };
+    powerManagement = {
+      powertop.enable = lib.mkForce false;
+    };
   };
 }
