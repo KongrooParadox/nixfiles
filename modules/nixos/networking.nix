@@ -1,5 +1,6 @@
 {
   host,
+  lib,
   users,
   ...
 }:
@@ -15,6 +16,7 @@
     };
     networkmanager.enable = true;
     hostName = host;
+    wireless.enable = lib.mkForce false;
   };
 
   users.users = builtins.listToAttrs (

@@ -118,6 +118,36 @@
             ./modules/nixos
           ];
         };
+        iso-arm = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            domain = "tavel.kongroo.ovh";
+            host = "iso-arm";
+            users = [ "ops" ];
+            stateVersion = "25.05";
+            system = "aarch64-linux";
+            workgroup = "SKYNET";
+            inherit self inputs;
+          };
+          modules = [
+            ./modules/nixos
+          ];
+        };
+        iso-x86 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            domain = "tavel.kongroo.ovh";
+            host = "iso-x86";
+            users = [ "ops" ];
+            stateVersion = "25.05";
+            system = "x86_64-linux";
+            workgroup = "SKYNET";
+            inherit self inputs;
+          };
+          modules = [
+            ./modules/nixos
+          ];
+        };
         lordi = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
