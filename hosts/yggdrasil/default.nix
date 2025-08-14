@@ -60,33 +60,14 @@
     };
   };
 
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories = [
-      "/var/log"
+  impermanence = {
+    enable = true;
+    extraDirectories = [
       "/var/lib/acme"
-      "/var/lib/nixos"
       "/var/lib/postgresql"
       "/var/lib/redis-immich/"
       "/var/lib/samba"
-      "/var/lib/systemd/coredump"
-    ];
-    files = [
-      "/etc/machine-id"
     ];
   };
 
-  services.openssh = {
-    hostKeys = [
-      {
-        path = "/persist/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-      {
-        path = "/persist/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-        bits = 4096;
-      }
-    ];
-  };
 }

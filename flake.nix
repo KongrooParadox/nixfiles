@@ -96,11 +96,10 @@
             stateVersion = "23.11";
             system = "x86_64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
-            impermanence.nixosModules.impermanence
           ];
         };
         heimdall = nixpkgs-unstable.lib.nixosSystem {
@@ -112,7 +111,7 @@
             stateVersion = "24.05";
             system = "aarch64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
@@ -175,7 +174,7 @@
             stateVersion = "24.11";
             system = "x86_64-linux";
             workgroup = "CASA_ANITA";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
@@ -192,6 +191,7 @@
             workgroup = "SKYNET";
             inherit
               apple-silicon
+              impermanence
               inputs
               nix-ld
               self
@@ -199,7 +199,6 @@
           };
           modules = [
             ./modules/nixos
-            impermanence.nixosModules.impermanence
           ];
         };
         vili = nixpkgs.lib.nixosSystem {
@@ -226,11 +225,10 @@
             stateVersion = "24.05";
             system = "x86_64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
-            impermanence.nixosModules.impermanence
           ];
         };
       };

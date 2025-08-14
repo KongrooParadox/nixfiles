@@ -47,10 +47,14 @@ in
 
   config = lib.mkIf cfg.enable {
     home-manager.sharedModules = [
+      inputs.impermanence.homeManagerModules.impermanence
       inputs.sops-nix.homeManagerModules.sops
       {
         sops = {
-          age.sshKeyPaths = map (user: "${cfg.homeBaseDirectory}/${user}/.ssh/id_ed25519") users;
+          age = {
+            keyFile = "/persist/.age.txt";
+            sshKeyPaths = map (user: "${cfg.homeBaseDirectory}/${user}/.ssh/id_ed25519") users;
+          };
           defaultSopsFile = ../../secrets/secrets.yaml;
           defaultSopsFormat = "yaml";
           secrets."anthropic-api-key" = { };

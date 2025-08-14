@@ -47,43 +47,12 @@
   };
 
   sops = {
-    age = {
-      keyFile = "/.age.txt";
-      sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
-    };
     secrets = {
       "zfs-dataset/baldur/encrypted.key" = { };
     };
   };
 
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories = [
-      "/var/log"
-      "/var/lib/bluetooth"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
-    ];
-    files = [
-      "/etc/machine-id"
-      "/.age.txt"
-    ];
-  };
-
-  services.openssh = {
-    hostKeys = [
-      {
-        path = "/persist/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-      {
-        path = "/persist/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-        bits = 4096;
-      }
-    ];
-  };
+  impermanence.enable = true;
 
   system.language = "fr_FR";
   virtualization.enable = true;

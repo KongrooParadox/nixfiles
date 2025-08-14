@@ -16,6 +16,7 @@
     ./dns-server.nix
     ./home-assistant.nix
     ./immich.nix
+    ./impermanence.nix
     ./media-player.nix
     ./networking.nix
     ./podman.nix

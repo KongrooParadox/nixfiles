@@ -39,6 +39,7 @@
   tailscale = {
     acceptRoutes = true;
   };
+
   wireguard.enable = true;
 
   networking.hostId = "720320e5";
@@ -49,25 +50,8 @@
     openFirewall = true;
   };
 
-  sops = {
-    age = {
-      sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
-    };
-  };
+  impermanence.enable = true;
 
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories = [
-      "/var/log"
-      "/var/lib/bluetooth"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/etc/NetworkManager/system-connections"
-    ];
-    files = [
-      "/etc/machine-id"
-    ];
-  };
   sops.secrets."wireguard/proton/ar-25" = { };
   networking.wg-quick.interfaces.wg-ar-25 = {
     address = [ "10.2.0.2/32" ];
@@ -88,22 +72,6 @@
         persistentKeepalive = 25;
       }
     ];
-  };
-
-  services = {
-    openssh = {
-      hostKeys = [
-        {
-          path = "/persist/etc/ssh/ssh_host_ed25519_key";
-          type = "ed25519";
-        }
-        {
-          path = "/persist/etc/ssh/ssh_host_rsa_key";
-          type = "rsa";
-          bits = 4096;
-        }
-      ];
-    };
   };
 
   samba.client.enable = true;
