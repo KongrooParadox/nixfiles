@@ -24,6 +24,7 @@
 
   services.xserver.xkb.layout = lib.mkForce "fr,ara,us";
 
+  hm.enable = true;
   home-manager.users.fatiha.home.packages = [
     pkgs.zoom-us
   ];
