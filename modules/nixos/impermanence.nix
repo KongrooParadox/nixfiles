@@ -2,6 +2,7 @@
   config,
   impermanence,
   lib,
+  users,
   ...
 }:
 let
@@ -39,6 +40,44 @@ in
       files = [
         "/etc/machine-id"
       ];
+      users = builtins.listToAttrs (
+        map (user: {
+          name = user;
+          value = {
+            directories = [
+              {
+                directory = ".gnupg";
+                mode = "0700";
+              }
+              ".local/share"
+              {
+                directory = ".ssh";
+                mode = "0700";
+              }
+              "Documents"
+            ]
+            ++ lib.optionals (user != "fatiha") [
+              "Desktop"
+              "Downloads"
+              "Music"
+              "Pictures"
+              "Templates"
+              "Videos"
+              "nixfiles"
+              "personal"
+            ]
+            ++ lib.optionals (user == "fatiha") [
+              ".zoom"
+              "Bureau"
+              "Images"
+              "Modèles"
+              "Musique"
+              "Téléchargements"
+              "Vidéos"
+            ];
+          };
+        }) users
+      );
     };
     # Needed for home-manager allowOther option
     programs.fuse.userAllowOther = true;
