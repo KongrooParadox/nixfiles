@@ -78,7 +78,7 @@
             stateVersion = "24.05";
             system = "aarch64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
@@ -126,7 +126,7 @@
             stateVersion = "25.05";
             system = "aarch64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
@@ -141,7 +141,7 @@
             stateVersion = "25.05";
             system = "x86_64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
@@ -159,7 +159,7 @@
             stateVersion = "25.05";
             system = "x86_64-linux";
             workgroup = "SKYNET";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
@@ -210,7 +210,7 @@
             stateVersion = "24.11";
             system = "aarch64-linux";
             workgroup = "CASA_ANITA";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
