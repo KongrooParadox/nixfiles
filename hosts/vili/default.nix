@@ -6,8 +6,21 @@
 }:
 {
   imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
+    (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
   ];
+
+  boot = {
+    tmp.cleanOnBoot = true;
+    growPartition = true;
+    loader = {
+      grub = {
+        enable = false;
+        device = lib.mkDefault "/dev/vda";
+      };
+      systemd-boot.enable = lib.mkForce false;
+      generic-extlinux-compatible.enable = true;
+    };
+  };
 
   reverseProxy.enable = true;
   home-assistant = {
@@ -50,31 +63,9 @@
   };
 
   nixpkgs.hostPlatform = "aarch64-linux";
-  fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-label/ESP";
-      fsType = "vfat";
-    };
-    "/" = {
-      device = "/dev/disk/by-label/nixos";
-      autoResize = true;
-      fsType = "ext4";
-    };
-  };
-
-  boot = {
-    tmp.cleanOnBoot = true;
-    growPartition = true;
-    loader = {
-      grub = {
-        device = lib.mkDefault "/dev/vda";
-      };
-    };
-  };
 
   services.openssh.enable = true;
 
-  services.qemuGuest.enable = true;
   services.resolved.enable = false;
   networking.nameservers = [ "127.0.0.1" ]; # Use local DNS server
 
