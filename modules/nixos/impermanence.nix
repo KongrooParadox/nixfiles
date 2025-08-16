@@ -45,11 +45,13 @@ in
           name = user;
           value = {
             directories = [
+              ".config"
               {
                 directory = ".gnupg";
                 mode = "0700";
               }
               ".local/share"
+              ".mozilla"
               {
                 directory = ".ssh";
                 mode = "0700";
@@ -74,6 +76,10 @@ in
               "Musique"
               "Téléchargements"
               "Vidéos"
+            ];
+            files = [
+              ".bash_history"
+              ".zsh_history"
             ];
           };
         }) users
