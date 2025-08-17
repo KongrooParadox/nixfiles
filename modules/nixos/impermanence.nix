@@ -103,7 +103,7 @@ in
 
     sops = {
       age = {
-        keyFile = "/persist/.age.txt";
+        # keyFile = "/persist/.age.txt";
         sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
       };
     };
