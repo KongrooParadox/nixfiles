@@ -126,7 +126,6 @@
         complete -o nospace -C $(which terraform) terraform
         path+=('${config.home.homeDirectory}/go/bin')
         path+=('${config.home.homeDirectory}/.local/bin')
-        export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
       '';
     };
   };

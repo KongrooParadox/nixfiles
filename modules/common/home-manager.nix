@@ -57,7 +57,6 @@ in
           };
           defaultSopsFile = ../../secrets/secrets.yaml;
           defaultSopsFormat = "yaml";
-          secrets."anthropic-api-key" = { };
         };
       }
     ];
