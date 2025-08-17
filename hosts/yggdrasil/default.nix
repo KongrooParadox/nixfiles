@@ -21,6 +21,7 @@
     };
   };
 
+  binary-cache.enable = true;
   hm.enable = true;
   immich.enable = true;
   reverseProxy.enable = true;

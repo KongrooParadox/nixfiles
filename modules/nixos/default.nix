@@ -12,6 +12,7 @@
     ./arr.nix
     ./audio.nix
     ./boot.nix
+    ./binary-cache.nix
     ./desktop
     ./dns-server.nix
     ./home-assistant.nix
