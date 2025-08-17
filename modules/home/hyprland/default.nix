@@ -226,6 +226,8 @@ in
             bind = ,XF86MonBrightnessUp,exec,brightnessctl set +5%
             bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"
             bindl = , switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, 2560x1600@60.0, auto, 1.25"
+            bindl = , switch:on:Apple SMC power/lid events, exec, hyprctl keyword monitor "eDP-1, disable"
+            bindl = , switch:off:Apple SMC power/lid events, exec, hyprctl keyword monitor "eDP-1, 2560x1600@60.0, auto, 1.25"
           ''
         ];
     };
