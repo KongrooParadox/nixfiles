@@ -52,7 +52,6 @@ in
       {
         sops = {
           age = {
-            keyFile = "/persist/.age.txt";
             sshKeyPaths = map (user: "${cfg.homeBaseDirectory}/${user}/.ssh/id_ed25519") users;
           };
           defaultSopsFile = ../../secrets/secrets.yaml;
