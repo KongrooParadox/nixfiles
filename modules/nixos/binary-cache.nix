@@ -21,5 +21,6 @@ in
       environmentFile = config.sops.secrets."attic/server-token".path;
     };
     sops.secrets."attic/server-token" = { };
+    networking.firewall.allowedTCPPorts = [ 8080 ];
   };
 }
