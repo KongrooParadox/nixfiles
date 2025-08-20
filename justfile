@@ -23,8 +23,8 @@ switch-remote FQDN:
     hostname=$(echo {{FQDN}} | awk -F '.' {'print $1'})
     remoteArch=$(ssh {{FQDN}} "uname -a | awk '{ print \$(NF-1) }'" )
     if [[ "{{architecture}}" == "$remoteArch" ]];
-        then NIX_SSHOPTS="-t -T" nixos-rebuild switch --flake .#$hostname --target-host {{FQDN}} --sudo
-        else NIX_SSHOPTS="-t -T" nixos-rebuild switch --flake .#$hostname --build-host {{FQDN}} --target-host {{FQDN}} --sudo
+        then nixos-rebuild switch --flake .#$hostname --sudo --target-host {{FQDN}}
+        else nixos-rebuild switch --flake .#$hostname --sudo --build-host {{FQDN}} --target-host {{FQDN}}
     fi
 
 test:
