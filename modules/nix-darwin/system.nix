@@ -43,6 +43,7 @@
       jq
       lftp
       nettools
+      nix-output-monitor
       nmap
       openssl
       ripgrep
