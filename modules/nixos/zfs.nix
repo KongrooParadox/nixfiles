@@ -9,6 +9,7 @@
 }:
 let
   cfg = config.kp.zfs;
+  diskoFile = "${self}/hosts/${host}/disks.nix";
 in
 {
   options.kp = {
@@ -26,10 +27,14 @@ in
     };
   };
 
-  imports = [
-    "${self}/hosts/${host}/disks.nix"
-    inputs.disko.nixosModules.disko
-  ];
+  imports =
+    if builtins.pathExists diskoFile then
+      [
+        diskoFile
+        inputs.disko.nixosModules.disko
+      ]
+    else
+      [ ];
 
   config = lib.mkIf cfg.enable {
     boot = {
