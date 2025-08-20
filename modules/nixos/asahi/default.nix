@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.asahi;
+  cfg = config.kp.asahi;
 in
 {
-  options.asahi = {
+  options.kp.asahi = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.storage;
+  cfg = config.kp.storage;
 in
 {
-  options.storage = {
+  options.kp.storage = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

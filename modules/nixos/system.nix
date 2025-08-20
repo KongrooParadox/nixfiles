@@ -7,10 +7,10 @@
   ...
 }:
 let
-  cfg = config.system;
+  cfg = config.kp.system;
 in
 {
-  options.system = {
+  options.kp.system = {
     encoding = lib.mkOption {
       type = lib.types.str;
       default = "UTF-8";

@@ -9,7 +9,8 @@
 let
   isUnstable = lib.versions.majorMinor lib.version == "25.11";
   isLinux = lib.strings.hasSuffix "linux" system;
-  needsStylix = config.desktop.environment == "hyprland" || config.desktop.environment == "macos";
+  needsStylix =
+    config.kp.desktop.environment == "hyprland" || config.kp.desktop.environment == "macos";
 
   nixCfg =
     if isUnstable then
@@ -33,7 +34,7 @@ in
 {
   imports = stylixModule ++ (lib.optional isLinux ../nixos/stylix.nix);
 
-  config = lib.mkIf (config.desktop.enable && needsStylix) {
+  config = lib.mkIf (config.kp.desktop.enable && needsStylix) {
     stylix = {
       enable = true;
       autoEnable = true;

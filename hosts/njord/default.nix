@@ -18,17 +18,17 @@
 
   # programs.nix-ld.dev.enable = true;
 
-  desktop.enable = true;
-  hm.enable = true;
-  podman.enable = true;
-  virtualization.enable = true;
-  tailscale = {
-    acceptRoutes = true;
+  kp = {
+    desktop.enable = true;
+    home-manager.enable = true;
+    impermanence.enable = true;
+    podman.enable = true;
+    samba.client.enable = true;
+    tailscale.acceptRoutes = true;
+    virtualization.enable = true;
+    wireguard.enable = true;
+    zfs.enable = true;
   };
-
-  kp.zfs.enable = true;
-
-  wireguard.enable = true;
 
   networking.hostId = "720320e5";
 
@@ -37,8 +37,6 @@
     nssmdns4 = true;
     openFirewall = true;
   };
-
-  impermanence.enable = true;
 
   sops.secrets."wireguard/proton/ar-25" = { };
   networking.wg-quick.interfaces.wg-ar-25 = {
@@ -61,6 +59,4 @@
       }
     ];
   };
-
-  samba.client.enable = true;
 }

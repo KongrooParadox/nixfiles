@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.media-player;
+  cfg = config.kp.media-player;
 in
 {
-  options.media-player = {
+  options.kp.media-player = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -29,7 +29,7 @@ in
   config = lib.mkIf cfg.enable {
     users.groups.media = { };
 
-    reverseProxy = {
+    kp.reverseProxy = {
       domain = cfg.domain;
       services = {
         jellyfin.port = 8096;

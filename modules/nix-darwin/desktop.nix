@@ -13,5 +13,5 @@
     };
   };
 
-  config.hm.enable = true;
+  config.kp.home-manager.enable = true;
 }

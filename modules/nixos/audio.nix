@@ -4,7 +4,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.desktop.enable {
+  config = lib.mkIf config.kp.desktop.enable {
     security.rtkit.enable = true;
     services = {
       pipewire = {

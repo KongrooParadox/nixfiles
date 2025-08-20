@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.dns-server;
+  cfg = config.kp.dns-server;
 in
 {
-  options.dns-server = {
+  options.kp.dns-server = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

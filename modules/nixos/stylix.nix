@@ -5,10 +5,11 @@
   ...
 }:
 let
-  needsStylix = config.desktop.environment == "hyprland" || config.desktop.environment == "macos";
+  needsStylix =
+    config.kp.desktop.environment == "hyprland" || config.kp.desktop.environment == "macos";
 in
 {
-  config = lib.mkIf (config.desktop.enable && needsStylix) {
+  config = lib.mkIf (config.kp.desktop.enable && needsStylix) {
     stylix.cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Ice";

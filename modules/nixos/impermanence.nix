@@ -6,10 +6,10 @@
   ...
 }:
 let
-  cfg = config.impermanence;
+  cfg = config.kp.impermanence;
 in
 {
-  options.impermanence = {
+  options.kp.impermanence = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

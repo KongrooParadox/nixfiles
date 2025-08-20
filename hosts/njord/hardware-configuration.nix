@@ -14,7 +14,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  asahi.enable = true;
+  kp.asahi.enable = true;
   boot.initrd.availableKernelModules = [ "uas" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];

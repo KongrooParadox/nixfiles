@@ -7,11 +7,11 @@
   ...
 }:
 let
-  cfg = config.desktop;
+  cfg = config.kp.desktop;
   nixpkgs-stable = inputs.nixpkgs.legacyPackages.${pkgs.system};
 in
 {
-  options.desktop = {
+  options.kp.desktop = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
