@@ -31,7 +31,10 @@
     tailscale.enable = false;
     ups.enable = true;
     virtualization.enable = true;
-    zfs.enable = true;
+    zfs = {
+      enable = true;
+      encryptionKeys = [ "encrypted.key" ];
+    };
   };
 
   networking = {
