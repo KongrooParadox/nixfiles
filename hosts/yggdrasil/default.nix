@@ -1,12 +1,9 @@
 {
   lib,
-  inputs,
   ...
 }:
 {
   imports = [
-    inputs.disko.nixosModules.disko
-    ./disks.nix
     ./hardware-configuration.nix
   ];
 
@@ -14,11 +11,12 @@
     cpuFreqGovernor = "powersave";
   };
 
-  sops = {
-    secrets = {
-      "zfs-dataset/yggdrasil/root.key" = { };
-      "zfs-dataset/yggdrasil/rust.key" = { };
-    };
+  kp.zfs = {
+    enable = true;
+    encryptionKeys = [
+      "root.key"
+      "rust.key"
+    ];
   };
 
   binary-cache.enable = true;
@@ -47,14 +45,6 @@
         ];
       };
       systemd-boot.enable = lib.mkForce false;
-    };
-
-    initrd.postResumeCommands = lib.mkAfter ''
-      zfs rollback -r root/local/root@blank
-    '';
-    supportedFilesystems = [ "zfs" ];
-    zfs = {
-      devNodes = "/dev/disk/by-path";
     };
   };
 

@@ -1,30 +1,16 @@
 {
   apple-silicon,
   config,
-  inputs,
-  lib,
   # nix-ld,
   ...
 }:
 {
   imports = [
     ../../modules/nixos/asahi
-    ./disks.nix
     ./hardware-configuration.nix
     apple-silicon.nixosModules.default
-    inputs.disko.nixosModules.disko
     # nix-ld.nixosModules.nix-ld
   ];
-
-  boot = {
-    initrd.postResumeCommands = lib.mkAfter ''
-      zfs rollback -r zpool/root@blank
-    '';
-    supportedFilesystems = [ "zfs" ];
-    zfs = {
-      devNodes = "/dev/disk/by-id";
-    };
-  };
 
   nixpkgs.overlays = [
     apple-silicon.overlays.apple-silicon-overlay
@@ -39,6 +25,8 @@
   tailscale = {
     acceptRoutes = true;
   };
+
+  kp.zfs.enable = true;
 
   wireguard.enable = true;
 

@@ -33,5 +33,6 @@
     ./users.nix
     ./virtualization.nix
     ./wireguard.nix
+    ./zfs.nix
   ];
 }
