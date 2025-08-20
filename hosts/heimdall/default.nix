@@ -1,8 +1,5 @@
 {
-  host,
   inputs,
-  lib,
-  pkgs,
   ...
 }:
 {
@@ -25,8 +22,8 @@
     reverseProxy.enable = true;
     samba.client = {
       enable = true;
-      uid = "1001";
-      gid = "990";
+      uid = "1000";
+      gid = "997";
     };
     tailscale.enable = false;
     ups.enable = true;
