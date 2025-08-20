@@ -2,10 +2,12 @@
   config,
   domain,
   lib,
+  users,
   ...
 }:
 let
   cfg = config.kp.media-player;
+  user = lib.lists.head users;
 in
 {
   options.kp.media-player = {
@@ -27,7 +29,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.media = { };
+    users = {
+      users.${user}.extraGroups = [ "media" ];
+      groups.media = { };
+    };
 
     kp.reverseProxy = {
       domain = cfg.domain;
