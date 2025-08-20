@@ -7,11 +7,11 @@
   ...
 }:
 let
-  cfg = config.virtualization;
+  cfg = config.kp.virtualization;
   currentArchitecture = system;
 in
 {
-  options.virtualization = {
+  options.kp.virtualization = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

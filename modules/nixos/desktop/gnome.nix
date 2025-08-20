@@ -5,6 +5,7 @@
   ...
 }:
 let
+  cfg = config.kp.desktop;
   isUnstable = lib.versions.majorMinor lib.version == "25.11";
   gnomeCfg = {
     displayManager.gdm = {
@@ -15,7 +16,7 @@ let
   };
 in
 {
-  config = lib.mkIf (config.desktop.enable && (config.desktop.environment == "gnome")) (
+  config = lib.mkIf (cfg.enable && (cfg.environment == "gnome")) (
     lib.mkMerge [
       {
         services = {

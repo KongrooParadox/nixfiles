@@ -11,7 +11,7 @@
     ./system.nix
   ];
 
-  hm.homeBaseDirectory = "/Users";
+  kp.home-manager.homeBaseDirectory = "/Users";
 
   nixpkgs.config.allowUnfree = true;
 

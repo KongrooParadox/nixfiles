@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.steam;
+  cfg = config.kp.steam;
 in
 {
-  options.steam = {
+  options.kp.steam = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

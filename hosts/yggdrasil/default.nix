@@ -11,21 +11,31 @@
     cpuFreqGovernor = "powersave";
   };
 
-  kp.zfs = {
-    enable = true;
-    encryptionKeys = [
-      "root.key"
-      "rust.key"
-    ];
+  kp = {
+    binary-cache.enable = true;
+    home-manager.enable = true;
+    immich.enable = true;
+    impermanence = {
+      enable = true;
+      extraDirectories = [
+        "/var/lib/acme"
+        "/var/lib/postgresql"
+        "/var/lib/redis-immich/"
+        "/var/lib/samba"
+      ];
+    };
+    reverseProxy.enable = true;
+    samba.server.enable = true;
+    storage.enable = true;
+    tailscale.enable = false;
+    zfs = {
+      enable = true;
+      encryptionKeys = [
+        "root.key"
+        "rust.key"
+      ];
+    };
   };
-
-  binary-cache.enable = true;
-  hm.enable = true;
-  immich.enable = true;
-  reverseProxy.enable = true;
-  storage.enable = true;
-  samba.server.enable = true;
-  tailscale.enable = false;
 
   boot = {
     loader = {
@@ -47,15 +57,4 @@
       systemd-boot.enable = lib.mkForce false;
     };
   };
-
-  impermanence = {
-    enable = true;
-    extraDirectories = [
-      "/var/lib/acme"
-      "/var/lib/postgresql"
-      "/var/lib/redis-immich/"
-      "/var/lib/samba"
-    ];
-  };
-
 }

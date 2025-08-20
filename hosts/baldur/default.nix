@@ -12,19 +12,20 @@
 
   services.xserver.xkb.layout = lib.mkForce "fr,ara,us";
 
-  hm.enable = true;
-  home-manager.users.fatiha.home.packages = [
-    pkgs.zoom-us
-  ];
-
   kp = {
+    desktop = {
+      enable = true;
+      environment = "gnome";
+    };
+    home-manager.enable = true;
+    impermanence.enable = true;
+    virtualization.enable = true;
     zfs.enable = true;
   };
 
-  desktop = {
-    enable = true;
-    environment = "gnome";
-  };
+  home-manager.users.fatiha.home.packages = [
+    pkgs.zoom-us
+  ];
 
   networking = {
     firewall = {
@@ -33,8 +34,5 @@
     hostId = "050d02a0";
   };
 
-  impermanence.enable = true;
-
   system.language = "fr_FR";
-  virtualization.enable = true;
 }

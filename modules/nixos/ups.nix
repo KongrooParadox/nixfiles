@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.ups;
+  cfg = config.kp.ups;
 in
 {
-  options.ups = {
+  options.kp.ups = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

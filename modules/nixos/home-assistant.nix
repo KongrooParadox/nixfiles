@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.home-assistant;
+  cfg = config.kp.home-assistant;
 in
 {
-  options.home-assistant = {
+  options.kp.home-assistant = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -27,7 +27,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    reverseProxy = {
+    kp.reverseProxy = {
       domain = cfg.domain;
       services.home-assistant = {
         port = 8123;

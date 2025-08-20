@@ -4,10 +4,10 @@
   ...
 }:
 let
-  cfg = config.binary-cache;
+  cfg = config.kp.binary-cache;
 in
 {
-  options.binary-cache = {
+  options.kp.binary-cache = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

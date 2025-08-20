@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  options.wireguard = {
+  options.kp.wireguard = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -8,7 +8,7 @@
     };
   };
 
-  config = lib.mkIf config.wireguard.enable {
+  config = lib.mkIf config.kp.wireguard.enable {
     sops.secrets."wireguard/casa-anita" = { };
 
     networking.wg-quick.interfaces = {

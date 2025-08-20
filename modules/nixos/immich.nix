@@ -6,10 +6,10 @@
   ...
 }:
 let
-  cfg = config.immich;
+  cfg = config.kp.immich;
 in
 {
-  options.immich = {
+  options.kp.immich = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -82,7 +82,7 @@ in
     networking.firewall.allowedTCPPorts = [ cfg.machineLearningPort ];
 
     # Configure reverse proxy for Immich web interface
-    reverseProxy = {
+    kp.reverseProxy = {
       domain = cfg.domain;
       services.immich = {
         port = config.services.immich.port;

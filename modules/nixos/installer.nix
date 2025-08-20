@@ -14,5 +14,5 @@
   };
   networking.hostId = "dae522e3";
 
-  hm.enable = true;
+  kp.home-manager.enable = true;
 }

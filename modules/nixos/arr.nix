@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.arr;
+  cfg = config.kp.arr;
 in
 {
-  options.arr = {
+  options.kp.arr = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -137,7 +137,7 @@ in
     ];
     users.groups.media = { };
 
-    reverseProxy = {
+    kp.reverseProxy = {
       domain = cfg.domain;
       services = {
         deluge.port = 8112;

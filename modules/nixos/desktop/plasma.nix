@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf (config.desktop.enable && (config.desktop.environment == "plasma")) {
+  config = lib.mkIf (config.kp.desktop.enable && (config.kp.desktop.environment == "plasma")) {
     services = {
       displayManager.sddm.enable = true;
       desktopManager.plasma6.enable = true;

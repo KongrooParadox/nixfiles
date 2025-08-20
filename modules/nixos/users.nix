@@ -24,7 +24,7 @@
         name = user;
         value = {
           isNormalUser = true;
-          shell = if config.hm.enable then pkgs.zsh else pkgs.bash;
+          shell = if config.kp.home-manager.enable then pkgs.zsh else pkgs.bash;
           description = user;
           extraGroups = [
             "wheel"

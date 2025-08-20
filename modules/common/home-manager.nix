@@ -9,8 +9,8 @@
   ...
 }:
 let
-  cfg = config.hm;
-  desktop = config.desktop;
+  cfg = config.kp.home-manager;
+  desktop = config.kp.desktop;
   isLinux = lib.strings.hasSuffix "linux" system;
 in
 {
@@ -25,8 +25,8 @@ in
     else
       [ inputs.home-manager.darwinModules.home-manager ];
 
-  options = {
-    hm = {
+  options.kp = {
+    home-manager = {
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;

@@ -10,20 +10,21 @@
     ./hardware-configuration.nix
   ];
 
-  services.xserver.xkb.layout = lib.mkForce "fr,ara,us";
-
-  desktop = {
-    enable = true;
-    environment = "gnome";
+  kp = {
+    desktop = {
+      enable = true;
+      environment = "gnome";
+    };
+    home-manager.enable = true;
   };
-
-  hm.enable = true;
 
   networking = {
     firewall = {
       allowedTCPPorts = [ 22 ];
     };
   };
+
+  services.xserver.xkb.layout = lib.mkForce "fr,ara,us";
 
   sops = {
     age = {

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.reverseProxy;
+  cfg = config.kp.reverseProxy;
 
   # Sub-module for service definitions
   serviceOpts =
@@ -26,7 +26,7 @@ let
     };
 in
 {
-  options.reverseProxy = {
+  options.kp.reverseProxy = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;

@@ -8,7 +8,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  asahi.enable = true;
+  kp.asahi.enable = true;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "usbhid"

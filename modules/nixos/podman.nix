@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.podman;
+  cfg = config.kp.podman;
 in
 {
-  options.podman = {
+  options.kp.podman = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -30,7 +30,6 @@ in
       buildah
       dive
       podman-tui
-      # docker-compose
       podman-compose
     ];
   };

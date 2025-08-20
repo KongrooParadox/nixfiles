@@ -20,30 +20,31 @@
     cpuFreqGovernor = "powersave";
   };
 
-  kp.zfs = {
-    enable = true;
-    encryptionKeys = [
-      "root.key"
-      "rust.key"
-    ];
+  kp = {
+    arr = {
+      enable = true;
+      computeBasePath = "/mnt/compute";
+      mediaBasePath = "/mnt/media";
+      deluge.wireguardInterface = "wg-p2p-2";
+    };
+    home-manager.enable = true;
+    immich = {
+      enable = true;
+      mediaPath = "/mnt/media/gallery";
+    };
+    impermanence.enable = true;
+    media-player.enable = true;
+    reverseProxy.enable = true;
+    samba.server.enable = true;
+    tailscale.enable = false;
+    zfs = {
+      enable = true;
+      encryptionKeys = [
+        "root.key"
+        "rust.key"
+      ];
+    };
   };
-
-  reverseProxy.enable = true;
-  arr = {
-    enable = true;
-    computeBasePath = "/mnt/compute";
-    mediaBasePath = "/mnt/media";
-    deluge.wireguardInterface = "wg-p2p-2";
-  };
-  hm.enable = true;
-  media-player.enable = true;
-  tailscale.enable = false;
-  immich = {
-    enable = true;
-    mediaPath = "/mnt/media/gallery";
-  };
-  impermanence.enable = true;
-  samba.server.enable = true;
 
   boot = {
     initrd.kernelModules = [

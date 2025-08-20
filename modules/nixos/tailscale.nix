@@ -5,12 +5,12 @@
   ...
 }:
 let
-  cfg = config.tailscale;
+  cfg = config.kp.tailscale;
   keyName =
     if (domain == "tavel.kongroo.ovh") then "tailscale/keys/tavel" else "tailscale/keys/pernes";
 in
 {
-  options.tailscale = {
+  options.kp.tailscale = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -65,7 +65,7 @@ in
         ++ lib.optional cfg.acceptDns "--accept-dns"
         ++ lib.optional cfg.acceptRoutes "--accept-routes"
         ++ lib.optional cfg.subnetRouter "--advertise-routes=${lib.concatStringsSep "," cfg.advertisedRoutes}";
-      extraSetFlags = lib.optional config.tailscale.exitNode "--advertise-exit-node";
+      extraSetFlags = lib.optional cfg.exitNode "--advertise-exit-node";
       openFirewall = true;
       useRoutingFeatures = if cfg.subnetRouter then "server" else "client";
     };

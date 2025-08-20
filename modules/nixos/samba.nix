@@ -9,7 +9,7 @@
   ...
 }:
 let
-  cfg = config.samba;
+  cfg = config.kp.samba;
   # Prevent hanging on network split
   automount_opts =
     user:
@@ -18,7 +18,7 @@ let
     }";
 in
 {
-  options.samba = {
+  options.kp.samba = {
     server = {
       enable = lib.mkOption {
         type = lib.types.bool;
