@@ -8,36 +8,15 @@
 {
   imports = [
     ../../modules/nixos/asahi
-    ./disks.nix
     ./hardware-configuration.nix
     inputs.apple-silicon.nixosModules.default
-    inputs.disko.nixosModules.disko
   ];
 
   powerManagement.cpuFreqGovernor = "powersave";
 
   virtualization.enable = true;
 
-  boot = {
-    initrd.postResumeCommands = lib.mkAfter ''
-      zfs rollback -r zroot/root@blank
-    '';
-    supportedFilesystems = [ "zfs" ];
-    zfs = {
-      devNodes = "/dev/disk/by-path";
-    };
-  };
-
-  sops = {
-    secrets = {
-      "zfs-dataset/${host}/encrypted.key" = { };
-    };
-  };
-
-  # Because zfs tries to load encryption keys before sops secret is available
-  systemd.services.zfs-mount.serviceConfig.ExecStartPre = ''
-    ${pkgs.zfs}/bin/zfs load-key -a
-  '';
+  kp.zfs.enable = true;
 
   networking = {
     hostId = "a3c9f91c";
@@ -49,6 +28,7 @@
     };
     interfaces."br0".useDHCP = true;
   };
+
   impermanence.enable = true;
   samba.client = {
     enable = true;

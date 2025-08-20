@@ -4,7 +4,7 @@
       boot = {
         type = "disk";
         destroy = false;
-        device = "/dev/disk/by-id/nvme-APPLE_SSD_AP0512Z_0ba018e3a2b8f229-part4";
+        device = "/dev/disk/by-path/platform-27bcc0000.nvme-nvme-1-part4";
         content = {
           type = "gpt";
           partitions = {
@@ -23,7 +23,7 @@
       };
       swap = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-APPLE_SSD_AP0512Z_0ba018e3a2b8f229-part5";
+        device = "/dev/disk/by-path/platform-27bcc0000.nvme-nvme-1-part5";
         content = {
           type = "gpt";
           partitions = {
@@ -42,7 +42,7 @@
       root = {
         type = "disk";
         destroy = false;
-        device = "/dev/disk/by-id/nvme-APPLE_SSD_AP0512Z_0ba018e3a2b8f229-part6";
+        device = "/dev/disk/by-path/platform-27bcc0000.nvme-nvme-1-part6";
         content = {
           type = "gpt";
           partitions = {

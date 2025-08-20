@@ -6,9 +6,7 @@
 }:
 {
   imports = [
-    inputs.disko.nixosModules.disko
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia
-    ./disks.nix
     ./hardware-configuration.nix
   ];
 
@@ -22,11 +20,12 @@
     cpuFreqGovernor = "powersave";
   };
 
-  sops = {
-    secrets = {
-      "zfs-dataset/midgard/root.key" = { };
-      "zfs-dataset/midgard/rust.key" = { };
-    };
+  kp.zfs = {
+    enable = true;
+    encryptionKeys = [
+      "root.key"
+      "rust.key"
+    ];
   };
 
   reverseProxy.enable = true;
@@ -47,23 +46,14 @@
   samba.server.enable = true;
 
   boot = {
-    initrd = {
-      postDeviceCommands = lib.mkAfter ''
-        zfs rollback -r root/local/root@blank
-      '';
-      kernelModules = [
-        "nvidia"
-        "i915"
-        "nvidia_modeset"
-        "nvidia_uvm"
-        "nvidia_drm"
-      ];
-    };
+    initrd.kernelModules = [
+      "nvidia"
+      "i915"
+      "nvidia_modeset"
+      "nvidia_uvm"
+      "nvidia_drm"
+    ];
     kernelParams = [ "nvidia-drm.fbdev=1" ];
-    supportedFilesystems = [ "zfs" ];
-    zfs = {
-      devNodes = "/dev/disk/by-path";
-    };
   };
 
   networking = {
