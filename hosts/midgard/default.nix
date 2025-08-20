@@ -62,8 +62,6 @@
     kernelParams = [ "nvidia-drm.fbdev=1" ];
     supportedFilesystems = [ "zfs" ];
     zfs = {
-      forceImportAll = true;
-      forceImportRoot = true;
       devNodes = "/dev/disk/by-path";
     };
   };
