@@ -100,6 +100,7 @@ in
         lftp
         lsb-release
         nettools
+        nix-output-monitor
         nmap
         openssl
         ripgrep
