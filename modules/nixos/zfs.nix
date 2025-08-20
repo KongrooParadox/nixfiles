@@ -20,7 +20,7 @@ in
       };
       encryptionKeys = lib.mkOption {
         type = lib.types.listOf lib.types.str;
-        default = [ "encrypted.key" ];
+        default = [ ];
         description = lib.mdDoc "List of encryption keys for zfs datasets in sops secrets";
       };
     };
@@ -47,7 +47,7 @@ in
       ${pkgs.zfs}/bin/zfs load-key -a
     '';
 
-    sops = {
+    sops = lib.mkIf (cfg.encryptionKeys != [ ]) {
       secrets = builtins.listToAttrs (
         map (key: {
           name = "zfs-dataset/${host}/${key}";
