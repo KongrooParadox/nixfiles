@@ -15,10 +15,13 @@
     arr = {
       enable = true;
       mediaBasePath = "/mnt/share/media";
-      computeBasePath = "/var/lib";
+      computeBasePath = "/var/lib/compute";
     };
     impermanence.enable = true;
-    media-player.enable = true;
+    media-player = {
+      dataDir = "/var/lib/jellyfin";
+      enable = true;
+    };
     reverseProxy.enable = true;
     samba.client = {
       enable = true;

@@ -17,6 +17,12 @@ in
       description = lib.mdDoc "Whether to enable the media suite (Jellyfin & co).";
     };
 
+    dataDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/mnt/compute/jellyfin";
+      description = lib.mdDoc "Path to jellyfin persistent storage";
+    };
+
     domain = lib.mkOption {
       type = lib.types.str;
       default = domain;
@@ -56,11 +62,15 @@ in
       ];
     };
 
+    kp.impermanence = lib.mkIf config.kp.impermanence.enable {
+      extraDirectories = lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.dataDir) [ cfg.dataDir ];
+    };
+
     services.jellyfin = {
       enable = true;
       group = "media";
       openFirewall = true;
-      dataDir = "/mnt/compute/jellyfin";
+      dataDir = cfg.dataDir;
     };
   };
 }
