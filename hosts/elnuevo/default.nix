@@ -12,7 +12,10 @@
       gid = "990";
     };
     virtualization.enable = true;
-    zfs.enable = true;
+    zfs = {
+      enable = true;
+      encryptionKeys = [ "encrypted.key" ];
+    };
   };
 
   networking = {
