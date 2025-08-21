@@ -84,6 +84,7 @@ in
       systemPackages = with pkgs; [
         acpi
         age
+        attic-client
         bat
         btop
         cmake
