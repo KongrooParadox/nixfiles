@@ -36,18 +36,15 @@
         tasmota-desk    IN  A     10.10.111.28
         tasmota-window  IN  A     10.10.111.29
         asgard          IN  A     10.10.111.100
-                        IN  AAAA  2a01:cb1d:92dc:e500:2eda:d5e3:ab5:4a14
         home-assistant  IN  CNAME asgard
         yggdrasil       IN  A     10.10.111.101
         gallery         IN  CNAME yggdrasil
         smb             IN  CNAME yggdrasil
         njord           IN  A     10.10.111.26
-                        IN  AAAA  2a01:e0a:2f9:f360:8c79:a3d5:e5c3:d4a8
                         IN  A     10.10.111.31
         baldur          IN  A     10.10.111.20
                         IN  A     10.10.111.21
         heimdall        IN  A     10.10.111.102
-                        IN  AAAA  2a01:cb1d:92dc:e500:332b:ce0d:32f3:2c52
                         IN  A     10.10.111.43
         deluge          IN  CNAME heimdall
         jellyfin        IN  CNAME heimdall
@@ -58,6 +55,7 @@
         readarr         IN  CNAME heimdall
         sonarr          IN  CNAME heimdall
         lordi           IN  A     10.10.111.18
+        elnuevo         IN  A     10.10.111.24
         kronos          IN  A     10.10.111.103
         thor            IN  A     10.10.111.104
         pi401           IN  A     10.10.111.123
