@@ -36,6 +36,4 @@
     };
     hostId = "050d02a0";
   };
-
-  system.language = "fr_FR";
 }
