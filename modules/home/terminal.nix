@@ -114,7 +114,7 @@
         lll = "ls --color=auto -lh | less";
         v = "nvim";
       };
-      initExtra = ''
+      initContent = ''
         bindkey -e
         bindkey -s ^f "tmux-switcher\n"
         bindkey -s '^[y' "tmux-switcher ~/personal/homelab\n"
