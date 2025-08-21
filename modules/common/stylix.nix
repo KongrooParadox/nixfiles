@@ -39,7 +39,6 @@ in
       enable = true;
       autoEnable = true;
       image = ../../wallpapers/dark-nebula.jpg;
-
       base16Scheme = {
         base00 = "2E3440";
         base01 = "3B4252";
