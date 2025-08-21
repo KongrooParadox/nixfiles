@@ -137,16 +137,23 @@ in
     ];
     users.groups.media = { };
 
-    kp.reverseProxy = {
-      domain = cfg.domain;
-      services = {
-        deluge.port = 8112;
-        lidarr.port = 8686;
-        nzbget.port = 6789;
-        prowlarr.port = 9696;
-        radarr.port = 7878;
-        readarr.port = 8787;
-        sonarr.port = 8989;
+    kp = {
+      impermanence = lib.mkIf config.kp.impermanence.enable {
+        extraDirectories =
+          lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.mediaBasePath) [ cfg.mediaBasePath ]
+          ++ lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.computeBasePath) [ cfg.computeBasePath ];
+      };
+      reverseProxy = {
+        domain = cfg.domain;
+        services = {
+          deluge.port = 8112;
+          lidarr.port = 8686;
+          nzbget.port = 6789;
+          prowlarr.port = 9696;
+          radarr.port = 7878;
+          readarr.port = 8787;
+          sonarr.port = 8989;
+        };
       };
     };
 

@@ -82,11 +82,18 @@ in
     networking.firewall.allowedTCPPorts = [ cfg.machineLearningPort ];
 
     # Configure reverse proxy for Immich web interface
-    kp.reverseProxy = {
-      domain = cfg.domain;
-      services.immich = {
-        port = config.services.immich.port;
-        subdomain = cfg.subdomain;
+    kp = {
+      impermanence = lib.mkIf config.kp.impermanence.enable {
+        extraDirectories = lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.mediaPath) [
+          cfg.mediaPath
+        ];
+      };
+      reverseProxy = {
+        domain = cfg.domain;
+        services.immich = {
+          port = config.services.immich.port;
+          subdomain = cfg.subdomain;
+        };
       };
     };
 
