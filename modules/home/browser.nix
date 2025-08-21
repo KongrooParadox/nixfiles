@@ -23,7 +23,7 @@ in
           id = 0;
           name = "default";
           settings = {
-            "browser.startup.homepage" = "https://github.com/KongrooParadox";
+            "browser.startup.homepage" = "https://duckduckgo.com/";
             "dom.security.https_only_mode" = true;
             "dom.security.https_only_mode_ever_enabled" = true;
             "privacy.donottrackheader.enabled" = true;
@@ -57,5 +57,6 @@ in
         };
       };
     };
+    stylix.targets.firefox.profileNames = [ "default" ];
   };
 }
