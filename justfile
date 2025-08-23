@@ -13,19 +13,19 @@ build-remote HOSTNAME:
     nixos-rebuild build --flake .#{{HOSTNAME}} |& nom
 
 boot:
-    nixos-rebuild boot --flake .# --sudo |& nom
+    nixos-rebuild boot --flake .# --use-remote-sudo |& nom
 
 switch:
-    nixos-rebuild switch --flake .# --sudo |& nom
+    nixos-rebuild switch --flake .# --use-remote-sudo |& nom
 
 switch-remote FQDN:
     #!/usr/bin/env bash
     hostname=$(echo {{FQDN}} | awk -F '.' {'print $1'})
     remoteArch=$(ssh {{FQDN}} "uname -a | awk '{ print \$(NF-1) }'" )
     if [[ "{{architecture}}" == "$remoteArch" ]];
-        then nixos-rebuild switch --flake .#$hostname --sudo --target-host {{FQDN}} |& nom
-        else nixos-rebuild switch --flake .#$hostname --sudo --build-host {{FQDN}} --target-host {{FQDN}} |& nom
+        then nixos-rebuild switch --flake .#$hostname --use-remote-sudo --target-host {{FQDN}} |& nom
+        else nixos-rebuild switch --flake .#$hostname --use-remote-sudo --build-host {{FQDN}} --target-host {{FQDN}} |& nom
     fi
 
 test:
-    nixos-rebuild test --flake .# --sudo |& nom
+    nixos-rebuild test --flake .# --use-remote-sudo |& nom
