@@ -45,7 +45,6 @@
         baldur          IN  A     10.10.111.20
                         IN  A     10.10.111.21
         heimdall        IN  A     10.10.111.102
-                        IN  A     10.10.111.43
         deluge          IN  CNAME heimdall
         jellyfin        IN  CNAME heimdall
         lidarr          IN  CNAME heimdall

@@ -141,7 +141,8 @@ in
       impermanence = lib.mkIf config.kp.impermanence.enable {
         extraDirectories =
           lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.mediaBasePath) [ cfg.mediaBasePath ]
-          ++ lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.computeBasePath) [ cfg.computeBasePath ];
+          ++ lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.computeBasePath) [ cfg.computeBasePath ]
+          ++ lib.optionals cfg.nzbget.enable [ "/var/lib/nzbget" ];
       };
       reverseProxy = {
         domain = cfg.domain;
@@ -154,6 +155,9 @@ in
           readarr.port = 8787;
           sonarr.port = 8989;
         };
+      };
+      tailscale = lib.mkIf cfg.deluge.enable {
+        enable = lib.mkForce false;
       };
     };
 
@@ -185,6 +189,7 @@ in
       };
 
       prowlarr = lib.mkIf cfg.prowlarr.enable {
+        dataDir = "${cfg.computeBasePath}/prowlarr";
         enable = true;
         openFirewall = true;
       };
@@ -197,7 +202,7 @@ in
       };
 
       readarr = lib.mkIf cfg.readarr.enable {
-        dataDir = "${cfg.computeBasePath}/readarr/.config/Readarr";
+        dataDir = "${cfg.computeBasePath}/readarr";
         enable = true;
         group = "media";
         openFirewall = true;
@@ -253,12 +258,13 @@ in
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p".path;
           peers = [
             {
-              publicKey = "VEtFeCo88R26OwlJ+F1hwNOPhewYNJHL+S078L477Gk=";
+              # CL#31
+              publicKey = "F7z+SRMw1d3o1lQbWObWN7GBbHeUZNCC+PCpPy+SOQ8=";
               allowedIPs = [
                 "0.0.0.0/0"
                 "::/0"
               ];
-              endpoint = "79.127.169.59:51820";
+              endpoint = "138.199.50.106:51820";
               persistentKeepalive = 25;
             }
           ];

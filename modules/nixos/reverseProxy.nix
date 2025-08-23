@@ -124,5 +124,9 @@ in
         443
       ];
     };
+
+    kp.impermanence = lib.mkIf (config.kp.impermanence.enable && cfg.acme.enable) {
+      extraDirectories = [ "/var/lib/acme" ];
+    };
   };
 }
