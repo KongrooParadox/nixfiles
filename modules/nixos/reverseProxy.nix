@@ -111,7 +111,6 @@ in
       # Single wildcard cert for all subdomains
       certs.${cfg.domain} = {
         domain = "*.${cfg.domain}";
-        extraDomainNames = [ "*.${host}.${cfg.domain}" ];
         dnsProvider = cfg.acme.dnsProvider;
         environmentFile = cfg.acme.environmentFile;
         group = "nginx";
