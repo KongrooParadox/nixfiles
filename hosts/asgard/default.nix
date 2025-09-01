@@ -24,47 +24,33 @@
   kp = {
     dns-server = {
       enable = true;
-      localDomain = "skynet.local";
+      localDomain = "casa-anita.local";
       zone = ''
-        $ORIGIN skynet.local.
+        $ORIGIN casa-anita.local.
         $TTL 3600 ; default expiration time (in seconds) of all RRs without their own TTL value
-        skynet.local.   IN  SOA   asgard.skynet.local. noreply.kongroo.anonaddy.com. ( 2020091025 7200 3600 1209600 3600 )
-        skynet.local.   IN  NS    asgard
-        skynet.local.   IN  NS    livebox
-        tasmota-tv      IN  A     10.10.111.14
-        tasmota-nas     IN  A     10.10.111.27
-        tasmota-desk    IN  A     10.10.111.28
-        tasmota-window  IN  A     10.10.111.29
-        asgard          IN  A     10.10.111.100
-        home-assistant  IN  CNAME asgard
-        yggdrasil       IN  A     10.10.111.101
-        gallery         IN  CNAME yggdrasil
-        smb             IN  CNAME yggdrasil
-        njord           IN  A     10.10.111.26
-                        IN  A     10.10.111.31
-        baldur          IN  A     10.10.111.20
-                        IN  A     10.10.111.21
-        heimdall        IN  A     10.10.111.102
-        deluge          IN  CNAME heimdall
-        jellyfin        IN  CNAME heimdall
-        lidarr          IN  CNAME heimdall
-        nzbget          IN  CNAME heimdall
-        prowlarr        IN  CNAME heimdall
-        radarr          IN  CNAME heimdall
-        readarr         IN  CNAME heimdall
-        sonarr          IN  CNAME heimdall
-        lordi           IN  A     10.10.111.18
-        elnuevo         IN  A     10.10.111.24
-        kronos          IN  A     10.10.111.103
-        thor            IN  A     10.10.111.104
-        pi401           IN  A     10.10.111.123
-        livebox         IN  A     10.10.111.254
+        casa-anita.local.  IN  SOA   asgard.casa-anita.local. noreply.kongroo.anonaddy.com. ( 2020091025 7200 3600 1209600 3600 )
+        casa-anita.local.  IN  NS    asgard
+        casa-anita.local.  IN  NS    livebox
+        asgard             IN  A     192.168.1.100
+        home-assistant     IN  CNAME asgard
+        midgard            IN  A     192.168.1.101
+        deluge             IN  CNAME midgard
+        gallery            IN  CNAME midgard
+        jellyfin           IN  CNAME midgard
+        lidarr             IN  CNAME midgard
+        nzbget             IN  CNAME midgard
+        prowlarr           IN  CNAME midgard
+        radarr             IN  CNAME midgard
+        readarr            IN  CNAME midgard
+        sonarr             IN  CNAME midgard
+        livebox            IN  A     192.168.1.1
       '';
     };
     home-assistant.enable = true;
     reverseProxy.enable = true;
     tailscale = {
-      advertisedRoutes = [ "10.10.111.0/24" ];
+      acceptRoutes = true;
+      advertisedRoutes = [ "192.168.1.0/24" ];
       exitNode = false;
       subnetRouter = true;
     };
