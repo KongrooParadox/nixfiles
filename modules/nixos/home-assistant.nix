@@ -27,10 +27,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    kp.reverseProxy = {
-      domain = cfg.domain;
-      services.home-assistant = {
-        port = 8123;
+    kp = {
+      impermanence = lib.mkIf config.kp.impermanence.enable {
+        extraDirectories = [ "/var/lib/hass" ];
+      };
+      reverseProxy = {
+        domain = cfg.domain;
+        services.home-assistant = {
+          port = 8123;
+        };
       };
     };
     services = {

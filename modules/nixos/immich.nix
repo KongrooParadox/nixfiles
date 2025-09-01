@@ -84,9 +84,11 @@ in
     # Configure reverse proxy for Immich web interface
     kp = {
       impermanence = lib.mkIf config.kp.impermanence.enable {
-        extraDirectories = lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.mediaPath) [
-          cfg.mediaPath
-        ];
+        extraDirectories =
+          lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.mediaPath) [
+            cfg.mediaPath
+          ]
+          ++ [ "/var/lib/postgres" ];
       };
       reverseProxy = {
         domain = cfg.domain;
