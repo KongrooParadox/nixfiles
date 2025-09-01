@@ -6,6 +6,19 @@
 }:
 let
   cfg = config.kp.arr;
+  isUnstable = lib.versions.majorMinor lib.version == "25.11";
+  prowlarrCfg =
+    if isUnstable then
+      {
+        dataDir = "${cfg.computeBasePath}/prowlarr";
+        enable = true;
+        openFirewall = true;
+      }
+    else
+      {
+        enable = true;
+        openFirewall = true;
+      };
 in
 {
   options.kp.arr = {
@@ -142,7 +155,11 @@ in
         extraDirectories =
           lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.mediaBasePath) [ cfg.mediaBasePath ]
           ++ lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.computeBasePath) [ cfg.computeBasePath ]
-          ++ lib.optionals cfg.nzbget.enable [ "/var/lib/nzbget" ];
+          ++ lib.optionals cfg.nzbget.enable [ "/var/lib/nzbget" ]
+          ++ lib.optionals cfg.prowlarr.enable [
+            "${cfg.computeBasePath}/prowlarr"
+            "/var/lib/private"
+          ];
       };
       reverseProxy = {
         domain = cfg.domain;
@@ -188,11 +205,7 @@ in
         };
       };
 
-      prowlarr = lib.mkIf cfg.prowlarr.enable {
-        dataDir = "${cfg.computeBasePath}/prowlarr";
-        enable = true;
-        openFirewall = true;
-      };
+      prowlarr = lib.mkIf cfg.prowlarr.enable prowlarrCfg;
 
       radarr = lib.mkIf cfg.radarr.enable {
         dataDir = "${cfg.computeBasePath}/radarr/.config/Radarr";
