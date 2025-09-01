@@ -72,12 +72,12 @@
         asgard = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = {
-            domain = "tavel.kongroo.ovh";
+            domain = "pernes.kongroo.ovh";
             host = "asgard";
             users = [ "ops" ];
             stateVersion = "24.05";
             system = "aarch64-linux";
-            workgroup = "SKYNET";
+            workgroup = "CASA_ANITA";
             inherit self impermanence inputs;
           };
           modules = [
