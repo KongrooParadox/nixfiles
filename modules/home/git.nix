@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  home.packages = [ pkgs.jjui ];
   programs = {
     git = {
       enable = true;
@@ -22,6 +23,25 @@
         help.autocorrect = 20;
         init.defaultBranch = "main";
         credential.helper = "cache";
+      };
+    };
+    jujutsu = {
+      enable = true;
+      settings = {
+        ui = {
+          default-command = "log";
+          paginate = "never";
+        };
+        user = {
+          email = "7790572+KongrooParadox@users.noreply.github.com";
+          name = "Guillaume Nanty";
+        };
+        signing = {
+          backend = "gpg";
+          backends.gpg.program = "/run/current-system/sw/bin/gpg";
+          behavior = "own";
+          key = "2CD046115D337861";
+        };
       };
     };
   };
