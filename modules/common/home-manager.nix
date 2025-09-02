@@ -61,6 +61,9 @@ in
       };
       useUserPackages = true;
       users = lib.genAttrs users (name: {
+        accounts = {
+          calendar.basePath = ".calendar";
+        };
         home = {
           username = name;
           homeDirectory = lib.mkForce "${cfg.homeBaseDirectory}/${name}";

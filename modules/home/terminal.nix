@@ -5,6 +5,47 @@
   ...
 }:
 {
+  sops.secrets = {
+    "proton/user" = { };
+    "proton/password" = { };
+  };
+  accounts.email.accounts = {
+    main = {
+      enable = true;
+      primary = true;
+      offlineimap = {
+        extraConfig = {
+          account = {
+            autorefresh = 0.2;
+            quick = 10;
+          };
+          remote = {
+            type = "IMAP";
+            remoteport = 1143;
+            remotehost = "127.0.0.1";
+            remoteuser = config.sops.secrets."proton/user".path;
+            remotepass = config.sops.secrets."proton/password".path;
+            keepalive = 60;
+            holdconnectionopen = "yes";
+            expunge = "yes";
+
+          };
+          local = {
+            type = "Maildir";
+            localfolders = "~/.mail";
+            sync_deletes = "yes";
+          };
+        };
+        postSyncHookCommand = "notmuch new";
+      };
+    };
+  };
+  programs.offlineimap = {
+    enable = true;
+    extraConfig.general = {
+      accounts = "main";
+    };
+  };
   programs = {
     direnv = {
       enable = true;
@@ -12,11 +53,13 @@
       enableBashIntegration = true;
       nix-direnv.enable = true;
     };
+    khal.enable = true;
     kitty = {
       enable = osConfig.kp.desktop.enable;
       # Send CSI u for Shift+Enter so tmux/nvim can tell it apart from Enter
       keybindings."shift+enter" = "send_text all \\x1b[13;2u";
     };
+    neomutt.enable = true;
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -85,8 +128,11 @@
         git_status.disabled = true;
       };
     };
+    todoman.enable = true;
+    vdirsyncer.enable = true;
     yazi = {
       enable = true;
+      enableZshIntegration = true;
       shellWrapperName = "y";
     };
     zsh = {
