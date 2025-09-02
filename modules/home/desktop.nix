@@ -22,6 +22,7 @@ in
         mumble
         prusa-slicer
         pulseaudio
+        signal-desktop
         vlc
       ]
       ++ lib.optionals (currentArchitecture == "x86_64-linux") [
