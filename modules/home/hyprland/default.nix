@@ -40,7 +40,6 @@ in
     ];
 
     stylix.targets.hyprland.enable = false;
-    programs.hyprlock.enable = true;
     services = {
       hyprpaper = {
         enable = true;
