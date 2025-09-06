@@ -38,24 +38,28 @@
             command = "starship module git_branch";
             description = "Only show git_branch if we're not in a jj repo";
             style = "";
+            ignore_timeout = true;
           };
           git_commit = {
             when = "! jj --ignore-working-copy root";
             command = "starship module git_commit";
             style = "";
             description = "Only show git_commit if we're not in a jj repo";
+            ignore_timeout = true;
           };
           git_metrics = {
             when = "! jj --ignore-working-copy root";
             command = "starship module git_metrics";
             description = "Only show git_metrics if we're not in a jj repo";
             style = "";
+            ignore_timeout = true;
           };
           git_status = {
             when = "! jj --ignore-working-copy root";
             command = "starship module git_status";
             style = ""; # This disables the default "(bold green)" style
             description = "Only show git_status if we're not in a jj repo";
+            ignore_timeout = true;
           };
           jj = {
             description = "The current jj status";
@@ -81,6 +85,7 @@
                 )
               '
             '';
+            ignore_timeout = true;
           };
         };
         git_branch.disabled = true;
