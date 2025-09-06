@@ -16,6 +16,7 @@
         enable = true;
         package = inputs.hyprland.packages."${pkgs.system}".hyprland;
       };
+      hyprlock.enable = true;
       thunar.enable = true;
       xfconf.enable = true;
     };
