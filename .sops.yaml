@@ -3,8 +3,10 @@ keys:
   - &baldur-biche age17ge85twavzzeylrhns639007naxkxrvjty6zj7gmq57wnf4p7edqffuy98
   - &baldur-root age1qva0v8ka9pnh748fswd60y52luum5hthf7t5fh483xm7wn5al5hslejace
   - &baldur-robot age1q6a6qcuczj26e900mh4she2n0ezlze0297usjarpddzvdhst7yhshg9cds
-  - &elnuevo-ops age1wv7f8yx0kt6a0cktvm57jtzh6puerq3ya47kjcfcyjyak94f8gsqfzc3kl
-  - &elnuevo-root age18vapsrfd4pv07j0w88maa0mjthtpsqlkcdfhlksfqt5yvhd2mplqvzsz2n
+  - &elnuevo-1-ops age1wv7f8yx0kt6a0cktvm57jtzh6puerq3ya47kjcfcyjyak94f8gsqfzc3kl
+  - &elnuevo-1-root age18vapsrfd4pv07j0w88maa0mjthtpsqlkcdfhlksfqt5yvhd2mplqvzsz2n
+  - &elnuevo-2-ops age1vkljt68ypm2pc8vsguw6h37kxc7yz0n2et9vp60qfcgeg5f53y5srkxtph
+  - &elnuevo-2-root age1np3gadp47qqwjddc38hvj9vk5ay339fh767p49h3n3u9rjkxlf4s5assg5
   - &heimdall age148h3n794pww82ykk8nlqpk2y7cj5dx0892a9k57pt3tddckkvysslqveww
   - &lordi-biche age1amvvsl8a70hwnw3hsw0jpxj2mh7un88d3v2cd9d08m5trvgvvg7q62rksl
   - &lordi-root age1zzgfc4fx8ju9g2z4ak8qjq5sed4guafdn33qmvne0flz8xe9759sav2lt5
@@ -27,8 +29,10 @@ creation_rules:
         - *baldur-biche
         - *baldur-root
         - *baldur-robot
-        - *elnuevo-ops
-        - *elnuevo-root
+        - *elnuevo-1-ops
+        - *elnuevo-1-root
+        - *elnuevo-2-ops
+        - *elnuevo-2-root
         - *heimdall
         - *lordi-biche
         - *lordi-root
