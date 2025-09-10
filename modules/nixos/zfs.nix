@@ -48,9 +48,9 @@ in
     };
 
     # Because zfs tries to load encryption keys before sops secret is available
-    systemd.services.zfs-mount.serviceConfig.ExecStartPre = ''
-      ${pkgs.zfs}/bin/zfs load-key -a
-    '';
+    system.activationScripts.loadZfsEncryptionKeys = lib.mkIf (cfg.encryptionKeys != [ ]) (
+      lib.stringAfter [ "setupSecrets" ] "${pkgs.zfs}/bin/zfs load-key -a"
+    );
 
     sops = lib.mkIf (cfg.encryptionKeys != [ ]) {
       secrets = builtins.listToAttrs (
