@@ -11,15 +11,16 @@
       zone = ''
         $ORIGIN skynet.local.
         $TTL 3600 ; default expiration time (in seconds) of all RRs without their own TTL value
-        skynet.local.   IN  SOA   elnuevo.skynet.local. noreply.kongroo.anonaddy.com. ( 2020091025 7200 3600 1209600 3600 )
-        skynet.local.   IN  NS    elnuevo
+        skynet.local.   IN  SOA   elnuevo-2.skynet.local. noreply.kongroo.anonaddy.com. ( 2020091025 7200 3600 1209600 3600 )
+        skynet.local.   IN  NS    elnuevo-2
         skynet.local.   IN  NS    livebox
         tasmota-tv      IN  A     10.10.111.14
         tasmota-nas     IN  A     10.10.111.27
         tasmota-desk    IN  A     10.10.111.28
         tasmota-window  IN  A     10.10.111.29
-        elnuevo         IN  A     10.10.111.100
-        home-assistant  IN  CNAME elnuevo
+        elnuevo-2       IN  A     10.10.111.100
+        elnuevo-1       IN  A     10.10.111.99
+        home-assistant  IN  CNAME elnuevo-1
         yggdrasil       IN  A     10.10.111.101
         gallery         IN  CNAME yggdrasil
         smb             IN  CNAME yggdrasil
@@ -43,9 +44,8 @@
         livebox         IN  A     10.10.111.254
       '';
     };
-    home-assistant.enable = true;
+    home-manager.enable = true;
     impermanence.enable = true;
-    reverseProxy.enable = true;
     samba.client = {
       enable = true;
       uid = "1000";
@@ -69,7 +69,7 @@
         interfaces = [ "eno1" ];
       };
     };
-    hostId = "02ce4009";
+    hostId = "db46c034";
     firewall = {
       allowedUDPPortRanges = [
         {

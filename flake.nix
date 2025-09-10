@@ -102,11 +102,26 @@
             ./modules/nixos
           ];
         };
-        elnuevo = nixpkgs-unstable.lib.nixosSystem {
+        elnuevo-1 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
-            host = "elnuevo";
+            host = "elnuevo-1";
+            users = [ "ops" ];
+            stateVersion = "25.05";
+            system = "x86_64-linux";
+            workgroup = "SKYNET";
+            inherit self impermanence inputs;
+          };
+          modules = [
+            ./modules/nixos
+          ];
+        };
+        elnuevo-2 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            domain = "tavel.kongroo.ovh";
+            host = "elnuevo-2";
             users = [ "ops" ];
             stateVersion = "25.05";
             system = "x86_64-linux";

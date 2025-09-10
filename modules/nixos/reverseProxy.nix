@@ -72,6 +72,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets."acme-ovh" = { };
     services.nginx = {
       enable = true;
       recommendedProxySettings = true;

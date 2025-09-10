@@ -68,7 +68,7 @@
               mountpoint = "none";
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "file:///run/secrets/zfs-dataset/elnuevo/encrypted.key";
+              keylocation = "file:///run/secrets/zfs-dataset/elnuevo-1/encrypted.key";
             };
           };
           "encrypted/home" = {
