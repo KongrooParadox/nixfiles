@@ -262,5 +262,6 @@
           ];
         };
       };
+      homeManagerModules.default = ./modules/home;
     };
 }

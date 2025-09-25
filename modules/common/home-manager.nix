@@ -77,7 +77,7 @@ in
           ;
       };
       users = lib.genAttrs users (name: {
-        imports = [ ../home ];
+        imports = [ inputs.self.outputs.homeManagerModules.default ];
         home = {
           username = name;
           homeDirectory = lib.mkForce "${cfg.homeBaseDirectory}/${name}";
