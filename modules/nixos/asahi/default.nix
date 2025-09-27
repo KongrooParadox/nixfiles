@@ -1,6 +1,8 @@
 {
   config,
+  inputs,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -8,14 +10,16 @@ let
 in
 {
   options.kp.asahi = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = lib.mdDoc "Whether to enable Asahi Apple Silicon drivers.";
-    };
+    enable = lib.mkEnableOption "asahi drivers.";
   };
 
   config = lib.mkIf cfg.enable {
+    environment.systemPackages =
+      let
+        pkgsFex = pkgs.extend inputs.nixos-muvm-fex.overlays.default;
+      in
+      [ pkgsFex.muvm ];
+
     hardware.asahi = {
       peripheralFirmwareDirectory = ./firmware;
       setupAsahiSound = true;
