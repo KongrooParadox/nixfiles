@@ -17,7 +17,6 @@ in
       [
         # General desktop packages
         filezilla
-        gfn-electron
         keepassxc
         mumble
         prusa-slicer
