@@ -17,6 +17,8 @@ in
       description = lib.mdDoc "Whether to enable Tailscale";
     };
 
+    autoconnect = lib.mkEnableOption "enables autoconnect via authKey";
+
     ssh = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -56,9 +58,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    sops.secrets."${keyName}" = { };
+    sops.secrets = lib.mkIf cfg.autoconnect {
+      "${keyName}" = { };
+    };
+
     services.tailscale = {
-      authKeyFile = config.sops.secrets."${keyName}".path;
+      authKeyFile = if cfg.autoconnect then config.sops.secrets."${keyName}".path else null;
       enable = true;
       extraUpFlags =
         lib.optional cfg.ssh "--ssh"
