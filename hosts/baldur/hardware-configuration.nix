@@ -12,8 +12,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  environment.sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card1";
-
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"

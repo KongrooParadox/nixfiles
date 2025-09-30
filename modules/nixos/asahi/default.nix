@@ -14,11 +14,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages =
-      let
-        pkgsFex = pkgs.extend inputs.nixos-muvm-fex.overlays.default;
-      in
-      [ pkgsFex.muvm ];
+    environment = {
+      sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card2";
+      systemPackages =
+        let
+          pkgsFex = pkgs.extend inputs.nixos-muvm-fex.overlays.default;
+        in
+        [ pkgsFex.muvm ];
+    };
 
     hardware.asahi = {
       peripheralFirmwareDirectory = ./firmware;
