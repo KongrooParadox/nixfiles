@@ -117,10 +117,7 @@ in
             windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
             windowrulev2 = opacity 0.9 0.7, class:^(Firefox)$
             windowrulev2 = opacity 0.9 0.7, class:^(thunar)$
-            gestures {
-              workspace_swipe = true
-              workspace_swipe_fingers = 3
-            }
+            gesture = 3, horizontal, workspace
             misc {
               initial_workspace_tracking = 0
               mouse_move_enables_dpms = true
