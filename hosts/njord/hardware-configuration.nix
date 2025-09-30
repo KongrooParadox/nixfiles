@@ -8,8 +8,6 @@
   ...
 }:
 {
-  environment.sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card0";
-
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];

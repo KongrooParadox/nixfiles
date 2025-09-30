@@ -8,7 +8,7 @@
 }:
 {
   config = lib.mkIf (config.kp.desktop.enable && (config.kp.desktop.environment == "hyprland")) {
-    environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card0";
+    environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card1";
 
     programs = {
       light.enable = true;
