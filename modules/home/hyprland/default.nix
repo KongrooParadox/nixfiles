@@ -218,8 +218,8 @@ in
             bind = ,XF86AudioPause, exec, playerctl play-pause
             bind = ,XF86AudioNext, exec, playerctl next
             bind = ,XF86AudioPrev, exec, playerctl previous
-            bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-
-            bind = ,XF86MonBrightnessUp,exec,brightnessctl set +5%
+            bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-;brightnessctl --device kbd_backlight set 5%-
+            bind = ,XF86MonBrightnessUp,exec,brightnessctl set +5%;brightnessctl --device kbd_backlight set 5%+
             bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"
             bindl = , switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, 2560x1600@60.0, auto, 1.25"
             bindl = , switch:on:Apple SMC power/lid events, exec, hyprctl keyword monitor "eDP-1, disable"
