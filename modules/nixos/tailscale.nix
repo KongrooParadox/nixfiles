@@ -2,6 +2,7 @@
   config,
   domain,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -60,6 +61,21 @@ in
   config = lib.mkIf cfg.enable {
     sops.secrets = lib.mkIf cfg.autoconnect {
       "${keyName}" = { };
+    };
+
+    systemd.services = lib.mkIf cfg.exitNode or cfg.subnetRouter {
+      ethtool-tailscale = {
+        description = "ethtool optimizations for tailscale performance";
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart = ''
+            NETDEV=$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")
+            ${pkgs.ethtool}/bin/ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
+          '';
+        };
+        wantedBy = [ "network-pre.target" ];
+      };
     };
 
     services.tailscale = {
