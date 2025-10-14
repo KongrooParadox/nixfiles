@@ -62,7 +62,7 @@
             users = [ "robot" ];
             stateVersion = "25.05";
             system = "aarch64-darwin";
-            inherit self inputs;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nix-darwin
