@@ -8,10 +8,14 @@
     "${self}/hosts/${host}"
     "${self}/modules/common"
     ./desktop.nix
+    ./impermanence.nix
     ./system.nix
   ];
 
-  kp.home-manager.homeBaseDirectory = "/Users";
+  kp = {
+    home-manager.homeBaseDirectory = "/Users";
+    impermanence.enable = false;
+  };
 
   nixpkgs.config.allowUnfree = true;
 

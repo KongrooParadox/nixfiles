@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  options.desktop = {
+  options.kp.desktop = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
