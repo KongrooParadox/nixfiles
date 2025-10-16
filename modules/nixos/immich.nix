@@ -85,10 +85,13 @@ in
     kp = {
       impermanence = lib.mkIf config.kp.impermanence.enable {
         extraDirectories =
-          lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.mediaPath) [
+          lib.optionals (!lib.strings.hasPrefix "/mnt/" cfg.mediaPath) [
             cfg.mediaPath
           ]
-          ++ [ "/var/lib/postgres" ];
+          ++ [
+            "/var/lib/postgresql"
+            "/var/lib/redis-immich/"
+          ];
       };
       reverseProxy = {
         domain = cfg.domain;

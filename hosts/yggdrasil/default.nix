@@ -15,15 +15,7 @@
     binary-cache.enable = true;
     home-manager.enable = true;
     immich.enable = true;
-    impermanence = {
-      enable = true;
-      extraDirectories = [
-        "/var/lib/acme"
-        "/var/lib/postgresql"
-        "/var/lib/redis-immich/"
-        "/var/lib/samba"
-      ];
-    };
+    impermanence.enable = true;
     reverseProxy.enable = true;
     samba.server.enable = true;
     storage.enable = true;
