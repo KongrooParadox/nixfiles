@@ -108,6 +108,12 @@ in
         groups.${cfg.server.group} = { };
       };
 
+      kp.impermanence = lib.mkIf config.kp.impermanence.enable {
+        extraDirectories = [
+          "/var/lib/samba/"
+        ];
+      };
+
       services = {
         samba = {
           enable = true;

@@ -27,7 +27,7 @@
   nixpkgs.config.allowUnfreePredicate = pkg: true;
 
   home.packages = with pkgs; [
-    ansible-language-server
+    # ansible-language-server #unmaintained in nixpkgs
     bash-language-server
     docker-compose-language-service
     dockerfile-language-server-nodejs
