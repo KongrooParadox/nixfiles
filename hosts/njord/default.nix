@@ -45,7 +45,7 @@
       address = [ "10.2.0.2/32" ];
       autostart = false;
       dns = [
-        "10.10.111.100"
+        "192.168.2.100"
         "192.168.1.100"
       ];
       privateKeyFile = config.sops.secrets."wireguard/proton/ar-25".path;

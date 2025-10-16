@@ -122,7 +122,7 @@ in
               #"use sendfile" = "yes";
               #"max protocol" = "smb2";
               # note: localhost is the ipv6 localhost ::1
-              "hosts allow" = "192.168.1. 10.10.111. 127.0.0.1 localhost";
+              "hosts allow" = "192.168.1. 192.168.2. 127.0.0.1 localhost";
               "valid users" = "+${cfg.server.group}";
               "hosts deny" = "0.0.0.0/0";
               "guest account" = "nobody";
