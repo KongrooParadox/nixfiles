@@ -14,7 +14,7 @@
       gid = "990";
     };
     tailscale = {
-      advertisedRoutes = [ "10.10.111.0/24" ];
+      advertisedRoutes = [ "192.168.2.0/24" ];
       exitNode = false;
       subnetRouter = true;
     };
