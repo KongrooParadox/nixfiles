@@ -10,10 +10,9 @@
 }:
 let
   cfg = config.kp.samba;
-  # Prevent hanging on network split
   automount_opts =
     user:
-    "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${
+    "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5m,x-systemd.mount-timeout=5m,nofail,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${
       config.sops.secrets."smb/${user}".path
     }";
 in

@@ -19,27 +19,29 @@
         tasmota-desk    IN  A     192.168.2.4
         tasmota-laptop  IN  A     192.168.2.5
         elnuevo-2       IN  A     192.168.2.100
+        home-assistant  IN  CNAME elnuevo-2
         elnuevo-1       IN  A     192.168.2.99
-        home-assistant  IN  CNAME elnuevo-1
         yggdrasil       IN  A     192.168.2.101
         gallery         IN  CNAME yggdrasil
         smb             IN  CNAME yggdrasil
         njord           IN  A     192.168.2.25
         baldur          IN  A     192.168.2.20
         heimdall        IN  A     192.168.2.102
-        deluge          IN  CNAME heimdall
-        jellyfin        IN  CNAME heimdall
-        lidarr          IN  CNAME heimdall
-        nzbget          IN  CNAME heimdall
-        prowlarr        IN  CNAME heimdall
-        radarr          IN  CNAME heimdall
-        readarr         IN  CNAME heimdall
-        sonarr          IN  CNAME heimdall
+        deluge          IN  CNAME elnuevo-1
+        jellyfin        IN  CNAME elnuevo-1
+        lidarr          IN  CNAME elnuevo-1
+        nzbget          IN  CNAME elnuevo-1
+        prowlarr        IN  CNAME elnuevo-1
+        radarr          IN  CNAME elnuevo-1
+        readarr         IN  CNAME elnuevo-1
+        sonarr          IN  CNAME elnuevo-1
         livebox         IN  A     192.168.2.254
       '';
     };
+    home-assistant.enable = true;
     home-manager.enable = true;
     impermanence.enable = true;
+    reverseProxy.enable = true;
     samba.client = {
       enable = true;
       uid = "1000";
@@ -47,6 +49,7 @@
     };
     tailscale = {
       advertisedRoutes = [ "192.168.2.0/24" ];
+      autoconnect = true;
       exitNode = false;
       subnetRouter = true;
     };

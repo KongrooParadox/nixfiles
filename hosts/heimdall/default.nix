@@ -9,27 +9,15 @@
     inputs.apple-silicon.nixosModules.default
   ];
 
-  powerManagement.cpuFreqGovernor = "powersave";
-
   kp = {
-    arr = {
-      enable = true;
-      mediaBasePath = "/mnt/share/media";
-      computeBasePath = "/var/lib/compute";
-    };
     impermanence.enable = true;
-    media-player = {
-      dataDir = "/var/lib/jellyfin";
-      enable = true;
-    };
     reverseProxy.enable = true;
     samba.client = {
       enable = true;
       uid = "1000";
       gid = "997";
     };
-    tailscale.enable = false;
-    ups.enable = true;
+    tailscale.enable = true;
     virtualization.enable = true;
     zfs = {
       enable = true;

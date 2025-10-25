@@ -4,9 +4,19 @@
     ./hardware-configuration.nix
   ];
 
+  powerManagement.cpuFreqGovernor = "powersave";
+
   kp = {
-    home-assistant.enable = true;
+    arr = {
+      enable = true;
+      mediaBasePath = "/mnt/share/media";
+      computeBasePath = "/var/lib/compute";
+    };
     impermanence.enable = true;
+    media-player = {
+      dataDir = "/var/lib/jellyfin";
+      enable = true;
+    };
     reverseProxy.enable = true;
     samba.client = {
       enable = true;
@@ -18,6 +28,7 @@
       exitNode = false;
       subnetRouter = true;
     };
+    ups.enable = true;
     virtualization.enable = true;
     zfs = {
       enable = true;
