@@ -77,9 +77,6 @@ in
               "Téléchargements"
               "Vidéos"
             ];
-            files = [
-              ".bash_history"
-            ];
           };
         }) users
       );
