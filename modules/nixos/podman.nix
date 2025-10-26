@@ -28,9 +28,10 @@ in
 
     environment.systemPackages = with pkgs; [
       buildah
+      distrobox
       dive
-      podman-tui
       podman-compose
+      podman-tui
     ];
   };
 }

@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -16,11 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     environment = {
       sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card2";
-      systemPackages =
-        let
-          pkgsFex = pkgs.extend inputs.nixos-muvm-fex.overlays.default;
-        in
-        [ pkgsFex.muvm ];
+      systemPackages = [ pkgs.muvm ];
     };
 
     hardware.asahi = {

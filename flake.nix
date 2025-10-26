@@ -38,7 +38,8 @@
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-muvm-fex.url = "github:nrabulinski/nixos-muvm-fex/native-build";
+    # nixos-muvm-fex.url = "github:nrabulinski/nixos-muvm-fex/native-build";
+    # nixos-muvm-fex.url = "github:KongrooParadox/nixos-muvm-fex/native-build";
   };
 
   outputs =
