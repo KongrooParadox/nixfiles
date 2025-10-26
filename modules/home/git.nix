@@ -4,7 +4,7 @@
   programs = {
     git = {
       enable = true;
-      package = pkgs.gitAndTools.gitFull;
+      package = pkgs.gitFull;
       userName = "Guillaume Nanty";
       userEmail = "7790572+KongrooParadox@users.noreply.github.com";
       signing = {

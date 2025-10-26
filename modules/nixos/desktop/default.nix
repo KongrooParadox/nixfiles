@@ -66,6 +66,7 @@ in
           k9s
           libimobiledevice # usb drivers for apple mobile devices
           mesa
+          mesa-demos
           moonlight-qt
           networkmanagerapplet
           nixos-anywhere
@@ -74,7 +75,7 @@ in
           pavucontrol
           pkg-config
           protonmail-bridge
-          protonvpn-gui
+          # protonvpn-gui # python3.13-proton-core-0.4.0 build KO
           python3
           remmina
           samba
@@ -85,6 +86,7 @@ in
           usbutils
           virt-manager
           vlc
+          vulkan-tools
           wireguard-tools
           xournalpp
         ]
