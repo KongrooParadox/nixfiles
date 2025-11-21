@@ -23,10 +23,11 @@
       tailscale.acceptRoutes = true;
       virtualization.enable = true;
       wireguard.enable = true;
-      zfs.enable = true;
+      zfs = {
+        enable = true;
+        hostId = "720320e5";
+      };
     };
-
-    networking.hostId = "720320e5";
 
     nixpkgs.overlays = [
       apple-silicon.overlays.apple-silicon-overlay

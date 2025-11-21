@@ -24,6 +24,11 @@ in
         default = [ ];
         description = lib.mdDoc "List of encryption keys for zfs datasets in sops secrets";
       };
+      hostId = lib.mkOption {
+        type = lib.types.str;
+        example = "";
+        description = lib.mdDoc "The 32-bit host ID of the machine, formatted as 8 hexadecimal characters";
+      };
     };
   };
 
@@ -45,6 +50,10 @@ in
       zfs = {
         devNodes = "/dev/disk/by-path";
       };
+    };
+
+    networking = {
+      hostId = cfg.hostId;
     };
 
     # Because zfs tries to load encryption keys before sops secret is available

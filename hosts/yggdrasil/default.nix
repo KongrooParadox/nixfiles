@@ -25,6 +25,7 @@
         "root.key"
         "rust.key"
       ];
+      hostId = "8bd9a73c";
     };
   };
 

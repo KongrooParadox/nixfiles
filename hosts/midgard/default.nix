@@ -42,6 +42,7 @@
         "root.key"
         "rust.key"
       ];
+      hostId = "c9e13eac";
     };
   };
 
@@ -57,7 +58,6 @@
   };
 
   networking = {
-    hostId = "c9e13eac";
     useDHCP = false;
     networkmanager.enable = lib.mkForce false;
   };
