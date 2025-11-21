@@ -1030,15 +1030,16 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1761668017,
-        "narHash": "sha256-ZaSdalpgX/QyqoQekdBf8Lu1hnN3Vwj1SM2vcsYhFg8=",
-        "owner": "SaumonNet",
+        "lastModified": 1763768167,
+        "narHash": "sha256-54fz4TNkMO0YG3NHegN6UwGDF11pdEux8xkhBgDqJI4=",
+        "owner": "KongrooParadox",
         "repo": "proxmox-nixos",
-        "rev": "a7f750eda22687b9af89e0079ed7a9b0f496787c",
+        "rev": "9d280bd932fae54fc2ccf4569e370f0c55175d95",
         "type": "github"
       },
       "original": {
-        "owner": "SaumonNet",
+        "owner": "KongrooParadox",
+        "ref": "fix/pve-qemu-hash",
         "repo": "proxmox-nixos",
         "type": "github"
       }
