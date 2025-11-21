@@ -23,17 +23,11 @@
     zfs = {
       enable = true;
       encryptionKeys = [ "encrypted.key" ];
+      hostId = "050d02a0";
     };
   };
 
   home-manager.users.fatiha.home.packages = [
     pkgs.zoom-us
   ];
-
-  networking = {
-    firewall = {
-      allowedTCPPorts = [ 22 ];
-    };
-    hostId = "050d02a0";
-  };
 }

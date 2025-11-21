@@ -36,7 +36,6 @@
   };
 
   networking = {
-    hostId = "8bd9a73c";
     useDHCP = false;
     networkmanager.enable = lib.mkForce false;
   };

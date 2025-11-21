@@ -34,11 +34,7 @@
     zfs = {
       enable = true;
       encryptionKeys = [ "encrypted.key" ];
+      hostId = "a3c9f91c";
     };
   };
-
-  networking = {
-    hostId = "a3c9f91c";
-  };
-
 }

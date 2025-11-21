@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -61,11 +61,7 @@
     zfs = {
       enable = true;
       encryptionKeys = [ "encrypted.key" ];
+      hostId = "db46c034";
     };
   };
-
-  networking = {
-    hostId = "db46c034";
-  };
-
 }
