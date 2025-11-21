@@ -34,7 +34,6 @@
     };
     impermanence.enable = true;
     media-player.enable = true;
-    reverseProxy.enable = true;
     samba.server.enable = true;
     tailscale.enable = false;
     zfs = {

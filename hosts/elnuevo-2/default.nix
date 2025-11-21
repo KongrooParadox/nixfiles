@@ -20,28 +20,32 @@
         tasmota-laptop  IN  A     192.168.2.5
         elnuevo-2       IN  A     192.168.2.100
         home-assistant  IN  CNAME elnuevo-2
+        jellyfin        IN  CNAME elnuevo-2
         elnuevo-1       IN  A     192.168.2.99
+        proxmox         IN  CNAME elnuevo-1
         yggdrasil       IN  A     192.168.2.101
         gallery         IN  CNAME yggdrasil
         smb             IN  CNAME yggdrasil
         njord           IN  A     192.168.2.25
         baldur          IN  A     192.168.2.20
         heimdall        IN  A     192.168.2.102
-        deluge          IN  CNAME elnuevo-1
-        jellyfin        IN  CNAME elnuevo-1
-        lidarr          IN  CNAME elnuevo-1
-        nzbget          IN  CNAME elnuevo-1
-        prowlarr        IN  CNAME elnuevo-1
-        radarr          IN  CNAME elnuevo-1
-        readarr         IN  CNAME elnuevo-1
-        sonarr          IN  CNAME elnuevo-1
+        deluge          IN  CNAME heimdall
+        lidarr          IN  CNAME heimdall
+        nzbget          IN  CNAME heimdall
+        prowlarr        IN  CNAME heimdall
+        radarr          IN  CNAME heimdall
+        readarr         IN  CNAME heimdall
+        sonarr          IN  CNAME heimdall
         livebox         IN  A     192.168.2.254
       '';
     };
     home-assistant.enable = true;
     home-manager.enable = true;
     impermanence.enable = true;
-    reverseProxy.enable = true;
+    media-player = {
+      dataDir = "/var/lib/jellyfin";
+      enable = true;
+    };
     samba.client = {
       enable = true;
       uid = "1000";
@@ -61,28 +65,7 @@
   };
 
   networking = {
-    bridges = {
-      "br0" = {
-        interfaces = [ "eno1" ];
-      };
-    };
     hostId = "db46c034";
-    firewall = {
-      allowedUDPPortRanges = [
-        {
-          from = 40000;
-          to = 40010;
-        }
-      ];
-      allowedTCPPortRanges = [
-        {
-          from = 40000;
-          to = 40010;
-        }
-      ];
-    };
-    useDHCP = false;
-    interfaces."br0".useDHCP = true;
   };
 
 }

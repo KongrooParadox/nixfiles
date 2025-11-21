@@ -41,6 +41,7 @@ in
     };
 
     kp.reverseProxy = {
+      enable = true;
       domain = cfg.domain;
       services = {
         jellyfin.port = 8096;

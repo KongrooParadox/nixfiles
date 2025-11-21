@@ -47,7 +47,6 @@
       '';
     };
     home-assistant.enable = true;
-    reverseProxy.enable = true;
     tailscale = {
       acceptRoutes = true;
       advertisedRoutes = [ "192.168.1.0/24" ];

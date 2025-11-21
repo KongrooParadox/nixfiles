@@ -16,6 +16,15 @@ let
           description = lib.mdDoc "Local port the service is running on";
         };
 
+        protocol = lib.mkOption {
+          type = lib.types.enum [
+            "http"
+            "https"
+          ];
+          default = "http";
+          description = lib.mdDoc "Protocol the service is running on";
+        };
+
         subdomain = lib.mkOption {
           type = lib.types.str;
           default = name;
@@ -87,7 +96,7 @@ in
           forceSSL = true;
 
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString service.port}";
+            proxyPass = "${service.protocol}://127.0.0.1:${toString service.port}";
             proxyWebsockets = true;
           };
         }

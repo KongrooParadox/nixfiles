@@ -31,7 +31,7 @@
     ./tailscale.nix
     ./ups.nix
     ./users.nix
-    ./virtualization.nix
+    ./virtualization
     ./wireguard.nix
     ./zfs.nix
   ];

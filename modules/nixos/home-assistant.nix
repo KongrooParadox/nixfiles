@@ -32,6 +32,7 @@ in
         extraDirectories = [ "/var/lib/hass" ];
       };
       reverseProxy = {
+        enable = true;
         domain = cfg.domain;
         services.home-assistant = {
           port = 8123;
