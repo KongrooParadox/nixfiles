@@ -98,10 +98,10 @@ return {
                             path = "ansible",
                             useFullyQualifiedCollectionNames = true
                         },
-                        ansibleLint = {
-                            enabled = true,
-                            path = "ansible-lint"
-                        },
+                        -- ansibleLint = {
+                        --     enabled = true,
+                        --     path = "ansible-lint"
+                        -- },
                         executionEnvironment = {
                             enabled = false
                         },
