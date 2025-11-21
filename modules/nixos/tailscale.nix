@@ -63,6 +63,23 @@ in
       "${keyName}" = { };
     };
 
+    networking = lib.mkIf cfg.subnetRouter {
+      firewall = {
+        allowedUDPPortRanges = [
+          {
+            from = 40000;
+            to = 40010;
+          }
+        ];
+        allowedTCPPortRanges = [
+          {
+            from = 40000;
+            to = 40010;
+          }
+        ];
+      };
+    };
+
     systemd.services = lib.mkIf cfg.exitNode or cfg.subnetRouter {
       ethtool-tailscale = {
         description = "ethtool optimizations for tailscale performance";

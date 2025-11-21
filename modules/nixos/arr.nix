@@ -162,6 +162,7 @@ in
           ];
       };
       reverseProxy = {
+        enable = true;
         domain = cfg.domain;
         services = {
           deluge.port = 8112;

@@ -94,6 +94,7 @@ in
           ];
       };
       reverseProxy = {
+        enable = true;
         domain = cfg.domain;
         services.immich = {
           port = config.services.immich.port;

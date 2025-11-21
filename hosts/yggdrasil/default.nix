@@ -16,7 +16,6 @@
     home-manager.enable = true;
     immich.enable = true;
     impermanence.enable = true;
-    reverseProxy.enable = true;
     samba.server.enable = true;
     storage.enable = true;
     tailscale.enable = false;
