@@ -42,7 +42,7 @@
 
     packages = with pkgs; [
       ansible
-      ansible-lint
+      # ansible-lint
       cargo
       neofetch
       rustc
