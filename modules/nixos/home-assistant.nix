@@ -59,10 +59,9 @@ in
           "apcupsd"
           "esphome"
           "met"
-          "radio_browser"
           "mqtt"
+          "shelly"
           "tasmota"
-          "google_translate"
         ];
         config = {
           default_config = { };
