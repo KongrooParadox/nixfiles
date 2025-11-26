@@ -21,14 +21,10 @@
       uid = "1000";
       gid = "997";
     };
-    tailscale = {
-      advertisedRoutes = [ "192.168.2.0/24" ];
-      exitNode = false;
-      subnetRouter = true;
-    };
     ups.enable = true;
     virtualization = {
       enable = true;
+      bridgeInterfaceName = "end0";
       libvirtd.enable = true;
     };
     zfs = {

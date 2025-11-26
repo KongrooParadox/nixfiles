@@ -37,7 +37,7 @@ in
 
       wireguardInterface = lib.mkOption {
         type = lib.types.str;
-        default = "wg-p2p";
+        default = "wg-arr-tavel";
         description = lib.mdDoc "Name of Wireguard interface to use for deluge traffic";
       };
     };
@@ -138,7 +138,7 @@ in
           mode = "0440";
           group = "media";
         };
-        "wireguard/proton/p2p" = { };
+        "wireguard/proton/arr-tavel" = { };
         "wireguard/proton/p2p-2" = { };
       })
     ];
@@ -262,23 +262,23 @@ in
         allowedTCPPorts = lib.mkIf cfg.nzbget.enable [ 6789 ];
       };
       wg-quick.interfaces = lib.mkIf cfg.deluge.enable {
-        wg-p2p = lib.mkIf (cfg.deluge.wireguardInterface == "wg-p2p") {
+        wg-arr-tavel = lib.mkIf (cfg.deluge.wireguardInterface == "wg-arr-tavel") {
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [
             "192.168.2.100"
             "192.168.1.100"
           ];
-          privateKeyFile = config.sops.secrets."wireguard/proton/p2p".path;
+          privateKeyFile = config.sops.secrets."wireguard/proton/arr-tavel".path;
           peers = [
             {
-              # CL#31
-              publicKey = "F7z+SRMw1d3o1lQbWObWN7GBbHeUZNCC+PCpPy+SOQ8=";
+              # FR#501
+              publicKey = "hr/tdXvYAhoX6gCmdViw+uLXIYfGuC4W0kOIwagj0Dk=";
               allowedIPs = [
                 "0.0.0.0/0"
                 "::/0"
               ];
-              endpoint = "138.199.50.106:51820";
+              endpoint = "178.249.212.170:51820";
               persistentKeepalive = 25;
             }
           ];
