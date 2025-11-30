@@ -1,40 +1,53 @@
-vim.opt.list = true
-vim.opt.showbreak = "↪"
+vim.g.have_nerd_font = true
+
+vim.o.list = true
+vim.o.showbreak = "↪"
 vim.opt.listchars =
   { tab = " ▸", eol = "↲", nbsp = "␣", trail = "~", extends = "⟩", precedes = "⟨", space = "•" }
 
+-- Preview substitutions live, as you type!
+vim.o.inccommand = "split"
+
 -- Search settings
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
+vim.o.hlsearch = false
+vim.o.incsearch = true
 
 -- Make relative line numbers default
-vim.opt.relativenumber = true
-vim.opt.number = true
+vim.o.relativenumber = true
+vim.o.number = true
 
 -- Enable mouse mode
-vim.opt.mouse = ""
+vim.o.mouse = "a"
+vim.o.showmode = false
 
-vim.opt.smartindent = true
-vim.opt.breakindent = true
-vim.opt.wrap = false
+vim.o.smartindent = true
+vim.o.breakindent = true
+vim.o.wrap = false
 
 -- Save undo history
-vim.opt.undofile = true
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.o.undofile = true
+vim.o.swapfile = false
+vim.o.backup = false
+vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir"
 
 -- Case insensitive searching UNLESS /C or capital in search
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
-vim.opt.updatetime = 50
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "120"
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
+
+vim.o.scrolloff = 8
+vim.o.signcolumn = "yes"
+vim.o.colorcolumn = "120"
+
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+-- See `:help 'confirm'`
+vim.o.confirm = true
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = "menuone,noselect"
+vim.o.completeopt = "menuone,noselect"
 
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
