@@ -31,7 +31,9 @@ return {
         "c",
         "cpp",
         "go",
+        "gotmpl",
         "hcl",
+        "helm",
         "html",
         "javascript",
         "just",
@@ -77,6 +79,16 @@ return {
         end, opts.ensure_installed)
       end
       require("nvim-treesitter.configs").setup(opts)
+      vim.filetype.add({
+        extension = {
+          gotmpl = "gotmpl",
+        },
+        pattern = {
+          [".*/templates/.*%.tpl"] = "helm",
+          [".*/templates/.*%.ya?ml"] = "helm",
+          ["helmfile.*%.ya?ml"] = "helm",
+        },
+      })
 
       if load_textobjects then
         -- PERF: no need to load the plugin, if we only need its queries for mini.ai
