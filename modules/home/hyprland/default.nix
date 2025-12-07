@@ -9,7 +9,8 @@ let
     dbus-update-activation-environment --systemd --all
     systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     ${pkgs.killall}/bin/killall -q swww;sleep 1 && ${pkgs.swww}/bin/swww-daemon &
-    ${pkgs.killall}/bin/killall -q waybar;sleep 1 && waybar-launcher &
+    # ${pkgs.killall}/bin/killall -q waybar;sleep 1 && waybar-launcher &
+    ${pkgs.killall}/bin/killall -q qs;sleep 1 && qs &
     ${pkgs.killall}/bin/killall -q swaync
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
     ${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policylit-agent &
@@ -28,6 +29,7 @@ in
   config = {
     home.packages = with pkgs; [
       cliphist
+      quickshell
       wl-clipboard
       (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
       (import ../../../scripts/task-waybar.nix { inherit pkgs; })
@@ -85,9 +87,9 @@ in
             monitor=DVI-I-2,2560x1440@59.95,3610x245,1.0
             monitor=,preferred,auto,1
             general {
-              gaps_in = 6
-              gaps_out = 8
-              border_size = 2
+              gaps_in = 0
+              gaps_out = 0
+              border_size = 0
               layout = dwindle
               resize_on_border = true
               col.active_border = rgb(${config.stylix.base16Scheme.base08}) rgb(${config.stylix.base16Scheme.base0C}) 45deg
@@ -97,6 +99,8 @@ in
               kb_layout = us
               kb_variant = alt-intl
               kb_options = caps:escape
+              repeat_rate = 35
+              repeat_delay = 200
               follow_mouse = 1
               touchpad {
                 natural_scroll = true
@@ -105,6 +109,10 @@ in
               }
               sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
               accel_profile = flat
+            }
+            cursor {
+              inactive_timeout = 30
+              no_hardware_cursors = true
             }
             windowrulev2 = noborder,class:^(wofi)$
             windowrulev2 = center,class:^(wofi)$
@@ -138,7 +146,8 @@ in
               animation = workspaces, 1, 5, wind
             }
             decoration {
-              rounding = 10
+              rounding = 0
+              rounding_power = 0
               blur {
                   enabled = true
                   size = 5

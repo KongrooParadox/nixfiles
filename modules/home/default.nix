@@ -27,6 +27,9 @@ in
     "nvim" = {
       source = mkSymlink "${dotfiles}/nvim";
     };
+    "quickshell" = {
+      source = mkSymlink "${dotfiles}/quickshell";
+    };
     "tmux" = {
       source = mkSymlink "${dotfiles}/tmux";
     };
