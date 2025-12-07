@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+let
+  dotfiles = "${config.home.homeDirectory}/nixfiles/dotfiles";
+  mkSymlink = path: config.lib.file.mkOutOfStoreSymlink path;
+in
 {
   imports = [
     ./browser.nix
@@ -10,33 +14,32 @@
     ./terminal.nix
   ];
 
+  xdg.configFile = {
+    "btop/themes" = {
+      source = mkSymlink "${dotfiles}/btop/";
+    };
+    "k9s" = {
+      source = mkSymlink "${dotfiles}/k9s/";
+    };
+    "libvirt" = {
+      source = mkSymlink "${dotfiles}/libvirt/";
+    };
+    "nvim" = {
+      source = mkSymlink "${dotfiles}/nvim";
+    };
+  };
+
   home = {
     file = {
-      "libvirt.conf" = {
-        source = ../../dotfiles/libvirt;
-        target = ".config/libvirt";
-      };
-      ".config/k9s" = {
-        source = ../../dotfiles/k9s;
-        recursive = true;
-      };
-      ".config/nvim" = {
-        source = ../../dotfiles/nvim;
-        recursive = true;
-      };
       "scripts" = {
-        source = ../../dotfiles/bin;
+        source = mkSymlink "${dotfiles}/bin/";
         target = ".local/bin";
       };
       ".ssh/config" = {
-        source = ../../dotfiles/ssh/config;
+        source = mkSymlink "${dotfiles}/ssh/config/";
       };
       ".w3m" = {
-        source = ../../dotfiles/w3m;
-        recursive = true;
-      };
-      ".config/btop/themes" = {
-        source = ../../dotfiles/btop;
+        source = mkSymlink "${dotfiles}/w3m/";
       };
     };
 

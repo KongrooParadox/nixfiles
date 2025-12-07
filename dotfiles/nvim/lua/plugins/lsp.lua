@@ -8,7 +8,7 @@ local deps = {
   "WhoIsSethDaniel/mason-tool-installer.nvim",
 
   -- Useful status updates for LSP.
-  { "j-hui/fidget.nvim", opts = {} },
+  { "j-hui/fidget.nvim",    opts = {} },
 
   -- Allows extra capabilities provided by blink.cmp
   "saghen/blink.cmp",
@@ -113,10 +113,11 @@ return {
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if
-            client
-            and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
+              client
+              and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
           then
-            local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+            local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight",
+              { clear = false })
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
               buffer = event.buf,
               group = highlight_augroup,
@@ -213,6 +214,31 @@ return {
             },
           },
         },
+        nixd = {
+          cmd = { "nixd" },
+          settings = {
+            nixd = {
+              nixpkgs = {
+                expr = 'import (builtins.getFlake "github:KongrooParadox/nixfiles").inputs.nixpkgs-unstable { }',
+              },
+              formatting = {
+                command = { "nixfmt" },
+              },
+              options = {
+                nix_darwin = {
+                  expr = '(builtins.getFlake "github:KongrooParadox/nixfiles").darwinConfigurations.njord-mac.options',
+                },
+                nixos = {
+                  expr = '(builtins.getFlake "github:KongrooParadox/nixfiles").nixosConfigurations.njord.options',
+                },
+                home_manager = {
+                  expr =
+                  '(builtins.getFlake "github:KongrooParadox/nixfiles").nixosConfigurations.njord.options.home-manager.users.type.getSubOptions []',
+                },
+              },
+            },
+          },
+        },
         postgres_lsp = {},
         powershell_es = {},
         pylsp = {},
@@ -238,11 +264,17 @@ return {
               -- This handles overriding only values explicitly passed
               -- by the server configuration above. Useful when disabling
               -- certain features of an LSP (for example, turning off formatting for ts_ls)
-              server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+              server.capabilities = vim.tbl_deep_extend("force", {}, capabilities,
+                server.capabilities or {})
               require("lspconfig")[server_name].setup(server)
             end,
           },
         })
+      else
+        for server, config in pairs(servers) do
+          vim.lsp.config(server, config)
+          vim.lsp.enable(server)
+        end
       end
 
       -- Custom Filetype detection : helm and tf files

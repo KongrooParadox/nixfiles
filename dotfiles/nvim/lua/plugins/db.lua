@@ -10,10 +10,10 @@ return {
     event = "VeryLazy",
     config = function()
       -- Database connections
-      vim.g.dbs = {
-        local_postgres = "postgres://postgres@localhost:5432/postgres",
-        -- TODO : source optional config file to separate db config from neovim config
-      }
+      local dbConfFile = vim.fn.stdpath("config") .. "/lua/dbui-servers.lua"
+      if vim.fn["filereadable"](dbConfFile) == 1 then
+        vim.g.dbs = require("dbui-servers")
+      end
 
       vim.g.db_ui_execute_on_save = 1
       vim.g.db_ui_use_nerd_fonts = 1

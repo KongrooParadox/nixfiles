@@ -14,7 +14,7 @@
       "Makefile" = {
         indent_style = "tab";
       };
-      "*.{nix,yaml,yml,tf}" = {
+      "*.{nix,yaml,yml,tf,lua}" = {
         indent_size = 2;
       };
       "*.md" = {
@@ -37,7 +37,9 @@
     just-formatter
     just-lsp
     lua-language-server
+    llvmPackages_20.clang-unwrapped
     nixd
+    nil
     nixfmt-rfc-style
     python313Packages.python-lsp-server
     rust-analyzer
@@ -57,4 +59,6 @@
       vimdiffAlias = true;
     };
   };
+
+  stylix.targets.neovim.enable = false;
 }
