@@ -215,7 +215,20 @@ return {
           },
         },
         nixd = {
-          cmd = { "nixd" },
+          cmd = { "nixd", "--semantic-tokens=true", },
+          on_attach = function(client)
+            -- We disable everything EXCEPT completions and semantic tokens, since I use
+            -- both nixd and nil, and nil is better at everything else
+            client.server_capabilities.codeActionProvider = nil
+            client.server_capabilities.definitionProvider = false
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentSymbolProvider = false
+            client.server_capabilities.documentHighlightProvider = false
+            client.server_capabilities.hoverProvider = false
+            client.server_capabilities.inlayHintProvider = false
+            client.server_capabilities.referencesProvider = false
+            client.server_capabilities.renameProvider = false
+          end,
           settings = {
             nixd = {
               nixpkgs = {
@@ -235,6 +248,19 @@ return {
                   expr =
                   '(builtins.getFlake "github:KongrooParadox/nixfiles").nixosConfigurations.njord.options.home-manager.users.type.getSubOptions []',
                 },
+              },
+            },
+          },
+        },
+        nil_ls = {
+          on_attach = function(client)
+            -- We get completion from nixd, and everything else from nil
+            client.server_capabilities.completionProvider = nil
+          end,
+          settings = {
+            nil_ls = {
+              formatting = {
+                command = { "nixfmt" },
               },
             },
           },
@@ -272,6 +298,8 @@ return {
         })
       else
         for server, config in pairs(servers) do
+          config.capabilities = vim.tbl_deep_extend("force", {}, capabilities,
+            config.capabilities or {})
           vim.lsp.config(server, config)
           vim.lsp.enable(server)
         end
