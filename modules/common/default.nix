@@ -3,6 +3,7 @@
   imports = [
     ./fonts.nix
     ./home-manager.nix
+    ./sops.nix
     ./stylix.nix
   ];
 
