@@ -1,22 +1,26 @@
 {
   config,
   inputs,
+  lib,
+  system,
   users,
   ...
 }:
 let
+  isLinux = lib.strings.hasSuffix "linux" system;
   sopsKeyPath =
     if config.kp.impermanence.enable then
-      map (user: "/persist/home/${user}/.ssh/id_ed25519") users
+      map (user: "/persist${config.home.homeDirectory}/.ssh/id_ed25519") users
     else
-      map (user: "/home/${user}/.ssh/id_ed25519") users
+      map (user: "${config.home.homeDirectory}/.ssh/id_ed25519") users
       ++ [
         "/etc/ssh/ssh_host_ed25519_key"
       ];
+  module = if isLinux then inputs.sops-nix.nixosModules.sops else inputs.sops-nix.darwinModules.sops;
 in
 {
   imports = [
-    inputs.sops-nix.nixosModules.sops
+    module
     {
       sops = {
         age = {

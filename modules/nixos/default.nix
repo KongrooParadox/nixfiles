@@ -24,7 +24,6 @@
     ./reverseProxy.nix
     ./samba.nix
     ./security.nix
-    ./sops.nix
     ./steam.nix
     ./storage.nix
     ./system.nix
