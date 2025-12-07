@@ -1,6 +1,10 @@
 -- Set colorscheme
 vim.o.termguicolors = true
 
+local function enableTransparency()
+    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+end
+
 return {
   {
     "catppuccin/nvim",
@@ -8,6 +12,7 @@ return {
     priority = 1000,
     config = function()
       vim.cmd([[colorscheme catppuccin]])
+      enableTransparency()
     end,
   },
   {
