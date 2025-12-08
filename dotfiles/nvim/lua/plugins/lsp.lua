@@ -232,21 +232,22 @@ return {
           settings = {
             nixd = {
               nixpkgs = {
-                expr = 'import (builtins.getFlake "github:KongrooParadox/nixfiles").inputs.nixpkgs-unstable { }',
+                expr = 'import (builtins.getFlake "github:KongrooParadox/nixfiles/main").inputs.nixpkgs-unstable { }',
               },
               formatting = {
                 command = { "nixfmt" },
               },
               options = {
                 nix_darwin = {
-                  expr = '(builtins.getFlake "github:KongrooParadox/nixfiles").darwinConfigurations.njord-mac.options',
+                  expr =
+                  '(builtins.getFlake "github:KongrooParadox/nixfiles/main").darwinConfigurations.njord-mac.options',
                 },
                 nixos = {
-                  expr = '(builtins.getFlake "github:KongrooParadox/nixfiles").nixosConfigurations.njord.options',
+                  expr = '(builtins.getFlake "github:KongrooParadox/nixfiles/main").nixosConfigurations.njord.options',
                 },
                 home_manager = {
                   expr =
-                  '(builtins.getFlake "github:KongrooParadox/nixfiles").nixosConfigurations.njord.options.home-manager.users.type.getSubOptions []',
+                  '(builtins.getFlake "github:KongrooParadox/nixfiles/main").nixosConfigurations.njord.options.home-manager.users.type.getSubOptions []',
                 },
               },
             },
