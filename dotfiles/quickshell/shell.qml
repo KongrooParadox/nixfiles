@@ -20,7 +20,7 @@ ShellRoot {
 
     // Font
     property string fontFamily: "FiraCode Nerd Font"
-    property int fontSize: 14
+    property int fontSize: 16
 
     // System info properties
     property string kernelVersion: "Linux"
@@ -34,6 +34,9 @@ ShellRoot {
     // CPU tracking
     property var lastCpuIdle: 0
     property var lastCpuTotal: 0
+
+    // Battery
+    property var batteryCharge: 0
 
     // Kernel version
     Process {
@@ -91,6 +94,21 @@ ShellRoot {
                 var total = parseInt(parts[1]) || 1
                 var used = parseInt(parts[2]) || 0
                 memUsage = Math.round(100 * used / total)
+            }
+        }
+        Component.onCompleted: running = true
+    }
+
+    // Battery usage
+    Process {
+        id: batProc
+        command: ["sh", "-c", "acpi"]
+        stdout: SplitParser {
+            onRead: data => {
+                if (!data) return
+                var parts = data.trim().split(/\s+/)
+                var percentStr = parts[3].replace(',', '') || "0%"
+                batteryCharge = parseInt(percentStr.replace('%', '')) || 0
             }
         }
         Component.onCompleted: running = true
@@ -161,6 +179,7 @@ ShellRoot {
         running: true
         repeat: true
         onTriggered: {
+            batProc.running = true
             cpuProc.running = true
             memProc.running = true
             diskProc.running = true
@@ -330,6 +349,24 @@ ShellRoot {
                     }
 
                     Text {
+                        text: "Bat: " + batteryCharge + "%"
+                        color: root.colPurple
+                        font.pixelSize: root.fontSize
+                        font.family: root.fontFamily
+                        font.bold: true
+                        Layout.rightMargin: 8
+                    }
+
+                    Rectangle {
+                        Layout.preferredWidth: 1
+                        Layout.preferredHeight: 16
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.leftMargin: 0
+                        Layout.rightMargin: 8
+                        color: root.colMuted
+                    }
+
+                    Text {
                         text: "CPU: " + cpuUsage + "%"
                         color: root.colYellow
                         font.pixelSize: root.fontSize
@@ -404,7 +441,7 @@ ShellRoot {
                     Text {
                         id: clockText
                         text: Qt.formatDateTime(new Date(), "HH:mm")
-                        color: root.colCyan
+                        color: root.colYellow
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
