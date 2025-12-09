@@ -8,16 +8,23 @@ import QtQuick.Layouts
 ShellRoot {
     id: root
 
-    // Theme colors
-    property color colBg: "#1a1b26"
-    property color colFg: "#a9b1d6"
-    property color colMuted: "#444b6a"
-    property color colCyan: "#0db9d7"
-    property color colPurple: "#ad8ee6"
-    property color colRed: "#f7768e"
-    property color colGreen: "#c3e88d"
-    property color colYellow: "#e0af68"
-    property color colBlue: "#7aa2f7"
+    // Nord theme colors
+    property color colNord0: "#2e3440"
+    property color colNord1: "#3b4252"
+    property color colNord2: "#434c5e"
+    property color colNord3: "#4c566a"
+    property color colNord4: "#d8dee9"
+    property color colNord5: "#e5e9f0"
+    property color colNord6: "#eceff4"
+    property color colNord7: "#8fbcbb"
+    property color colNord8: "#88c0d0"
+    property color colNord9: "#81a1c1"
+    property color colNord10: "#5e81ac"
+    property color colNord11: "#bf616a"
+    property color colNord12: "#d08770"
+    property color colNord13: "#ebcb8b"
+    property color colNord14: "#a3be8c"
+    property color colNord15: "#b48ead"
 
     // property list<string> workspaceNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     property list<string> workspaceNames: ["", "", "󰊯", "", "", "󱇤", "󱘶", "", "󰧮"]
@@ -225,7 +232,7 @@ ShellRoot {
             }
 
             implicitHeight: 30
-            color: root.colBg
+            color: root.colNord0
 
             margins {
                 top: 0
@@ -236,7 +243,7 @@ ShellRoot {
 
             Rectangle {
                 anchors.fill: parent
-                color: root.colBg
+                color: root.colNord0
 
                 RowLayout {
                     anchors.fill: parent
@@ -282,7 +289,7 @@ ShellRoot {
 
                             Text {
                                 text: workspaceNames[index]
-                                color: parent.isFocused ? root.colCyan : (parent.hasWindows ? root.colCyan : root.colMuted)
+                                color: parent.isFocused ? root.colNord8 : (parent.hasWindows ? root.colNord8 : root.colNord3)
                                 font.pixelSize: root.fontSize
                                 font.family: root.fontFamily
                                 font.bold: true
@@ -292,7 +299,7 @@ ShellRoot {
                             Rectangle {
                                 width: 20
                                 height: 3
-                                color: parent.isFocused ? root.colRed : (parent.isActiveOnCurrentMonitor && parent.hasWindows ? root.colPurple : root.colBg)
+                                color: parent.isFocused ? root.colNord11 : (parent.isActiveOnCurrentMonitor && parent.hasWindows ? root.colNord14 : root.colNord0)
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.bottom: parent.bottom
                             }
@@ -311,12 +318,12 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 8
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         text: currentLayout
-                        color: root.colFg
+                        color: root.colNord6
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -330,12 +337,12 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 2
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         text: activeWindow
-                        color: root.colGreen
+                        color: root.colNord14
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -347,7 +354,7 @@ ShellRoot {
 
                     Text {
                         text: " " + kernelVersion
-                        color: root.colRed
+                        color: root.colNord11
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -360,12 +367,12 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 0
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         text: "Bat: " + batteryCharge + "%"
-                        color: root.colPurple
+                        color: root.colNord14
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -378,12 +385,12 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 0
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         text: "CPU: " + cpuUsage + "%"
-                        color: root.colYellow
+                        color: root.colNord4
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -396,12 +403,12 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 0
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         text: "Mem: " + memUsage + "%"
-                        color: root.colCyan
+                        color: root.colNord8
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -414,12 +421,12 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 0
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         text: "Disk: " + diskUsage + "%"
-                        color: root.colBlue
+                        color: root.colNord10
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -432,12 +439,12 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 0
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         text: "Vol: " + volumeLevel + "%"
-                        color: root.colPurple
+                        color: root.colNord14
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -450,13 +457,13 @@ ShellRoot {
                         Layout.alignment: Qt.AlignVCenter
                         Layout.leftMargin: 0
                         Layout.rightMargin: 8
-                        color: root.colMuted
+                        color: root.colNord3
                     }
 
                     Text {
                         id: clockText
                         text: Qt.formatDateTime(new Date(), "HH:mm")
-                        color: root.colYellow
+                        color: root.colNord4
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true

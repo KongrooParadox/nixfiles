@@ -3,19 +3,19 @@ vim.o.termguicolors = true
 
 local function enableTransparency()
   vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-  vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+  -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  vim.cmd('hi Directory guibg=NONE')
+  vim.cmd('hi SignColumn guibg=NONE')
 end
 
 return {
   {
-    "folke/tokyonight.nvim",
-    lazy = false,
+    "shaunsingh/nord.nvim",
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme tokyonight-night]])
       vim.cmd('hi Directory guibg=NONE')
       vim.cmd('hi SignColumn guibg=NONE')
+      vim.cmd([[colorscheme nord ]])
       enableTransparency()
     end,
   },
@@ -26,7 +26,7 @@ return {
     opts = {
       options = {
         icons_enabled = true,
-        theme = "auto",
+        theme = "nord",
         component_separators = "|",
         section_separators = { left = "", right = "" },
       },
