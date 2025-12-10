@@ -13,7 +13,10 @@
   ];
 
   config = {
-    home-manager.users.robot.kp.pentest.enable = true;
+    home-manager.users.robot.kp = {
+      pentest.enable = true;
+      hyprland.bar = "waybar";
+    };
     kp = {
       desktop.enable = true;
       home-manager.enable = true;
