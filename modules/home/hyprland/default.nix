@@ -5,19 +5,34 @@
   ...
 }:
 let
+  cfg = config.kp.hyprland;
+  barLauncher =
+    if cfg.bar == "waybar" then
+      "${pkgs.killall}/bin/killall -q waybar;sleep 1 && waybar-launcher &"
+    else
+      "${pkgs.killall}/bin/killall -q qs;sleep 1 && qs &";
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     dbus-update-activation-environment --systemd --all
     systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     ${pkgs.killall}/bin/killall -q swww;sleep 1 && ${pkgs.swww}/bin/swww-daemon &
-    # ${pkgs.killall}/bin/killall -q waybar;sleep 1 && waybar-launcher &
-    ${pkgs.killall}/bin/killall -q qs;sleep 1 && qs &
-    ${pkgs.killall}/bin/killall -q swaync
+    ${barLauncher}
+    ${pkgs.killall}/bin/killall -q swaync &
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
     ${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policylit-agent &
     wl-paste --watch cliphist store &
   '';
 in
 {
+  options.kp.hyprland = {
+    bar = lib.mkOption {
+      type = lib.types.enum [
+        "quickshell"
+        "waybar"
+      ];
+      default = "quickshell";
+      description = lib.mdDoc "bar implementation for hyprland";
+    };
+  };
   imports = [
     ./emoji.nix
     ./rofi.nix
@@ -27,19 +42,19 @@ in
   ];
 
   config = {
-    home.packages = with pkgs; [
-      cliphist
-      quickshell
-      wl-clipboard
-      (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
-      (import ../../../scripts/task-waybar.nix { inherit pkgs; })
-      (import ../../../scripts/web-search.nix { inherit pkgs; })
-      (import ../../../scripts/rofi-launcher.nix { inherit pkgs; })
-      (import ../../../scripts/rofi-clipboard-history.nix { inherit pkgs; })
-      (import ../../../scripts/screen-capture.nix { inherit pkgs; })
-      (import ../../../scripts/list-hypr-bindings.nix { inherit pkgs; })
-      (import ../../../scripts/waybar-launcher.nix { inherit pkgs; })
-    ];
+    home.packages =
+      with pkgs;
+      [
+        cliphist
+        wl-clipboard
+        (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
+        (import ../../../scripts/web-search.nix { inherit pkgs; })
+        (import ../../../scripts/rofi-launcher.nix { inherit pkgs; })
+        (import ../../../scripts/rofi-clipboard-history.nix { inherit pkgs; })
+        (import ../../../scripts/screen-capture.nix { inherit pkgs; })
+        (import ../../../scripts/list-hypr-bindings.nix { inherit pkgs; })
+      ]
+      ++ lib.optionals (cfg.bar == "quickshell") [ quickshell ];
 
     stylix.targets.hyprland.enable = false;
     services = {
@@ -183,7 +198,6 @@ in
             bind = ${modifier},S,exec,screen-capture
             bind = ${modifier},T,exec,alacritty
             bind = ${modifier},V,exec,rofi-clipboard-history
-            bind = ${modifier},W,exec,waybar-launcher
             bind = ${modifier},H,movefocus,l
             bind = ${modifier},J,movefocus,d
             bind = ${modifier},K,movefocus,u

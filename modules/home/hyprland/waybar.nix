@@ -10,8 +10,12 @@ let
 in
 with lib;
 {
-  config = {
+  config = lib.mkIf (config.kp.hyprland.bar == "waybar") {
     stylix.targets.waybar.enable = false;
+    home.packages = [
+      (import ../../../scripts/task-waybar.nix { inherit pkgs; })
+      (import ../../../scripts/waybar-launcher.nix { inherit pkgs; })
+    ];
     programs.waybar = {
       enable = true;
       package = pkgs.waybar;
