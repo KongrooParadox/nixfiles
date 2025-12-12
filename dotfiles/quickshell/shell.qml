@@ -15,8 +15,12 @@ ShellRoot {
     property color colCyan: "#0db9d7"
     property color colPurple: "#ad8ee6"
     property color colRed: "#f7768e"
+    property color colGreen: "#c3e88d"
     property color colYellow: "#e0af68"
     property color colBlue: "#7aa2f7"
+
+    // property list<string> workspaceNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    property list<string> workspaceNames: ["", "", "󰊯", "", "", "󱇤", "󱘶", "", "󰧮"]
 
     // Font
     property string fontFamily: "FiraCode Nerd Font"
@@ -252,23 +256,33 @@ ShellRoot {
                         }
                     }
 
+                    Rectangle {
+                        Layout.preferredWidth: 1
+                        Layout.preferredHeight: 16
+                        Layout.alignment: Qt.AlignVCenter
+                        Layout.leftMargin: 12
+                        Layout.rightMargin: 3
+                        color: root.colMuted
+                    }
+
                     Item { width: 8 }
 
                     Repeater {
                         model: 9
 
                         Rectangle {
-                            Layout.preferredWidth: 20
+                            Layout.preferredWidth: 30
                             Layout.preferredHeight: parent.height
                             color: "transparent"
 
                             property var workspace: Hyprland.workspaces.values.find(ws => ws.id === index + 1) ?? null
-                            property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
+                            property bool isFocused: Hyprland.focusedWorkspace?.id === (index + 1)
                             property bool hasWindows: workspace !== null
+                            property bool isActiveOnCurrentMonitor: workspace.monitor.id === Hyprland.monitorFor(screen).id
 
                             Text {
-                                text: index + 1
-                                color: parent.isActive ? root.colCyan : (parent.hasWindows ? root.colCyan : root.colMuted)
+                                text: workspaceNames[index]
+                                color: parent.isFocused ? root.colCyan : (parent.hasWindows ? root.colCyan : root.colMuted)
                                 font.pixelSize: root.fontSize
                                 font.family: root.fontFamily
                                 font.bold: true
@@ -278,10 +292,11 @@ ShellRoot {
                             Rectangle {
                                 width: 20
                                 height: 3
-                                color: parent.isActive ? root.colPurple : root.colBg
+                                color: parent.isFocused ? root.colRed : (parent.isActiveOnCurrentMonitor && parent.hasWindows ? root.colPurple : root.colBg)
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.bottom: parent.bottom
                             }
+
 
                             MouseArea {
                                 anchors.fill: parent
@@ -306,7 +321,7 @@ ShellRoot {
                         font.family: root.fontFamily
                         font.bold: true
                         Layout.leftMargin: 5
-                        Layout.rightMargin: 5
+                        Layout.rightMargin: 10
                     }
 
                     Rectangle {
@@ -320,7 +335,7 @@ ShellRoot {
 
                     Text {
                         text: activeWindow
-                        color: root.colPurple
+                        color: root.colGreen
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
                         font.bold: true
@@ -331,7 +346,7 @@ ShellRoot {
                     }
 
                     Text {
-                        text: kernelVersion
+                        text: " " + kernelVersion
                         color: root.colRed
                         font.pixelSize: root.fontSize
                         font.family: root.fontFamily
