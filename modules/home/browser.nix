@@ -15,7 +15,9 @@ in
       {
         home.packages =
           with pkgs;
-          [ ]
+          [
+            brave
+          ]
           ++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
             chromium
           ];
