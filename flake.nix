@@ -13,18 +13,18 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     stylix = {
       url = "github:danth/stylix/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -36,7 +36,7 @@
     };
     nix-ld = {
       url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     # proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
     proxmox-nixos.url = "github:KongrooParadox/proxmox-nixos/fix/pve-qemu-hash";
@@ -45,7 +45,7 @@
   outputs =
     {
       apple-silicon,
-      nixpkgs,
+      nixpkgs-stable,
       nixpkgs-unstable,
       impermanence,
       nix-darwin,
@@ -74,7 +74,7 @@
         };
       };
       nixosConfigurations = {
-        asgard = nixpkgs.lib.nixosSystem {
+        asgard = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "pernes.kongroo.ovh";
             host = "asgard";
@@ -113,7 +113,7 @@
             }
           ];
         };
-        elnuevo-1 = nixpkgs.lib.nixosSystem {
+        elnuevo-1 = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "elnuevo-1";
@@ -131,7 +131,7 @@
             }
           ];
         };
-        elnuevo-2 = nixpkgs.lib.nixosSystem {
+        elnuevo-2 = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "elnuevo-2";
@@ -167,7 +167,7 @@
             }
           ];
         };
-        iso-arm = nixpkgs.lib.nixosSystem {
+        iso-arm = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "iso-arm";
@@ -185,7 +185,7 @@
             }
           ];
         };
-        iso-x86 = nixpkgs.lib.nixosSystem {
+        iso-x86 = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "iso-x86";
@@ -203,7 +203,7 @@
             }
           ];
         };
-        lordi = nixpkgs.lib.nixosSystem {
+        lordi = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "lordi";
@@ -224,7 +224,7 @@
             }
           ];
         };
-        midgard = nixpkgs.lib.nixosSystem {
+        midgard = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "pernes.kongroo.ovh";
             host = "midgard";
@@ -266,7 +266,7 @@
             }
           ];
         };
-        vili = nixpkgs.lib.nixosSystem {
+        vili = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "pernes.kongroo.ovh";
             host = "vili";
@@ -284,7 +284,7 @@
             }
           ];
         };
-        yggdrasil = nixpkgs.lib.nixosSystem {
+        yggdrasil = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "yggdrasil";
@@ -303,6 +303,7 @@
           ];
         };
       };
+      overlays = import ./overlays { inherit inputs; };
       homeManagerModules.default = ./modules/home;
     };
 }

@@ -8,7 +8,7 @@
 }:
 let
   cfg = config.kp.desktop;
-  nixpkgs-stable = inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  nixpkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   options.kp.desktop = {
@@ -36,6 +36,8 @@ in
 
   config = lib.mkIf cfg.enable {
     system.stateVersion = stateVersion;
+
+    hardware.graphics.package = pkgs.mesa;
 
     environment = {
       sessionVariables.GSK_RENDERER = "gl"; # Fix GTK apps : https://github.com/NixOS/nixpkgs/issues/353990

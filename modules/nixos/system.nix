@@ -27,8 +27,6 @@ in
     system.stateVersion = stateVersion;
 
     nix = {
-      # sets NIX_PATH to flake input for nixd
-      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
       settings = {
         experimental-features = [
           "nix-command"

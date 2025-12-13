@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    "${inputs.nixpkgs}/nixos/modules/hardware/video/displaylink.nix"
+    "${inputs.nixpkgs-unstable}/nixos/modules/hardware/video/displaylink.nix"
     "${self}/hosts/${host}"
     "${self}/modules/common"
     ./arr.nix
