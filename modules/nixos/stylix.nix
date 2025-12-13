@@ -10,6 +10,7 @@ let
 in
 {
   config = lib.mkIf (config.kp.desktop.enable && needsStylix) {
+    # stylix.targets.qt.enable = false;
     stylix.cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Ice";

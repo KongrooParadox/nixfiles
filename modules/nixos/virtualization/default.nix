@@ -9,7 +9,7 @@
 let
   cfg = config.kp.virtualization;
   currentArchitecture = system;
-  isUnstable = lib.versions.majorMinor lib.version == "25.11";
+  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
   ovmfCfg =
     if isUnstable then
       { }

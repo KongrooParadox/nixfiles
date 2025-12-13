@@ -20,7 +20,7 @@ let
 in
 {
   imports =
-    if lib.versions.majorMinor lib.version == "25.11" then
+    if lib.versions.majorMinor lib.version >= "25.11" then
       if isLinux then
         [ inputs.home-manager-unstable.nixosModules.home-manager ]
       else

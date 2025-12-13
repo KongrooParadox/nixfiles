@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.kp.arr;
-  isUnstable = lib.versions.majorMinor lib.version == "25.11";
+  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
   prowlarrCfg =
     if isUnstable then
       {
