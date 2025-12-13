@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.kp.desktop;
-  isUnstable = lib.versions.majorMinor lib.version == "25.11";
+  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
   gnomeCfg = {
     displayManager.gdm = {
       enable = true;

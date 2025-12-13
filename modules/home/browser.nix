@@ -7,7 +7,7 @@
 }:
 let
   currentArchitecture = system;
-  isUnstable = lib.versions.majorMinor lib.version == "25.11";
+  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
 in
 {
   config = lib.mkIf desktop.enable (
