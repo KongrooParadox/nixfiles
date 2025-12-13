@@ -9,11 +9,11 @@ end
 
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme catppuccin-mocha]])
+      vim.cmd([[colorscheme tokyonight-night]])
       vim.cmd('hi Directory guibg=NONE')
       vim.cmd('hi SignColumn guibg=NONE')
       enableTransparency()
@@ -26,7 +26,7 @@ return {
     opts = {
       options = {
         icons_enabled = true,
-        theme = "catppuccin",
+        theme = "auto",
         component_separators = "|",
         section_separators = { left = "", right = "" },
       },

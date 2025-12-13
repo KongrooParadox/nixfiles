@@ -3,7 +3,8 @@ vim.g.have_nerd_font = true
 vim.o.list = true
 vim.o.showbreak = "↪"
 vim.opt.listchars =
-  { tab = " ▸", eol = "↲", nbsp = "␣", trail = "~", extends = "⟩", precedes = "⟨", space = "•" }
+{ tab = " ▸", eol = "↲", nbsp = "␣", trail = "~", extends = "⟩", precedes = "⟨", space = "•" }
+-- { tab = " ▸", eol = "↲", nbsp = "␣", trail = "~", extends = "⟩", precedes = "⟨" }
 
 -- Preview substitutions live, as you type!
 vim.o.inccommand = "split"

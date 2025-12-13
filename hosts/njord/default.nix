@@ -15,7 +15,7 @@
   config = {
     home-manager.users.robot.kp = {
       pentest.enable = true;
-      hyprland.bar = "waybar";
+      hyprland.bar = "quickshell";
     };
     kp = {
       desktop.enable = true;
