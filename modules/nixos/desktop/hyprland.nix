@@ -3,7 +3,6 @@
   inputs,
   lib,
   pkgs,
-  users,
   ...
 }:
 {
@@ -28,10 +27,10 @@
     services = {
       greetd = {
         enable = true;
+        useTextGreeter = true;
         settings = {
           default_session = {
-            user = lib.lists.head users; # First user in list is the default
-            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland --remember";
+            command = "${pkgs.tuigreet}/bin/tuigreet --time --sessions ${config.services.displayManager.sessionData.desktops}/share/xsessions:${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --remember --remember-user-session --asterisks";
           };
         };
       };
