@@ -2,13 +2,10 @@
   desktop,
   lib,
   pkgs,
-  system,
+  isLinux,
+  isUnstable,
   ...
 }:
-let
-  currentArchitecture = system;
-  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
-in
 {
   config = lib.mkIf desktop.enable (
     lib.mkMerge [
@@ -18,7 +15,7 @@ in
           [
             brave
           ]
-          ++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
+          ++ lib.optionals isLinux [
             chromium
           ];
         programs = {

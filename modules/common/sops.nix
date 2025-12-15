@@ -1,13 +1,11 @@
 {
   config,
   inputs,
-  lib,
-  system,
+  isLinux,
   users,
   ...
 }:
 let
-  isLinux = lib.strings.hasSuffix "linux" system;
 
   sopsKeyPath =
     if config.kp.impermanence.enable then

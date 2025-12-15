@@ -30,7 +30,7 @@
     # ansible-language-server #unmaintained in nixpkgs
     bash-language-server
     docker-compose-language-service
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     gopls
     helm-ls
     just

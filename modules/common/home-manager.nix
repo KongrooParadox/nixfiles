@@ -5,13 +5,13 @@
   lib,
   stateVersion,
   users,
-  system,
+  isLinux,
+  isUnstable,
   ...
 }:
 let
   cfg = config.kp.home-manager;
   desktop = config.kp.desktop;
-  isLinux = lib.strings.hasSuffix "linux" system;
   sopsKeyPath =
     if config.kp.impermanence.enable then
       map (user: "/persist/home/${user}/.ssh/id_ed25519") users
@@ -20,7 +20,7 @@ let
 in
 {
   imports =
-    if lib.versions.majorMinor lib.version >= "25.11" then
+    if isUnstable then
       if isLinux then
         [ inputs.home-manager-unstable.nixosModules.home-manager ]
       else
@@ -72,7 +72,8 @@ in
           desktop
           host
           inputs
-          system
+          isLinux
+          isUnstable
           users
           ;
       };

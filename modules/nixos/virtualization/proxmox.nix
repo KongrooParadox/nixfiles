@@ -3,7 +3,7 @@
   domain,
   inputs,
   lib,
-  system,
+  pkgs,
   ...
 }:
 let
@@ -40,7 +40,7 @@ in
     };
 
     nixpkgs.overlays = [
-      inputs.proxmox-nixos.overlays.${system}
+      inputs.proxmox-nixos.overlays.${pkgs.system}
     ];
 
     kp = {
