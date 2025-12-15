@@ -63,10 +63,15 @@ in
         settings = {
           ipc = "off";
           splash = false;
-          splash_offset = 2.0;
-          preload = [ "${../../../wallpapers/dark-nebula.jpg}" ];
+          preload = [
+            "${../../../wallpapers/ghibli-landscape.png}"
+            "${../../../wallpapers/vestrahorn-mountain.jpg}"
+            "${../../../wallpapers/water-dragon.png}"
+          ];
           wallpaper = [
-            ",${../../../wallpapers/dark-nebula.jpg}"
+            "eDP-1,${../../../wallpapers/water-dragon.png}"
+            "DVI-I-1,${../../../wallpapers/ghibli-landscape.png}"
+            "DVI-I-2,${../../../wallpapers/vestrahorn-mountain.jpg}"
           ];
         };
       };
