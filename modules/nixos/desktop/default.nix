@@ -4,12 +4,11 @@
   lib,
   pkgs,
   stateVersion,
-  system,
   ...
 }:
 let
   cfg = config.kp.desktop;
-  nixpkgs-stable = inputs.nixpkgs.legacyPackages.${pkgs.system};
+  nixpkgs-stable = inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   options.kp.desktop = {
@@ -90,7 +89,7 @@ in
           wireguard-tools
           xournalpp
         ]
-        ++ lib.optionals (system != "aarch64-linux") [
+        ++ lib.optionals (config.nixpkgs.hostPlatform.system != "aarch64-linux") [
           discord
         ];
     };

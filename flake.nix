@@ -56,38 +56,43 @@
     {
       darwinConfigurations = {
         njord-mac = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "njord-mac";
             users = [ "robot" ];
             stateVersion = "25.05";
-            system = "aarch64-darwin";
+            isUnstable = true;
+            isLinux = false;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nix-darwin
+            {
+              nixpkgs.hostPlatform = "aarch64-darwin";
+            }
           ];
         };
       };
       nixosConfigurations = {
         asgard = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
           specialArgs = {
             domain = "pernes.kongroo.ovh";
             host = "asgard";
             users = [ "ops" ];
             stateVersion = "24.05";
-            system = "aarch64-linux";
             workgroup = "CASA_ANITA";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "aarch64-linux";
+            }
           ];
         };
         baldur = nixpkgs-unstable.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "baldur";
@@ -96,91 +101,109 @@
               "robot"
             ];
             stateVersion = "23.11";
-            system = "x86_64-linux";
             workgroup = "SKYNET";
+            isUnstable = true;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
           ];
         };
         elnuevo-1 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "elnuevo-1";
             users = [ "ops" ];
             stateVersion = "25.05";
-            system = "x86_64-linux";
             workgroup = "SKYNET";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
           ];
         };
         elnuevo-2 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "elnuevo-2";
             users = [ "ops" ];
             stateVersion = "25.05";
-            system = "x86_64-linux";
             workgroup = "SKYNET";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
           ];
         };
         heimdall = nixpkgs-unstable.lib.nixosSystem {
-          system = "aarch64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "heimdall";
             users = [ "ops" ];
             stateVersion = "24.05";
-            system = "aarch64-linux";
             workgroup = "SKYNET";
+            isUnstable = true;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "aarch64-linux";
+            }
           ];
         };
         iso-arm = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "iso-arm";
             users = [ "ops" ];
             stateVersion = "25.05";
-            system = "aarch64-linux";
             workgroup = "SKYNET";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "aarch64-linux";
+            }
           ];
         };
         iso-x86 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "iso-x86";
             users = [ "ops" ];
             stateVersion = "25.05";
-            system = "x86_64-linux";
             workgroup = "SKYNET";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
           ];
         };
         lordi = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "lordi";
@@ -189,38 +212,45 @@
               "robot"
             ];
             stateVersion = "25.05";
-            system = "x86_64-linux";
             workgroup = "SKYNET";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
           ];
         };
         midgard = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = {
             domain = "pernes.kongroo.ovh";
             host = "midgard";
             users = [ "ops" ];
             stateVersion = "24.11";
-            system = "x86_64-linux";
             workgroup = "CASA_ANITA";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
           ];
         };
         njord = nixpkgs-unstable.lib.nixosSystem {
-          system = "aarch64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "njord";
             users = [ "robot" ];
             stateVersion = "24.11";
-            system = "aarch64-linux";
             workgroup = "SKYNET";
+            isUnstable = true;
+            isLinux = true;
             inherit
               apple-silicon
               impermanence
@@ -231,36 +261,45 @@
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "aarch64-linux";
+            }
           ];
         };
         vili = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
           specialArgs = {
             domain = "pernes.kongroo.ovh";
             host = "vili";
             users = [ "ops" ];
             stateVersion = "24.11";
-            system = "aarch64-linux";
             workgroup = "CASA_ANITA";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "aarch64-linux";
+            }
           ];
         };
         yggdrasil = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
           specialArgs = {
             domain = "tavel.kongroo.ovh";
             host = "yggdrasil";
             users = [ "ops" ];
             stateVersion = "24.05";
-            system = "x86_64-linux";
             workgroup = "SKYNET";
+            isUnstable = false;
+            isLinux = true;
             inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
+            {
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
           ];
         };
       };

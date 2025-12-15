@@ -1,7 +1,7 @@
 {
   pkgs,
   lib,
-  system,
+  isLinux,
   ...
 }:
 let
@@ -10,7 +10,6 @@ let
       pkgs.nerd-fonts.fira-code
     else
       pkgs.fira-code-nerdfont;
-  isLinux = lib.strings.hasSuffix "linux" system;
 in
 {
   imports = [ ] ++ (lib.optional isLinux ../nixos/fonts.nix);

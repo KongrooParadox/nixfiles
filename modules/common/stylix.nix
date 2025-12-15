@@ -3,12 +3,11 @@
   inputs,
   lib,
   pkgs,
-  system,
+  isLinux,
+  isUnstable,
   ...
 }:
 let
-  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
-  isLinux = lib.strings.hasSuffix "linux" system;
   needsStylix =
     config.kp.desktop.environment == "hyprland" || config.kp.desktop.environment == "macos";
 

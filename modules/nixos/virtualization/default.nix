@@ -3,13 +3,11 @@
   lib,
   pkgs,
   users,
-  system,
+  isUnstable,
   ...
 }:
 let
   cfg = config.kp.virtualization;
-  currentArchitecture = system;
-  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
   ovmfCfg =
     if isUnstable then
       { }
@@ -44,7 +42,7 @@ in
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
       # Enable emulation for other architectures
-      boot.binfmt.emulatedSystems = lib.lists.remove currentArchitecture [
+      boot.binfmt.emulatedSystems = lib.lists.remove config.nixpkgs.hostPlatform.system [
         "x86_64-linux"
         "aarch64-linux"
       ];

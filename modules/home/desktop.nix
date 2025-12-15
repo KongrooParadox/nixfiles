@@ -2,11 +2,11 @@
   desktop,
   lib,
   pkgs,
-  system,
+  specialArgs,
   ...
 }:
 let
-  currentArchitecture = system;
+  currentArchitecture = specialArgs.nixosConfig.nixpkgs.hostPlatform.system;
 in
 {
   imports = lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland;
