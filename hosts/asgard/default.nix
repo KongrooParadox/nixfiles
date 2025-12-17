@@ -8,6 +8,8 @@
     (modulesPath + "/installer/sd-card/sd-image-aarch64.nix")
   ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+
   boot = {
     tmp.cleanOnBoot = true;
     growPartition = true;

@@ -67,9 +67,6 @@
           };
           modules = [
             ./modules/nix-darwin
-            {
-              nixpkgs.hostPlatform = "aarch64-darwin";
-            }
           ];
         };
       };
@@ -87,9 +84,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "aarch64-linux";
-            }
           ];
         };
         baldur = nixpkgs-unstable.lib.nixosSystem {
@@ -108,9 +102,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-            }
           ];
         };
         elnuevo-1 = nixpkgs-stable.lib.nixosSystem {
@@ -126,9 +117,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-            }
           ];
         };
         elnuevo-2 = nixpkgs-stable.lib.nixosSystem {
@@ -144,9 +132,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-            }
           ];
         };
         heimdall = nixpkgs-unstable.lib.nixosSystem {
@@ -162,9 +147,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "aarch64-linux";
-            }
           ];
         };
         iso-arm = nixpkgs-stable.lib.nixosSystem {
@@ -180,9 +162,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "aarch64-linux";
-            }
           ];
         };
         iso-x86 = nixpkgs-stable.lib.nixosSystem {
@@ -198,9 +177,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-            }
           ];
         };
         lordi = nixpkgs-stable.lib.nixosSystem {
@@ -219,9 +195,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-            }
           ];
         };
         midgard = nixpkgs-stable.lib.nixosSystem {
@@ -237,9 +210,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-            }
           ];
         };
         njord = nixpkgs-unstable.lib.nixosSystem {
@@ -261,27 +231,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "aarch64-linux";
-            }
-          ];
-        };
-        vili = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "pernes.kongroo.ovh";
-            host = "vili";
-            users = [ "ops" ];
-            stateVersion = "24.11";
-            workgroup = "CASA_ANITA";
-            isUnstable = false;
-            isLinux = true;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "aarch64-linux";
-            }
           ];
         };
         yggdrasil = nixpkgs-stable.lib.nixosSystem {
@@ -297,9 +246,6 @@
           };
           modules = [
             ./modules/nixos
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-            }
           ];
         };
       };
