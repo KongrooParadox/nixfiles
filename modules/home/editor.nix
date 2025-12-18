@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   editorconfig = {
     enable = true;
@@ -51,6 +51,13 @@
   ];
 
   programs = {
+    doom-emacs = {
+      enable = true;
+      doomDir = ../../dotfiles/doom.d;
+      # Currently broken
+      # doomDir = "${config.home.homeDirectory}/.config/doom.d";
+      # doomDir = "/nix/store/3z230glrjqibydmxv1v2r612jv8bn3pj-home-manager-files/.config/doom.d";
+    };
     neovim = {
       defaultEditor = true;
       enable = true;
@@ -58,6 +65,10 @@
       vimAlias = true;
       vimdiffAlias = true;
     };
+  };
+
+  services.emacs = {
+    enable = true;
   };
 
   stylix.targets.neovim.enable = false;

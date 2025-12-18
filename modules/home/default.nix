@@ -18,6 +18,9 @@ in
     "btop/themes" = {
       source = mkSymlink "${dotfiles}/btop/";
     };
+    "doom.d" = {
+      source = mkSymlink "${dotfiles}/doom.d/";
+    };
     "k9s" = {
       source = mkSymlink "${dotfiles}/k9s/";
     };

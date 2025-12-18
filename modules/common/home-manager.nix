@@ -78,7 +78,10 @@ in
           ;
       };
       users = lib.genAttrs users (name: {
-        imports = [ inputs.self.outputs.homeManagerModules.default ];
+        imports = [
+          inputs.self.outputs.homeManagerModules.default
+          inputs.nix-doom-emacs-unstraightened.homeModule
+        ];
         home = {
           username = name;
           homeDirectory = lib.mkForce "${cfg.homeBaseDirectory}/${name}";
