@@ -56,7 +56,7 @@ in
       ansible
       # ansible-lint
       cargo
-      neofetch
+      fastfetch
       rustc
       starship
     ];

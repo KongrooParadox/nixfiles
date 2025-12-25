@@ -15,7 +15,7 @@
   config = {
     home-manager.users.robot.kp = {
       pentest.enable = true;
-      hyprland.bar = "quickshell";
+      hyprland.bar = "noctalia";
     };
     kp = {
       desktop.enable = true;

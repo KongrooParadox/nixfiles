@@ -51,6 +51,12 @@ in
       powertop.enable = true;
     };
 
+    # Power profile services
+    services = {
+      upower.enable = true;
+      tuned.enable = true;
+    };
+
     # Set your time zone.
     time.timeZone = "Europe/Paris";
 
