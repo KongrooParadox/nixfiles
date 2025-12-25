@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -eu
+
+terminal="alacritty"
+
+# Pick repo
+configs="$({ echo ~/nixfiles; fd . ~/src --min-depth 1 --max-depth 1 --type d ; } | xargs -n1 basename)"
+[ -n "$configs" ] || exit 0
+chosen="$(printf '%s\n' "$configs" | rofi -dmenu -p 'Projects:')"
+[ -n "$chosen" ] || exit 0
+
+if [ "$chosen" == "nixfiles" ]; then
+    dir="$HOME/$chosen"
+else
+    dir="$HOME/src/$chosen"
+fi
+
+# Nuke any existing terminal instance
+pkill -x $terminal 2>/dev/null || true
+sleep 0.1
+
+exec $terminal -e tmux new-session -As "$chosen" -c "$dir"

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+declare -A URLS
+declare -a SORTED_KEYS
+
+URLS=(
+    [ YouTube]="https://www.youtube.com/results?search_query="
+    [❄️ Unstable Packages]="https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query="
+    [🦥 Arch Wiki]="https://wiki.archlinux.org/title/"
+    [🌎 Search]="https://search.brave.com/search?q="
+    [🐃 Gentoo Wiki]="https://wiki.gentoo.org/index.php?title="
+)
+
+SORTED_KEYS=(
+    "🌎 Search"
+    "🦥 Arch Wiki"
+    "❄️ Unstable Packages"
+    "🐃 Gentoo Wiki"
+    " YouTube"
+)
+
+# List for rofi
+gen_list() {
+    for k in "${SORTED_KEYS[@]}"
+    do
+        echo "$k"
+    done
+}
+
+main() {
+    # Pass the list to rofi
+    platform=$( (gen_list) | rofi -dmenu -i -p "Pick platform to search:" )
+    if [[ -n "$platform" ]]; then
+        query=$( (echo ) | rofi -dmenu )
+        if [[ -n "$query" ]]; then
+            url=''${URLS[$platform]}$query
+            xdg-open "$url"
+        else
+            exit
+        fi
+    else
+        exit
+    fi
+}
+
+main
+exit 0

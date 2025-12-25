@@ -4,7 +4,7 @@ HEADER="Project directories"
 PROMPT="> "
 
 if [[ -z $PARAM_DIR ]]; then
-    dir=$({ echo ~/nixfiles; fd . ~/personal --min-depth 1 --max-depth 1 --type d ; } | fzf --reverse --header "$HEADER" --prompt "$PROMPT")
+    dir=$({ echo ~/nixfiles; fd . ~/src --min-depth 1 --max-depth 1 --type d ; } | fzf --reverse --header "$HEADER" --prompt "$PROMPT")
 else
     dir=$1
 fi

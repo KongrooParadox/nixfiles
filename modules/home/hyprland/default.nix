@@ -35,7 +35,6 @@ in
     };
   };
   imports = [
-    ./emoji.nix
     ./noctalia.nix
     ./rofi.nix
     ./swaync.nix
@@ -49,8 +48,6 @@ in
       [
         cliphist
         wl-clipboard
-        (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
-        (import ../../../scripts/web-search.nix { inherit pkgs; })
         (import ../../../scripts/rofi-launcher.nix { inherit pkgs; })
         (import ../../../scripts/rofi-clipboard-history.nix { inherit pkgs; })
         (import ../../../scripts/screen-capture.nix { inherit pkgs; })
