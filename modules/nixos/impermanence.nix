@@ -67,7 +67,7 @@ in
               "Templates"
               "Videos"
               "nixfiles"
-              "personal"
+              "src"
             ]
             ++ lib.optionals (user == "fatiha") [
               ".zoom"

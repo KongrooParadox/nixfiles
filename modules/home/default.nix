@@ -15,6 +15,9 @@ in
   ];
 
   xdg.configFile = {
+    "bookmarks" = {
+      source = mkSymlink "${dotfiles}/bookmarks/";
+    };
     "btop/themes" = {
       source = mkSymlink "${dotfiles}/btop/";
     };
@@ -45,7 +48,7 @@ in
         target = ".local/bin";
       };
       ".ssh/config" = {
-        source = mkSymlink "${dotfiles}/ssh/config/";
+        source = mkSymlink "${dotfiles}/ssh/config";
       };
       ".w3m" = {
         source = mkSymlink "${dotfiles}/w3m/";

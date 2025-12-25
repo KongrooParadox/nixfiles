@@ -1,0 +1,7 @@
+# work
+[blog] Nixcademy :: https://nixcademy.com/posts/
+[chat] NixOS Discourse :: https://discourse.nixos.org/
+[code] GitHub :: https://github.com/
+[docs] Hyprland Wiki :: https://wiki.hypr.land/Configuring/Workspace-Rules/#rules
+[docs] NixOS Manual :: https://nixos.org/manual/
+[docs] QuickShell Docs :: https://quickshell.org/docs/master/types/

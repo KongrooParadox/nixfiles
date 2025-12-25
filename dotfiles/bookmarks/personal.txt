@@ -1,0 +1,3 @@
+# personal
+[mail] Proton :: https://mail.proton.me/u/2/inbox
+[media] YouTube :: https://youtube.com

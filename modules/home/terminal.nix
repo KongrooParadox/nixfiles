@@ -109,10 +109,10 @@
       initContent = ''
         bindkey -e
         bindkey -s ^f "tmux-switcher\n"
-        bindkey -s '^[y' "tmux-switcher ~/personal/homelab\n"
+        bindkey -s '^[y' "tmux-switcher ~/src/homelab\n"
         bindkey -s '^[u' "tmux-switcher ~/nixfiles\n"
-        bindkey -s '^[i' "tmux-switcher ~/personal/kongroo.io\n"
-        bindkey -s '^[o' "tmux-switcher ~/personal/zellij\n"
+        bindkey -s '^[i' "tmux-switcher ~/src/kongroo.io\n"
+        bindkey -s '^[o' "tmux-switcher ~/src/zellij\n"
         autoload -U +X bashcompinit && bashcompinit
         complete -F __start_kubectl k
         complete -o nospace -C $(which terraform) terraform

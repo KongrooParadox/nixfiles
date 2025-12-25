@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+terminal="alacritty"
+
+hosts=$(cat ~/.ssh/known_hosts | awk '{print $1}' | grep -v 'github.com' | sort | uniq)
+chosenFQDN=$(echo "$hosts" | rofi -dmenu -p 'Choose host to SSH into :')
+hostName=$(echo "$chosenFQDN" | perl -pe 's|(.*?)\..*|\1|' )
+echo "$hostName"
+[ -n "$hostName" ] || exit 0
+
+if ! tmux has-session -t="ssh_$hostName" 2> /dev/null; then
+    tmux new-session -ds "ssh_$hostName" "ssh ${chosenFQDN}"
+fi
+
+if [ "${TMUX-}" ]; then
+    exec tmux switch-client -t "ssh_${hostName}"
+fi
+
+client_tty="$(
+  tmux list-clients -F '#{client_tty} #{client_termname}' 2>/dev/null \
+  | awk "\$2 ~ /^${terminal}/ { print \$1; exit }" || true
+)"
+
+if [ -n "${client_tty}" ]; then
+  # switch that client to the chosen session
+  tmux switch-client -c "${client_tty}" -t "ssh_${hostName}"
+  exit 0
+fi
+
+# Nuke any existing terminal instance
+pkill -x $terminal 2>/dev/null || true
+sleep 0.1
+
+exec "$terminal" -e tmux attach -t "ssh_${hostName}"
