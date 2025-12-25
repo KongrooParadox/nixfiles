@@ -79,8 +79,10 @@ in
       };
       users = lib.genAttrs users (name: {
         imports = [
-          inputs.self.outputs.homeManagerModules.default
           inputs.nix-doom-emacs-unstraightened.homeModule
+          inputs.noctalia.homeModules.default
+          inputs.self.outputs.homeManagerModules.default
+
         ];
         home = {
           username = name;

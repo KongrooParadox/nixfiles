@@ -9,6 +9,8 @@ let
   barLauncher =
     if cfg.bar == "waybar" then
       "${pkgs.killall}/bin/killall -q waybar;sleep 1 && waybar-launcher &"
+    else if cfg.bar == "noctalia" then
+      "${pkgs.killall}/bin/killall -q noctalia-shell;sleep 1 && noctalia-shell &"
     else
       "${pkgs.killall}/bin/killall -q qs;sleep 1 && qs &";
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
@@ -24,15 +26,17 @@ in
   options.kp.hyprland = {
     bar = lib.mkOption {
       type = lib.types.enum [
+        "noctalia"
         "quickshell"
         "waybar"
       ];
-      default = "quickshell";
+      default = "noctalia";
       description = lib.mdDoc "bar implementation for hyprland";
     };
   };
   imports = [
     ./emoji.nix
+    ./noctalia.nix
     ./rofi.nix
     ./swaync.nix
     ./waybar.nix
@@ -52,7 +56,10 @@ in
         (import ../../../scripts/screen-capture.nix { inherit pkgs; })
         (import ../../../scripts/list-hypr-bindings.nix { inherit pkgs; })
       ]
-      ++ lib.optionals (cfg.bar == "quickshell") [ quickshell ];
+      ++ lib.optionals (builtins.elem cfg.bar [
+        "noctalia"
+        "quickshell"
+      ]) [ quickshell ];
 
     stylix.targets.hyprland.enable = false;
     services = {
