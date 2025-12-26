@@ -3,7 +3,6 @@
   lib,
   pkgs,
   isLinux,
-  isUnstable,
   ...
 }:
 {
@@ -60,14 +59,9 @@
           };
         };
       }
-      (
-        if isUnstable then
-          {
-            stylix.targets.firefox.profileNames = [ "default" ];
-          }
-        else
-          { }
-      )
+      {
+        stylix.targets.firefox.profileNames = [ "default" ];
+      }
     ]
   );
 }

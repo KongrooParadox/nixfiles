@@ -3,24 +3,10 @@
   lib,
   pkgs,
   users,
-  isUnstable,
   ...
 }:
 let
   cfg = config.kp.virtualization;
-  ovmfCfg =
-    if isUnstable then
-      { }
-    else
-      {
-        enable = true;
-        packages = [
-          (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd
-        ];
-      };
 in
 {
   options.kp.virtualization = {
@@ -76,7 +62,6 @@ in
           package = pkgs.qemu;
           runAsRoot = true;
           swtpm.enable = true;
-          ovmf = ovmfCfg;
         };
       };
     })

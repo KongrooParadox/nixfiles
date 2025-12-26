@@ -40,7 +40,7 @@ in
     };
 
     nixpkgs.overlays = [
-      inputs.proxmox-nixos.overlays.${pkgs.system}
+      inputs.proxmox-nixos.overlays.${config.nixpkgs.hostPlatform.system}
     ];
 
     kp = {

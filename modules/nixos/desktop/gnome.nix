@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.kp.desktop;
-  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
   gnomeCfg = {
     displayManager.gdm = {
       enable = true;
@@ -29,16 +28,9 @@ in
           gnomeExtensions.open-bar
         ];
       }
-      (
-        if isUnstable then
-          {
-            services = gnomeCfg;
-          }
-        else
-          {
-            services.xserver = gnomeCfg;
-          }
-      )
+      {
+        services = gnomeCfg;
+      }
     ]
   );
 }

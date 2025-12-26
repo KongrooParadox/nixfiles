@@ -6,19 +6,10 @@
 }:
 let
   cfg = config.kp.arr;
-  isUnstable = lib.versions.majorMinor lib.version >= "25.11";
-  prowlarrCfg =
-    if isUnstable then
-      {
-        dataDir = "${cfg.computeBasePath}/prowlarr";
-        enable = true;
-        openFirewall = true;
-      }
-    else
-      {
-        enable = true;
-        openFirewall = true;
-      };
+  prowlarrCfg = {
+    enable = true;
+    openFirewall = true;
+  };
 in
 {
   options.kp.arr = {
