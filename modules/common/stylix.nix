@@ -8,32 +8,30 @@
   ...
 }:
 let
-  needsStylix =
-    config.kp.desktop.environment == "hyprland" || config.kp.desktop.environment == "macos";
-
-  nixCfg =
-    if isUnstable then
-      {
-        monoPkg = pkgs.nerd-fonts.jetbrains-mono;
-        stylixModule =
-          if isLinux then
-            [ inputs.stylix-unstable.nixosModules.stylix ]
-          else
-            [ inputs.stylix-unstable.darwinModules.stylix ];
-      }
-    else
-      {
-        monoPkg = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
-        stylixModule =
-          if isLinux then [ inputs.stylix.nixosModules.stylix ] else [ inputs.stylix.darwinModules.stylix ];
-      };
-
+  cfg = config.kp.stylix;
+  nixCfg = {
+    monoPkg = pkgs.nerd-fonts.jetbrains-mono;
+    stylixModule =
+      if isUnstable then
+        if isLinux then
+          [ inputs.stylix-unstable.nixosModules.stylix ]
+        else
+          [ inputs.stylix-unstable.darwinModules.stylix ]
+      else if isLinux then
+        [ inputs.stylix.nixosModules.stylix ]
+      else
+        [ inputs.stylix.darwinModules.stylix ];
+  };
   inherit (nixCfg) monoPkg stylixModule;
 in
 {
+  options.kp.stylix = {
+    enable = lib.mkEnableOption "stylix theming";
+  };
+
   imports = stylixModule ++ (lib.optional isLinux ../nixos/stylix.nix);
 
-  config = lib.mkIf (config.kp.desktop.enable && needsStylix) {
+  config = lib.mkIf (cfg.enable) {
     stylix = {
       enable = true;
       autoEnable = true;

@@ -26,6 +26,17 @@ in
       default = "hyprland";
       description = lib.mdDoc "Which Desktop Environment to install (hyprland, plasma or gnome)";
     };
+    stylix = lib.mkOption {
+      type = lib.types.bool;
+      default = (
+        cfg.enable
+        && builtins.elem config.kp.desktop.environment [
+          "hyprland"
+          "macos"
+        ]
+      );
+      description = lib.mdDoc "Whether to enable Stylix theming";
+    };
   };
 
   imports = [

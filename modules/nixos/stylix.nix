@@ -4,12 +4,8 @@
   pkgs,
   ...
 }:
-let
-  needsStylix =
-    config.kp.desktop.environment == "hyprland" || config.kp.desktop.environment == "macos";
-in
 {
-  config = lib.mkIf (config.kp.desktop.enable && needsStylix) {
+  config = lib.mkIf (config.kp.stylix.enable) {
     # stylix.targets.qt.enable = false;
     stylix.cursor = {
       package = pkgs.bibata-cursors;

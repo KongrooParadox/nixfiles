@@ -10,6 +10,8 @@
     ./stylix.nix
   ];
 
+  kp.stylix.enable = true;
+
   sops.secrets."github/api-key" = { };
 
   nix = {
