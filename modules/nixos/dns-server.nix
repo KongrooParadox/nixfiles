@@ -68,7 +68,7 @@ in
             zone = cfg.zone;
           };
           blocking = {
-            blackLists = {
+            denylists = {
               ads = [ "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" ];
               adult = [ "https://blocklistproject.github.io/Lists/porn.txt" ];
             };
@@ -91,6 +91,7 @@ in
           };
         };
       };
+      resolved.enable = false;
     };
   };
 }
