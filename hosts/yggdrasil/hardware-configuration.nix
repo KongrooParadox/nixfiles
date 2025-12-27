@@ -35,17 +35,4 @@
     ];
   };
 
-  networking = {
-    useDHCP = false;
-    networkmanager.enable = lib.mkForce false;
-  };
-
-  systemd.network = {
-    enable = true;
-    networks."70-enp7s0" = {
-      matchConfig.Name = "enp7s0";
-      networkConfig.DHCP = "yes";
-      linkConfig.RequiredForOnline = "yes";
-    };
-  };
 }

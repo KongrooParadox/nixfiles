@@ -46,6 +46,17 @@
       dataDir = "/var/lib/jellyfin";
       enable = true;
     };
+    networking.systemd = {
+      enable = true;
+      nicList = [
+        {
+          dhcp = "yes";
+          name = "eno1";
+          prefix = "10";
+          requiredForOnline = "yes";
+        }
+      ];
+    };
     samba.client = {
       enable = true;
       uid = "1000";

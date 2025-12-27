@@ -16,6 +16,18 @@
     home-manager.enable = true;
     immich.enable = true;
     impermanence.enable = true;
+    networking.systemd = {
+      enable = true;
+      nicList = [
+        {
+          dhcp = "yes";
+          name = "enp7s0";
+          prefix = "10";
+          requiredForOnline = "yes";
+        }
+      ];
+    };
+
     samba.server.enable = true;
     storage.enable = true;
     tailscale.enable = false;
