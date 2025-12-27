@@ -34,6 +34,17 @@
     };
     impermanence.enable = true;
     media-player.enable = true;
+    networking.systemd = {
+      enable = true;
+      nicList = [
+        {
+          dhcp = "yes";
+          name = "enp4s0";
+          prefix = "10";
+          requiredForOnline = "yes";
+        }
+      ];
+    };
     podman.enable = true;
     samba.server.enable = true;
     tailscale.enable = false;
@@ -61,15 +72,6 @@
   networking = {
     useDHCP = false;
     networkmanager.enable = lib.mkForce false;
-  };
-
-  systemd.network = {
-    enable = true;
-    networks."40-enp4s0" = {
-      matchConfig.Name = "enp4s0";
-      networkConfig.DHCP = "yes";
-      linkConfig.RequiredForOnline = "yes";
-    };
   };
 
   hardware = {
