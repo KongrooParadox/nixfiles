@@ -36,6 +36,9 @@
       };
       gvfs.enable = true; # Mount, trash, and other functionalities
       tumbler.enable = true; # Thumbnail support for images
+      # Power profile services
+      upower.enable = true;
+      tuned.enable = true;
     };
 
     xdg.portal.configPackages = [
