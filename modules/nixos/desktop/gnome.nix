@@ -23,6 +23,12 @@ in
           gnome.gnome-browser-connector.enable = true;
         };
 
+        programs.dconf.profiles.user.databases = [{
+          settings."org/gnome/desktop/wm/preferences" = {
+            button-layout = ":minimize,maximize,close";
+          };
+        }];
+
         environment.systemPackages = with pkgs; [
           gnomeExtensions.dash-to-dock
           gnomeExtensions.open-bar
