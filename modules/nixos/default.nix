@@ -11,13 +11,14 @@
     "${self}/modules/common"
     ./arr.nix
     ./audio.nix
-    ./boot.nix
     ./binary-cache.nix
+    ./boot.nix
     ./desktop
     ./dns-server.nix
     ./home-assistant.nix
     ./immich.nix
     ./impermanence.nix
+    ./kids.nix
     ./media-player.nix
     ./networking.nix
     ./podman.nix

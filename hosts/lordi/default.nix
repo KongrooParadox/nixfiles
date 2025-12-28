@@ -16,6 +16,7 @@
       environment = "gnome";
     };
     home-manager.enable = true;
+    kids.enable = true;
   };
 
   networking = {

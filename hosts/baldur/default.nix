@@ -19,6 +19,7 @@
     };
     home-manager.enable = true;
     impermanence.enable = true;
+    kids.enable = true;
     virtualization.enable = true;
     zfs = {
       enable = true;
