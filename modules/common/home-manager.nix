@@ -66,7 +66,6 @@ in
     ];
     home-manager = {
       backupFileExtension = "backup";
-      useUserPackages = true;
       extraSpecialArgs = {
         inherit
           desktop
@@ -77,6 +76,8 @@ in
           users
           ;
       };
+      overwriteBackup = true;
+      useUserPackages = true;
       users = lib.genAttrs users (name: {
         imports = [
           inputs.nix-doom-emacs-unstraightened.homeModule
