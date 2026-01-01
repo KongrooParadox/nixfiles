@@ -18,11 +18,13 @@ in
         # General desktop packages
         filezilla
         keepassxc
+        mpv
         mumble
         prusa-slicer
         pulseaudio
         signal-desktop
         vlc
+        yt-dlp
       ]
       ++ lib.optionals (currentArchitecture == "x86_64-linux") [
         libreoffice
