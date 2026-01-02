@@ -39,12 +39,6 @@
 
     # programs.nix-ld.dev.enable = true;
 
-    services.avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-
     sops.secrets."wireguard/proton/ar-25" = { };
     networking.wg-quick.interfaces.wg-ar-25 = {
       address = [ "10.2.0.2/32" ];
