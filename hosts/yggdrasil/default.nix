@@ -11,6 +11,10 @@
     cpuFreqGovernor = "powersave";
   };
 
+  home-manager.users.ops.kp = {
+    irc.enable = true;
+  };
+
   kp = {
     binary-cache.enable = true;
     home-manager.enable = true;
