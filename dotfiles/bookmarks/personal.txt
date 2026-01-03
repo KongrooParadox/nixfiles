@@ -1,3 +1,4 @@
 # personal
+[code] Boot.dev :: https://boot.dev
 [mail] Proton :: https://mail.proton.me/u/2/inbox
 [media] YouTube :: https://youtube.com
