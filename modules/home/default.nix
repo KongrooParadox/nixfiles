@@ -9,6 +9,7 @@ in
     ./desktop.nix
     ./editor.nix
     ./git.nix
+    ./irc.nix
     ./pentest.nix
     ./rclone.nix
     ./terminal.nix
