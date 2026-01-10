@@ -4,6 +4,14 @@
     ./hardware-configuration.nix
   ];
 
+  networking = {
+    firewall = {
+      allowedTCPPorts = [
+        9191
+      ];
+      allowedUDPPorts = [ 9191 ];
+    };
+  };
   kp = {
     dns-server = {
       enable = true;
@@ -57,6 +65,7 @@
         }
       ];
     };
+    podman.enable = true;
     samba.client = {
       enable = true;
       uid = "1000";
