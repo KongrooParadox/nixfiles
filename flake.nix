@@ -45,6 +45,7 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nixos-muvm-steam.url = "github:dramforever/nixos-muvm-steam";
   };
 
   outputs =

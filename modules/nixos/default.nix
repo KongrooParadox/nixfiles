@@ -25,7 +25,7 @@
     ./reverseProxy.nix
     ./samba.nix
     ./security.nix
-    ./steam.nix
+    ./gaming.nix
     ./storage.nix
     ./system.nix
     ./tailscale.nix

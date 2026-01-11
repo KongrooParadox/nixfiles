@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  pkgs,
+  inputs,
   ...
 }:
 let
@@ -15,7 +15,10 @@ in
   config = lib.mkIf cfg.enable {
     environment = {
       sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card2";
-      systemPackages = [ pkgs.muvm ];
+      systemPackages = with inputs.nixos-muvm-steam.packages.aarch64-linux; [
+        muvm
+        muvm-steam
+      ];
     };
 
     hardware.asahi = {
