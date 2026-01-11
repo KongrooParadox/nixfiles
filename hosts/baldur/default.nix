@@ -21,6 +21,13 @@
     impermanence.enable = true;
     kids.enable = true;
     networking.networkmanager.enable = true;
+    gaming = {
+      sunshine = {
+        enable = true;
+        virtualMonitor = true;
+      };
+      steam.enable = true;
+    };
     system.language = "fr_FR";
     virtualization.enable = true;
     zfs = {

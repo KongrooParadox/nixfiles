@@ -916,6 +916,24 @@
         "type": "github"
       }
     },
+    "nixos-muvm-steam": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1766479126,
+        "narHash": "sha256-6MirRJIfmBG2R0IGeSZC6vlhMbwcP6DWNw99IaP+WIs=",
+        "owner": "dramforever",
+        "repo": "nixos-muvm-steam",
+        "rev": "6ce8bf134f50ba66e5b8095ee7f0985104c14a16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dramforever",
+        "repo": "nixos-muvm-steam",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1762977756,
@@ -1040,6 +1058,22 @@
       }
     },
     "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1766070988,
+        "narHash": "sha256-G/WVghka6c4bAzMhTwT2vjLccg/awmHkdKSd2JrycLc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c6245e83d836d0433170a16eb185cefe0572f8b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1766125104,
         "narHash": "sha256-l/YGrEpLromL4viUo5GmFH3K5M1j0Mb9O+LiaeCPWEM=",
@@ -1183,6 +1217,7 @@
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened",
         "nix-ld": "nix-ld",
         "nixos-hardware": "nixos-hardware",
+        "nixos-muvm-steam": "nixos-muvm-steam",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "noctalia": "noctalia",
@@ -1194,7 +1229,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1766289575,
