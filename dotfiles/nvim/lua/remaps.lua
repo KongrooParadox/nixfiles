@@ -27,7 +27,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down & aut
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up & auto-indent" })
 
 vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "No CC for me !" })
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "[P]roject [V]iew" })
+vim.keymap.set("n", "<leader>cd", vim.cmd.Ex, { desc = "[C]hange [D]irectory" })
 
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "<Q>", "<Nop>", { silent = true })
