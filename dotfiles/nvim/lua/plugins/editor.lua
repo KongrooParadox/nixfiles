@@ -78,7 +78,7 @@ return {
       },
     },
   },
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     "folke/which-key.nvim",
     event = "VimEnter", -- Sets the loading event to 'VimEnter'
     opts = {
@@ -129,5 +129,18 @@ return {
         { "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
       },
     },
+  },
+  {
+    "lervag/vimtex",
+    dependencies = {
+      "let-def/texpresso.vim",
+    },
+    lazy = false, -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- VimTeX configuration goes here, e.g.
+      vim.g.vimtex_view_method = "zathura"
+      vim.g.vimtex_quickfix_open_on_warning = 0
+    end
   },
 }
