@@ -12,6 +12,12 @@
 let
   cfg = config.kp.home-manager;
   desktop = config.kp.desktop;
+  modulesFromInputs = [
+    inputs.sops-nix.homeManagerModules.sops
+  ]
+  ++ lib.optionals (!isUnstable) [
+    inputs.impermanence.homeManagerModules.impermanence
+  ];
   sopsKeyPath =
     if config.kp.impermanence.enable then
       map (user: "/persist/home/${user}/.ssh/id_ed25519") users
@@ -52,8 +58,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home-manager.sharedModules = [
-      inputs.impermanence.homeManagerModules.impermanence
-      inputs.sops-nix.homeManagerModules.sops
       {
         sops = {
           age = {
@@ -63,7 +67,8 @@ in
           defaultSopsFormat = "yaml";
         };
       }
-    ];
+    ]
+    ++ modulesFromInputs;
     home-manager = {
       backupFileExtension = "backup";
       extraSpecialArgs = {

@@ -10,7 +10,6 @@
     environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card1";
 
     programs = {
-      light.enable = true;
       hyprland = {
         enable = true;
         package = inputs.hyprland.packages."${pkgs.system}".hyprland;

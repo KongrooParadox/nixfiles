@@ -3,7 +3,8 @@
 
   inputs = {
     # apple-silicon.url = "github:nix-community/nixos-apple-silicon";
-    apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/zfs-kernel";
+    # apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/zfs-kernel";
+    apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/fairydust";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
