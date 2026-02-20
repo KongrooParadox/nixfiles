@@ -55,6 +55,7 @@ in
         default = true;
         description = "DHCP for network Manager";
       };
+      wireless = lib.mkEnableOption "Wireless";
     };
     systemd = {
       enable = lib.mkEnableOption "systemd.network to manage NICs";
@@ -72,15 +73,16 @@ in
         enable = true;
         trustedInterfaces = [
           "wlan0"
+          "wld0"
           "wlp1s0f0"
           "virbr1"
         ];
       };
       hostName = host;
       networkmanager.enable = cfg.networkmanager.enable;
-      useDHCP = cfg.networkmanager.useDHCP;
+      useDHCP = lib.mkForce cfg.networkmanager.useDHCP;
       useNetworkd = cfg.systemd.enable;
-      wireless.enable = lib.mkForce false;
+      wireless.enable = lib.mkForce cfg.networkmanager.wireless;
     };
 
     systemd.network = lib.mkIf cfg.systemd.enable {

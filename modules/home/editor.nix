@@ -40,7 +40,7 @@
     llvmPackages_20.clang-unwrapped
     nixd
     nil
-    nixfmt-rfc-style
+    nixfmt
     python313Packages.python-lsp-server
     rust-analyzer
     terraform

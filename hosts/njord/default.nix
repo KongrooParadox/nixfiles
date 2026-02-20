@@ -21,7 +21,10 @@
       desktop.enable = true;
       home-manager.enable = true;
       impermanence.enable = true;
-      networking.networkmanager.enable = true;
+      networking.networkmanager = {
+        enable = true;
+        wireless = true;
+      };
       podman.enable = true;
       samba.client.enable = true;
       tailscale.acceptRoutes = true;
