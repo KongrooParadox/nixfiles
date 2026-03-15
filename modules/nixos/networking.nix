@@ -49,7 +49,13 @@ let
 in
 {
   options.kp.networking = {
-    networkmanager.enable = lib.mkEnableOption "networkmanager to manage NICs";
+    networkmanager = {
+      enable = lib.mkEnableOption "networkmanager to manage NICs";
+      useDHCP = lib.mkOption {
+        default = true;
+        description = "DHCP for network Manager";
+      };
+    };
     systemd = {
       enable = lib.mkEnableOption "systemd.network to manage NICs";
       nicList = lib.mkOption {
@@ -72,7 +78,7 @@ in
       };
       hostName = host;
       networkmanager.enable = cfg.networkmanager.enable;
-      useDHCP = false;
+      useDHCP = cfg.networkmanager.useDHCP;
       useNetworkd = cfg.systemd.enable;
       wireless.enable = lib.mkForce false;
     };
