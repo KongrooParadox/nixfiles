@@ -13,6 +13,13 @@ let
 in
 {
   options.kp.arr = {
+    bazarr = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = lib.mdDoc "Whether to enable Bazarr.";
+      };
+    };
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -156,6 +163,7 @@ in
         enable = true;
         domain = cfg.domain;
         services = {
+          bazarr.port = 6767;
           deluge.port = 8112;
           lidarr.port = 8686;
           nzbget.port = 6789;
@@ -165,12 +173,20 @@ in
           sonarr.port = 8989;
         };
       };
+      # Deluge vpn setup does not work if any other wireguard tunnel is enabled
       tailscale = lib.mkIf cfg.deluge.enable {
         enable = lib.mkForce false;
       };
     };
 
     services = {
+      bazarr = lib.mkIf cfg.bazarr.enable {
+        dataDir = "${cfg.computeBasePath}/bazarr";
+        enable = true;
+        group = "media";
+        openFirewall = true;
+      };
+
       deluge = lib.mkIf cfg.deluge.enable {
         authFile = config.sops.secrets."deluge-auth".path;
         config = {
