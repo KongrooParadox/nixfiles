@@ -37,6 +37,7 @@
         njord           IN  A     192.168.2.25
         baldur          IN  A     192.168.2.20
         heimdall        IN  A     192.168.2.102
+        bazarr          IN  CNAME heimdall
         deluge          IN  CNAME heimdall
         lidarr          IN  CNAME heimdall
         nzbget          IN  CNAME heimdall
