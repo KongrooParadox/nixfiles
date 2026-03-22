@@ -1,20 +1,23 @@
 {
   config,
   lib,
+  users,
   ...
 }:
 let
   cfg.enabled = config.kp.hyprland.bar == "noctalia";
+  user = lib.lists.head users;
 in
 {
   config = lib.mkIf cfg.enabled {
     home.file.".cache/noctalia/wallpapers.json" = {
       text = builtins.toJSON {
-        defaultWallpaper = "~/nixfiles/wallpapers/water-dragon.png";
+        defaultWallpaper = "/home/${user}/nixfiles/wallpapers/water-dragon.png";
         wallpapers = {
-          "eDP-1" = "~/nixfiles/wallpapers/water-dragon.png";
-          "DVI-I-1" = "~/nixfiles/wallpapers/ghibli-landscape.png";
-          "DVI-I-2" = "~/nixfiles/wallpapers/vestrahorn-mountain.jpg";
+          "DP-1" = "/home/${user}/nixfiles/wallpapers/water-dragon.png";
+          "DVI-I-1" = "/home/${user}/nixfiles/wallpapers/ghibli-landscape.png";
+          "DVI-I-2" = "/home/${user}/nixfiles/wallpapers/vestrahorn-mountain.jpg";
+          "eDP-1" = "/home/${user}/nixfiles/wallpapers/water-dragon.png";
         };
       };
     };
