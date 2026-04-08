@@ -1,12 +1,10 @@
 {
   host,
-  inputs,
   self,
   ...
 }:
 {
   imports = [
-    "${inputs.nixpkgs-unstable}/nixos/modules/hardware/video/displaylink.nix"
     "${self}/hosts/${host}"
     "${self}/modules/common"
     ./arr.nix
