@@ -70,6 +70,7 @@
             stateVersion = "25.05";
             isUnstable = true;
             isLinux = false;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -87,6 +88,7 @@
             workgroup = "CASA_ANITA";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -105,6 +107,7 @@
             workgroup = "SKYNET";
             isUnstable = true;
             isLinux = true;
+            usesDisplaylink = true;
             inherit self impermanence inputs;
           };
           modules = [
@@ -120,6 +123,7 @@
             workgroup = "SKYNET";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -135,6 +139,7 @@
             workgroup = "SKYNET";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -150,6 +155,7 @@
             workgroup = "SKYNET";
             isUnstable = true;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -165,6 +171,7 @@
             workgroup = "SKYNET";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -180,6 +187,7 @@
             workgroup = "SKYNET";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -198,6 +206,7 @@
             workgroup = "SKYNET";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = true;
             inherit self impermanence inputs;
           };
           modules = [
@@ -213,6 +222,7 @@
             workgroup = "CASA_ANITA";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [
@@ -228,6 +238,7 @@
             workgroup = "SKYNET";
             isUnstable = true;
             isLinux = true;
+            usesDisplaylink = true;
             inherit
               apple-silicon
               impermanence
@@ -249,6 +260,7 @@
             workgroup = "SKYNET";
             isUnstable = false;
             isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [

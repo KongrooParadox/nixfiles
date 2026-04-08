@@ -4,6 +4,7 @@
   lib,
   pkgs,
   stateVersion,
+  usesDisplaylink,
   ...
 }:
 let
@@ -43,6 +44,9 @@ in
     ./gnome.nix
     ./hyprland.nix
     ./plasma.nix
+  ]
+  ++ lib.optionals usesDisplaylink [
+    "${inputs.nixpkgs-unstable}/nixos/modules/hardware/video/displaylink.nix"
   ];
 
   config = lib.mkIf cfg.enable {
@@ -59,7 +63,6 @@ in
           android-tools
           nixpkgs-stable.calibre
           deluge-gtk
-          displaylink
           element-desktop
           evolution
           gimp
@@ -101,6 +104,9 @@ in
           vulkan-tools
           wireguard-tools
           xournalpp
+        ]
+        ++ lib.optionals usesDisplaylink [
+          displaylink
         ]
         ++ lib.optionals (config.nixpkgs.hostPlatform.system != "aarch64-linux") [
           discord
