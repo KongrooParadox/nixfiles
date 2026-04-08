@@ -14,9 +14,6 @@ let
   desktop = config.kp.desktop;
   modulesFromInputs = [
     inputs.sops-nix.homeManagerModules.sops
-  ]
-  ++ lib.optionals (!isUnstable) [
-    inputs.impermanence.homeManagerModules.impermanence
   ];
   sopsKeyPath =
     if config.kp.impermanence.enable then
