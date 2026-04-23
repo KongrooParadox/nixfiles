@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1775683172,
-        "narHash": "sha256-m6sPy68QhogLNZVdSwNx1ndrcLZW5oDVjUQYjR7EjMU=",
+        "lastModified": 1776944820,
+        "narHash": "sha256-AKGRzH/gl1dQ9vpAXeyf5X3u0xnWuQT+NL8GwBzE5AM=",
         "owner": "KongrooParadox",
         "repo": "nixos-apple-silicon",
-        "rev": "956b6927b557c3d75d27ea479fb2a1b360303fb4",
+        "rev": "177ed4324f59e5e421570a553fdfae0e869df828",
         "type": "github"
       },
       "original": {
