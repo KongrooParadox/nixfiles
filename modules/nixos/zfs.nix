@@ -43,9 +43,19 @@ in
 
   config = lib.mkIf cfg.enable {
     boot = {
-      initrd.postResumeCommands = lib.mkAfter ''
-        zfs rollback -r zroot/root@blank
-      '';
+      initrd = {
+        postResumeCommands = lib.mkAfter ''
+          zfs rollback -r zroot/root@blank
+        '';
+        secrets = lib.mkIf (cfg.encryptionKeys != [ ]) (
+          builtins.listToAttrs (
+            map (key: {
+              name = "/run/secrets/zfs-dataset/${host}/${key}";
+              value = null; # null means path value is the same as it's attribute name
+            }) cfg.encryptionKeys
+          )
+        );
+      };
       supportedFilesystems = [ "zfs" ];
       zfs = {
         devNodes = "/dev/disk/by-path";
@@ -55,11 +65,6 @@ in
     networking = {
       hostId = cfg.hostId;
     };
-
-    # Because zfs tries to load encryption keys before sops secret is available
-    system.activationScripts.loadZfsEncryptionKeys = lib.mkIf (cfg.encryptionKeys != [ ]) (
-      lib.stringAfter [ "setupSecrets" ] "${pkgs.zfs}/bin/zfs load-key -a"
-    );
 
     sops = lib.mkIf (cfg.encryptionKeys != [ ]) {
       secrets = builtins.listToAttrs (
