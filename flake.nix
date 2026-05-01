@@ -251,6 +251,22 @@
             ./modules/nixos
           ];
         };
+        vili = nixpkgs-stable.lib.nixosSystem {
+          specialArgs = {
+            domain = "tavel.kongroo.ovh";
+            host = "vili";
+            users = [ "ops" ];
+            stateVersion = "25.11";
+            workgroup = "SKYNET";
+            isUnstable = false;
+            isLinux = true;
+            usesDisplaylink = false;
+            inherit self impermanence inputs;
+          };
+          modules = [
+            ./modules/nixos
+          ];
+        };
         yggdrasil = nixpkgs-stable.lib.nixosSystem {
           specialArgs = {
             domain = "tavel.kongroo.ovh";

@@ -83,7 +83,7 @@
     };
   };
   fileSystems = {
-    "/home".neededForBoot = true;
     "/persist".neededForBoot = true;
+    "/home".neededForBoot = true;
   };
 }
