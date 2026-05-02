@@ -12,6 +12,7 @@ in
   imports = lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland;
 
   config = lib.mkIf (desktop.enable && desktop.environment != "macos") {
+    gtk.gtk4.theme = null;
     home.packages =
       with pkgs;
       [

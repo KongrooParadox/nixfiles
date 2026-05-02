@@ -21,9 +21,10 @@
         };
       };
       signing = {
+        format = "openpgp";
+        key = "2CD046115D337861";
         signByDefault = true;
         signer = "/run/current-system/sw/bin/gpg";
-        key = "2CD046115D337861";
       };
       lfs.enable = true;
     };

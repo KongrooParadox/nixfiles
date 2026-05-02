@@ -14,7 +14,7 @@ let
     else
       "${pkgs.killall}/bin/killall -q qs;sleep 1 && qs &";
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-    ${pkgs.killall}/bin/killall -q swww;sleep 1 && ${pkgs.swww}/bin/swww-daemon &
+    ${pkgs.killall}/bin/killall -q awww;sleep 1 && ${pkgs.awww}/bin/swww-daemon &
     ${barLauncher}
     ${pkgs.killall}/bin/killall -q swaync &
     ${pkgs.networkmanagerapplet}/bin/nm-applet --indicator &
@@ -90,7 +90,7 @@ in
       xwayland.enable = true;
       systemd.enable = true;
       settings = {
-        exec-once = ''${startupScript}/bin/start'';
+        exec-once = "${startupScript}/bin/start";
       };
       extraConfig = "source = ~/.config/hypr/extraConfig.conf";
     };
