@@ -18,6 +18,7 @@
     ./immich.nix
     ./impermanence.nix
     ./kids.nix
+    ./llm.nix
     ./media-player.nix
     ./networking.nix
     ./nextcloud.nix

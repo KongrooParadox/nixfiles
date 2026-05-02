@@ -22,6 +22,7 @@
       desktop.enable = true;
       home-manager.enable = true;
       impermanence.enable = true;
+      llm.enable = true;
       networking.networkmanager = {
         enable = true;
         wireless = true;
