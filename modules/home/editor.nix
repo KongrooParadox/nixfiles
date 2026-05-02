@@ -74,6 +74,8 @@
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
+        withPython3 = false;
+        withRuby = false;
       };
     };
 
