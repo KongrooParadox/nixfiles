@@ -273,7 +273,7 @@ in
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [
-            "192.168.2.100"
+            "192.168.2.103"
             "192.168.1.100"
           ];
           privateKeyFile = config.sops.secrets."wireguard/proton/arr-tavel".path;
@@ -294,7 +294,7 @@ in
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [
-            "192.168.2.100"
+            "192.168.2.103"
             "192.168.1.100"
           ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p-2".path;

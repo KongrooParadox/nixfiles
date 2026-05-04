@@ -1,5 +1,6 @@
 {
   config,
+  domain,
   host,
   lib,
   users,
@@ -64,6 +65,31 @@ in
         description = "List of interfaces to configure for our system";
         type = lib.types.listOf nicModule;
       };
+      resolved = lib.mkOption {
+        default = true;
+        description = "systemd-resolved for DNS";
+      };
+    };
+    fallbackNameservers = lib.mkOption {
+      default = [
+        "9.9.9.9"
+      ];
+      description = "List of fallback dns servers for systems";
+      type = lib.types.listOf lib.types.str;
+    };
+    nameservers = lib.mkOption {
+      default =
+        [ ]
+        ++ lib.optionals (domain == "tavel.kongroo.ovh") [
+          "192.168.2.103"
+          "192.168.2.254"
+        ]
+        ++ lib.optionals (domain == "pernes.kongroo.ovh") [
+          "192.168.1.100"
+          "192.168.1.254"
+        ];
+      description = "List of default dns servers for systems";
+      type = lib.types.listOf lib.types.str;
     };
   };
 
@@ -79,6 +105,7 @@ in
         ];
       };
       hostName = host;
+      nameservers = cfg.nameservers;
       networkmanager.enable = cfg.networkmanager.enable;
       useDHCP = lib.mkForce cfg.networkmanager.useDHCP;
       useNetworkd = cfg.systemd.enable;
@@ -99,6 +126,20 @@ in
       );
     };
 
+    services.resolved = lib.mkIf cfg.systemd.enable {
+      enable = lib.mkForce cfg.systemd.resolved;
+      # domains = [ "~." ];
+      dnssec = "false";
+      dnsovertls = "false";
+      fallbackDns = cfg.fallbackNameservers;
+      # only for 26.05 onward
+      # settings.Resolve = {
+      #   DNSSEC = "true";
+      #   Domains = [ "~." ];
+      #   DNSOverTLS = "true";
+      #   FallbackDNS = cfg.fallbackNameservers;
+      # };
+    };
     users.users = lib.mkIf cfg.networkmanager.enable (
       builtins.listToAttrs (
         map (user: {

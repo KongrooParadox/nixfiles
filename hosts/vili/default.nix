@@ -41,7 +41,7 @@
         jellyfin        IN  CNAME elnuevo-2
         yggdrasil       IN  A     192.168.2.101
         gallery         IN  CNAME yggdrasil
-        smb             IN  CNAME yggdrasil
+        samba           IN  CNAME yggdrasil
         heimdall        IN  A     192.168.2.102
         bazarr          IN  CNAME heimdall
         deluge          IN  CNAME heimdall
