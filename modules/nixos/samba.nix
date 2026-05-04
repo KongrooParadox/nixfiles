@@ -195,7 +195,7 @@ in
           {
             name = "/mnt/share/backup";
             value = {
-              device = lib.mkForce "//smb.${domain}/backup";
+              device = lib.mkForce "//samba.${domain}/backup";
               fsType = "cifs";
               options = [ (automount_opts user) ];
             };
@@ -203,7 +203,7 @@ in
           {
             name = "/mnt/share/compute";
             value = {
-              device = lib.mkForce "//smb.${domain}/compute";
+              device = lib.mkForce "//samba.${domain}/compute";
               fsType = "cifs";
               options = [ (automount_opts user) ];
             };
@@ -211,7 +211,7 @@ in
           {
             name = "/mnt/share/media";
             value = {
-              device = lib.mkForce "//smb.${domain}/media";
+              device = lib.mkForce "//samba.${domain}/media";
               fsType = "cifs";
               options = [ (automount_opts user) ];
             };
