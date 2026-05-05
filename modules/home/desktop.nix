@@ -24,9 +24,6 @@ in
         pulseaudio
         signal-desktop
         vlc
-        # yt-dlp
-      ]
-      ++ lib.optionals (currentArchitecture == "x86_64-linux") [
         libreoffice
       ]
       ++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
