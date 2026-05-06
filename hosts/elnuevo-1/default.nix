@@ -8,6 +8,7 @@
 
   kp = {
     impermanence.enable = true;
+    nextcloud.enable = true;
     samba.client = {
       enable = true;
       uid = "1000";
@@ -17,7 +18,7 @@
       bridgeInterfaceName = "eno1";
       enable = true;
       proxmox = {
-        enable = true;
+        enable = false;
         ipAddress = "192.168.2.99";
       };
     };

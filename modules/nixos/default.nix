@@ -13,17 +13,18 @@
     ./boot.nix
     ./desktop
     ./dns-server.nix
+    ./gaming.nix
     ./home-assistant.nix
     ./immich.nix
     ./impermanence.nix
     ./kids.nix
     ./media-player.nix
     ./networking.nix
+    ./nextcloud.nix
     ./podman.nix
     ./reverseProxy.nix
     ./samba.nix
     ./security.nix
-    ./gaming.nix
     ./storage.nix
     ./system.nix
     ./tailscale.nix
