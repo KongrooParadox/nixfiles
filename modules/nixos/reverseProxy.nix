@@ -95,7 +95,7 @@ in
           useACMEHost = cfg.domain; # Use the wildcard cert
           forceSSL = true;
 
-          locations."/" = {
+          locations."/" = lib.mkIf (service.subdomain != "nextcloud") {
             proxyPass = "${service.protocol}://127.0.0.1:${toString service.port}";
             proxyWebsockets = true;
           };

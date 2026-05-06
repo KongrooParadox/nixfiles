@@ -37,6 +37,7 @@
         njord           IN  A     192.168.2.25
         elnuevo-1       IN  A     192.168.2.99
         proxmox         IN  CNAME elnuevo-1
+        nextcloud       IN  CNAME elnuevo-1
         elnuevo-2       IN  A     192.168.2.100
         jellyfin        IN  CNAME elnuevo-2
         yggdrasil       IN  A     192.168.2.101
