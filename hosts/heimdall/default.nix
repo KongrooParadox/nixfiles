@@ -12,8 +12,9 @@
   kp = {
     arr = {
       enable = true;
-      mediaBasePath = "/mnt/share/media";
+      bazarr.subgen.enable = true;
       computeBasePath = "/var/lib/compute";
+      mediaBasePath = "/mnt/share/media";
     };
     impermanence.enable = true;
     samba.client = {
