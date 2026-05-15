@@ -19,6 +19,7 @@ in
         default = true;
         description = lib.mdDoc "Whether to enable Bazarr.";
       };
+      subgen.enable = lib.mkEnableOption "Subgen for transcription/translation";
     };
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -158,6 +159,9 @@ in
             "${cfg.computeBasePath}/prowlarr"
             "/var/lib/private"
           ];
+      };
+      podman = lib.mkIf (cfg.bazarr.enable && cfg.bazarr.subgen.enable) {
+        enable = true;
       };
       reverseProxy = {
         enable = true;
@@ -312,5 +316,26 @@ in
         };
       };
     };
+
+    virtualisation.oci-containers.containers =
+      lib.mkIf (cfg.bazarr.enable && cfg.bazarr.subgen.enable)
+        {
+          subgen = {
+            environment = {
+              CONCURRENT_TRANSCRIPTIONS = "2";
+              TRANSCRIBE_DEVICE = "cpu";
+              TRANSCRIBE_OR_TRANSLATE = "translate";
+              WHISPER_MODEL = "medium";
+            };
+            image = "mccloud/subgen:cpu";
+            ports = [ "127.0.0.1:9000:9000" ];
+            volumes = [
+              "${cfg.mediaBasePath}/anime:/${cfg.mediaBasePath}/anime"
+              "${cfg.mediaBasePath}/series:/${cfg.mediaBasePath}/series"
+              "${cfg.mediaBasePath}/movies:/${cfg.mediaBasePath}/movies"
+              "${cfg.mediaBasePath}/kids:/${cfg.mediaBasePath}/kids"
+            ];
+          };
+        };
   };
 }
