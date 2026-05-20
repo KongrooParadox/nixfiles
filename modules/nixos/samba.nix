@@ -15,6 +15,7 @@ let
     "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5m,x-systemd.mount-timeout=5m,nofail,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${
       config.sops.secrets."smb/${user}".path
     }";
+  sambaIp = if domain == "tavel.kongroo.ovh" then "192.168.2.101" else "192.168.1.101";
 in
 {
   options.kp.samba = {
@@ -109,7 +110,7 @@ in
 
       kp.impermanence = lib.mkIf config.kp.impermanence.enable {
         extraDirectories = [
-          "/var/lib/samba/"
+          "/var/lib/${sambaIp}/"
         ];
       };
 
@@ -195,7 +196,7 @@ in
           {
             name = "/mnt/share/backup";
             value = {
-              device = lib.mkForce "//samba.${domain}/backup";
+              device = lib.mkForce "//${sambaIp}/backup";
               fsType = "cifs";
               options = [ (automount_opts user) ];
             };
@@ -203,7 +204,7 @@ in
           {
             name = "/mnt/share/compute";
             value = {
-              device = lib.mkForce "//samba.${domain}/compute";
+              device = lib.mkForce "//${sambaIp}/compute";
               fsType = "cifs";
               options = [ (automount_opts user) ];
             };
@@ -211,7 +212,7 @@ in
           {
             name = "/mnt/share/media";
             value = {
-              device = lib.mkForce "//samba.${domain}/media";
+              device = lib.mkForce "//${sambaIp}/media";
               fsType = "cifs";
               options = [ (automount_opts user) ];
             };
