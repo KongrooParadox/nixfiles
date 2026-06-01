@@ -48,7 +48,7 @@ in
               acl = [
                 "readwrite #"
               ];
-              hashedPassword = "$7$101$zZowRHVB/HcjcgnJ$q4L1Vgw+riu3UBpBpjSPzS6P0hOrodx/bf1lWqEH5TR0aqYz2sl71eG04ksY/II98rGi1kFHndS9O3KsNLrbtw==";
+              hashedPasswordFile = config.sops.secrets."mosquitto/password".path;
             };
           }
         ];
@@ -83,5 +83,6 @@ in
     networking = {
       firewall.allowedTCPPorts = [ 1883 ];
     };
+    sops.secrets."mosquitto/password" = { };
   };
 }
