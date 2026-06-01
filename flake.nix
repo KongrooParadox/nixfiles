@@ -60,6 +60,7 @@
     }@inputs:
     let
       inherit (nixpkgs-unstable) lib;
+      inherit (self) outputs;
       facts = (import ./facts { inherit lib; }).facts;
       helpers = (import ./facts { inherit lib; }).helpers;
       mkHost =
@@ -105,10 +106,23 @@
           modules = [ baseModule ];
         };
       buildAll = names: lib.genAttrs names (n: mkHost n);
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      forAllSystems = lib.genAttrs systems;
     in
     {
       nixosConfigurations = buildAll facts.nixosHosts;
       darwinConfigurations = buildAll facts.darwinHosts;
+
+      devShells = forAllSystems (system: {
+        default = inputs.nixpkgs-unstable.legacyPackages.${system}.mkShellNoCC {
+          packages = [ outputs.formatter.${system} ];
+        };
+      });
+
+      formatter = inputs.nixpkgs-unstable.formatter;
 
       overlays = import ./overlays { inherit inputs; };
       homeModules.default = ./modules/home;
