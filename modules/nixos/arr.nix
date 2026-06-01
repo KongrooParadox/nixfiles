@@ -133,11 +133,6 @@ in
       })
     ];
 
-    # https://github.com/NixOS/nixpkgs/issues/360592 - Sonar still uses EOL .net 6.0
-    nixpkgs.config.permittedInsecurePackages = [
-      "dotnet-sdk-6.0.428"
-      "aspnetcore-runtime-6.0.36"
-    ];
     users.groups.media = { };
 
     kp = {
