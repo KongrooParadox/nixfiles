@@ -6,10 +6,6 @@
 }:
 let
   cfg = config.kp.arr;
-  prowlarrCfg = {
-    enable = true;
-    openFirewall = true;
-  };
 in
 {
   options.kp.arr = {
@@ -173,7 +169,7 @@ in
         dataDir = "${cfg.computeBasePath}/bazarr";
         enable = true;
         group = "media";
-        openFirewall = true;
+        openFirewall = false;
       };
 
       deluge = lib.mkIf cfg.deluge.enable {
@@ -195,34 +191,37 @@ in
         enable = true;
         group = "media";
         openFilesLimit = 2000;
-        openFirewall = true;
+        openFirewall = false;
         web = {
           enable = true;
-          openFirewall = true;
+          openFirewall = false;
         };
       };
 
-      prowlarr = lib.mkIf cfg.prowlarr.enable prowlarrCfg;
+      prowlarr = lib.mkIf cfg.prowlarr.enable {
+        enable = true;
+        openFirewall = false;
+      };
 
       radarr = lib.mkIf cfg.radarr.enable {
         dataDir = "${cfg.computeBasePath}/radarr/.config/Radarr";
         enable = true;
         group = "media";
-        openFirewall = true;
+        openFirewall = false;
       };
 
       sonarr = lib.mkIf cfg.sonarr.enable {
         dataDir = "${cfg.computeBasePath}/sonarr/.config/Sonarr";
         enable = true;
         group = "media";
-        openFirewall = true;
+        openFirewall = false;
       };
 
       lidarr = lib.mkIf cfg.lidarr.enable {
         dataDir = "${cfg.computeBasePath}/lidarr/.config/Lidarr";
         enable = true;
         group = "media";
-        openFirewall = true;
+        openFirewall = false;
       };
 
       nzbget = lib.mkIf cfg.nzbget.enable {
@@ -241,7 +240,7 @@ in
       sabnzbd = lib.mkIf cfg.sabnzbd.enable {
         enable = true;
         group = "media";
-        openFirewall = true;
+        openFirewall = false;
       };
     };
 
