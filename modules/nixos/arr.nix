@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.kp.arr;
+  withPodman = cfg.bazarr.subgen.enable || cfg.dispatcharr.enable;
 in
 {
   options.kp.arr = {
@@ -21,6 +22,14 @@ in
       type = lib.types.bool;
       default = false;
       description = lib.mdDoc "Whether to enable the arr suite (Prowlarr, Radarr, Sonarr, Lidarr).";
+    };
+
+    dispatcharr = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = lib.mdDoc "Whether to enable Dispatcharr.";
+      };
     };
 
     deluge = {
@@ -142,15 +151,18 @@ in
             "/var/lib/private"
           ];
       };
-      podman = lib.mkIf (cfg.bazarr.enable && cfg.bazarr.subgen.enable) {
+
+      podman = lib.mkIf withPodman {
         enable = true;
       };
+
       reverseProxy = {
         enable = true;
         domain = cfg.domain;
         services = {
           bazarr.port = 6767;
           deluge.port = 8112;
+          dispatcharr.port = 9191;
           lidarr.port = 8686;
           nzbget.port = 6789;
           prowlarr.port = 9696;
@@ -295,25 +307,36 @@ in
       };
     };
 
-    virtualisation.oci-containers.containers =
-      lib.mkIf (cfg.bazarr.enable && cfg.bazarr.subgen.enable)
-        {
-          subgen = {
-            environment = {
-              CONCURRENT_TRANSCRIPTIONS = "2";
-              TRANSCRIBE_DEVICE = "cpu";
-              TRANSCRIBE_OR_TRANSLATE = "translate";
-              WHISPER_MODEL = "medium";
-            };
-            image = "mccloud/subgen:cpu";
-            ports = [ "127.0.0.1:9000:9000" ];
-            volumes = [
-              "${cfg.mediaBasePath}/anime:/${cfg.mediaBasePath}/anime"
-              "${cfg.mediaBasePath}/series:/${cfg.mediaBasePath}/series"
-              "${cfg.mediaBasePath}/movies:/${cfg.mediaBasePath}/movies"
-              "${cfg.mediaBasePath}/kids:/${cfg.mediaBasePath}/kids"
-            ];
-          };
+    virtualisation.oci-containers.containers = lib.mkIf withPodman {
+      dispatcharr = lib.mkIf cfg.dispatcharr.enable {
+        environment = {
+          DISPATCHARR_ENV = "aio";
+          REDIS_HOST = "localhost";
+          CELERY_BROKER_URL = "redis://localhost:6379/0";
+          DISPATCHARR_LOG_LEVEL = "info";
         };
+        image = "ghcr.io/dispatcharr/dispatcharr:latest";
+        ports = [ "127.0.0.1:9191:9191" ];
+        volumes = [
+          "dispatcharr_data:/data"
+        ];
+      };
+      subgen = lib.mkIf cfg.bazarr.subgen.enable {
+        environment = {
+          CONCURRENT_TRANSCRIPTIONS = "2";
+          TRANSCRIBE_DEVICE = "cpu";
+          TRANSCRIBE_OR_TRANSLATE = "translate";
+          WHISPER_MODEL = "medium";
+        };
+        image = "mccloud/subgen:cpu";
+        ports = [ "127.0.0.1:9000:9000" ];
+        volumes = [
+          "${cfg.mediaBasePath}/anime:/${cfg.mediaBasePath}/anime"
+          "${cfg.mediaBasePath}/series:/${cfg.mediaBasePath}/series"
+          "${cfg.mediaBasePath}/movies:/${cfg.mediaBasePath}/movies"
+          "${cfg.mediaBasePath}/kids:/${cfg.mediaBasePath}/kids"
+        ];
+      };
+    };
   };
 }

@@ -30,6 +30,7 @@ in
       enable = true;
       bazarr.subgen.enable = true;
       computeBasePath = "/var/lib/compute";
+      dispatcharr.enable = false;
       mediaBasePath = "/mnt/share/media";
     };
     home-manager.enable = true;

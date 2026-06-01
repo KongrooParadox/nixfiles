@@ -21,6 +21,7 @@
       systemd-boot.enable = lib.mkForce false;
       generic-extlinux-compatible.enable = true;
     };
+    zfs.forceImportRoot = lib.mkForce false;
   };
 
   kp = {
@@ -37,6 +38,7 @@
         home-assistant     IN  CNAME asgard
         midgard            IN  A     192.168.1.101
         deluge             IN  CNAME midgard
+        dispatcharr        IN  CNAME midgard
         gallery            IN  CNAME midgard
         jellyfin           IN  CNAME midgard
         lidarr             IN  CNAME midgard
