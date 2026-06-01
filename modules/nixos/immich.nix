@@ -74,7 +74,6 @@ in
       environment = {
         IMMICH_MACHINE_LEARNING_URL = "http://localhost:${toString cfg.machineLearningPort}";
       };
-      host = "0.0.0.0";
       mediaLocation = cfg.mediaPath;
       openFirewall = true;
     };
