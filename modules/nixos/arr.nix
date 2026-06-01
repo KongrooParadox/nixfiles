@@ -62,8 +62,7 @@ in
 
     computeBasePath = lib.mkOption {
       type = lib.types.str;
-      default = "${cfg.computeBasePath}";
-      example = "/var/lib/compute";
+      default = "/var/lib/compute";
       description = lib.mdDoc ''
         Base path for arr apps (aka compute path).
       '';
