@@ -43,7 +43,6 @@
         nzbget             IN  CNAME midgard
         prowlarr           IN  CNAME midgard
         radarr             IN  CNAME midgard
-        readarr            IN  CNAME midgard
         sonarr             IN  CNAME midgard
         samba              IN  CNAME midgard
         livebox            IN  A     192.168.1.1

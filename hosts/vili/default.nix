@@ -50,7 +50,6 @@
         nzbget          IN  CNAME heimdall
         prowlarr        IN  CNAME heimdall
         radarr          IN  CNAME heimdall
-        readarr         IN  CNAME heimdall
         sonarr          IN  CNAME heimdall
         vili            IN  A     192.168.2.103
         home-assistant  IN  CNAME vili

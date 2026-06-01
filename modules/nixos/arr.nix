@@ -24,7 +24,7 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to enable the arr suite (Prowlarr, Radarr, Sonarr, Readarr, Lidarr).";
+      description = lib.mdDoc "Whether to enable the arr suite (Prowlarr, Radarr, Sonarr, Lidarr).";
     };
 
     deluge = {
@@ -81,14 +81,6 @@ in
         type = lib.types.bool;
         default = true;
         description = lib.mdDoc "Whether to enable Radarr.";
-      };
-    };
-
-    readarr = {
-      enable = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = lib.mdDoc "Whether to enable Readarr.";
       };
     };
 
@@ -172,7 +164,6 @@ in
           nzbget.port = 6789;
           prowlarr.port = 9696;
           radarr.port = 7878;
-          readarr.port = 8787;
           sonarr.port = 8989;
         };
       };
@@ -220,13 +211,6 @@ in
 
       radarr = lib.mkIf cfg.radarr.enable {
         dataDir = "${cfg.computeBasePath}/radarr/.config/Radarr";
-        enable = true;
-        group = "media";
-        openFirewall = true;
-      };
-
-      readarr = lib.mkIf cfg.readarr.enable {
-        dataDir = "${cfg.computeBasePath}/readarr";
         enable = true;
         group = "media";
         openFirewall = true;
