@@ -16,6 +16,17 @@
   };
 
   kp = {
+    arr = {
+      bazarr.enable = false;
+      deluge.enable = false;
+      dispatcharr.enable = true;
+      enable = true;
+      lidarr.enable = false;
+      nzbget.enable = false;
+      prowlarr.enable = false;
+      radarr.enable = false;
+      sonarr.enable = false;
+    };
     binary-cache.enable = true;
     home-manager.enable = true;
     immich.enable = true;

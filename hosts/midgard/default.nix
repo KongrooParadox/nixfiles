@@ -22,6 +22,7 @@
 
   kp = {
     arr = {
+      dispatcharr.enable = true;
       enable = true;
       computeBasePath = "/mnt/compute";
       mediaBasePath = "/mnt/media";
