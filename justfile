@@ -18,13 +18,13 @@ boot:
 switch:
     nixos-rebuild switch --flake .# --sudo |& nom
 
-switch-remote FQDN:
+deploy-remote FQDN COMMAND:
     #!/usr/bin/env bash
     hostname=$(echo {{FQDN}} | awk -F '.' {'print $1'})
     remoteArch=$(ssh {{FQDN}} "uname -a | awk '{ print \$(NF-1) }'" )
     if [[ "{{architecture}}" == "$remoteArch" ]];
-        then nixos-rebuild switch --flake .#$hostname --sudo --target-host {{FQDN}} |& nom
-        else nixos-rebuild switch --flake .#$hostname --sudo --build-host {{FQDN}} --target-host {{FQDN}} |& nom
+        then nixos-rebuild {{COMMAND}} --flake .#$hostname --sudo --target-host {{FQDN}} |& nom
+        else nixos-rebuild {{COMMAND}} --flake .#$hostname --sudo --build-host {{FQDN}} --target-host {{FQDN}} |& nom
     fi
 
 test:
