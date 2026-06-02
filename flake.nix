@@ -47,6 +47,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixos-muvm-steam.url = "github:dramforever/nixos-muvm-steam";
+    nix-openclaw = {
+      url = "github:openclaw/nix-openclaw";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
