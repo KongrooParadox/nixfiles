@@ -10,6 +10,7 @@ in
     ./editor.nix
     ./git.nix
     ./irc.nix
+    ./openclaw.nix
     ./pentest.nix
     ./rclone.nix
     ./terminal.nix
