@@ -13,6 +13,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    nixpkgs.overlays = [
+      inputs.apple-silicon.overlays.apple-silicon-overlay
+    ];
+
     environment = {
       sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card2";
       systemPackages = with inputs.nixos-muvm-steam.packages.aarch64-linux; [
@@ -21,9 +25,14 @@ in
       ];
     };
 
-    hardware.asahi = {
-      peripheralFirmwareDirectory = ./firmware;
-      setupAsahiSound = true;
+    hardware = {
+      asahi = {
+        peripheralFirmwareDirectory = ./firmware;
+        setupAsahiSound = true;
+      };
+      # Provide the Asahi Mesa GPU userspace (incl. the Honeykrisp Vulkan ICD in
+      # /run/opengl-driver) so any Asahi host can use the GPU (e.g. llama.cpp).
+      graphics.enable = lib.mkDefault true;
     };
     powerManagement = {
       powertop.enable = lib.mkForce false;
