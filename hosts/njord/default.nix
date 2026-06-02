@@ -38,10 +38,6 @@
       };
     };
 
-    nixpkgs.overlays = [
-      apple-silicon.overlays.apple-silicon-overlay
-    ];
-
     # programs.nix-ld.dev.enable = true;
 
     sops.secrets."wireguard/proton/ar-25" = { };
