@@ -4,6 +4,9 @@
   # nix-ld,
   ...
 }:
+let
+  localModel = "qwen2.5-coder-7b";
+in
 {
   imports = [
     ../../modules/nixos/asahi
@@ -17,12 +20,38 @@
       emacs.enable = false;
       pentest.enable = true;
       hyprland.bar = "noctalia";
+      openclaw = {
+        enable = true;
+        model = localModel;
+        # Match the llama.cpp server context; shrink the response reserve so the
+        # agent's large (~12k incl. tool schemas) prompt leaves usable room.
+        contextWindow = 24576;
+        reserveTokens = 8192;
+        # Minimal tool set: OpenClaw proactively compacts when the prompt nears
+        # its (small, default-8k) per-model budget; fewer tools keeps the fixed
+        # prompt under that threshold so it doesn't loop on uncompactable context.
+        allowedTools = [
+          "read"
+          "write"
+          "edit"
+          "exec"
+        ];
+      };
     };
     kp = {
       desktop.enable = true;
       home-manager.enable = true;
       impermanence.enable = true;
-      llm.enable = true;
+      llm = {
+        enable = true;
+        llamaCpp = {
+          enable = true;
+          alias = localModel;
+          modelFile = "qwen2.5-coder-7b-instruct-q4_k_m.gguf";
+          modelUrl = "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/qwen2.5-coder-7b-instruct-q4_k_m.gguf";
+          contextSize = 24576;
+        };
+      };
       networking.networkmanager = {
         enable = true;
         wireless = true;
