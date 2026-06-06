@@ -5,7 +5,7 @@
   ...
 }:
 let
-  localModel = "qwen2.5-coder-7b";
+  localModel = "gemma-4-E4B-it-qat-GGUF";
 in
 {
   imports = [
@@ -47,8 +47,8 @@ in
         llamaCpp = {
           enable = true;
           alias = localModel;
-          modelFile = "qwen2.5-coder-7b-instruct-q4_k_m.gguf";
-          modelUrl = "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/qwen2.5-coder-7b-instruct-q4_k_m.gguf";
+          modelFile = "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf";
+          modelUrl = "https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF/resolve/main/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf";
           contextSize = 24576;
         };
       };
