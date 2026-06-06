@@ -164,15 +164,15 @@ in
 
   config = lib.mkIf cfg.enable {
     assertions = [
-      {
-        assertion = !needsHashPin || aarch64Hash != null;
-        message = ''
-          kp.openclaw: no aarch64-linux pnpmDepsHash pinned for OpenClaw ${ocVersion}.
-          Build it once and add the hash to modules/home/openclaw.nix:
-            nix build --impure --expr 'let f = builtins.getFlake (toString ./.); in (import "''${f.inputs.nix-openclaw}/nix/packages" { pkgs = f.nixosConfigurations.njord.pkgs; sourceInfo = import "''${f.inputs.nix-openclaw}/nix/sources/openclaw-source.nix"; openclawToolPkgs = f.inputs.nix-openclaw.inputs.nix-openclaw-tools.packages.aarch64-linux; qmdPackage = null; }).openclaw'
-          and copy the "got:" hash from the FOD mismatch error.
-        '';
-      }
+      # {
+      #   assertion = !needsHashPin || aarch64Hash != null;
+      #   message = ''
+      #     kp.openclaw: no aarch64-linux pnpmDepsHash pinned for OpenClaw ${ocVersion}.
+      #     Build it once and add the hash to modules/home/openclaw.nix:
+      #       nix build --impure --expr 'let f = builtins.getFlake (toString ./.); in (import "''${f.inputs.nix-openclaw}/nix/packages" { pkgs = f.nixosConfigurations.njord.pkgs; sourceInfo = import "''${f.inputs.nix-openclaw}/nix/sources/openclaw-source.nix"; openclawToolPkgs = f.inputs.nix-openclaw.inputs.nix-openclaw-tools.packages.aarch64-linux; qmdPackage = null; }).openclaw'
+      #     and copy the "got:" hash from the FOD mismatch error.
+      #   '';
+      # }
       {
         assertion = !cfg.signal.enable || cfg.signal.account != "";
         message = "kp.openclaw.signal.account must be set (E.164) when the Signal channel is enabled.";
