@@ -128,17 +128,12 @@ in
 
     services.resolved = lib.mkIf cfg.systemd.enable {
       enable = lib.mkForce cfg.systemd.resolved;
-      # domains = [ "~." ];
-      dnssec = "false";
-      dnsovertls = "false";
-      fallbackDns = cfg.fallbackNameservers;
-      # only for 26.05 onward
-      # settings.Resolve = {
-      #   DNSSEC = "true";
-      #   Domains = [ "~." ];
-      #   DNSOverTLS = "true";
-      #   FallbackDNS = cfg.fallbackNameservers;
-      # };
+      settings.Resolve = {
+        DNSSEC = "false";
+        # Domains = [ "~." ];
+        DNSOverTLS = "false";
+        FallbackDNS = cfg.fallbackNameservers;
+      };
     };
     users.users = lib.mkIf cfg.networkmanager.enable (
       builtins.listToAttrs (

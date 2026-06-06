@@ -86,6 +86,7 @@ in
     };
 
     wayland.windowManager.hyprland = {
+      configType = "hyprlang";
       enable = true;
       xwayland.enable = true;
       systemd.enable = true;

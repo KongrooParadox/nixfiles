@@ -71,6 +71,7 @@
       neovim = {
         defaultEditor = true;
         enable = true;
+        sideloadInitLua = true;
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;

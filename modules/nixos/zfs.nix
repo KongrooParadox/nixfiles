@@ -44,9 +44,23 @@ in
   config = lib.mkIf cfg.enable {
     boot = {
       initrd = {
-        postResumeCommands = lib.mkAfter ''
-          zfs rollback -r zroot/root@blank
-        '';
+        systemd.services.impermanence = lib.mkIf config.kp.impermanence.enable {
+          description = "wipe root dataset";
+          serviceConfig.Type = "oneshot";
+          after = [
+            "initrd-root-device.target"
+            "zfs-import-zpool.service"
+          ];
+          requires = [
+            "initrd-root-device.target"
+            "zfs-import-zpool.service"
+          ];
+          before = [ "sysroot.mount" ];
+          wantedBy = [ "initrd.target" ];
+          script = ''
+            ${pkgs.zfs}/bin/zfs rollback -r ${config.fileSystems."/".device}@blank
+          '';
+        };
         secrets = lib.mkIf (cfg.encryptionKeys != [ ]) (
           builtins.listToAttrs (
             map (key: {
@@ -59,6 +73,7 @@ in
       supportedFilesystems = [ "zfs" ];
       zfs = {
         devNodes = "/dev/disk/by-path";
+        forceImportRoot = false;
       };
     };
 
