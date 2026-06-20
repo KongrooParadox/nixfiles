@@ -91,7 +91,7 @@
           enableOffloadCmd = false;
         };
       };
-      package = config.boot.kernelPackages.nvidiaPackages.production;
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
       forceFullCompositionPipeline = true;
     };
   };
