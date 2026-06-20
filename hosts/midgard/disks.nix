@@ -256,6 +256,7 @@
   };
   fileSystems = {
     "/home".neededForBoot = true;
+    "/mnt/compute".neededForBoot = true;
     "/persist".neededForBoot = true;
   };
 }

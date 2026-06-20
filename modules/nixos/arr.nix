@@ -275,18 +275,19 @@ in
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [
-            "192.168.2.103"
             "192.168.1.100"
+            "192.168.2.103"
+            "10.2.0.1"
           ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p-2".path;
           peers = [
             {
-              publicKey = "JsWZdbNQ38Enz3AYGJLI6HVF5I5RqfrIkkcwsznAGSs=";
+              publicKey = "l9w95rYPoGJs5rStJHdsXRrwdhtqPYnvnmrVQZFEljw=";
               allowedIPs = [
                 "0.0.0.0/0"
                 "::/0"
               ];
-              endpoint = "146.70.194.50:51820";
+              endpoint = "217.79.104.1:51820";
               persistentKeepalive = 25;
             }
           ];

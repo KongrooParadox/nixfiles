@@ -2,11 +2,12 @@
   config,
   host,
   inputs,
-  lib,
-  stateVersion,
-  users,
   isLinux,
   isUnstable,
+  lib,
+  pkgs,
+  stateVersion,
+  users,
   ...
 }:
 let
@@ -67,7 +68,7 @@ in
     ]
     ++ modulesFromInputs;
     home-manager = {
-      backupFileExtension = "backup";
+      backupCommand = "rm -f";
       extraSpecialArgs = {
         inherit
           desktop
@@ -78,7 +79,6 @@ in
           users
           ;
       };
-      overwriteBackup = true;
       useUserPackages = true;
       users = lib.genAttrs users (name: {
         imports = [
