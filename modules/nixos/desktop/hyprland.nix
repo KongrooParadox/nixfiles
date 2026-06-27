@@ -9,6 +9,12 @@
   config = lib.mkIf (config.kp.desktop.enable && (config.kp.desktop.environment == "hyprland")) {
     environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card1";
 
+    kp = {
+      impermanence = lib.mkIf config.kp.impermanence.enable {
+        extraDirectories = [ "/var/cache/tuigreet" ];
+      };
+    };
+
     programs = {
       hyprland = {
         enable = true;
