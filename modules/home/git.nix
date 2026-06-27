@@ -1,4 +1,14 @@
 { pkgs, ... }:
+let
+  user = {
+    email = "7790572+KongrooParadox@users.noreply.github.com";
+    name = "Guillaume Nanty";
+  };
+  gpg = {
+    program = "/run/current-system/sw/bin/gpg";
+    key = "2CD046115D337861";
+  };
+in
 {
   home.packages = [ pkgs.jjui ];
   programs = {
@@ -15,16 +25,13 @@
         credential.helper = "cache";
         help.autocorrect = 20;
         init.defaultBranch = "main";
-        user = {
-          name = "Guillaume Nanty";
-          email = "7790572+KongrooParadox@users.noreply.github.com";
-        };
+        user = user;
       };
       signing = {
         format = "openpgp";
-        key = "2CD046115D337861";
+        key = gpg.key;
         signByDefault = true;
-        signer = "/run/current-system/sw/bin/gpg";
+        signer = gpg.program;
       };
       lfs.enable = true;
     };
@@ -32,18 +39,15 @@
       enable = true;
       settings = {
         ui = {
-          default-command = "log";
+          default-command = "status";
           paginate = "never";
         };
-        user = {
-          email = "7790572+KongrooParadox@users.noreply.github.com";
-          name = "Guillaume Nanty";
-        };
+        user = user;
         signing = {
           backend = "gpg";
-          backends.gpg.program = "/run/current-system/sw/bin/gpg";
+          backends.gpg.program = gpg.program;
           behavior = "own";
-          key = "2CD046115D337861";
+          key = gpg.key;
         };
       };
     };
