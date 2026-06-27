@@ -70,8 +70,8 @@ in
       };
 
       gpuLayers = lib.mkOption {
-        type = lib.types.int;
-        default = 999;
+        type = lib.types.str;
+        default = "auto";
         description = lib.mdDoc "Number of layers to offload to the GPU (`-ngl`, only used with the vulkan backend).";
       };
 
@@ -82,14 +82,12 @@ in
       };
 
       kvCacheType = lib.mkOption {
-        type = lib.types.nullOr (
-          lib.types.enum [
-            "f16"
-            "q8_0"
-            "q4_0"
-          ]
-        );
-        default = null;
+        type = lib.types.enum [
+          "f16"
+          "q8_0"
+          "q4_0"
+        ];
+        default = "f16";
         example = "q8_0";
         description = lib.mdDoc ''
           KV-cache quantization type (`-ctk`/`-ctv`). Halves (`q8_0`) or quarters
@@ -116,15 +114,6 @@ in
         description = lib.mdDoc "Open the llama-server port in the firewall.";
       };
 
-      extraFlags = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        default = [ ];
-        example = [
-          "--parallel"
-          "2"
-        ];
-        description = lib.mdDoc "Extra flags appended to the llama-server invocation.";
-      };
     };
   };
 
@@ -134,44 +123,23 @@ in
     })
 
     (lib.mkIf (cfg.enable && lcfg.enable) {
-      assertions = [
-        {
-          assertion = lcfg.kvCacheType == null || lcfg.flashAttention;
-          message = "kp.llm.llamaCpp.kvCacheType requires flashAttention = true (llama.cpp only allows quantized KV cache with Flash Attention).";
-        }
-      ];
 
       services.llama-cpp = {
         enable = true;
         package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
-        host = lcfg.host;
-        port = lcfg.port;
         openFirewall = lcfg.openFirewall;
-        model = modelPath;
-        extraFlags = [
-          "--alias"
-          lcfg.alias
-          "-c"
-          (toString lcfg.contextSize)
-          # Use the model's chat template so tool/function calling works (needed
-          # by agentic clients such as OpenClaw).
-          "--jinja"
-        ]
-        ++ lib.optionals useVulkan [
-          "-ngl"
-          (toString lcfg.gpuLayers)
-        ]
-        ++ lib.optionals lcfg.flashAttention [
-          "-fa"
-          "on"
-        ]
-        ++ lib.optionals (lcfg.kvCacheType != null) [
-          "-ctk"
-          lcfg.kvCacheType
-          "-ctv"
-          lcfg.kvCacheType
-        ]
-        ++ lcfg.extraFlags;
+        settings = {
+          alias = lcfg.alias;
+          ctk = lcfg.kvCacheType;
+          ctv = lcfg.kvCacheType;
+          ctx-size = lcfg.contextSize;
+          flash-attn = if lcfg.flashAttention then "on" else "off";
+          host = lcfg.host;
+          jinja = true;
+          model = modelPath;
+          ngl = lcfg.gpuLayers;
+          port = lcfg.port;
+        };
       };
 
       # Fetch the GGUF into the persisted models dir on first start (kept out of
@@ -227,6 +195,7 @@ in
       };
 
       kp.impermanence.extraDirectories = lib.mkIf config.kp.impermanence.enable [
+        "/var/cache/llama-cpp"
         lcfg.modelsDir
       ];
     })
