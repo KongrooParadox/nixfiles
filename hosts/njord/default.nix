@@ -74,18 +74,17 @@ in
       address = [ "10.2.0.2/32" ];
       autostart = false;
       dns = [
-        "192.168.2.100"
-        "192.168.1.100"
+        "10.2.0.1"
       ];
       privateKeyFile = config.sops.secrets."wireguard/proton/ar-25".path;
       peers = [
         {
-          publicKey = "pPR96SBtq9grARK6XDm5WI3XP1d8Le19Jl/HA9p7o00=";
+          publicKey = "0qOv5inT/bLBy2/vjMfwvhWTTN+qA2c/vgKMCqFYd1g=";
           allowedIPs = [
             "0.0.0.0/0"
             "::/0"
           ];
-          endpoint = "149.102.224.161:51820";
+          endpoint = "103.106.58.163:51820";
           persistentKeepalive = 25;
         }
       ];
