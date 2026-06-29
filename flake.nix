@@ -15,6 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -56,6 +57,7 @@
     {
       apple-silicon,
       nixpkgs-stable,
+      nixpkgs-stable-small,
       nixpkgs-unstable,
       impermanence,
       nix-darwin,
@@ -111,6 +113,22 @@
             isUnstable = true;
             isLinux = true;
             usesDisplaylink = true;
+            inherit self impermanence inputs;
+          };
+          modules = [
+            ./modules/nixos
+          ];
+        };
+        box = nixpkgs-stable-small.lib.nixosSystem {
+          specialArgs = {
+            domain = "avignon.kongroo.ovh";
+            host = "box";
+            users = [ "ops" ];
+            stateVersion = "26.05";
+            workgroup = "BLANCHISSAGE";
+            isUnstable = false;
+            isLinux = true;
+            usesDisplaylink = false;
             inherit self impermanence inputs;
           };
           modules = [

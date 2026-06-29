@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.kp.llm;
-  lcfg = cfg.llamaCpp;
+  lcfg = config.kp.llm.llamaCpp;
   useVulkan = lcfg.acceleration == "vulkan";
   modelPath = "${lcfg.modelsDir}/${lcfg.modelFile}";
 in
@@ -117,87 +117,81 @@ in
     };
   };
 
-  config = lib.mkMerge [
-    (lib.mkIf cfg.enable {
-      environment.systemPackages = with pkgs; [ opencode ];
-    })
-
-    (lib.mkIf (cfg.enable && lcfg.enable) {
-
-      services.llama-cpp = {
-        enable = true;
-        package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
-        openFirewall = lcfg.openFirewall;
-        settings = {
-          alias = lcfg.alias;
-          ctk = lcfg.kvCacheType;
-          ctv = lcfg.kvCacheType;
-          ctx-size = lcfg.contextSize;
-          flash-attn = if lcfg.flashAttention then "on" else "off";
-          host = lcfg.host;
-          jinja = true;
-          model = modelPath;
-          ngl = lcfg.gpuLayers;
-          port = lcfg.port;
-        };
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [ opencode ];
+    services.llama-cpp = lib.mkIf lcfg.enable {
+      enable = true;
+      package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
+      openFirewall = lcfg.openFirewall;
+      settings = {
+        alias = lcfg.alias;
+        ctk = lcfg.kvCacheType;
+        ctv = lcfg.kvCacheType;
+        ctx-size = lcfg.contextSize;
+        flash-attn = if lcfg.flashAttention then "on" else "off";
+        host = lcfg.host;
+        jinja = true;
+        model = modelPath;
+        ngl = lcfg.gpuLayers;
+        port = lcfg.port;
       };
+    };
 
-      # Fetch the GGUF into the persisted models dir on first start (kept out of
-      # the Nix store). Idempotent: skips when the file already exists.
-      systemd.services.llama-cpp-model-fetch = {
-        description = "Fetch llama.cpp model (${lcfg.modelFile})";
-        before = [ "llama-cpp.service" ];
-        requiredBy = [ "llama-cpp.service" ];
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        path = [
-          pkgs.curl
-          pkgs.coreutils
-        ];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-        };
-        script = ''
-          set -euo pipefail
-          mkdir -p ${lib.escapeShellArg lcfg.modelsDir}
-          if [ ! -f ${lib.escapeShellArg modelPath} ]; then
-            echo "Downloading ${lcfg.modelFile} from ${lcfg.modelUrl}"
-            tmp="$(mktemp ${lib.escapeShellArg lcfg.modelsDir}/.download.XXXXXX)"
-            trap 'rm -f "$tmp"' EXIT
-            curl -fL --retry 5 --retry-delay 10 --retry-connrefused \
-              -o "$tmp" ${lib.escapeShellArg lcfg.modelUrl}
-            ${lib.optionalString (lcfg.modelSha256 != null) ''
-              echo "${lcfg.modelSha256}  $tmp" | sha256sum -c -
-            ''}
-            mv "$tmp" ${lib.escapeShellArg modelPath}
-            trap - EXIT
-          fi
-          chmod 0755 ${lib.escapeShellArg lcfg.modelsDir}
-          chmod 0444 ${lib.escapeShellArg modelPath}
-        '';
-      };
-
-      # The upstream service is heavily sandboxed and runs as a DynamicUser; relax
-      # the bits that block GPU (Vulkan) access on the Asahi stack.
-      systemd.services.llama-cpp.serviceConfig = lib.mkIf useVulkan {
-        SupplementaryGroups = [
-          "render"
-          "video"
-        ];
-        DeviceAllow = [
-          "char-drm rw"
-          "/dev/dri rw"
-        ];
-        PrivateDevices = lib.mkForce false;
-        # GPU drivers / shader JIT need writable+executable memory.
-        MemoryDenyWriteExecute = lib.mkForce false;
-      };
-
-      kp.impermanence.extraDirectories = lib.mkIf config.kp.impermanence.enable [
-        "/var/cache/llama-cpp"
-        lcfg.modelsDir
+    # Fetch the GGUF into the persisted models dir on first start (kept out of
+    # the Nix store). Idempotent: skips when the file already exists.
+    systemd.services.llama-cpp-model-fetch = {
+      description = "Fetch llama.cpp model (${lcfg.modelFile})";
+      before = [ "llama-cpp.service" ];
+      requiredBy = [ "llama-cpp.service" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      path = [
+        pkgs.curl
+        pkgs.coreutils
       ];
-    })
-  ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        set -euo pipefail
+        mkdir -p ${lib.escapeShellArg lcfg.modelsDir}
+        if [ ! -f ${lib.escapeShellArg modelPath} ]; then
+          echo "Downloading ${lcfg.modelFile} from ${lcfg.modelUrl}"
+          tmp="$(mktemp ${lib.escapeShellArg lcfg.modelsDir}/.download.XXXXXX)"
+          trap 'rm -f "$tmp"' EXIT
+          curl -fL --retry 5 --retry-delay 10 --retry-connrefused \
+            -o "$tmp" ${lib.escapeShellArg lcfg.modelUrl}
+          ${lib.optionalString (lcfg.modelSha256 != null) ''
+            echo "${lcfg.modelSha256}  $tmp" | sha256sum -c -
+          ''}
+          mv "$tmp" ${lib.escapeShellArg modelPath}
+          trap - EXIT
+        fi
+        chmod 0755 ${lib.escapeShellArg lcfg.modelsDir}
+        chmod 0444 ${lib.escapeShellArg modelPath}
+      '';
+    };
+
+    # The upstream service is heavily sandboxed and runs as a DynamicUser; relax
+    # the bits that block GPU (Vulkan) access on the Asahi stack.
+    systemd.services.llama-cpp.serviceConfig = lib.mkIf useVulkan {
+      SupplementaryGroups = [
+        "render"
+        "video"
+      ];
+      DeviceAllow = [
+        "char-drm rw"
+        "/dev/dri rw"
+      ];
+      PrivateDevices = lib.mkForce false;
+      # GPU drivers / shader JIT need writable+executable memory.
+      MemoryDenyWriteExecute = lib.mkForce false;
+    };
+
+    kp.impermanence.extraDirectories = lib.mkIf config.kp.impermanence.enable [
+      "/var/cache/llama-cpp"
+      lcfg.modelsDir
+    ];
+  };
 }
