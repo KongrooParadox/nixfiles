@@ -1103,6 +1103,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable-small": {
+      "locked": {
+        "lastModified": 1782708249,
+        "narHash": "sha256-1r9j6FUOm7FTTVkItqt2Bi1CJmb5bc1tbM7HPS7mIr8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "68d68014342a18d2514d6e6f1185cfc24d02fc00",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05-small",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable_2": {
       "locked": {
         "lastModified": 1761016216,
@@ -1452,6 +1468,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-muvm-steam": "nixos-muvm-steam",
         "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs-stable-small": "nixpkgs-stable-small",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "noctalia": "noctalia",
         "proxmox-nixos": "proxmox-nixos",
