@@ -96,7 +96,7 @@ in
           forceSSL = true;
 
           locations."/" = lib.mkIf (service.subdomain != "nextcloud") {
-            proxyPass = "${service.protocol}://127.0.0.1:${toString service.port}";
+            proxyPass = "${service.protocol}://localhost:${toString service.port}";
             proxyWebsockets = true;
           };
         }
