@@ -1,5 +1,6 @@
 {
   config,
+  isUnstable,
   lib,
   pkgs,
   ...
@@ -9,6 +10,49 @@ let
   lcfg = config.kp.llm.llamaCpp;
   useVulkan = lcfg.acceleration == "vulkan";
   modelPath = "${lcfg.modelsDir}/${lcfg.modelFile}";
+  llamaOptions =
+    if isUnstable then
+      {
+        enable = true;
+        package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
+        openFirewall = lcfg.openFirewall;
+        settings = {
+          alias = lcfg.alias;
+          ctk = lcfg.kvCacheType;
+          ctv = lcfg.kvCacheType;
+          ctx-size = lcfg.contextSize;
+          flash-attn = if lcfg.flashAttention then "on" else "off";
+          host = lcfg.host;
+          jinja = true;
+          model = modelPath;
+          ngl = lcfg.gpuLayers;
+          port = lcfg.port;
+        };
+      }
+    else
+      {
+        enable = true;
+        host = lcfg.host;
+        package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
+        openFirewall = lcfg.openFirewall;
+        model = modelPath;
+        port = lcfg.port;
+        extraFlags = [
+          "--alias"
+          lcfg.alias
+          "--ctk"
+          lcfg.kvCacheType
+          "--ctv"
+          lcfg.kvCacheType
+          "--ctx-size"
+          lcfg.contextSize
+          "--flash-attn"
+          (if lcfg.flashAttention then "on" else "off")
+          "--jinja"
+          "--ngl"
+          lcfg.gpuLayers
+        ];
+      };
 in
 {
   options.kp.llm = {
@@ -119,24 +163,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ opencode ];
-    services.llama-cpp = lib.mkIf lcfg.enable {
-      enable = true;
-      package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
-      openFirewall = lcfg.openFirewall;
-      settings = {
-        alias = lcfg.alias;
-        ctk = lcfg.kvCacheType;
-        ctv = lcfg.kvCacheType;
-        ctx-size = lcfg.contextSize;
-        flash-attn = if lcfg.flashAttention then "on" else "off";
-        host = lcfg.host;
-        jinja = true;
-        model = modelPath;
-        ngl = lcfg.gpuLayers;
-        port = lcfg.port;
-      };
-    };
-
+    services.llama-cpp = lib.mkIf lcfg.enable llamaOptions;
     # Fetch the GGUF into the persisted models dir on first start (kept out of
     # the Nix store). Idempotent: skips when the file already exists.
     systemd.services.llama-cpp-model-fetch = {
@@ -175,19 +202,22 @@ in
 
     # The upstream service is heavily sandboxed and runs as a DynamicUser; relax
     # the bits that block GPU (Vulkan) access on the Asahi stack.
-    systemd.services.llama-cpp.serviceConfig = lib.mkIf useVulkan {
-      SupplementaryGroups = [
-        "render"
-        "video"
-      ];
-      DeviceAllow = [
-        "char-drm rw"
-        "/dev/dri rw"
-      ];
-      PrivateDevices = lib.mkForce false;
-      # GPU drivers / shader JIT need writable+executable memory.
-      MemoryDenyWriteExecute = lib.mkForce false;
-    };
+    systemd.services.llama-cpp.serviceConfig = lib.mkMerge [
+      (lib.mkIf useVulkan {
+        SupplementaryGroups = [
+          "render"
+          "video"
+        ];
+        DeviceAllow = [
+          "char-drm rw"
+          "/dev/dri rw"
+        ];
+        PrivateDevices = lib.mkForce false;
+        # GPU drivers / shader JIT need writable+executable memory.
+        MemoryDenyWriteExecute = lib.mkForce false;
+      })
+      { Group = "llama-cpp"; }
+    ];
 
     kp.impermanence.extraDirectories = lib.mkIf config.kp.impermanence.enable [
       "/var/cache/llama-cpp"
