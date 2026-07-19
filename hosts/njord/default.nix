@@ -58,7 +58,10 @@ in
       };
       podman.enable = true;
       samba.client.enable = true;
-      tailscale.acceptRoutes = true;
+      tailscale = {
+        autoconnect = true;
+        acceptRoutes = true;
+      };
       virtualization.enable = true;
       wireguard.enable = true;
       zfs = {
