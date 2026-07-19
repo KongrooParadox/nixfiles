@@ -50,8 +50,9 @@ in
       powertop.enable = true;
     };
 
-    # Set your time zone.
-    time.timeZone = "Europe/Paris";
+    # Dynamic timezone
+    time.timeZone = lib.mkDefault "Europe/Paris";
+    services.automatic-timezoned.enable = true;
 
     # Select internationalisation properties.
     i18n = {
