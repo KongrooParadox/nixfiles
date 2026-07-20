@@ -19,6 +19,7 @@ in
       font-awesome
       twitter-color-emoji
       firacodePkg
+      route159
     ];
   };
 }
