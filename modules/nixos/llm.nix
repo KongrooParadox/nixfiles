@@ -18,14 +18,14 @@ let
         openFirewall = lcfg.openFirewall;
         settings = {
           alias = lcfg.alias;
-          ctk = lcfg.kvCacheType;
-          ctv = lcfg.kvCacheType;
+          cache-type-k = lcfg.kvCacheType;
+          cache-type-v = lcfg.kvCacheType;
           ctx-size = lcfg.contextSize;
           flash-attn = if lcfg.flashAttention then "on" else "off";
           host = lcfg.host;
           jinja = true;
           model = modelPath;
-          ngl = lcfg.gpuLayers;
+          gpu-layers = lcfg.gpuLayers;
           port = lcfg.port;
         };
       }
@@ -40,16 +40,16 @@ let
         extraFlags = [
           "--alias"
           lcfg.alias
-          "--ctk"
+          "--cache-type-k"
           lcfg.kvCacheType
-          "--ctv"
+          "--cache-type-v"
           lcfg.kvCacheType
           "--ctx-size"
           lcfg.contextSize
           "--flash-attn"
           (if lcfg.flashAttention then "on" else "off")
           "--jinja"
-          "--ngl"
+          "--gpu-layers"
           lcfg.gpuLayers
         ];
       };
@@ -202,25 +202,29 @@ in
 
     # The upstream service is heavily sandboxed and runs as a DynamicUser; relax
     # the bits that block GPU (Vulkan) access on the Asahi stack.
-    systemd.services.llama-cpp.serviceConfig = lib.mkMerge [
-      (lib.mkIf useVulkan {
-        SupplementaryGroups = [
-          "render"
-          "video"
-        ];
-        DeviceAllow = [
-          "char-drm rw"
-          "/dev/dri rw"
-        ];
-        PrivateDevices = lib.mkForce false;
-        # GPU drivers / shader JIT need writable+executable memory.
-        MemoryDenyWriteExecute = lib.mkForce false;
-      })
-      { Group = "llama-cpp"; }
-    ];
+    systemd.services.llama-cpp = {
+      environment = {
+        XDG_CACHE_HOME = "/var/cache/llama-cpp";
+        MESA_SHADER_CACHE_DIR = "/var/cache/llama-cpp";
+      };
+      serviceConfig = lib.mkMerge [
+        (lib.mkIf useVulkan {
+          SupplementaryGroups = [
+            "render"
+            "video"
+          ];
+          DeviceAllow = [
+            "char-drm rw"
+            "/dev/dri rw"
+          ];
+          PrivateDevices = lib.mkForce false;
+          # GPU drivers / shader JIT need writable+executable memory.
+          MemoryDenyWriteExecute = lib.mkForce false;
+        })
+      ];
+    };
 
     kp.impermanence.extraDirectories = lib.mkIf config.kp.impermanence.enable [
-      "/var/cache/llama-cpp"
       lcfg.modelsDir
     ];
   };
