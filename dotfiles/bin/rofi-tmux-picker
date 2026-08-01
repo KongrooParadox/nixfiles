@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-terminal="alacritty"
+terminal="kitty"
 
 sessions="$(tmux list-sessions -F '#S' 2>/dev/null || true)"
 [ -n "${sessions}" ] || exit 0

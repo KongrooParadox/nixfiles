@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-terminal="alacritty"
+terminal="kitty"
 
 # Pick repo
 configs="$({ echo ~/nixfiles; fd . ~/src --min-depth 1 --max-depth 1 --type d ; } | xargs -n1 basename)"
