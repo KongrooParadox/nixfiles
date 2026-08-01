@@ -80,20 +80,28 @@ in
     };
 
     xdg.configFile = {
-      "hypr/extraConfig.conf" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixfiles/dotfiles/hypr/extraConfig.conf";
-      };
+      "hypr/config".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixfiles/dotfiles/hypr/config";
     };
 
     wayland.windowManager.hyprland = {
-      configType = "hyprlang";
+      configType = "lua";
+      extraConfig = ''require("config/init")'';
       enable = true;
-      xwayland.enable = true;
-      systemd.enable = true;
-      settings = {
-        exec-once = "${startupScript}/bin/start";
+      package = null;
+      portalPackage = null;
+      settings.on = {
+        _args = [
+          "hyprland.start"
+          (lib.generators.mkLuaInline ''
+            function()
+              hl.exec_cmd("${startupScript}/bin/start")
+            end
+          '')
+        ];
       };
-      extraConfig = "source = ~/.config/hypr/extraConfig.conf";
+      systemd.enable = true;
+      xwayland.enable = true;
     };
   };
 }

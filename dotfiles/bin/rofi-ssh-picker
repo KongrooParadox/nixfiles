@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-terminal="alacritty"
+terminal="kitty"
 
 hosts=$(cat ~/.ssh/known_hosts | awk '{print $1}' | grep -v 'github.com' | sort | uniq)
 chosenFQDN=$(echo "$hosts" | rofi -dmenu -p 'Choose host to SSH into :')
