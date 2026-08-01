@@ -77,6 +77,7 @@ in
       };
       supportedFilesystems = [ "zfs" ];
       zfs = {
+        package = lib.mkDefault pkgs.zfs_unstable;
         devNodes = "/dev/disk/by-path";
         extraPools = cfg.extraPools;
         forceImportRoot = false;
