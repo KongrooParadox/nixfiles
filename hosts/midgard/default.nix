@@ -4,6 +4,9 @@
   lib,
   ...
 }:
+let
+  localModel = "gemma-4-E4B-it-qat-GGUF";
+in
 {
   imports = [
     inputs.nixos-hardware.nixosModules.common-gpu-nvidia
@@ -34,6 +37,16 @@
       mediaPath = "/mnt/media/gallery";
     };
     impermanence.enable = true;
+    llm = {
+      enable = true;
+      llamaCpp = {
+        enable = true;
+        alias = localModel;
+        modelFile = "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf";
+        modelUrl = "https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF/resolve/main/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf";
+        contextSize = 24576;
+      };
+    };
     media-player.enable = true;
     networking.systemd = {
       enable = true;
