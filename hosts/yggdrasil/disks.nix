@@ -261,8 +261,42 @@
             type = "zfs_fs";
             mountpoint = "/mnt/backup";
             options = {
-              mountpoint = "legacy";
-              "com.sun:auto-snapshot" = "false";
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+          "data/backup/baldur" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/backup/baldur";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+          "data/backup/elnuevo-1" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/backup/elnuevo-1";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+          "data/backup/elnuevo-2" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/backup/elnuevo-2";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+          "data/backup/heimdall" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/backup/heimdall";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
+          };
+          "data/backup/njord" = {
+            type = "zfs_fs";
+            mountpoint = "/mnt/backup/njord";
+            options = {
+              "com.sun:auto-snapshot" = "true";
             };
           };
           "data/compute" = {
