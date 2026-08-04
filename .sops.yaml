@@ -7,7 +7,8 @@ keys:
   - &elnuevo-1-root age18vapsrfd4pv07j0w88maa0mjthtpsqlkcdfhlksfqt5yvhd2mplqvzsz2n
   - &elnuevo-2-ops age1vkljt68ypm2pc8vsguw6h37kxc7yz0n2et9vp60qfcgeg5f53y5srkxtph
   - &elnuevo-2-root age1np3gadp47qqwjddc38hvj9vk5ay339fh767p49h3n3u9rjkxlf4s5assg5
-  - &heimdall age148h3n794pww82ykk8nlqpk2y7cj5dx0892a9k57pt3tddckkvysslqveww
+  - &heimdall-ops age100k5jmd9gslg7k6xpsf2y47zm6kc09vnwvqaqqh0tp489lcyxvksc729nv
+  - &heimdall-root age148h3n794pww82ykk8nlqpk2y7cj5dx0892a9k57pt3tddckkvysslqveww
   - &lordi-biche age1amvvsl8a70hwnw3hsw0jpxj2mh7un88d3v2cd9d08m5trvgvvg7q62rksl
   - &lordi-root age1zzgfc4fx8ju9g2z4ak8qjq5sed4guafdn33qmvne0flz8xe9759sav2lt5
   - &lordi-robot age1xw7u99pjez0wjz8u607wt8xaa0x6h0stualezknh7zjctsa8r54sz0jev0
@@ -33,7 +34,8 @@ creation_rules:
           - *elnuevo-1-root
           - *elnuevo-2-ops
           - *elnuevo-2-root
-          - *heimdall
+          - *heimdall-ops
+          - *heimdall-root
           - *lordi-biche
           - *lordi-root
           - *lordi-robot
