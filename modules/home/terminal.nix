@@ -26,6 +26,7 @@
       enableBashIntegration = true;
       nix-direnv.enable = true;
     };
+    kitty.enable = true;
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -93,6 +94,10 @@
         git_metrics.disabled = true;
         git_status.disabled = true;
       };
+    };
+    yazi = {
+      enable = true;
+      shellWrapperName = "y";
     };
     zsh = {
       enable = true;
