@@ -12,7 +12,7 @@ let
   cfg = config.kp.samba;
   automount_opts =
     user:
-    "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5m,x-systemd.mount-timeout=5m,nofail,nodfs,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${
+    "x-systemd.requires=samba-server-reachable.service,_netdev,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5m,x-systemd.mount-timeout=5m,nofail,nodfs,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${
       config.sops.secrets."smb/${user}".path
     }";
   sambaIp = if domain == "tavel.kongroo.ovh" then "192.168.2.101" else "192.168.1.101";
@@ -219,6 +219,17 @@ in
           }
         ]) users
       );
+
+      systemd.services.samba-server-reachable = {
+        description = "Check Samba server availability";
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${pkgs.bash}/bin/sh -c 'until ${pkgs.iputils}/bin/ping -c 1 ${sambaIp}; do sleep 1; done'";
+        };
+      };
     })
   ];
 }
