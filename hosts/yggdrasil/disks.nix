@@ -198,7 +198,9 @@
           "local/nix" = {
             type = "zfs_fs";
             mountpoint = "/nix";
-            options."com.sun:auto-snapshot" = "false";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
           };
           "local/persist" = {
             type = "zfs_fs";
@@ -210,7 +212,9 @@
           "local/root" = {
             type = "zfs_fs";
             mountpoint = "/";
-            options."com.sun:auto-snapshot" = "false";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
             postCreateHook = "zfs snapshot root/local/root@blank";
           };
         };
@@ -259,60 +263,115 @@
           };
           "data/backup" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/backup";
             options = {
               "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/backup";
             };
           };
           "data/backup/baldur" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/backup/baldur";
             options = {
               "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/backup/baldur";
             };
           };
           "data/backup/elnuevo-1" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/backup/elnuevo-1";
             options = {
               "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/backup/elnuevo-1";
             };
           };
           "data/backup/elnuevo-2" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/backup/elnuevo-2";
             options = {
               "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/backup/elnuevo-2";
             };
           };
           "data/backup/heimdall" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/backup/heimdall";
             options = {
               "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/backup/heimdall";
             };
           };
           "data/backup/njord" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/backup/njord";
             options = {
               "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/backup/njord";
             };
           };
           "data/compute" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/compute";
             options = {
-              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/compute";
             };
           };
+
           "data/media" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/media";
             options = {
-              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media";
+            };
+          };
+          "data/media/anime" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/anime";
+            };
+          };
+          "data/media/downloads" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/downloads";
+            };
+          };
+          "data/media/immich" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/media/immich";
+            };
+          };
+          "data/media/kids" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/kids";
+            };
+          };
+          "data/media/movies" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/movies";
+            };
+          };
+          "data/media/music" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/music";
+            };
+          };
+          "data/media/series" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/series";
+            };
+          };
+          "data/media/training" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/training";
             };
           };
         };

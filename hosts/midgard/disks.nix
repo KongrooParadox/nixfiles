@@ -167,7 +167,9 @@
           "local/nix" = {
             type = "zfs_fs";
             mountpoint = "/nix";
-            options."com.sun:auto-snapshot" = "false";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
           };
           "local/persist" = {
             type = "zfs_fs";
@@ -179,7 +181,9 @@
           "local/root" = {
             type = "zfs_fs";
             mountpoint = "/";
-            options."com.sun:auto-snapshot" = "false";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
             postCreateHook = "zfs snapshot root/local/root@blank";
           };
         };
@@ -228,26 +232,72 @@
           };
           "data/backup" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/backup";
             options = {
-              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/backup";
+            };
+          };
+          "data/backup/yggdrasil" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/backup/yggdrasil";
             };
           };
           "data/compute" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/compute";
             options = {
-              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/compute";
             };
           };
           "data/media" = {
             type = "zfs_fs";
-            mountpoint = "/mnt/media";
             options = {
-              mountpoint = "legacy";
               "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media";
+            };
+          };
+          "data/media/downloads" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/downloads";
+            };
+          };
+          "data/media/gallery" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+              mountpoint = "/mnt/media/gallery";
+            };
+          };
+          "data/media/kids" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/kids";
+            };
+          };
+          "data/media/movies" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/movies";
+            };
+          };
+          "data/media/music" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/music";
+            };
+          };
+          "data/media/series" = {
+            type = "zfs_fs";
+            options = {
+              "com.sun:auto-snapshot" = "false";
+              mountpoint = "/mnt/media/series";
             };
           };
         };
@@ -256,7 +306,6 @@
   };
   fileSystems = {
     "/home".neededForBoot = true;
-    "/mnt/compute".neededForBoot = true;
     "/persist".neededForBoot = true;
   };
 }
