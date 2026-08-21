@@ -144,10 +144,12 @@ in
       impermanence = lib.mkIf config.kp.impermanence.enable {
         extraDirectories =
           lib.optionals (!lib.strings.hasPrefix "/mnt" cfg.mediaBasePath) [ cfg.mediaBasePath ]
-          ++ lib.optionals (!lib.strings.hasPrefix "/mnt" cfg.computeBasePath) [ cfg.computeBasePath ]
+          ++ lib.optionals (!lib.strings.hasPrefix "/mnt" cfg.computeBasePath) [
+            cfg.computeBasePath
+            "${cfg.computeBasePath}/prowlarr"
+          ]
           ++ lib.optionals cfg.nzbget.enable [ "/var/lib/nzbget" ]
           ++ lib.optionals cfg.prowlarr.enable [
-            "${cfg.computeBasePath}/prowlarr"
             "/var/lib/private"
           ];
       };

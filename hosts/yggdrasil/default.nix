@@ -52,6 +52,7 @@
         "root.key"
         "rust.key"
       ];
+      extraPools = [ "rust" ];
       hostId = "8bd9a73c";
     };
   };

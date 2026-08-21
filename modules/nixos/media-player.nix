@@ -64,7 +64,7 @@ in
     };
 
     kp.impermanence = lib.mkIf config.kp.impermanence.enable {
-      extraDirectories = lib.optionals (!lib.strings.hasPrefix "/mnt/share" cfg.dataDir) [ cfg.dataDir ];
+      extraDirectories = lib.optionals (!lib.strings.hasPrefix "/mnt" cfg.dataDir) [ cfg.dataDir ];
     };
 
     services.jellyfin = {

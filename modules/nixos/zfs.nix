@@ -24,6 +24,11 @@ in
         default = [ ];
         description = lib.mdDoc "List of encryption keys for zfs datasets in sops secrets";
       };
+      extraPools = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = lib.mdDoc "List of extra zfs pools to import at boot";
+      };
       hostId = lib.mkOption {
         type = lib.types.str;
         example = "";
@@ -73,6 +78,7 @@ in
       supportedFilesystems = [ "zfs" ];
       zfs = {
         devNodes = "/dev/disk/by-path";
+        extraPools = cfg.extraPools;
         forceImportRoot = false;
       };
     };
