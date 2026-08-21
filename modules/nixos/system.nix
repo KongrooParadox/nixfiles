@@ -117,6 +117,7 @@ in
         wget
         yad
         yq
+        zip
       ];
     };
 
