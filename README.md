@@ -2,7 +2,7 @@
 
 My flake that is supports my homelab infra-as-code, and dotfiles.
 
-Despite having played around with Nix for two years in my spare time, this is still very much a work in progress !
+Despite having played around with Nix for a few years in my spare time, this is still very much a work in progress !
 
 ## Build config for current host
 
@@ -22,9 +22,18 @@ just switch
 just build-remote HOSTNAME
 ```
 
-## Switch to new config for remote host
+## Deploy new config for remote host
 
 ```shell
-just switch-remote FQDN
+just deploy-remote FQDN COMMAND
+```
+
+## Build iso live environment
+
+```shell
+# x86
+nix build .#nixosConfigurations.iso-x86.config.system.build.isoImage |& nom
+# arm
+nix build .#nixosConfigurations.iso-arm.config.system.build.isoImage |& nom
 ```
 
