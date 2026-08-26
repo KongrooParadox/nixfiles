@@ -106,7 +106,7 @@ in
       };
       hostName = host;
       nameservers = cfg.nameservers;
-      networkmanager.enable = cfg.networkmanager.enable;
+      networkmanager.enable = lib.mkDefault cfg.networkmanager.enable;
       useDHCP = lib.mkForce cfg.networkmanager.useDHCP;
       useNetworkd = cfg.systemd.enable;
       wireless.enable = lib.mkForce cfg.networkmanager.wireless;
