@@ -48,6 +48,12 @@ in
                 id = "WallpaperSelector";
               }
               {
+                id = "Brightness";
+              }
+              {
+                id = "NotificationHistory";
+              }
+              {
                 id = "Workspace";
                 colorizeIcons = true;
                 hideUnoccupied = false;
@@ -76,19 +82,13 @@ in
                 id = "Volume";
               }
               {
-                id = "Brightness";
-              }
-              {
                 id = "Bluetooth";
               }
               {
-                id = "WiFi";
+                id = "Network";
               }
               {
                 id = "VPN";
-              }
-              {
-                id = "NotificationHistory";
               }
               {
                 id = "Tray";
