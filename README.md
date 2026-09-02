@@ -37,3 +37,10 @@ nix build .#nixosConfigurations.iso-x86.config.system.build.isoImage |& nom
 nix build .#nixosConfigurations.iso-arm.config.system.build.isoImage |& nom
 ```
 
+## Build OCI image
+
+```shell
+# arm
+nix build .#nixosConfigurations.oci-arm.config.system.build.OCIImage |& nom
+```
+

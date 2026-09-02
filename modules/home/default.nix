@@ -13,6 +13,7 @@ in
     ./openclaw.nix
     ./pentest.nix
     ./rclone.nix
+    ./s3.nix
     ./terminal.nix
   ];
 

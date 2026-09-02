@@ -1,8 +1,8 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   boot = {
     loader = {
-      efi.canTouchEfiVariables = true;
+      efi.canTouchEfiVariables = lib.mkDefault true;
       systemd-boot = {
         enable = true;
         configurationLimit = 10;

@@ -5,6 +5,7 @@
     # apple-silicon.url = "github:nix-community/nixos-apple-silicon";
     apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/fairydust";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     home-manager-unstable = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -58,6 +59,7 @@
       nixpkgs-stable,
       nixpkgs-stable-small,
       nixpkgs-unstable,
+      nixpkgs-unstable-small,
       impermanence,
       nix-darwin,
       nix-ld,
@@ -266,6 +268,22 @@
               nix-ld
               self
               ;
+          };
+          modules = [
+            ./modules/nixos
+          ];
+        };
+        oci-arm = nixpkgs-unstable-small.lib.nixosSystem {
+          specialArgs = {
+            domain = "mrs-cloud.kongroo.ovh";
+            host = "oci-arm";
+            users = [ "ops" ];
+            stateVersion = "26.11";
+            workgroup = "OCI";
+            isUnstable = true;
+            isLinux = true;
+            usesDisplaylink = false;
+            inherit self impermanence inputs;
           };
           modules = [
             ./modules/nixos
