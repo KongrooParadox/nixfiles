@@ -28,7 +28,7 @@ if [ -n "${client_tty}" ]; then
 fi
 
 # Nuke any existing terminal instance
-pkill -x $terminal 2>/dev/null || true
+pkill $terminal 2>/dev/null || true
 sleep 0.1
 
 exec "$terminal" -e tmux attach -t "ssh_${hostName}"
