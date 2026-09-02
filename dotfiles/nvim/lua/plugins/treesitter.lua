@@ -20,7 +20,7 @@ return {
     cmd = { "TSUpdateSync" },
     keys = {
       { "<c-space>", desc = "Increment selection" },
-      { "<bs>", desc = "Decrement selection", mode = "x" },
+      { "<bs>",      desc = "Decrement selection", mode = "x" },
     },
     ---@type TSConfig
     opts = {
@@ -87,6 +87,12 @@ return {
           [".*/templates/.*%.tpl"] = "helm",
           [".*/templates/.*%.ya?ml"] = "helm",
           ["helmfile.*%.ya?ml"] = "helm",
+        },
+      })
+      vim.filetype.add({
+        extension = {
+          tofu = "terraform", -- Maps to Neovim's built-in terraform filetype
+          tofuvars = "terraform-vars",
         },
       })
 

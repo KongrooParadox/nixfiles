@@ -121,6 +121,7 @@
         autoload -U +X bashcompinit && bashcompinit
         complete -F __start_kubectl k
         complete -o nospace -C $(which terraform) terraform
+        complete -C $(which tofu) tofu
         path+=('${config.home.homeDirectory}/go/bin')
         path+=('${config.home.homeDirectory}/.local/bin')
       '';

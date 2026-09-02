@@ -272,6 +272,12 @@ return {
         pyright = {},
         rust_analyzer = {},
         terraformls = {},
+        tofu_ls = {
+          cmd = { 'tofu-ls', 'serve' },
+          -- Base filetypes
+          filetypes = { 'terraform', 'terraform-vars', 'opentofu' },
+          root_markers = { '.terraform', '.git' },
+        },
         yamlls = {},
       }
 

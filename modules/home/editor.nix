@@ -46,15 +46,17 @@
       just
       just-formatter
       just-lsp
-      lua-language-server
       llvmPackages_20.clang-unwrapped
-      nixd
+      lua-language-server
       nil
+      nixd
       nixfmt
+      opentofu
       python313Packages.python-lsp-server
       rust-analyzer
       terraform
       terraform-ls
+      tofu-ls
       typescript-language-server
       vscode-langservers-extracted
       yaml-language-server
