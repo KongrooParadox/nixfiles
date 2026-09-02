@@ -16,7 +16,7 @@ else
 fi
 
 # Nuke any existing terminal instance
-pkill -x $terminal 2>/dev/null || true
+pkill $terminal 2>/dev/null || true
 sleep 0.1
 
 exec $terminal -e tmux new-session -As "$chosen" -c "$dir"
