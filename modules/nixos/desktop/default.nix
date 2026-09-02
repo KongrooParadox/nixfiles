@@ -90,7 +90,7 @@ in
           pavucontrol
           pkg-config
           protonmail-bridge
-          # protonvpn-gui # python3.13-proton-core-0.4.0 build KO
+          protonvpn-gui # python3.13-proton-core-0.4.0 build KO
           python3
           remmina
           samba
