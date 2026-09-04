@@ -1,0 +1,49 @@
+{ pkgs, ... }:
+let
+  tex = pkgs.texliveBasic.withPackages (
+    ps: with ps; [
+      accsupp
+      adjustbox
+      biblatex
+      changepage
+      cmap
+      dashrule
+      enumitem
+      epstopdf-pkg
+      etoolbox
+      everyshi
+      extsizes
+      fontawesome5
+      fontaxes
+      fontspec
+      geometry
+      hyperref
+      ifmtarg
+      iftex
+      infwarerr
+      latex-bin
+      latexmk
+      lato
+      ltxcmds
+      luatex85
+      luatexbase
+      multirow
+      paracol
+      pdftexcmds
+      pdfx
+      pgf
+      roboto
+      scheme-minimal
+      simpleicons
+      tcolorbox
+      tikzfill
+      xcolor
+      xmpincl
+    ]
+  );
+in
+{
+  home.packages = [
+    tex
+  ];
+}
