@@ -21,7 +21,7 @@ in
         # General desktop packages
         filezilla
         keepassxc
-        # mpv
+        mpv
         mumble
         prusa-slicer
         pulseaudio
