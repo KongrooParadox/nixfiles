@@ -6,7 +6,7 @@ local mainMod         = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
--- closeWindowBind:set_enabled(false)
+closeWindowBind:set_enabled(true)
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("rofi-bookmarks"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("hyprpicker -a"))
@@ -84,9 +84,24 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind("switch:on:[Apple SMC power/lid events]", hl.dsp.dpms({ monitor = "eDP-1", action = "enable" }),
-  { locked = true })
-hl.bind("switch:off:[Apple SMC power/lid events]", hl.dsp.dpms({ monitor = "eDP-1", action = "disable" }),
-  { locked = true })
-hl.bind("switch:on:[Lid Switch]", hl.dsp.dpms({ monitor = "eDP-1", action = "enable" }), { locked = true })
-hl.bind("switch:off:[Lid Switch]", hl.dsp.dpms({ monitor = "eDP-1", action = "disable" }), { locked = true })
+local function disableMonitor()
+  hl.monitor({ output = "eDP-1", disabled = true })
+end
+-- hl.bind("switch:on:Apple SMC power/lid events", disableMonitor, { locked = true })
+
+local function enableMonitor()
+  hl.monitor({ output = "eDP-1", disabled = false })
+end
+-- hl.bind("switch:off:Apple SMC power/lid events", enableMonitor, { locked = true })
+
+local function toggleInternalMonitor()
+  local lidIsClosed = IsLidClosed()
+  if lidIsClosed then
+    hl.monitor({ output = "eDP-1", disabled = true })
+  else
+    hl.monitor({ output = "eDP-1", disabled = false })
+  end
+end
+
+hl.bind("switch:Apple SMC power/lid events", toggleInternalMonitor, { locked = true })
+-- toggleInternalMonitor()

@@ -1,43 +1,74 @@
--- TODO : test with monitors
---
--- workspace = 1,monitor:DVI-I-2,default:true,persistent:true
--- workspace = 2,monitor:DVI-I-1,default:true,persistent:true
--- workspace = 3,monitor:DP-1,persistent:true
--- workspace = 4,monitor:eDP-1,default:true,persistent:true
--- workspace = 5,monitor:DVI-I-2,persistent:true
--- workspace = 6,monitor:DVI-I-1,persistent:true
--- workspace = 7,monitor:DP-1,persistent:true
--- workspace = 8,monitor:eDP-1,persistent:true
--- workspace = 9,monitor:DVI-I-2,persistent:true
--- workspace = 10,monitor:DVI-I-1,persistent:true
 hl.monitor({
-  output   = "",
   mode     = "preferred",
-  position = "auto",
+  output   = "",
   scale    = "auto",
+  position = "auto",
 })
 hl.monitor({
-  output   = "eDP-1",
   mode     = "2560x1600@60.0",
-  position = "4290x1685",
+  output   = "eDP-1",
+  position = "1200x3187",
   scale    = "1.67",
+  disabled = IsLidClosed(),
 })
 hl.monitor({
-  output    = "DVI-I-1",
   mode      = "1920x1200@59.95",
-  position  = "2410x105",
+  output    = "desc:Hewlett Packard HP E241i CN444907WG",
+  position  = "0x1740",
   scale     = "1.0",
   transform = 1,
 })
 hl.monitor({
-  output   = "DVI-I-2",
-  mode     = "2560x1440@59.95",
-  position = "3610x245",
-  scale    = "1.0",
+  mode     = "1920x1080@60.00",
+  output   = "desc:Iiyama North America PLG2488H 0",
+  position = "1200x2287",
+  scale    = "1.2",
 })
-hl.monitor({
-  output   = "DP-1",
-  mode     = "1920x1080@60.0",
-  position = "6170x555",
-  scale    = "1.0",
+
+hl.workspace_rule({
+  default = true,
+  monitor = "desc:Iiyama North America PLG2488H 0",
+  persistent = true,
+  workspace = "1",
+})
+hl.workspace_rule({
+  default = true,
+  layout = "scrolling",
+  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  persistent = true,
+  workspace = "2",
+})
+hl.workspace_rule({
+  monitor = "desc:Iiyama North America PLG2488H 0",
+  persistent = true,
+  workspace = "3",
+})
+hl.workspace_rule({
+  default = true,
+  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  workspace = "4",
+})
+hl.workspace_rule({
+  monitor = "desc:Iiyama North America PLG2488H 0",
+  workspace = "5",
+})
+hl.workspace_rule({
+  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  workspace = "6",
+})
+hl.workspace_rule({
+  monitor = "desc:Iiyama North America PLG2488H 0",
+  workspace = "7",
+})
+hl.workspace_rule({
+  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  workspace = "8",
+})
+hl.workspace_rule({
+  monitor = "eDP-1",
+  workspace = "9",
+})
+hl.workspace_rule({
+  monitor = "eDP-1",
+  workspace = "10",
 })

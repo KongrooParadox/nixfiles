@@ -41,7 +41,7 @@ hl.window_rule({
 })
 hl.window_rule({
   name      = "thunar",
-  match     = { class = "^(Thunar)$" },
+  match     = { class = "^([Tt]hunar)$" },
   opacity   = "0.9 0.7",
   workspace = "4",
 })
