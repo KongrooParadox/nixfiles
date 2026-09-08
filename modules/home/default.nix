@@ -21,7 +21,7 @@ in
     "bookmarks" = {
       source = mkSymlink "${dotfiles}/bookmarks/";
     };
-    "btop/themes" = {
+    "btop" = {
       source = mkSymlink "${dotfiles}/btop/";
     };
     "doom.d" = {
