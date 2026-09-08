@@ -42,6 +42,7 @@
       docker-compose-language-service
       dockerfile-language-server
       gopls
+      harper
       helm-ls
       just
       just-formatter

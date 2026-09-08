@@ -194,6 +194,17 @@ return {
         gopls = {
           filetypes = { "go", "gomod", "gowork" },
         },
+        harper_ls = {
+          settings = {
+            ["harper-ls"] = {
+              dialect = "British",
+              linters = {
+                SentenceCapitalization = false,
+                SpellCheck = true,
+              },
+            },
+          },
+        },
         helm_ls = {
           settings = {
             ["helm-ls"] = {
