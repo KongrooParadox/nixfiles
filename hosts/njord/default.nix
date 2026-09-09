@@ -6,6 +6,7 @@
 }:
 let
   localModel = "gemma-4-E4B-it-qat-GGUF";
+  contextSize = 24576;
 in
 {
   imports = [
@@ -21,15 +22,10 @@ in
       pentest.enable = true;
       hyprland.bar = "noctalia";
       openclaw = {
-        enable = true;
+        enable = false;
         model = localModel;
-        # Match the llama.cpp server context; shrink the response reserve so the
-        # agent's large (~12k incl. tool schemas) prompt leaves usable room.
-        contextWindow = 24576;
-        reserveTokens = 8192;
-        # Minimal tool set: OpenClaw proactively compacts when the prompt nears
-        # its (small, default-8k) per-model budget; fewer tools keeps the fixed
-        # prompt under that threshold so it doesn't loop on uncompactable context.
+        contextWindow = contextSize;
+        reserveTokens = contextSize / 3;
         allowedTools = [
           "read"
           "write"
@@ -37,19 +33,20 @@ in
           "exec"
         ];
       };
+      opencode.enable = true;
     };
     kp = {
       desktop.enable = true;
       home-manager.enable = true;
       impermanence.enable = true;
       llm = {
-        enable = true;
+        enable = false;
         llamaCpp = {
           enable = true;
           alias = localModel;
           modelFile = "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf";
           modelUrl = "https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF/resolve/main/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf";
-          contextSize = 24576;
+          contextSize = contextSize;
         };
       };
       networking.networkmanager = {

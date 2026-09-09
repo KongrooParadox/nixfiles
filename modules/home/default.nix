@@ -11,6 +11,7 @@ in
     ./git.nix
     ./irc.nix
     ./openclaw.nix
+    ./opencode.nix
     ./pentest.nix
     ./rclone.nix
     ./s3.nix

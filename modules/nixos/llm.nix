@@ -162,7 +162,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ opencode ];
     services.llama-cpp = lib.mkIf lcfg.enable llamaOptions;
     # Fetch the GGUF into the persisted models dir on first start (kept out of
     # the Nix store). Idempotent: skips when the file already exists.
