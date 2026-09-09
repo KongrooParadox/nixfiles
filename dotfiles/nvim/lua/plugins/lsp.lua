@@ -219,6 +219,7 @@ return {
             client.server_capabilities.referencesProvider = false
             client.server_capabilities.renameProvider = false
           end,
+          filetypes = { 'nix' },
           settings = {
             nixd = {
               nixpkgs = {
@@ -253,6 +254,7 @@ return {
               formatting = {
                 command = { "nixfmt" },
               },
+              filetypes = { 'nix' },
             },
           },
         },
