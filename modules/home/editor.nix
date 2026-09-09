@@ -42,6 +42,7 @@
       docker-compose-language-service
       dockerfile-language-server
       gopls
+      gitlab-ci-ls
       harper
       helm-ls
       just
@@ -53,7 +54,9 @@
       nixd
       nixfmt
       opentofu
+      postgres-language-server
       python313Packages.python-lsp-server
+      pyright
       rust-analyzer
       terraform
       terraform-ls
