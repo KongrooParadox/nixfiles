@@ -82,6 +82,7 @@
         withPython3 = false;
         withRuby = false;
       };
+      zathura.enable = true;
     };
 
     services.emacs = {
