@@ -8,6 +8,7 @@ let
       changepage
       cmap
       dashrule
+      datetime2
       enumitem
       epstopdf-pkg
       etoolbox
@@ -16,7 +17,9 @@ let
       fontawesome5
       fontaxes
       fontspec
+      footmisc
       geometry
+      graphics
       hyperref
       ifmtarg
       iftex
@@ -32,6 +35,7 @@ let
       pdftexcmds
       pdfx
       pgf
+      ragged2e
       roboto
       scheme-minimal
       simpleicons
