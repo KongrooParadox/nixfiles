@@ -2,16 +2,17 @@
   desktop,
   lib,
   pkgs,
-  specialArgs,
+  inputs,
+  isLinux,
   ...
 }:
 let
-  currentArchitecture = specialArgs.nixosConfig.nixpkgs.hostPlatform.system;
+  nixpkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   imports =
     lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland
-    ++ lib.optional (desktop.enable && lib.strings.hasSuffix "linux" currentArchitecture) ./tex.nix;
+    ++ lib.optional (desktop.enable && isLinux) ./tex.nix;
 
   config = lib.mkIf (desktop.enable && desktop.environment != "macos") {
     gtk.gtk4.theme = lib.mkForce null;
@@ -21,7 +22,7 @@ in
         # General desktop packages
         filezilla
         keepassxc
-        libreoffice
+        nixpkgs-stable.libreoffice
         mpv
         mumble
         prusa-slicer
@@ -29,7 +30,7 @@ in
         signal-desktop
         vlc
       ]
-      ++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
+      ++ lib.optionals isLinux [
         brightnessctl
         playerctl
         xdg-utils
