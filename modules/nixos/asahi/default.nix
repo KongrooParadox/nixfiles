@@ -28,7 +28,6 @@ in
     hardware = {
       asahi = {
         enable = true;
-        peripheralFirmwareDirectory = ./firmware;
         setupAsahiSound = true;
       };
       # Provide the Asahi Mesa GPU userspace (incl. the Honeykrisp Vulkan ICD in
