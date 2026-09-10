@@ -20,7 +20,7 @@ iostat -p /dev/sd[a-b] /dev/sd[e-h] -h;hddtemp /dev/sd[a-b] /dev/sd[e-h] -q -uC
 
 Setup ssh-key:
 ```shell
-ssh-copy-id root@yggdrasil.skynet.local
+ssh-copy-id root@yggdrasil.oujda.kongroo.ovh
 ```
 
 Copy zfs dataset secrets to yggdrasil
@@ -28,8 +28,8 @@ Copy zfs dataset secrets to yggdrasil
 sops --decrypt --extract "['zfs-dataset']['yggdrasil']['root.key']" secrets/secrets.yaml > root.key
 sops --decrypt --extract "['zfs-dataset']['yggdrasil']['fast.key']" secrets/secrets.yaml > fast.key
 sops --decrypt --extract "['zfs-dataset']['yggdrasil']['rust.key']" secrets/secrets.yaml > rust.key
-ssh root@yggdrasil.skynet.local 'mkdir -p /run/secrets/zfs-dataset/'
-scp *.key root@yggdrasil.skynet.local:/run/secrets/zfs-dataset/
+ssh root@yggdrasil.oujda.kongroo.ovh 'mkdir -p /run/secrets/zfs-dataset/'
+scp *.key root@yggdrasil.oujda.kongroo.ovh:/run/secrets/zfs-dataset/
 rm *.key
 ```
 
@@ -47,7 +47,7 @@ mount /dev/sdd1 /mnt/boot-fallback
 Copy nixconfig from workstation & partition using disko
 
 ```shell
-scp hosts/yggdrasil/disks.nix root@yggdrasil.skynet.local:/tmp/
+scp hosts/yggdrasil/disks.nix root@yggdrasil.oujda.kongroo.ovh:/tmp/
 # On yggdrasil as root
 nix \
   --experimental-features "nix-command flakes" \
@@ -58,14 +58,14 @@ nix \
 Install NixOs
 
 ```shell
-ssh root@yggdrasil.skynet.local 'mkdir -p /mnt/etc/nixos'
-scp -R . root@yggdrasil.skynet.local:/mnt/etc/nixos/
-scp secrets/secrets.yaml root@yggdrasil.skynet.local:/mnt/etc/nixos/
-scp .sops.yaml root@yggdrasil.skynet.local:/mnt/etc/nixos/
-ssh root@yggdrasil.skynet.local 'mkdir -p /root/.config/ /mnt/root/.config/'
-ssh root@yggdrasil.skynet.local 'sed -e 's#../../secrets#.#' -e 's#~/.config#/root/.config#' /mnt/etc/nixos/flake.nix -i'
-scp ~/.config/age.txt root@yggdrasil.skynet.local:/root/.config/
-scp ~/.config/age.txt root@yggdrasil.skynet.local:/mnt/root/.config/
+ssh root@yggdrasil.oujda.kongroo.ovh 'mkdir -p /mnt/etc/nixos'
+scp -R . root@yggdrasil.oujda.kongroo.ovh:/mnt/etc/nixos/
+scp secrets/secrets.yaml root@yggdrasil.oujda.kongroo.ovh:/mnt/etc/nixos/
+scp .sops.yaml root@yggdrasil.oujda.kongroo.ovh:/mnt/etc/nixos/
+ssh root@yggdrasil.oujda.kongroo.ovh 'mkdir -p /root/.config/ /mnt/root/.config/'
+ssh root@yggdrasil.oujda.kongroo.ovh 'sed -e 's#../../secrets#.#' -e 's#~/.config#/root/.config#' /mnt/etc/nixos/flake.nix -i'
+scp ~/.config/age.txt root@yggdrasil.oujda.kongroo.ovh:/root/.config/
+scp ~/.config/age.txt root@yggdrasil.oujda.kongroo.ovh:/mnt/root/.config/
 # On yggdrasil as root
 nixos-install --root /mnt --flake '/mnt/etc/nixos#yggdrasil'
 ```

@@ -15,6 +15,24 @@ builtins.mapAttrs (site: cfg: cfg) {
     subnet = "10.0.1.0/24";
     workgroup = "OCI";
   };
+  oujda = {
+    dns = {
+      custom = true;
+      resolvers = [
+        "vili"
+        "box"
+      ];
+    };
+    unmanagedHosts = {
+      box.ipv4 = "192.168.2.1";
+      tasmota-desk.ipv4 = "192.168.2.4";
+      tasmota-grill.ipv4 = "192.168.2.2";
+      tasmota-laptop.ipv4 = "192.168.2.5";
+      tasmota-window.ipv4 = "192.168.2.3";
+    };
+    subnet = "192.168.2.0/24";
+    workgroup = "SKYNET";
+  };
   pernes = {
     dns = {
       custom = true;
@@ -33,18 +51,14 @@ builtins.mapAttrs (site: cfg: cfg) {
     dns = {
       custom = true;
       resolvers = [
-        "vili"
+        "frigg"
         "box"
       ];
     };
     unmanagedHosts = {
-      box.ipv4 = "192.168.2.1";
-      tasmota-desk.ipv4 = "192.168.2.4";
-      tasmota-grill.ipv4 = "192.168.2.2";
-      tasmota-laptop.ipv4 = "192.168.2.5";
-      tasmota-window.ipv4 = "192.168.2.3";
+      box.ipv4 = "192.168.3.254";
     };
-    subnet = "192.168.2.0/24";
-    workgroup = "SKYNET";
+    subnet = "192.168.3.0/24";
+    workgroup = "CARTERESSES";
   };
 }

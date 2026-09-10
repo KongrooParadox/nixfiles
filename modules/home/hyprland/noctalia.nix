@@ -135,7 +135,7 @@ in
           settingsPanelMode = "attached";
         };
         location = {
-          name = "Tavel";
+          name = "Oujda";
           weatherEnabled = true;
           weatherShowEffects = true;
           useFahrenheit = false;

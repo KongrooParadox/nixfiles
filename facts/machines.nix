@@ -3,7 +3,7 @@ let
     isLinux = true;
     isSmall = false;
     isUnstable = false;
-    site = "tavel";
+    site = "oujda";
     users = [ "ops" ];
     usesDisplaylink = false;
   };
@@ -26,12 +26,6 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     site = "pernes";
     stateVersion = "24.05";
   };
-  box = {
-    ipv4 = "192.168.3.100";
-    site = "avignon";
-    stateVersion = "26.05";
-    isSmall = true;
-  };
   elnuevo-1 = {
     aliases = [
       "nextcloud"
@@ -44,6 +38,12 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     aliases = [ "jellyfin" ];
     ipv4 = "192.168.2.100";
     stateVersion = "25.05";
+  };
+  frigg = {
+    aliases = [ "dns" ];
+    ipv4 = "192.168.3.100";
+    site = "tavel";
+    stateVersion = "26.05";
   };
   iso-arm = {
     stateVersion = "25.05";

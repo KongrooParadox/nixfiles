@@ -41,7 +41,7 @@ in
 
       wireguardInterface = lib.mkOption {
         type = lib.types.str;
-        default = "wg-arr-tavel";
+        default = "wg-arr-oujda";
         description = lib.mdDoc "Name of Wireguard interface to use for deluge traffic";
       };
     };
@@ -133,7 +133,7 @@ in
           mode = "0440";
           group = "media";
         };
-        "wireguard/proton/arr-tavel" = { };
+        "wireguard/proton/arr-oujda" = { };
         "wireguard/proton/p2p-2" = { };
       })
     ];
@@ -264,14 +264,14 @@ in
         allowedTCPPorts = lib.mkIf cfg.nzbget.enable [ 6789 ];
       };
       wg-quick.interfaces = lib.mkIf cfg.deluge.enable {
-        wg-arr-tavel = lib.mkIf (cfg.deluge.wireguardInterface == "wg-arr-tavel") {
+        wg-arr-oujda = lib.mkIf (cfg.deluge.wireguardInterface == "wg-arr-oujda") {
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [
             "192.168.2.103"
             "192.168.1.100"
           ];
-          privateKeyFile = config.sops.secrets."wireguard/proton/arr-tavel".path;
+          privateKeyFile = config.sops.secrets."wireguard/proton/arr-oujda".path;
           peers = [
             {
               # FR#501
