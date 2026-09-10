@@ -1,3 +1,7 @@
+local portraitMonitor = "desc:Hewlett Packard HP E241i CN444907WG"
+local mainMonitor = "desc:iiyama Corporation PLG2488H 0"
+local laptopMonitor = "eDP-1"
+
 hl.monitor({
   mode     = "preferred",
   output   = "",
@@ -12,69 +16,72 @@ hl.monitor({
 })
 hl.monitor({
   mode     = "2560x1600@60.0",
-  output   = "eDP-1",
+  output   = laptopMonitor,
   position = "1200x3187",
-  scale    = "1.67",
+  scale    = 1.67,
   disabled = IsLidClosed(),
+  vrr      = 0,
 })
 hl.monitor({
   mode      = "1920x1200@59.95",
-  output    = "desc:Hewlett Packard HP E241i CN444907WG",
+  output    = portraitMonitor,
   position  = "0x1740",
-  scale     = "1.0",
+  scale     = 1.0,
   transform = 1,
+  vrr       = 0,
 })
 hl.monitor({
   mode     = "1920x1080@60.00",
-  output   = "desc:Iiyama North America PLG2488H 0",
-  position = "1200x2287",
-  scale    = "1.2",
+  output   = mainMonitor,
+  position = "1200x2107",
+  scale    = 1.2,
+  vrr      = 0,
 })
 
 hl.workspace_rule({
   default = true,
-  monitor = "desc:Iiyama North America PLG2488H 0",
+  monitor = mainMonitor,
   persistent = true,
   workspace = "1",
 })
 hl.workspace_rule({
   default = true,
   layout = "scrolling",
-  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  monitor = portraitMonitor,
   persistent = true,
   workspace = "2",
 })
 hl.workspace_rule({
-  monitor = "desc:Iiyama North America PLG2488H 0",
+  monitor = mainMonitor,
   persistent = true,
   workspace = "3",
 })
 hl.workspace_rule({
   default = true,
-  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  monitor = portraitMonitor,
   workspace = "4",
 })
 hl.workspace_rule({
-  monitor = "desc:Iiyama North America PLG2488H 0",
+  monitor = mainMonitor,
   workspace = "5",
 })
 hl.workspace_rule({
-  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  monitor = portraitMonitor,
   workspace = "6",
 })
 hl.workspace_rule({
-  monitor = "desc:Iiyama North America PLG2488H 0",
+  monitor = mainMonitor,
   workspace = "7",
 })
 hl.workspace_rule({
-  monitor = "desc:Hewlett Packard HP E241i CN444907WG",
+  monitor = portraitMonitor,
   workspace = "8",
 })
 hl.workspace_rule({
-  monitor = "eDP-1",
+  monitor = laptopMonitor,
   workspace = "9",
 })
 hl.workspace_rule({
-  monitor = "eDP-1",
+  monitor = laptopMonitor,
   workspace = "10",
 })
