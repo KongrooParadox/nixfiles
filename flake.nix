@@ -4,51 +4,51 @@
   inputs = {
     # apple-silicon.url = "github:nix-community/nixos-apple-silicon";
     apple-silicon.url = "github:KongrooParadox/nixos-apple-silicon/fairydust";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    stylix-unstable = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
-    nixpkgs-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
-    stylix = {
-      url = "github:danth/stylix/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    sops-nix.url = "github:Mic92/sops-nix";
     impermanence.url = "github:nix-community/impermanence";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
     nix-ld = {
       url = "github:Mic92/nix-ld";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
-    # proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
-    proxmox-nixos.url = "github:KongrooParadox/proxmox-nixos/fix/pve-qemu-hash";
-    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    nix-openclaw = {
+      url = "github:openclaw/nix-openclaw";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-muvm-steam.url = "github:dramforever/nixos-muvm-steam";
+    nixpkgs-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell/legacy-v4";
     };
-    nixos-muvm-steam.url = "github:dramforever/nixos-muvm-steam";
-    nix-openclaw = {
-      url = "github:openclaw/nix-openclaw";
+    # proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
+    proxmox-nixos.url = "github:KongrooParadox/proxmox-nixos/fix/pve-qemu-hash";
+    sops-nix.url = "github:Mic92/sops-nix";
+    stylix = {
+      url = "github:danth/stylix/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+    stylix-unstable = {
+      url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
@@ -56,272 +56,149 @@
   outputs =
     {
       apple-silicon,
-      nixpkgs-stable,
-      nixpkgs-stable-small,
-      nixpkgs-unstable,
-      nixpkgs-unstable-small,
       impermanence,
       nix-darwin,
       nix-ld,
+      nixpkgs-unstable,
       self,
       ...
     }@inputs:
-    {
-      darwinConfigurations = {
-        njord-mac = nix-darwin.lib.darwinSystem {
+    let
+      inherit (nixpkgs-unstable) lib;
+      mkHost =
+        name:
+        {
+          domain,
+          users,
+          workgroup,
+          stateVersion,
+          isLinux,
+          isUnstable,
+          isSmall,
+          usesDisplaylink,
+          extraModules,
+          extraSpecialArgs,
+        }:
+        let
+          channel = "nixpkgs-${
+            if isUnstable then "unstable" else "stable"
+          }${lib.optionalString isSmall "-small"}";
+          pkgs = inputs.${channel};
+          builder = if isLinux then pkgs.lib.nixosSystem else nix-darwin.lib.darwinSystem;
+          baseModule = if isLinux then ./modules/nixos else ./modules/nix-darwin;
+        in
+        builder {
           specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "njord-mac";
-            users = [ "robot" ];
-            stateVersion = "25.05";
-            isUnstable = true;
-            isLinux = false;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nix-darwin
-          ];
-        };
-      };
-      nixosConfigurations = {
-        asgard = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "pernes.kongroo.ovh";
-            host = "asgard";
-            users = [ "ops" ];
-            stateVersion = "24.05";
-            workgroup = "CASA_ANITA";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        baldur = nixpkgs-unstable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "baldur";
-            users = [
-              "fatiha"
-              "robot"
-            ];
-            stateVersion = "23.11";
-            workgroup = "SKYNET";
-            isUnstable = true;
-            isLinux = true;
-            usesDisplaylink = true;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        box = nixpkgs-stable-small.lib.nixosSystem {
-          specialArgs = {
-            domain = "avignon.kongroo.ovh";
-            host = "box";
-            users = [ "ops" ];
-            stateVersion = "26.05";
-            workgroup = "BLANCHISSAGE";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        elnuevo-1 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "elnuevo-1";
-            users = [ "ops" ];
-            stateVersion = "25.05";
-            workgroup = "SKYNET";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        elnuevo-2 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "elnuevo-2";
-            users = [ "ops" ];
-            stateVersion = "25.05";
-            workgroup = "SKYNET";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        heimdall = nixpkgs-unstable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "heimdall";
-            users = [ "ops" ];
-            stateVersion = "24.05";
-            workgroup = "SKYNET";
-            isUnstable = true;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        iso-arm = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "iso-arm";
-            users = [ "ops" ];
-            stateVersion = "25.05";
-            workgroup = "SKYNET";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        iso-x86 = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "iso-x86";
-            users = [ "ops" ];
-            stateVersion = "25.05";
-            workgroup = "SKYNET";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        lordi = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "lordi";
-            users = [
-              "fatiha"
-              "robot"
-            ];
-            stateVersion = "25.05";
-            workgroup = "SKYNET";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = true;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        midgard = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "pernes.kongroo.ovh";
-            host = "midgard";
-            users = [ "ops" ];
-            stateVersion = "24.11";
-            workgroup = "CASA_ANITA";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
-        };
-        njord = nixpkgs-unstable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "njord";
-            users = [ "robot" ];
-            stateVersion = "24.11";
-            workgroup = "SKYNET";
-            isUnstable = true;
-            isLinux = true;
-            usesDisplaylink = true;
+            host = name;
             inherit
-              apple-silicon
+              domain
+              users
+              workgroup
+              stateVersion
+              isLinux
+              isUnstable
+              usesDisplaylink
+              self
               impermanence
               inputs
-              nix-ld
-              self
               ;
-          };
-          modules = [
-            ./modules/nixos
-          ];
+          }
+          // extraSpecialArgs;
+          modules = [ baseModule ] ++ extraModules;
         };
-        oci-arm = nixpkgs-unstable-small.lib.nixosSystem {
-          specialArgs = {
-            domain = "mrs-cloud.kongroo.ovh";
-            host = "oci-arm";
-            users = [ "ops" ];
-            stateVersion = "26.11";
-            workgroup = "OCI";
-            isUnstable = true;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
+
+      # Majority-case defaults; hosts declare only deviations.
+      hostDefaults = {
+        domain = "tavel.kongroo.ovh";
+        users = [ "ops" ];
+        workgroup = "SKYNET";
+        isLinux = true;
+        isUnstable = false;
+        isSmall = false;
+        usesDisplaylink = false;
+        extraModules = [ ];
+        extraSpecialArgs = { };
+      };
+
+      hosts = lib.mapAttrs (_: cfg: hostDefaults // cfg) {
+        # Darwin
+        njord-mac = {
+          users = [ "robot" ];
+          stateVersion = "25.05";
+          isLinux = false;
+          isUnstable = true;
+          workgroup = null;
         };
-        vili = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "vili";
-            users = [ "ops" ];
-            stateVersion = "25.11";
-            workgroup = "SKYNET";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
-          ];
+
+        # NixOS: stable
+        asgard = {
+          domain = "pernes.kongroo.ovh";
+          workgroup = "CASA_ANITA";
+          stateVersion = "24.05";
         };
-        yggdrasil = nixpkgs-stable.lib.nixosSystem {
-          specialArgs = {
-            domain = "tavel.kongroo.ovh";
-            host = "yggdrasil";
-            users = [ "ops" ];
-            stateVersion = "24.05";
-            workgroup = "SKYNET";
-            isUnstable = false;
-            isLinux = true;
-            usesDisplaylink = false;
-            inherit self impermanence inputs;
-          };
-          modules = [
-            ./modules/nixos
+        box = {
+          domain = "avignon.kongroo.ovh";
+          workgroup = "BLANCHISSAGE";
+          stateVersion = "26.05";
+          isSmall = true;
+        };
+        elnuevo-1.stateVersion = "25.05";
+        elnuevo-2.stateVersion = "25.05";
+        iso-arm.stateVersion = "25.05";
+        iso-x86.stateVersion = "25.05";
+        lordi = {
+          users = [
+            "fatiha"
+            "robot"
           ];
+          stateVersion = "25.05";
+          usesDisplaylink = true;
+        };
+        midgard = {
+          domain = "pernes.kongroo.ovh";
+          workgroup = "CASA_ANITA";
+          stateVersion = "24.11";
+        };
+        vili.stateVersion = "25.11";
+        yggdrasil.stateVersion = "24.05";
+
+        # NixOS: unstable
+        baldur = {
+          users = [
+            "fatiha"
+            "robot"
+          ];
+          stateVersion = "23.11";
+          isUnstable = true;
+          usesDisplaylink = true;
+        };
+        heimdall = {
+          stateVersion = "24.05";
+          isUnstable = true;
+        };
+        njord = {
+          users = [ "robot" ];
+          stateVersion = "24.11";
+          isUnstable = true;
+          usesDisplaylink = true;
+          extraSpecialArgs = { inherit apple-silicon nix-ld; };
+        };
+        oci-arm = {
+          domain = "mrs-cloud.kongroo.ovh";
+          workgroup = "OCI";
+          stateVersion = "26.11";
+          isUnstable = true;
+          isSmall = true;
         };
       };
+
+      platforms = lib.partition (n: hosts.${n}.isLinux) (builtins.attrNames hosts);
+      buildAll = names: lib.genAttrs names (n: mkHost n hosts.${n});
+    in
+    {
+      nixosConfigurations = buildAll platforms.right;
+      darwinConfigurations = buildAll platforms.wrong;
+
       overlays = import ./overlays { inherit inputs; };
       homeManagerModules.default = ./modules/home;
     };
