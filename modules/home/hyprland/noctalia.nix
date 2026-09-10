@@ -1,23 +1,23 @@
 {
   config,
+  inputs,
   lib,
-  users,
   ...
 }:
 let
   cfg.enabled = config.kp.hyprland.bar == "noctalia";
-  user = lib.lists.head users;
+  wallpaperDirectory = "${config.home.homeDirectory}/Pictures/wallpapers";
 in
 {
   config = lib.mkIf cfg.enabled {
-    home.file.".cache/noctalia/wallpapers.json" = {
-      text = builtins.toJSON {
-        defaultWallpaper = "/home/${user}/nixfiles/wallpapers/water-dragon.png";
-        wallpapers = {
-          "DP-1" = "/home/${user}/nixfiles/wallpapers/water-dragon.png";
-          "DVI-I-1" = "/home/${user}/nixfiles/wallpapers/ghibli-landscape.png";
-          "DVI-I-2" = "/home/${user}/nixfiles/wallpapers/vestrahorn-mountain.jpg";
-          "eDP-1" = "/home/${user}/nixfiles/wallpapers/water-dragon.png";
+    home.file = {
+      "Pictures/wallpapers".source = config.lib.file.mkOutOfStoreSymlink inputs.wallpapers;
+      ".cache/noctalia/wallpapers.json" = {
+        text = builtins.toJSON {
+          defaultWallpaper = "${wallpaperDirectory}/water-dragon.png";
+          wallpapers = {
+            "DVI-I-1" = "${wallpaperDirectory}/ghibli-landscape.png";
+          };
         };
       };
     };
@@ -179,7 +179,7 @@ in
         wallpaper = {
           enabled = true;
           overviewEnabled = false;
-          directory = "~/nixfiles/wallpapers";
+          directory = wallpaperDirectory;
           monitorDirectories = [ ];
           enableMultiMonitorDirectories = false;
           recursiveSearch = false;

@@ -1487,7 +1487,8 @@
         "proxmox-nixos": "proxmox-nixos",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
-        "stylix-unstable": "stylix-unstable"
+        "stylix-unstable": "stylix-unstable",
+        "wallpapers": "wallpapers"
       }
     },
     "sops-nix": {
@@ -1846,6 +1847,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "wallpapers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789249734,
+        "narHash": "sha256-VZQ/ihQf64t/BTMjotqdWJJSL+zocraDjxOeb9wVe6s=",
+        "owner": "KongrooParadox",
+        "repo": "wallpapers",
+        "rev": "00afe4ab4f1c8aeaaacf81c982675a124e823a6c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KongrooParadox",
+        "repo": "wallpapers",
         "type": "github"
       }
     },
