@@ -51,6 +51,10 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    wallpapers = {
+      flake = false;
+      url = "github:KongrooParadox/wallpapers";
+    };
   };
 
   outputs =

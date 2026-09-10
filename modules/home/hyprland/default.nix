@@ -59,25 +59,25 @@ in
       ]) [ quickshell ];
 
     stylix.targets.hyprland.enable = false;
-    services = {
-      hyprpaper = {
-        enable = true;
-        settings = {
-          ipc = "off";
-          splash = false;
-          preload = [
-            "${../../../wallpapers/ghibli-landscape.png}"
-            "${../../../wallpapers/vestrahorn-mountain.jpg}"
-            "${../../../wallpapers/water-dragon.png}"
-          ];
-          wallpaper = [
-            "eDP-1,${../../../wallpapers/water-dragon.png}"
-            "DVI-I-1,${../../../wallpapers/ghibli-landscape.png}"
-            "DVI-I-2,${../../../wallpapers/vestrahorn-mountain.jpg}"
-          ];
-        };
-      };
-    };
+    # services = {
+    #   hyprpaper = {
+    #     enable = true;
+    #     settings = {
+    #       ipc = "off";
+    #       splash = false;
+    #       preload = [
+    #         "${../../../wallpapers/ghibli-landscape.png}"
+    #         "${../../../wallpapers/vestrahorn-mountain.jpg}"
+    #         "${../../../wallpapers/water-dragon.png}"
+    #       ];
+    #       wallpaper = [
+    #         "eDP-1,${../../../wallpapers/water-dragon.png}"
+    #         "DVI-I-1,${../../../wallpapers/ghibli-landscape.png}"
+    #         "DVI-I-2,${../../../wallpapers/vestrahorn-mountain.jpg}"
+    #       ];
+    #     };
+    #   };
+    # };
 
     xdg.configFile = {
       "hypr/config".source =

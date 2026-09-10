@@ -19,7 +19,7 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("rofi-ssh-picker"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("rofi-tmux-picker"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("rofi-clipboard-history"))
---hl.bind(mainMod .. " + ;", hl.dsp.exec_cmd("emoji-picker"))
+-- hl.bind(mainMod .. " + SEMICOLON", hl.dsp.exec_cmd("emoji-picker"))
 --hl.bind(mainMod .. " + TBD", hl.dsp.window.float({ action = "toggle" }))
 --hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
