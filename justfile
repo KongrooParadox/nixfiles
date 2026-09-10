@@ -15,6 +15,9 @@ build-remote HOSTNAME:
 boot:
     nixos-rebuild boot --flake .# --sudo |& nom
 
+check:
+    nix flake check |& nom
+
 switch:
     nixos-rebuild switch --flake .# --sudo |& nom
 
