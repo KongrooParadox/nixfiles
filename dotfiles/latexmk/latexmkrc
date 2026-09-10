@@ -1,0 +1,65 @@
+# Prune luaotfload caches that reference garbage-collected /nix/store paths.
+#
+# Why: luaotfload caches parsed fonts with their *absolute* path baked in. On
+# NixOS every store file has mtime 1970-01-01 and a stable size, so luaotfload's
+# staleness check sees "unchanged" and happily reuses an entry pointing at a
+# store path that `nix-collect-garbage` has since removed. LuaTeX then typesets
+# the whole document fine and only fails when it tries to embed the font:
+#
+#     ! error:  (file ) (type 0): cannot find file ''
+#     !  ==> Fatal error occurred, no output PDF file produced!
+#
+# Runs once per latexmk invocation (so once per `latexmk -pvc` session, not per
+# rebuild).
+#
+# Output goes to stderr, which VimTeX redirects to its compiler output file --
+# :VimtexCompileOutput (<localleader>lo).
+
+unless ( $ENV{'LATEXMK_NO_FONTCACHE_GUARD'} ) {
+    foreach my $gen ( glob "$ENV{HOME}/.texlive*/texmf-var/luatex-cache/generic" ) {
+        my $otl   = "$gen/fonts/otl";
+        my $names = "$gen/names";
+
+        my %alive;
+        my $gone = sub {
+            my $p = shift;
+            $alive{$p} = ( -e $p ? 1 : 0 ) unless exists $alive{$p};
+            return !$alive{$p};
+        };
+
+        my $db = "$names/luaotfload-names.lua.gz";
+        if ( -e $db ) {
+            foreach my $p ( split /\n/, `zcat "$db" 2>/dev/null | grep -ao '/nix/store/[^"]*'` ) {
+                next unless $gone->($p);
+                warn "latexmkrc: luaotfload names DB is stale ($p is gone)\n";
+                warn "latexmkrc: rebuilding font names database...\n";
+                system( 'luaotfload-tool', '--update', '--force', '-v' );
+                warn "latexmkrc: done, continuing compile\n";
+                %alive = ();
+                last;
+            }
+        }
+
+        my $lookup = "$names/luaotfload-lookup-cache.lua";
+        if ( -e $lookup ) {
+            foreach my $p ( split /\n/, `grep -aoh '/nix/store/[^"]*' "$lookup" 2>/dev/null` ) {
+                next unless $gone->($p);
+                unlink $lookup, "$names/luaotfload-lookup-cache.luc";
+                warn "latexmkrc: flushed stale luaotfload lookup cache\n";
+                last;
+            }
+        }
+
+        if ( -d $otl ) {
+            my ( %done, @pruned );
+            foreach my $line ( split /\n/, `grep -aoH '/nix/store/[^"]*' "$otl"/*.lua 2>/dev/null` ) {
+                my ( $file, $path ) = $line =~ m{^(.+\.lua):(/nix/store/.*)$} or next;
+                next if $done{$file}++ or !$gone->($path);
+                ( my $stem = $file ) =~ s/\.lua\z//;
+                unlink "$stem.lua", "$stem.luc";
+                push @pruned, ( $stem =~ m{([^/]+)$} )[0];
+            }
+            warn "latexmkrc: pruned stale luaotfload font cache: @pruned\n" if @pruned;
+        }
+    }
+}

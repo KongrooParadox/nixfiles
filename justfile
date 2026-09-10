@@ -1,7 +1,7 @@
 architecture := `uname -a | awk '{ print $(NF-1) }'`
 
 build:
-    nixos-rebuild build --flake .# |& nom
+    nixos-rebuild build --flake .# --sudo |& nom
 
 build-iso-arm:
     nix build .#nixosConfigurations.iso-arm.config.system.build.isoImage |& nom

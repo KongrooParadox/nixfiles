@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   tex = pkgs.texliveBasic.withPackages (
     ps: with ps; [
@@ -46,4 +46,6 @@ in
   home.packages = [
     tex
   ];
+  xdg.configFile."latexmk".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixfiles/dotfiles/latexmk";
 }
