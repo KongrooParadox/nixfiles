@@ -5,6 +5,12 @@ hl.monitor({
   position = "auto",
 })
 hl.monitor({
+  output   = "DP-1",
+  mode     = "1280x1024@60.00",
+  position = "4200x4287",
+  scale    = "1.0",
+})
+hl.monitor({
   mode     = "2560x1600@60.0",
   output   = "eDP-1",
   position = "1200x3187",
