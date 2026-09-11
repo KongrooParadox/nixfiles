@@ -52,7 +52,6 @@ in
                 mode = "0700";
               }
               ".local/share"
-              ".mozilla"
               {
                 directory = ".ssh";
                 mode = "0700";

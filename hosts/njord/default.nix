@@ -49,10 +49,6 @@ in
           contextSize = contextSize;
         };
       };
-      networking.networkmanager = {
-        enable = true;
-        wireless = true;
-      };
       podman.enable = true;
       samba.client.enable = true;
       tailscale = {

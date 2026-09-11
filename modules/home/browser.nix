@@ -8,7 +8,10 @@
   ...
 }:
 let
-  firefoxConfigMigrated = builtins.elem host [ "njord" ];
+  firefoxConfigMigrated = builtins.elem host [
+    "baldur"
+    "njord"
+  ];
 in
 {
   config = lib.mkIf desktop.enable (

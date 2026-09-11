@@ -9,7 +9,6 @@ let
   gnomeCfg = {
     displayManager.gdm = {
       enable = true;
-      wayland = true;
     };
     desktopManager.gnome.enable = true;
   };
@@ -26,8 +25,16 @@ in
 
         programs.dconf.profiles.user.databases = [
           {
-            settings."org/gnome/desktop/wm/preferences" = {
-              button-layout = ":minimize,maximize,close";
+            settings = {
+              "org/gnome/desktop/datetime" = {
+                automatic-timezone = true;
+              };
+              "org/gnome/desktop/wm/preferences" = {
+                button-layout = ":minimize,maximize,close";
+              };
+              "org/gnome/system/location" = {
+                enabled = true;
+              };
             };
           }
         ];
@@ -37,6 +44,8 @@ in
           gnomeExtensions.open-bar
           gnome-randr
         ];
+
+        time.timeZone = lib.mkForce null; # TZ will be set by desktop user
       }
       {
         services = gnomeCfg;

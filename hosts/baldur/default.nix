@@ -20,11 +20,10 @@
     home-manager.enable = true;
     impermanence.enable = true;
     kids.enable = true;
-    networking.networkmanager.enable = true;
     gaming = {
       sunshine = {
         enable = true;
-        virtualMonitor = true;
+        virtualMonitor = false;
       };
       steam.enable = true;
     };
@@ -37,7 +36,7 @@
     };
   };
 
-  home-manager.users.fatiha.home.packages = [
-    pkgs.zoom-us
+  home-manager.users.fatiha.home.packages = with pkgs; [
+    zoom-us
   ];
 }

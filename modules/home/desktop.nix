@@ -21,18 +21,19 @@ in
         # General desktop packages
         filezilla
         keepassxc
+        libreoffice
         mpv
         mumble
         prusa-slicer
         pulseaudio
         signal-desktop
         vlc
-        libreoffice
       ]
       ++ lib.optionals (lib.strings.hasSuffix "linux" currentArchitecture) [
         brightnessctl
         playerctl
         xdg-utils
+        wineWow64Packages.waylandFull
       ];
   };
 }

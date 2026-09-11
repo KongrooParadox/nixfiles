@@ -17,7 +17,6 @@
     };
     home-manager.enable = true;
     kids.enable = true;
-    networking.networkmanager.enable = true;
     system.language = "fr_FR";
   };
 

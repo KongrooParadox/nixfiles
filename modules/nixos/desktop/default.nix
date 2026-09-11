@@ -50,6 +50,10 @@ in
   ];
 
   config = lib.mkIf cfg.enable {
+    kp.networking.networkmanager = {
+      enable = true;
+      wireless = true;
+    };
     system.stateVersion = stateVersion;
 
     hardware.graphics.package = pkgs.mesa;
