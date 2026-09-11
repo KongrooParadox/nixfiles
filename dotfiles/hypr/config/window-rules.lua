@@ -45,6 +45,12 @@ hl.window_rule({
   opacity   = "0.9 0.7",
   workspace = "4",
 })
+hl.window_rule({
+  name      = "zathura",
+  match     = { class = "^org.pwmt.zathura$" },
+  opacity   = "0.9 0.7",
+  workspace = "4",
+})
 
 
 local suppressMaximizeRule = hl.window_rule({
