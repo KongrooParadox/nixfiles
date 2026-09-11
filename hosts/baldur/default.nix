@@ -20,7 +20,6 @@
     home-manager.enable = true;
     impermanence.enable = true;
     kids.enable = true;
-    networking.networkmanager.enable = true;
     gaming = {
       sunshine = {
         enable = true;
