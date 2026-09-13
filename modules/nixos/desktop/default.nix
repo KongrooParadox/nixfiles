@@ -65,7 +65,6 @@ in
         [
           adwaita-icon-theme
           android-tools
-          nixpkgs-stable.calibre
           deluge-gtk
           element-desktop
           evolution
@@ -75,26 +74,25 @@ in
           helmfile
           hugo
           hyprpicker
-          ifuse # optional, to mount using 'ifuse'
           inkscape
+          k9s
           kooha
           krita
           kubectl
           kubectx
           kubernetes-helm
-          k9s
-          libimobiledevice # usb drivers for apple mobile devices
           mesa
           mesa-demos
           moonlight-qt
           networkmanagerapplet
           nixos-anywhere
+          nixpkgs-stable.calibre
           nodejs_22
           parsec-bin
           pavucontrol
           pkg-config
-          protonmail-bridge
           proton-vpn
+          protonmail-bridge
           python3
           remmina
           samba
@@ -103,17 +101,16 @@ in
           teams-for-linux
           transmission_4
           usbutils
+          vesktop
           virt-manager
           vlc
           vulkan-tools
           wireguard-tools
           xournalpp
+          zapzap
         ]
         ++ lib.optionals usesDisplaylink [
           displaylink
-        ]
-        ++ lib.optionals (config.nixpkgs.hostPlatform.system != "aarch64-linux") [
-          discord
         ];
     };
 
