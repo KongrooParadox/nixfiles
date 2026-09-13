@@ -1,5 +1,5 @@
 require("remaps.lsp")
-require("remaps.telescope")
+-- require("remaps.telescope")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`

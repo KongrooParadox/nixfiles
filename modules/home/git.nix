@@ -12,6 +12,15 @@ in
 {
   home.packages = [ pkgs.jjui ];
   programs = {
+    gh = {
+      gitCredentialHelper.enable = false;
+      enable = true;
+      extensions = [ pkgs.gh-eco ];
+      settings = {
+        git_protocol = "ssh";
+        prompt = "enabled";
+      };
+    };
     git = {
       enable = true;
       package = pkgs.gitFull;
