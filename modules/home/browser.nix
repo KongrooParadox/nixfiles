@@ -7,12 +7,6 @@
   isLinux,
   ...
 }:
-let
-  firefoxConfigMigrated = builtins.elem host [
-    "baldur"
-    "njord"
-  ];
-in
 {
   config = lib.mkIf desktop.enable (
     lib.mkMerge [
@@ -27,7 +21,7 @@ in
           ];
         programs = {
           firefox = {
-            configPath = lib.mkIf firefoxConfigMigrated "${config.xdg.configHome}/mozilla/firefox";
+            configPath = "${config.xdg.configHome}/mozilla/firefox";
             enable = true;
             profiles.default = {
               id = 0;
