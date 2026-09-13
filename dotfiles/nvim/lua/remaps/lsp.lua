@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     --  Useful when you're not sure what type a variable is and you want to see
     --  the definition of its *type*, not where it was *defined*.
     map("gtd", telescope_builtin.lsp_type_definitions, "[G]oto [T]ype [D]efinition")
-    map("K", vim.lsp.buf.hover, "LSP: Hover Documentation")
+    -- map("K", function() vim.lsp.buf.hover { border = "rounded" } end, "LSP: Hover Documentation")
     map("<leader>K", vim.lsp.buf.signature_help, "LSP: Signature Documentation")
     map("<leader>wa", vim.lsp.buf.add_workspace_folder, "LSP: [W]orkspace [A]dd Folder")
     map("<leader>wr", vim.lsp.buf.remove_workspace_folder, "LSP: [W]orkspace [R]emove Folder")

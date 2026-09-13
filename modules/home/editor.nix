@@ -67,6 +67,11 @@
       yaml-language-server
     ];
 
+    # for nixd to source host-specific options in nvim config
+    home.sessionVariables = {
+      NIXFILES_DIR = "${config.home.homeDirectory}/nixfiles";
+    };
+
     programs = {
       doom-emacs = {
         enable = config.kp.emacs.enable;

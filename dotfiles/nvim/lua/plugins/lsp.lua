@@ -43,6 +43,99 @@ if handle ~= nil then
   end
 end
 
+local nixpkgsInputCandidates = { "nixpkgs", "nixpkgs-unstable", "nixpkgs-stable", "unstable" }
+
+local function isNixfilesCheckout(dir)
+  return dir ~= nil
+      and dir ~= ""
+      and vim.fn.filereadable(dir .. "/flake.nix") == 1
+      and vim.fn.isdirectory(dir .. "/modules/nixos") == 1
+      and vim.fn.isdirectory(dir .. "/modules/home") == 1
+end
+
+local function findFlakeRoot(start)
+  local flake = vim.fs.find("flake.nix", { upward = true, type = "file", path = start })[1]
+  return flake and vim.fs.dirname(flake) or nil
+end
+
+local function findNixfilesRoot(start)
+  if isNixfilesCheckout(vim.env.NIXFILES_DIR) then
+    return vim.env.NIXFILES_DIR
+  end
+  local found = vim.fs.find("flake.nix", {
+    upward = true,
+    type = "file",
+    path = start,
+    limit = math.huge,
+  })
+  for _, flake in ipairs(found) do
+    local dir = vim.fs.dirname(flake)
+    if isNixfilesCheckout(dir) then
+      return dir
+    end
+  end
+  return nil
+end
+
+local function nixpkgsExpr(flakeRoot)
+  if not flakeRoot then
+    return "import <nixpkgs> { }"
+  end
+  local candidates = table.concat(
+    vim.tbl_map(function(n) return ('"%s"'):format(n) end, nixpkgsInputCandidates),
+    " "
+  )
+  return ([[
+let
+  inputs = (builtins.getFlake "%s").inputs or { };
+  names = builtins.filter (n: inputs ? ${n}) [ %s ];
+  src = if names == [ ] then <nixpkgs> else inputs.${builtins.head names};
+in import src { }]]):format(flakeRoot, candidates)
+end
+
+local isDarwin = vim.uv.os_uname().sysname == "Darwin"
+local hostConfigAttr = isDarwin and "darwinConfigurations" or "nixosConfigurations"
+local hostOptionKey = isDarwin and "nix_darwin" or "nixos"
+
+local function pickHostExpr(flakeRoot, host)
+  return ([[
+  configs = (builtins.getFlake "%s").%s or { };
+  names = builtins.attrNames configs;
+  picked =
+    if configs ? "%s" then configs."%s"
+    else if names == [ ] then null
+    else configs.${builtins.head names};]]):format(flakeRoot, hostConfigAttr, host, host)
+end
+
+local function nixdSettings(start)
+  local nixfilesRoot = findNixfilesRoot(start)
+  local settings = {
+    nixpkgs = { expr = nixpkgsExpr(nixfilesRoot or findFlakeRoot(start)) },
+    formatting = { command = { "nixfmt" } },
+  }
+
+  -- Host-specific option sets only make sense inside the config repo itself.
+  if nixfilesRoot then
+    local pick = pickHostExpr(nixfilesRoot, vim.uv.os_gethostname())
+    settings.options = {
+      [hostOptionKey] = {
+        expr = "let\n" .. pick .. "\nin if picked == null then { } else picked.options",
+      },
+      home_manager = {
+        expr = "let\n" .. pick .. [[
+
+in
+  if picked == null || !(picked.options ? "home-manager")
+  then { }
+  else picked.options.home-manager.users.type.getSubOptions [ ]
+]],
+      },
+    }
+  end
+
+  return settings
+end
+
 return {
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -206,55 +299,47 @@ return {
         },
         nixd = {
           cmd = { "nixd", "--semantic-tokens=true", },
+          filetypes = { 'nix' },
+          -- Filled in by before_init, once root_dir is known. This table must be
+          -- mutated in place: the client captures it by reference when it is
+          -- constructed and never re-reads config.settings afterwards.
+          settings = { nixd = {} },
+          before_init = function(_, config)
+            local start = config.root_dir or vim.fn.expand("%:p:h")
+            config.settings.nixd = nixdSettings(start)
+          end,
           on_attach = function(client)
-            -- We disable everything EXCEPT completions and semantic tokens, since I use
-            -- both nixd and nil, and nil is better at everything else
+            -- nixd resolves `lib`, `pkgs` and module options by evaluating nixpkgs,
+            -- hover, Goto-definition: it resolves local bindings, and additionally
+            -- follows `lib`/`pkgs` symbols into the nixpkgs sources.
             client.server_capabilities.codeActionProvider = nil
-            client.server_capabilities.definitionProvider = false
             client.server_capabilities.documentFormattingProvider = false
             client.server_capabilities.documentSymbolProvider = false
             client.server_capabilities.documentHighlightProvider = false
-            client.server_capabilities.hoverProvider = false
             client.server_capabilities.inlayHintProvider = false
             client.server_capabilities.referencesProvider = false
             client.server_capabilities.renameProvider = false
           end,
-          filetypes = { 'nix' },
-          settings = {
-            nixd = {
-              nixpkgs = {
-                expr = 'import (builtins.getFlake "github:KongrooParadox/nixfiles/main").inputs.nixpkgs-unstable { }',
-              },
-              formatting = {
-                command = { "nixfmt" },
-              },
-              options = {
-                nix_darwin = {
-                  expr =
-                  '(builtins.getFlake "github:KongrooParadox/nixfiles/main").darwinConfigurations.njord-mac.options',
-                },
-                nixos = {
-                  expr = '(builtins.getFlake "github:KongrooParadox/nixfiles/main").nixosConfigurations.njord.options',
-                },
-                home_manager = {
-                  expr =
-                  '(builtins.getFlake "github:KongrooParadox/nixfiles/main").nixosConfigurations.njord.options.home-manager.users.type.getSubOptions []',
-                },
-              },
-            },
-          },
         },
         nil_ls = {
           on_attach = function(client)
-            -- We get completion from nixd, and everything else from nil
+            -- nil keeps diagnostics, code actions, rename, references,
+            -- symbols, inlay hints and formatting.
             client.server_capabilities.completionProvider = nil
+            client.server_capabilities.definitionProvider = false
           end,
           settings = {
-            nil_ls = {
+            ["nil"] = {
               formatting = {
                 command = { "nixfmt" },
               },
-              filetypes = { 'nix' },
+              nix = {
+                flake = {
+                  autoArchive = false,
+                  autoEvalInputs = false,
+                  nixpkgsInputName = "nixpkgs-unstable",
+                },
+              },
             },
           },
         },
@@ -352,6 +437,7 @@ return {
       end,
       formatters_by_ft = {
         lua = { "stylua" },
+        nix = { "nixfmt" },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

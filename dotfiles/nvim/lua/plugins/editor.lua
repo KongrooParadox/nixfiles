@@ -146,4 +146,16 @@ return {
       vim.g.vimtex_quickfix_open_on_warning = 0
     end
   },
+  {
+    "so1ve/tiny-md.nvim",
+    dependencies = {
+      "MeanderingProgrammer/render-markdown.nvim",
+    },
+    opts = {},
+    config = function()
+      vim.keymap.set("n", "K", function()
+        require("tiny-md.hover").hover()
+      end, { desc = "LSP hover" })
+    end
+  },
 }
