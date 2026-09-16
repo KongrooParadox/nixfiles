@@ -20,12 +20,10 @@
 
   fileSystems = {
     "/boot" = {
-      label = "esp";
       device = "/dev/disk/by-label/ESP";
       fsType = "vfat";
     };
     "/" = {
-      label = "nixos";
       device = "/dev/disk/by-label/nixos";
       autoResize = true;
       fsType = "ext4";

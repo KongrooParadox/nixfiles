@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   users,
   ...
@@ -38,6 +39,7 @@
     // {
       root = {
         hashedPasswordFile = config.sops.secrets."users/root/password".path;
+        initialHashedPassword = lib.mkForce null;
         openssh.authorizedKeys.keys = (import ./ssh.nix).keys;
       };
     };

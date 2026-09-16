@@ -21,7 +21,6 @@
       systemd-boot.enable = lib.mkForce false;
       generic-extlinux-compatible.enable = true;
     };
-    zfs.forceImportRoot = lib.mkForce false;
   };
 
   kp = {

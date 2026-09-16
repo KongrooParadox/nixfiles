@@ -45,7 +45,7 @@ let
           "--cache-type-v"
           lcfg.kvCacheType
           "--ctx-size"
-          lcfg.contextSize
+          (toString lcfg.contextSize)
           "--flash-attn"
           (if lcfg.flashAttention then "on" else "off")
           "--jinja"

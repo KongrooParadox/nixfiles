@@ -25,6 +25,8 @@ in
   config = {
     system.stateVersion = stateVersion;
 
+    boot.zfs.forceImportRoot = false;
+
     nix = {
       settings = {
         experimental-features = [
