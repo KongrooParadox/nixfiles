@@ -32,7 +32,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixos-muvm-steam.url = "github:dramforever/nixos-muvm-steam";
     nixpkgs-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
@@ -43,6 +42,10 @@
     # proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
     proxmox-nixos.url = "github:KongrooParadox/proxmox-nixos/fix/pve-qemu-hash";
     sops-nix.url = "github:Mic92/sops-nix";
+    steam-asahi = {
+      url = "github:KongrooParadox/steam-asahi/feature/desktop-shortcuts";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     stylix = {
       url = "github:danth/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -59,7 +62,6 @@
 
   outputs =
     {
-      apple-silicon,
       impermanence,
       nix-darwin,
       nix-ld,
@@ -185,7 +187,7 @@
           stateVersion = "24.11";
           isUnstable = true;
           usesDisplaylink = true;
-          extraSpecialArgs = { inherit apple-silicon nix-ld; };
+          extraSpecialArgs = { inherit nix-ld; };
         };
         oci-arm = {
           domain = "mrs-cloud.kongroo.ovh";

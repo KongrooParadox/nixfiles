@@ -1,6 +1,6 @@
 {
-  apple-silicon,
   config,
+  inputs,
   # nix-ld,
   ...
 }:
@@ -12,7 +12,7 @@ in
   imports = [
     ../../modules/nixos/asahi
     ./hardware-configuration.nix
-    apple-silicon.nixosModules.default
+    inputs.apple-silicon.nixosModules.default
     # nix-ld.nixosModules.nix-ld
   ];
 
@@ -36,6 +36,10 @@ in
       opencode.enable = true;
     };
     kp = {
+      asahi = {
+        enable = true;
+        steam.enable = true;
+      };
       desktop.enable = true;
       home-manager.enable = true;
       impermanence.enable = true;

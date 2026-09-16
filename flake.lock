@@ -1036,24 +1036,6 @@
         "type": "github"
       }
     },
-    "nixos-muvm-steam": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_7"
-      },
-      "locked": {
-        "lastModified": 1766479126,
-        "narHash": "sha256-6MirRJIfmBG2R0IGeSZC6vlhMbwcP6DWNw99IaP+WIs=",
-        "owner": "dramforever",
-        "repo": "nixos-muvm-steam",
-        "rev": "6ce8bf134f50ba66e5b8095ee7f0985104c14a16",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dramforever",
-        "repo": "nixos-muvm-steam",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1789006805,
@@ -1255,22 +1237,6 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1766070988,
-        "narHash": "sha256-G/WVghka6c4bAzMhTwT2vjLccg/awmHkdKSd2JrycLc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c6245e83d836d0433170a16eb185cefe0572f8b8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_8": {
-      "locked": {
         "lastModified": 1780749050,
         "narHash": "sha256-3av0pIjlOWQ6rDbNOmpUSvbNnJkGORQKKjb4LtCZsIY=",
         "owner": "nixos",
@@ -1285,7 +1251,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_9": {
+    "nixpkgs_8": {
       "locked": {
         "lastModified": 1782175435,
         "narHash": "sha256-EMzXKmnOtBQ2MnvpiNOm7E+kOMvdPrIKaeg52Tip2Uk=",
@@ -1303,7 +1269,7 @@
     },
     "noctalia": {
       "inputs": {
-        "nixpkgs": "nixpkgs_8",
+        "nixpkgs": "nixpkgs_7",
         "noctalia-qs": "noctalia-qs"
       },
       "locked": {
@@ -1478,7 +1444,6 @@
         "nix-ld": "nix-ld",
         "nix-openclaw": "nix-openclaw",
         "nixos-hardware": "nixos-hardware",
-        "nixos-muvm-steam": "nixos-muvm-steam",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-stable-small": "nixpkgs-stable-small",
         "nixpkgs-unstable": "nixpkgs-unstable",
@@ -1486,6 +1451,7 @@
         "noctalia": "noctalia",
         "proxmox-nixos": "proxmox-nixos",
         "sops-nix": "sops-nix",
+        "steam-asahi": "steam-asahi",
         "stylix": "stylix",
         "stylix-unstable": "stylix-unstable",
         "wallpapers": "wallpapers"
@@ -1493,7 +1459,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_9"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1786629091,
@@ -1506,6 +1472,27 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "steam-asahi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788872400,
+        "narHash": "sha256-UPk0R5OqIby5B4zgg3ICO4/fcfb2gS4PKRCx9ASi8kg=",
+        "owner": "KongrooParadox",
+        "repo": "steam-asahi",
+        "rev": "3cf7567dfbac1d6a4be8685d1aa4df00236aa3ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KongrooParadox",
+        "ref": "feature/arm64-client",
+        "repo": "steam-asahi",
         "type": "github"
       }
     },

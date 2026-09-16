@@ -10,7 +10,14 @@ in
 {
   options.kp.asahi = {
     enable = lib.mkEnableOption "asahi drivers.";
+    steam = {
+      enable = lib.mkEnableOption "steam-asahi flake.";
+    };
   };
+
+  imports = [
+    ./steam-asahi.nix
+  ];
 
   config = lib.mkIf cfg.enable {
     nixpkgs.overlays = [
@@ -19,10 +26,6 @@ in
 
     environment = {
       sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card2";
-      systemPackages = with inputs.nixos-muvm-steam.packages.aarch64-linux; [
-        muvm
-        muvm-steam
-      ];
     };
 
     hardware = {
