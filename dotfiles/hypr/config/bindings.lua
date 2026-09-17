@@ -26,8 +26,7 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("rofi-clipboard-history"))
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("list-hypr-bindings"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + I", hl.dsp.layout("togglesplit")) -- dwindle only
-hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("swaync-client -rs"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("scrren-capture"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("screen-capture"))
 hl.bind(mainMod .. " + CONTROL + L", hl.dsp.exec_cmd("hyprlock"))
 
 -- Move focus with mainMod + arrow keys

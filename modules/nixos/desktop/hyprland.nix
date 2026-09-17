@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -18,16 +17,13 @@
     programs = {
       hyprland = {
         enable = true;
-        package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
+        withUWSM = true;
+        xwayland.enable = true;
       };
       hyprlock.enable = true;
       thunar.enable = true;
       xfconf.enable = true;
     };
-
-    environment.systemPackages = with pkgs; [
-      swaynotificationcenter
-    ];
 
     services = {
       greetd = {
@@ -48,8 +44,6 @@
 
     xdg.portal.configPackages = [
       pkgs.xdg-desktop-portal-hyprland
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal
     ];
   };
 }

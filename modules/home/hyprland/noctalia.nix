@@ -11,7 +11,7 @@ in
 {
   config = lib.mkIf cfg.enabled {
     home.file = {
-      "Pictures/wallpapers".source = config.lib.file.mkOutOfStoreSymlink inputs.wallpapers;
+      "Pictures/wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${inputs.big-files}/wallpapers";
       ".cache/noctalia/wallpapers.json" = {
         text = builtins.toJSON {
           defaultWallpaper = "${wallpaperDirectory}/water-dragon.png";

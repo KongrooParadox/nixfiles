@@ -16,7 +16,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     impermanence.url = "github:nix-community/impermanence";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
@@ -54,9 +53,9 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    wallpapers = {
+    big-files = {
       flake = false;
-      url = "github:KongrooParadox/wallpapers";
+      url = "github:KongrooParadox/big-files";
     };
   };
 
