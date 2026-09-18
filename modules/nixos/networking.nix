@@ -1,8 +1,8 @@
 {
   config,
-  domain,
   host,
   lib,
+  nameservers,
   users,
   ...
 }:
@@ -78,16 +78,7 @@ in
       type = lib.types.listOf lib.types.str;
     };
     nameservers = lib.mkOption {
-      default =
-        [ ]
-        ++ lib.optionals (domain == "tavel.kongroo.ovh") [
-          "192.168.2.103"
-          "192.168.2.254"
-        ]
-        ++ lib.optionals (domain == "pernes.kongroo.ovh") [
-          "192.168.1.100"
-          "192.168.1.254"
-        ];
+      default = nameservers;
       description = "List of default dns servers for systems";
       type = lib.types.listOf lib.types.str;
     };

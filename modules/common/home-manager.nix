@@ -84,7 +84,7 @@ in
         imports = [
           inputs.nix-doom-emacs-unstraightened.homeModule
           inputs.noctalia.homeModules.default
-          inputs.self.outputs.homeManagerModules.default
+          inputs.self.outputs.homeModules.default
 
         ];
         home = {

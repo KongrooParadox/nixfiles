@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  # nix-ld,
   ...
 }:
 let
@@ -13,7 +12,6 @@ in
     ../../modules/nixos/asahi
     ./hardware-configuration.nix
     inputs.apple-silicon.nixosModules.default
-    # nix-ld.nixosModules.nix-ld
   ];
 
   config = {
@@ -66,8 +64,6 @@ in
         hostId = "720320e5";
       };
     };
-
-    # programs.nix-ld.dev.enable = true;
 
     sops.secrets."wireguard/proton/ar-25" = { };
     networking.wg-quick.interfaces.wg-ar-25 = {

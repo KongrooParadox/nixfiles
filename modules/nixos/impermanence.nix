@@ -1,6 +1,6 @@
 {
   config,
-  impermanence,
+  inputs,
   lib,
   users,
   ...
@@ -24,7 +24,7 @@ in
     };
   };
 
-  imports = [ impermanence.nixosModules.impermanence ];
+  imports = [ inputs.impermanence.nixosModules.impermanence ];
 
   config = lib.mkIf cfg.enable {
     environment.persistence."/persist" = {

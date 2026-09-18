@@ -1,9 +1,9 @@
 {
   config,
-  domain,
   host,
   lib,
   pkgs,
+  sambaIp,
   users,
   workgroup,
   ...
@@ -15,7 +15,6 @@ let
     "x-systemd.requires=samba-server-reachable.service,_netdev,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5m,x-systemd.mount-timeout=5m,nofail,nodfs,file_mode=0770,dir_mode=0770,uid=${cfg.client.uid},gid=${cfg.client.gid},credentials=${
       config.sops.secrets."smb/${user}".path
     }";
-  sambaIp = if domain == "tavel.kongroo.ovh" then "192.168.2.101" else "192.168.1.101";
 in
 {
   options.kp.samba = {
@@ -110,7 +109,7 @@ in
 
       kp.impermanence = lib.mkIf config.kp.impermanence.enable {
         extraDirectories = [
-          "/var/lib/${sambaIp}/"
+          "/var/lib/samba/"
         ];
       };
 
@@ -121,18 +120,16 @@ in
           openFirewall = true;
           settings = {
             global = {
-              workgroup = workgroup;
-              "server string" = host;
-              "netbios name" = host;
-              security = "user";
-              #"use sendfile" = "yes";
-              #"max protocol" = "smb2";
-              # note: localhost is the ipv6 localhost ::1
-              "hosts allow" = "192.168.1. 192.168.2. 127.0.0.1 localhost";
-              "valid users" = "+${cfg.server.group}";
-              "hosts deny" = "0.0.0.0/0";
               "guest account" = "nobody";
+              "hosts allow" = "192.168.1. 192.168.2. 192.168.3. 192.168.4. 127.0.0.1 localhost";
+              "hosts deny" = "0.0.0.0/0";
               "map to guest" = "bad user";
+              "netbios name" = host;
+              "server string" = host;
+              "unix password sync" = "yes";
+              "valid users" = "+${cfg.server.group}";
+              security = "user";
+              workgroup = workgroup;
             };
             "backup" = {
               "path" = "/mnt/backup";

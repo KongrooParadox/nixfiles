@@ -1,14 +1,14 @@
 {
   config,
-  domain,
   lib,
   pkgs,
+  subnet,
+  site,
   ...
 }:
 let
   cfg = config.kp.tailscale;
-  keyName =
-    if (domain == "tavel.kongroo.ovh") then "tailscale/keys/tavel" else "tailscale/keys/pernes";
+  keyName = "tailscale/keys/${site}";
 in
 {
   options.kp.tailscale = {
@@ -52,7 +52,7 @@ in
 
     advertisedRoutes = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
+      default = [ subnet ];
       example = [ "192.168.1.0/24" ];
       description = lib.mdDoc "Routes to advertise when acting as a subnet router";
     };

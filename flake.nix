@@ -22,10 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
     nix-openclaw = {
       url = "github:openclaw/nix-openclaw";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -61,150 +57,64 @@
 
   outputs =
     {
-      impermanence,
       nix-darwin,
-      nix-ld,
       nixpkgs-unstable,
       self,
       ...
     }@inputs:
     let
       inherit (nixpkgs-unstable) lib;
+      facts = (import ./facts { inherit lib; }).facts;
+      helpers = (import ./facts { inherit lib; }).helpers;
       mkHost =
         name:
-        {
-          domain,
-          users,
-          workgroup,
-          stateVersion,
-          isLinux,
-          isUnstable,
-          isSmall,
-          usesDisplaylink,
-          extraModules,
-          extraSpecialArgs,
-        }:
         let
-          channel = "nixpkgs-${
-            if isUnstable then "unstable" else "stable"
-          }${lib.optionalString isSmall "-small"}";
+          baseModule = if facts.managedHosts.${name}.isLinux then ./modules/nixos else ./modules/nix-darwin;
+          builder =
+            if facts.managedHosts.${name}.isLinux then pkgs.lib.nixosSystem else nix-darwin.lib.darwinSystem;
+          channel = "nixpkgs-${if facts.managedHosts.${name}.isUnstable then "unstable" else "stable"}${
+            lib.optionalString facts.managedHosts.${name}.isSmall "-small"
+          }";
           pkgs = inputs.${channel};
-          builder = if isLinux then pkgs.lib.nixosSystem else nix-darwin.lib.darwinSystem;
-          baseModule = if isLinux then ./modules/nixos else ./modules/nix-darwin;
+          site = helpers.siteOf name;
+          domain = helpers.domainOf site;
+          siteCfg = helpers.siteCfgOf site;
+          sambaIp = facts.sambaIps.${site};
+          gateway = helpers.ipv4AddressOf site "box";
+          nameservers = helpers.nameserversIpv4AddressOf site;
+          zone = helpers.zoneOf site;
         in
         builder {
           specialArgs = {
             host = name;
             inherit
               domain
-              users
-              workgroup
-              stateVersion
+              gateway
+              inputs
+              nameservers
+              sambaIp
+              self
+              site
+              zone
+              ;
+            inherit (siteCfg) dns subnet workgroup;
+            inherit (facts.managedHosts.${name})
               isLinux
               isUnstable
+              stateVersion
+              users
               usesDisplaylink
-              self
-              impermanence
-              inputs
               ;
-          }
-          // extraSpecialArgs;
-          modules = [ baseModule ] ++ extraModules;
+          };
+          modules = [ baseModule ];
         };
-
-      # Majority-case defaults; hosts declare only deviations.
-      hostDefaults = {
-        domain = "tavel.kongroo.ovh";
-        users = [ "ops" ];
-        workgroup = "SKYNET";
-        isLinux = true;
-        isUnstable = false;
-        isSmall = false;
-        usesDisplaylink = false;
-        extraModules = [ ];
-        extraSpecialArgs = { };
-      };
-
-      hosts = lib.mapAttrs (_: cfg: hostDefaults // cfg) {
-        # Darwin
-        njord-mac = {
-          users = [ "robot" ];
-          stateVersion = "25.05";
-          isLinux = false;
-          isUnstable = true;
-          workgroup = null;
-        };
-
-        # NixOS: stable
-        asgard = {
-          domain = "pernes.kongroo.ovh";
-          workgroup = "CASA_ANITA";
-          stateVersion = "24.05";
-        };
-        box = {
-          domain = "avignon.kongroo.ovh";
-          workgroup = "BLANCHISSAGE";
-          stateVersion = "26.05";
-          isSmall = true;
-        };
-        elnuevo-1.stateVersion = "25.05";
-        elnuevo-2.stateVersion = "25.05";
-        iso-arm.stateVersion = "25.05";
-        iso-x86.stateVersion = "25.05";
-        lordi = {
-          users = [
-            "fatiha"
-            "robot"
-          ];
-          stateVersion = "25.05";
-          usesDisplaylink = true;
-        };
-        midgard = {
-          domain = "pernes.kongroo.ovh";
-          workgroup = "CASA_ANITA";
-          stateVersion = "24.11";
-        };
-        vili.stateVersion = "25.11";
-        yggdrasil.stateVersion = "24.05";
-
-        # NixOS: unstable
-        baldur = {
-          users = [
-            "fatiha"
-            "robot"
-          ];
-          stateVersion = "23.11";
-          isUnstable = true;
-          usesDisplaylink = true;
-        };
-        heimdall = {
-          stateVersion = "24.05";
-          isUnstable = true;
-        };
-        njord = {
-          users = [ "robot" ];
-          stateVersion = "24.11";
-          isUnstable = true;
-          usesDisplaylink = true;
-          extraSpecialArgs = { inherit nix-ld; };
-        };
-        oci-arm = {
-          domain = "mrs-cloud.kongroo.ovh";
-          workgroup = "OCI";
-          stateVersion = "26.11";
-          isUnstable = true;
-          isSmall = true;
-        };
-      };
-
-      platforms = lib.partition (n: hosts.${n}.isLinux) (builtins.attrNames hosts);
-      buildAll = names: lib.genAttrs names (n: mkHost n hosts.${n});
+      buildAll = names: lib.genAttrs names (n: mkHost n);
     in
     {
-      nixosConfigurations = buildAll platforms.right;
-      darwinConfigurations = buildAll platforms.wrong;
+      nixosConfigurations = buildAll facts.nixosHosts;
+      darwinConfigurations = buildAll facts.darwinHosts;
 
       overlays = import ./overlays { inherit inputs; };
-      homeManagerModules.default = ./modules/home;
+      homeModules.default = ./modules/home;
     };
 }

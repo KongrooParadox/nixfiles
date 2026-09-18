@@ -2,6 +2,7 @@
   config,
   domain,
   lib,
+  zone,
   ...
 }:
 let
@@ -15,29 +16,13 @@ in
       description = lib.mdDoc "Whether to enable DNS server.";
     };
 
-    publicDomain = lib.mkOption {
-      type = lib.types.str;
-      default = domain;
-      example = "example.com";
-      description = lib.mdDoc "Public domain to rewrite";
-    };
-
-    localDomain = lib.mkOption {
-      type = lib.types.str;
-      default = "local";
-      description = lib.mdDoc "Local domain (destination of url rewrite)";
-    };
-
-    mapping = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      default = { };
-      description = "Local dns A entries";
-    };
-
     zone = lib.mkOption {
       type = lib.types.str;
-      default = "";
-      description = "Local zone file";
+      default = zone;
+      description = lib.mdDoc ''
+        Split-horizon zone served on the LAN, derived from `facts/machines.nix` & `facts/sites.nix`.
+        Its `$ORIGIN` is the site's public domain.
+      '';
     };
   };
 
@@ -57,14 +42,8 @@ in
         enable = true;
         settings = {
           upstreams.groups.default = [ "127.0.0.1:5353" ];
-          conditional = {
-            fallbackUpstream = true;
-          };
           customDNS = {
-            customTTL = "1h";
             filterUnmappedTypes = true;
-            rewrite.${cfg.publicDomain} = cfg.localDomain;
-            mapping = cfg.mapping;
             zone = cfg.zone;
           };
           blocking = {
@@ -86,12 +65,16 @@ in
         settings = {
           server = {
             interface = "127.0.0.1@5353";
-            access-control = [ "127.0.0.1/0 allow" ];
             verbosity = 1;
           };
         };
       };
       resolved.enable = false;
+    };
+
+    systemd.services.blocky = {
+      after = [ "unbound.service" ];
+      wants = [ "unbound.service" ];
     };
   };
 }
