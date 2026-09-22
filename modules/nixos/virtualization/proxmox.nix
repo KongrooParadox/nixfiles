@@ -17,7 +17,7 @@ in
       type = lib.types.str;
       default = domain;
       example = "example.org";
-      description = lib.mdDoc ''
+      description = ''
         FQDN domain of Proxmox server.
         This will be used as the base url for NGINX reverse proxy.
       '';
@@ -26,7 +26,7 @@ in
     ipAddress = lib.mkOption {
       type = lib.types.str;
       example = "192.168.1.0";
-      description = lib.mdDoc "Ip address of PVE node";
+      description = "Ip address of PVE node";
     };
   };
 

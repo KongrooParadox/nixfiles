@@ -14,21 +14,21 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = lib.mdDoc "Whether to enable Bazarr.";
+        description = "Whether to enable Bazarr.";
       };
       subgen.enable = lib.mkEnableOption "Subgen for transcription/translation";
     };
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to enable the arr suite (Prowlarr, Radarr, Sonarr, Lidarr).";
+      description = "Whether to enable the arr suite (Prowlarr, Radarr, Sonarr, Lidarr).";
     };
 
     dispatcharr = {
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Whether to enable Dispatcharr.";
+        description = "Whether to enable Dispatcharr.";
       };
     };
 
@@ -36,13 +36,13 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = lib.mdDoc "Whether to enable Deluge torrent download client.";
+        description = "Whether to enable Deluge torrent download client.";
       };
 
       wireguardInterface = lib.mkOption {
         type = lib.types.str;
         default = "wg-arr-oujda";
-        description = lib.mdDoc "Name of Wireguard interface to use for deluge traffic";
+        description = "Name of Wireguard interface to use for deluge traffic";
       };
     };
 
@@ -50,7 +50,7 @@ in
       type = lib.types.str;
       default = domain;
       example = "my-server.example.org";
-      description = lib.mdDoc ''
+      description = ''
         FQDN domain of arr server.
         This will be used as the base url for NGINX reverse proxy.
       '';
@@ -60,7 +60,7 @@ in
       type = lib.types.str;
       default = "/mnt/media";
       example = "/var/lib/media";
-      description = lib.mdDoc ''
+      description = ''
         Base path of media folder (used for downloads).
       '';
     };
@@ -68,7 +68,7 @@ in
     computeBasePath = lib.mkOption {
       type = lib.types.str;
       default = "/var/lib/compute";
-      description = lib.mdDoc ''
+      description = ''
         Base path for arr apps (aka compute path).
       '';
     };
@@ -77,7 +77,7 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = lib.mdDoc "Whether to enable Prowlarr.";
+        description = "Whether to enable Prowlarr.";
       };
     };
 
@@ -85,7 +85,7 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = lib.mdDoc "Whether to enable Radarr.";
+        description = "Whether to enable Radarr.";
       };
     };
 
@@ -93,7 +93,7 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = lib.mdDoc "Whether to enable Sonarr.";
+        description = "Whether to enable Sonarr.";
       };
     };
 
@@ -101,7 +101,7 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = lib.mdDoc "Whether to enable lidarr.";
+        description = "Whether to enable lidarr.";
       };
     };
 
@@ -109,7 +109,7 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = lib.mdDoc "Whether to enable Nzbget.";
+        description = "Whether to enable Nzbget.";
       };
     };
 
@@ -117,7 +117,7 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Whether to enable Sabnzbd.";
+        description = "Whether to enable Sabnzbd.";
       };
     };
   };

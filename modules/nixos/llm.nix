@@ -67,7 +67,7 @@ in
           "vulkan"
         ];
         default = "vulkan";
-        description = lib.mdDoc ''
+        description = ''
           Inference backend. `vulkan` offloads to the Asahi GPU (requires the
           asahi module's GPU userspace); `cpu` runs purely on CPU.
         '';
@@ -76,38 +76,38 @@ in
       modelsDir = lib.mkOption {
         type = lib.types.str;
         default = "/var/lib/llm/models";
-        description = lib.mdDoc "Directory holding GGUF models (kept out of the Nix store, persisted under impermanence).";
+        description = "Directory holding GGUF models (kept out of the Nix store, persisted under impermanence).";
       };
 
       modelFile = lib.mkOption {
         type = lib.types.str;
         default = "qwen2.5-coder-14b-instruct-q4_k_m.gguf";
-        description = lib.mdDoc "GGUF file name served by llama-server (looked up inside `modelsDir`).";
+        description = "GGUF file name served by llama-server (looked up inside `modelsDir`).";
       };
 
       modelUrl = lib.mkOption {
         type = lib.types.str;
         default = "https://huggingface.co/Qwen/Qwen2.5-Coder-14B-Instruct-GGUF/resolve/main/qwen2.5-coder-14b-instruct-q4_k_m.gguf";
-        description = lib.mdDoc "URL the model is downloaded from on first start if `modelFile` is missing.";
+        description = "URL the model is downloaded from on first start if `modelFile` is missing.";
       };
 
       modelSha256 = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;
         example = "sha256-...";
-        description = lib.mdDoc "Optional sha256 checksum verified after download (skipped when null).";
+        description = "Optional sha256 checksum verified after download (skipped when null).";
       };
 
       alias = lib.mkOption {
         type = lib.types.str;
         default = "qwen2.5-coder-14b";
-        description = lib.mdDoc "Model id advertised over the OpenAI-compatible API.";
+        description = "Model id advertised over the OpenAI-compatible API.";
       };
 
       contextSize = lib.mkOption {
         type = lib.types.ints.positive;
         default = 8192;
-        description = lib.mdDoc ''
+        description = ''
           Context window size (`-c`). Larger values need more GPU/CPU memory for
           the KV cache; raise it once you've confirmed the model fits.
         '';
@@ -116,13 +116,13 @@ in
       gpuLayers = lib.mkOption {
         type = lib.types.str;
         default = "auto";
-        description = lib.mdDoc "Number of layers to offload to the GPU (`-ngl`, only used with the vulkan backend).";
+        description = "Number of layers to offload to the GPU (`-ngl`, only used with the vulkan backend).";
       };
 
       flashAttention = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Enable Flash Attention (`-fa on`). Required for KV-cache quantization.";
+        description = "Enable Flash Attention (`-fa on`). Required for KV-cache quantization.";
       };
 
       kvCacheType = lib.mkOption {
@@ -133,7 +133,7 @@ in
         ];
         default = "f16";
         example = "q8_0";
-        description = lib.mdDoc ''
+        description = ''
           KV-cache quantization type (`-ctk`/`-ctv`). Halves (`q8_0`) or quarters
           (`q4_0`) KV memory so a larger context fits in VRAM. Requires
           `flashAttention = true`.
@@ -143,19 +143,19 @@ in
       host = lib.mkOption {
         type = lib.types.str;
         default = "127.0.0.1";
-        description = lib.mdDoc "Address llama-server listens on.";
+        description = "Address llama-server listens on.";
       };
 
       port = lib.mkOption {
         type = lib.types.port;
         default = 8080;
-        description = lib.mdDoc "Port llama-server listens on (OpenAI-compatible API under /v1).";
+        description = "Port llama-server listens on (OpenAI-compatible API under /v1).";
       };
 
       openFirewall = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Open the llama-server port in the firewall.";
+        description = "Open the llama-server port in the firewall.";
       };
 
     };

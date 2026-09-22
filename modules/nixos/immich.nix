@@ -13,13 +13,13 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to enable Immich instance.";
+      description = "Whether to enable Immich instance.";
     };
 
     machineLearningPort = lib.mkOption {
       type = lib.types.port;
       default = 3003;
-      description = lib.mdDoc ''
+      description = ''
         Port for machine learning service.
         Must be accessible from the main Immich service.
       '';
@@ -28,7 +28,7 @@ in
     mediaPath = lib.mkOption {
       type = lib.types.path;
       default = "/mnt/media/immich";
-      description = lib.mdDoc ''
+      description = ''
         Path to media library root directory.
         This directory must exist and be writable by the immich user.
       '';
@@ -38,7 +38,7 @@ in
       type = lib.types.str;
       default = domain;
       example = "example.org";
-      description = lib.mdDoc ''
+      description = ''
         FQDN domain of Immich server.
         This will be used as the base url for NGINX reverse proxy.
       '';
@@ -47,7 +47,7 @@ in
     subdomain = lib.mkOption {
       type = lib.types.str;
       default = "gallery";
-      description = lib.mdDoc ''
+      description = ''
         Subdomain name for the Immich instance.
         This will be used as the subdomain of NGINX reverse proxy
       '';

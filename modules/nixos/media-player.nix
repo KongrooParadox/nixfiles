@@ -14,20 +14,20 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to enable the media suite (Jellyfin & co).";
+      description = "Whether to enable the media suite (Jellyfin & co).";
     };
 
     dataDir = lib.mkOption {
       type = lib.types.str;
       default = "/mnt/compute/jellyfin";
-      description = lib.mdDoc "Path to jellyfin persistent storage";
+      description = "Path to jellyfin persistent storage";
     };
 
     domain = lib.mkOption {
       type = lib.types.str;
       default = domain;
       example = "example.org";
-      description = lib.mdDoc ''
+      description = ''
         FQDN domain of Jellyfin server.
         This will be used as the base url for NGINX reverse proxy.
       '';

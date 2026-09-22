@@ -17,22 +17,22 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Whether to enable zfs module";
+        description = "Whether to enable zfs module";
       };
       encryptionKeys = lib.mkOption {
         type = lib.types.listOf lib.types.str;
         default = [ ];
-        description = lib.mdDoc "List of encryption keys for zfs datasets in sops secrets";
+        description = "List of encryption keys for zfs datasets in sops secrets";
       };
       extraPools = lib.mkOption {
         type = lib.types.listOf lib.types.str;
         default = [ ];
-        description = lib.mdDoc "List of extra zfs pools to import at boot";
+        description = "List of extra zfs pools to import at boot";
       };
       hostId = lib.mkOption {
         type = lib.types.str;
         example = "";
-        description = lib.mdDoc "The 32-bit host ID of the machine, formatted as 8 hexadecimal characters";
+        description = "The 32-bit host ID of the machine, formatted as 8 hexadecimal characters";
       };
     };
   };

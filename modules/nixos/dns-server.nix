@@ -13,13 +13,13 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to enable DNS server.";
+      description = "Whether to enable DNS server.";
     };
 
     zone = lib.mkOption {
       type = lib.types.str;
       default = zone;
-      description = lib.mdDoc ''
+      description = ''
         Split-horizon zone served on the LAN, derived from `facts/machines.nix` & `facts/sites.nix`.
         Its `$ORIGIN` is the site's public domain.
       '';

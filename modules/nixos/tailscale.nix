@@ -15,7 +15,7 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = lib.mdDoc "Whether to enable Tailscale";
+      description = "Whether to enable Tailscale";
     };
 
     autoconnect = lib.mkEnableOption "enables autoconnect via authKey";
@@ -23,7 +23,7 @@ in
     ssh = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = lib.mdDoc "Whether to enable Tailscale SSH";
+      description = "Whether to enable Tailscale SSH";
     };
 
     exitNode = lib.mkOption {
@@ -35,26 +35,26 @@ in
     subnetRouter = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether this node acts as a subnet router";
+      description = "Whether this node acts as a subnet router";
     };
 
     acceptDns = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = lib.mdDoc "Whether to accept DNS config from tailscale";
+      description = "Whether to accept DNS config from tailscale";
     };
 
     acceptRoutes = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to accept routes from other subnet routers";
+      description = "Whether to accept routes from other subnet routers";
     };
 
     advertisedRoutes = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ subnet ];
       example = [ "192.168.1.0/24" ];
-      description = lib.mdDoc "Routes to advertise when acting as a subnet router";
+      description = "Routes to advertise when acting as a subnet router";
     };
   };
 

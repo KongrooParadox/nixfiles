@@ -22,38 +22,38 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Whether to enable Samba server";
+        description = "Whether to enable Samba server";
       };
 
       user = lib.mkOption {
         type = lib.types.str;
         default = "samba";
-        description = lib.mdDoc "User for samba file mapping";
+        description = "User for samba file mapping";
       };
 
       group = lib.mkOption {
         type = lib.types.str;
         default = "samba";
-        description = lib.mdDoc "Group for samba file mapping";
+        description = "Group for samba file mapping";
       };
     };
     client = {
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Whether to enable Samba client";
+        description = "Whether to enable Samba client";
       };
 
       uid = lib.mkOption {
         type = lib.types.str;
         default = "1000";
-        description = lib.mdDoc "UID of user to own samba mountpoint";
+        description = "UID of user to own samba mountpoint";
       };
 
       gid = lib.mkOption {
         type = lib.types.str;
         default = "100";
-        description = lib.mdDoc "ID of group to own samba mountpoint";
+        description = "ID of group to own samba mountpoint";
       };
     };
   };

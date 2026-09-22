@@ -16,7 +16,7 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to enable desktop-specific config";
+      description = "Whether to enable desktop-specific config";
     };
     environment = lib.mkOption {
       type = lib.types.enum [
@@ -25,7 +25,7 @@ in
         "gnome"
       ];
       default = "hyprland";
-      description = lib.mdDoc "Which Desktop Environment to install (hyprland, plasma or gnome)";
+      description = "Which Desktop Environment to install (hyprland, plasma or gnome)";
     };
     stylix = lib.mkOption {
       type = lib.types.bool;
@@ -36,7 +36,7 @@ in
           "macos"
         ]
       );
-      description = lib.mdDoc "Whether to enable Stylix theming";
+      description = "Whether to enable Stylix theming";
     };
   };
 

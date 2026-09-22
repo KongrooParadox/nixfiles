@@ -29,17 +29,17 @@ in
       enable = lib.mkOption {
         type = lib.types.bool;
         default = false;
-        description = lib.mdDoc "Whether to enable home-manager modules";
+        description = "Whether to enable home-manager modules";
       };
       users = lib.mkOption {
         type = lib.types.listOf lib.types.str;
         default = users;
-        description = lib.mdDoc "List of users to enable home-manager for";
+        description = "List of users to enable home-manager for";
       };
       homeBaseDirectory = lib.mkOption {
         type = lib.types.str;
         default = "/home";
-        description = lib.mdDoc "Base directory for users (default is linux path)";
+        description = "Base directory for users (default is linux path)";
       };
     };
   };

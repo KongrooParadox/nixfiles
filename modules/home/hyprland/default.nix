@@ -30,7 +30,7 @@ in
         "quickshell"
       ];
       default = "noctalia";
-      description = lib.mdDoc "bar implementation for hyprland";
+      description = "bar implementation for hyprland";
     };
   };
 

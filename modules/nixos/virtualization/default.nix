@@ -15,7 +15,7 @@ in
     bridgeInterfaceName = lib.mkOption {
       type = lib.types.str;
       example = "eno1";
-      description = lib.mdDoc "Interface device name used for bridge of virtualization host";
+      description = "Interface device name used for bridge of virtualization host";
     };
 
     libvirtd = {

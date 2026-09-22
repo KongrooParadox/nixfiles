@@ -13,14 +13,14 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Whether to enable impermanence module.";
+      description = "Whether to enable impermanence module.";
     };
 
     extraDirectories = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
       example = [ "/var/lib/my-service" ];
-      description = lib.mdDoc "List of directories to add to persistent storage";
+      description = "List of directories to add to persistent storage";
     };
   };
 

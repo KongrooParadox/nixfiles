@@ -12,7 +12,7 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = lib.mdDoc "Enable podman containers and related tooling";
+      description = "Enable podman containers and related tooling";
     };
   };
 

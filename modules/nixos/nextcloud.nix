@@ -16,7 +16,7 @@ in
       type = lib.types.str;
       default = domain;
       example = "example.org";
-      description = lib.mdDoc ''
+      description = ''
         FQDN domain of Nextcloud server.
         This will be used as the base url for NGINX reverse proxy.
       '';
@@ -25,7 +25,7 @@ in
     subdomain = lib.mkOption {
       type = lib.types.str;
       default = "nextcloud";
-      description = lib.mdDoc ''
+      description = ''
         Subdomain name for the Nextcloud instance.
         This will be used as the subdomain of NGINX reverse proxy
       '';
@@ -34,7 +34,7 @@ in
     dbType = lib.mkOption {
       type = lib.types.str;
       default = "sqlite";
-      description = lib.mdDoc ''
+      description = ''
         DB type : one of the following
         sqlite, psql or
       '';
