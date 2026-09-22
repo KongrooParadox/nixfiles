@@ -1,11 +1,14 @@
 {
   config,
   lib,
+  osConfig,
   pkgs,
   ...
 }:
 let
   cfg = config.kp.hyprland;
+  hyprlandEnable =
+    osConfig.kp.desktop.enable == true && osConfig.kp.desktop.environment == "hyprland";
   barLauncher =
     if cfg.bar == "noctalia" then
       "${pkgs.killall}/bin/killall -q noctalia-shell;sleep 1 && noctalia-shell &"
@@ -30,13 +33,14 @@ in
       description = lib.mdDoc "bar implementation for hyprland";
     };
   };
+
   imports = [
     ./noctalia.nix
     ./rofi.nix
     ./wlogout.nix
   ];
 
-  config = {
+  config = lib.mkIf hyprlandEnable {
     home.packages =
       with pkgs;
       [

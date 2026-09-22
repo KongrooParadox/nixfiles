@@ -17,6 +17,7 @@ in
   config = {
     home-manager.users.robot.kp = {
       emacs.enable = false;
+      latex.enable = true;
       pentest.enable = true;
       hyprland.bar = "noctalia";
       opencode.enable = true;

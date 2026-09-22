@@ -1,14 +1,13 @@
 {
   config,
-  desktop,
-  host,
-  lib,
-  pkgs,
   isLinux,
+  lib,
+  osConfig,
+  pkgs,
   ...
 }:
 {
-  config = lib.mkIf desktop.enable (
+  config = lib.mkIf osConfig.kp.desktop.enable (
     lib.mkMerge [
       {
         home.packages =

@@ -2,14 +2,18 @@
   config,
   inputs,
   lib,
+  osConfig,
   ...
 }:
 let
-  cfg.enabled = config.kp.hyprland.bar == "noctalia";
+  noctaliaEnable =
+    osConfig.kp.desktop.enable == true
+    && osConfig.kp.desktop.environment == "hyprland"
+    && config.kp.hyprland.bar == "noctalia";
   wallpaperDirectory = "${config.home.homeDirectory}/Pictures/wallpapers";
 in
 {
-  config = lib.mkIf cfg.enabled {
+  config = lib.mkIf noctaliaEnable {
     home.file = {
       "Pictures/wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${inputs.big-files}/wallpapers";
       ".cache/noctalia/wallpapers.json" = {

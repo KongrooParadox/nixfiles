@@ -1,5 +1,11 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
+  cfg = config.kp.latex;
   tex = pkgs.texliveBasic.withPackages (
     ps: with ps; [
       accsupp
@@ -47,9 +53,13 @@ let
   );
 in
 {
-  home.packages = [
-    tex
-  ];
-  xdg.configFile."latexmk".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixfiles/dotfiles/latexmk";
+  options.kp.latex.enable = lib.mkEnableOption "LaTeX specific tools";
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [
+      tex
+    ];
+    xdg.configFile."latexmk".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixfiles/dotfiles/latexmk";
+  };
 }

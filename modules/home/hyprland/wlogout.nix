@@ -1,6 +1,15 @@
-{ config, ... }:
 {
-  config = {
+  config,
+  lib,
+  osConfig,
+  ...
+}:
+let
+  hyprlandEnable =
+    osConfig.kp.desktop.enable == true && osConfig.kp.desktop.environment == "hyprland";
+in
+{
+  config = lib.mkIf hyprlandEnable {
     programs.wlogout = {
       enable = true;
       layout = [

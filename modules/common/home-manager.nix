@@ -5,14 +5,12 @@
   isLinux,
   isUnstable,
   lib,
-  pkgs,
   stateVersion,
   users,
   ...
 }:
 let
   cfg = config.kp.home-manager;
-  desktop = config.kp.desktop;
   modulesFromInputs = [
     inputs.sops-nix.homeManagerModules.sops
   ];
@@ -71,7 +69,6 @@ in
       backupCommand = "rm -f";
       extraSpecialArgs = {
         inherit
-          desktop
           host
           inputs
           isLinux
@@ -85,7 +82,6 @@ in
           inputs.nix-doom-emacs-unstraightened.homeModule
           inputs.noctalia.homeModules.default
           inputs.self.outputs.homeModules.default
-
         ];
         home = {
           username = name;

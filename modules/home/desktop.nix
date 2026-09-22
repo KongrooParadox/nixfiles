@@ -1,5 +1,5 @@
 {
-  desktop,
+  osConfig,
   lib,
   pkgs,
   inputs,
@@ -8,13 +8,15 @@
 }:
 let
   nixpkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  cfg = osConfig.kp.desktop;
 in
 {
-  imports =
-    lib.optional (desktop.enable && desktop.environment == "hyprland") ./hyprland
-    ++ lib.optional (desktop.enable && isLinux) ./tex.nix;
+  imports = [
+    ./hyprland
+    ./tex.nix
+  ];
 
-  config = lib.mkIf (desktop.enable && desktop.environment != "macos") {
+  config = lib.mkIf cfg.enable {
     gtk.gtk4.theme = lib.mkForce null;
     home.packages =
       with pkgs;
@@ -22,19 +24,19 @@ in
         # General desktop packages
         filezilla
         keepassxc
-        nixpkgs-stable.libreoffice
         mpv
         mumble
+        nixpkgs-stable.libreoffice
         prusa-slicer
-        pulseaudio
         signal-desktop
         vlc
       ]
       ++ lib.optionals isLinux [
         brightnessctl
         playerctl
-        xdg-utils
+        pulseaudio
         wineWow64Packages.waylandFull
+        xdg-utils
       ];
   };
 }
