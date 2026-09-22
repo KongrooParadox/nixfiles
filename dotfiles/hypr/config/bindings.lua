@@ -1,7 +1,7 @@
 -- Set programs that you use
 local terminal        = "kitty"
 local fileManager     = "thunar"
-local menu            = "rofi -show drun"
+local menu            = "launcher"
 local mainMod         = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
@@ -18,7 +18,7 @@ hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("rofi-project-picker"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("rofi-ssh-picker"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("rofi-tmux-picker"))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("rofi-clipboard-history"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("clipboard-history"))
 -- hl.bind(mainMod .. " + SEMICOLON", hl.dsp.exec_cmd("emoji-picker"))
 --hl.bind(mainMod .. " + TBD", hl.dsp.window.float({ action = "toggle" }))
 --hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -27,7 +27,7 @@ hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("list-hypr-bindings"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + I", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("screen-capture"))
-hl.bind(mainMod .. " + CONTROL + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + CONTROL + L", hl.dsp.exec_cmd("lock-screen"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))

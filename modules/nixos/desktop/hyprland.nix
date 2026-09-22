@@ -2,8 +2,15 @@
   config,
   lib,
   pkgs,
+  users,
   ...
 }:
+let
+  # noctaliaEnable = config.home-manager;
+  noctaliaEnable = builtins.any (
+    user: config.home-manager.users.${user}.kp.hyprland.bar == "noctalia"
+  ) users;
+in
 {
   config = lib.mkIf (config.kp.desktop.enable && (config.kp.desktop.environment == "hyprland")) {
     environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card1";
@@ -45,5 +52,11 @@
     xdg.portal.configPackages = [
       pkgs.xdg-desktop-portal-hyprland
     ];
+    nix.settings = lib.mkIf noctaliaEnable {
+      extra-substituters = [ "https://noctalia.cachix.org" ];
+      extra-trusted-public-keys = [
+        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      ];
+    };
   };
 }

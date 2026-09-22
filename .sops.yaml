@@ -1,54 +1,54 @@
 keys:
-    - &asgard age1uqltjql96ttngvw4peylxtg2fnkgtlqxld9naeda34mp9l3zf3jsndncy5
-    - &baldur-biche age17ge85twavzzeylrhns639007naxkxrvjty6zj7gmq57wnf4p7edqffuy98
-    - &baldur-root age1qva0v8ka9pnh748fswd60y52luum5hthf7t5fh483xm7wn5al5hslejace
-    - &baldur-robot age1q6a6qcuczj26e900mh4she2n0ezlze0297usjarpddzvdhst7yhshg9cds
-    - &elnuevo-1-ops age1wv7f8yx0kt6a0cktvm57jtzh6puerq3ya47kjcfcyjyak94f8gsqfzc3kl
-    - &elnuevo-1-root age18vapsrfd4pv07j0w88maa0mjthtpsqlkcdfhlksfqt5yvhd2mplqvzsz2n
-    - &elnuevo-2-ops age1vkljt68ypm2pc8vsguw6h37kxc7yz0n2et9vp60qfcgeg5f53y5srkxtph
-    - &elnuevo-2-root age1np3gadp47qqwjddc38hvj9vk5ay339fh767p49h3n3u9rjkxlf4s5assg5
-    - &heimdall-ops age100k5jmd9gslg7k6xpsf2y47zm6kc09vnwvqaqqh0tp489lcyxvksc729nv
-    - &heimdall-root age148h3n794pww82ykk8nlqpk2y7cj5dx0892a9k57pt3tddckkvysslqveww
-    - &lordi-biche age1amvvsl8a70hwnw3hsw0jpxj2mh7un88d3v2cd9d08m5trvgvvg7q62rksl
-    - &lordi-root age1zzgfc4fx8ju9g2z4ak8qjq5sed4guafdn33qmvne0flz8xe9759sav2lt5
-    - &lordi-robot age1xw7u99pjez0wjz8u607wt8xaa0x6h0stualezknh7zjctsa8r54sz0jev0
-    - &midgard-ops age10t8nlfw57zkk6nwcya6qzhylyeckg29u5fuymnvp83j2a22suyvsljv595
-    - &midgard-root age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
-    - &njord age1u25wwdktfywcrupcw0lxkwm5nqnfmps22ea8563txs73n2348uqqze3xkd
-    - &njord-host age1wsdqdexlqzmzs8muh8t4rvxhudn4eentw0jp2mtk0ftm4p4yesfqj72kfs
-    - &njord-mac age1s72rue0que3ecjzzc7mwhegd8gjemjqnyzws8fwrs3qlgc47pc2q3380nj
-    - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
-    - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
-    - &yggdrasil-ops age154vpafvshynw9jwp6gkege9eph8jwspfch3sd8vcuq2rt00zv50s4y806k
-    - &yggdrasil-root age1jmazcskxhmlcv5ne4mvu98crszu7ptg3q5kgcp53ck6pfsjeng8qz7vf7w
-    - &vili age1ak66v60p8ws2vf2m56c0q64q6j7cts4atrhua5jwvkx85eq5y3qsn6q8vt
+  - &asgard age1uqltjql96ttngvw4peylxtg2fnkgtlqxld9naeda34mp9l3zf3jsndncy5
+  - &baldur-biche age17ge85twavzzeylrhns639007naxkxrvjty6zj7gmq57wnf4p7edqffuy98
+  - &baldur-root age1qva0v8ka9pnh748fswd60y52luum5hthf7t5fh483xm7wn5al5hslejace
+  - &baldur-robot age1q6a6qcuczj26e900mh4she2n0ezlze0297usjarpddzvdhst7yhshg9cds
+  - &elnuevo-1-ops age1wv7f8yx0kt6a0cktvm57jtzh6puerq3ya47kjcfcyjyak94f8gsqfzc3kl
+  - &elnuevo-1-root age18vapsrfd4pv07j0w88maa0mjthtpsqlkcdfhlksfqt5yvhd2mplqvzsz2n
+  - &elnuevo-2-ops age1vkljt68ypm2pc8vsguw6h37kxc7yz0n2et9vp60qfcgeg5f53y5srkxtph
+  - &elnuevo-2-root age1np3gadp47qqwjddc38hvj9vk5ay339fh767p49h3n3u9rjkxlf4s5assg5
+  - &heimdall-ops age100k5jmd9gslg7k6xpsf2y47zm6kc09vnwvqaqqh0tp489lcyxvksc729nv
+  - &heimdall-root age148h3n794pww82ykk8nlqpk2y7cj5dx0892a9k57pt3tddckkvysslqveww
+  - &lordi-biche age1amvvsl8a70hwnw3hsw0jpxj2mh7un88d3v2cd9d08m5trvgvvg7q62rksl
+  - &lordi-root age1zzgfc4fx8ju9g2z4ak8qjq5sed4guafdn33qmvne0flz8xe9759sav2lt5
+  - &lordi-robot age1xw7u99pjez0wjz8u607wt8xaa0x6h0stualezknh7zjctsa8r54sz0jev0
+  - &midgard-ops age10t8nlfw57zkk6nwcya6qzhylyeckg29u5fuymnvp83j2a22suyvsljv595
+  - &midgard-root age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
+  - &njord age1u25wwdktfywcrupcw0lxkwm5nqnfmps22ea8563txs73n2348uqqze3xkd
+  - &njord-host age1wsdqdexlqzmzs8muh8t4rvxhudn4eentw0jp2mtk0ftm4p4yesfqj72kfs
+  - &njord-mac age1s72rue0que3ecjzzc7mwhegd8gjemjqnyzws8fwrs3qlgc47pc2q3380nj
+  - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
+  - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
+  - &yggdrasil-ops age154vpafvshynw9jwp6gkege9eph8jwspfch3sd8vcuq2rt00zv50s4y806k
+  - &yggdrasil-root age1jmazcskxhmlcv5ne4mvu98crszu7ptg3q5kgcp53ck6pfsjeng8qz7vf7w
+  - &vili age1ak66v60p8ws2vf2m56c0q64q6j7cts4atrhua5jwvkx85eq5y3qsn6q8vt
 creation_rules:
-    - path_regex: secrets/.*\.(yaml|json)$
-      key_groups:
-          - age:
-                - *asgard
-                - *baldur-biche
-                - *baldur-root
-                - *baldur-robot
-                - *elnuevo-1-ops
-                - *elnuevo-1-root
-                - *elnuevo-2-ops
-                - *elnuevo-2-root
-                - *heimdall-ops
-                - *heimdall-root
-                - *lordi-biche
-                - *lordi-root
-                - *lordi-robot
-                - *midgard-ops
-                - *midgard-root
-                - *njord
-                - *njord-host
-                - *njord-mac
-                - *robot
-                - *spare
-                - *yggdrasil-ops
-                - *yggdrasil-root
-                - *vili
+  - path_regex: secrets/.*\.(yaml|json)$
+    key_groups:
+      - age:
+          - *asgard
+          - *baldur-biche
+          - *baldur-root
+          - *baldur-robot
+          - *elnuevo-1-ops
+          - *elnuevo-1-root
+          - *elnuevo-2-ops
+          - *elnuevo-2-root
+          - *heimdall-ops
+          - *heimdall-root
+          - *lordi-biche
+          - *lordi-root
+          - *lordi-robot
+          - *midgard-ops
+          - *midgard-root
+          - *njord
+          - *njord-host
+          - *njord-mac
+          - *robot
+          - *spare
+          - *yggdrasil-ops
+          - *yggdrasil-root
+          - *vili
 stores:
-    yaml:
-        indent: 2
+  yaml:
+    indent: 2

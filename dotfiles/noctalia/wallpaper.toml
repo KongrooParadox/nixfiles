@@ -1,0 +1,13 @@
+[wallpaper]
+directory = "~/Pictures/wallpapers/horizontal"
+per_monitor_directories = true
+
+[wallpaper.default]
+path = "~/Pictures/wallpapers/horizontal/water-dragon.png"
+
+[wallpaper.monitor.DVI-I-2]
+enabled = true
+directory = "~/Pictures/wallpapers/vertical"
+
+[wallpaper.monitors.DVI-I-2]
+path = "/home/robot/Pictures/wallpapers/vertical/ghibli-landscape.png"

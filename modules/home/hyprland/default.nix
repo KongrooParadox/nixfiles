@@ -11,7 +11,7 @@ let
     osConfig.kp.desktop.enable == true && osConfig.kp.desktop.environment == "hyprland";
   barLauncher =
     if cfg.bar == "noctalia" then
-      "${pkgs.killall}/bin/killall -q noctalia-shell;sleep 1 && noctalia-shell &"
+      "${pkgs.killall}/bin/killall -q noctalia;sleep 1 && noctalia &"
     else
       # quickshell
       "${pkgs.killall}/bin/killall -q qs;sleep 1 && qs &";
@@ -44,17 +44,19 @@ in
     home.packages =
       with pkgs;
       [
-        cliphist
-        wl-clipboard
-        (import ../../../scripts/rofi-launcher.nix { inherit pkgs; })
-        (import ../../../scripts/rofi-clipboard-history.nix { inherit pkgs; })
-        (import ../../../scripts/screen-capture.nix { inherit pkgs; })
+        (import ../../../scripts/launcher.nix { inherit config pkgs; })
+        (import ../../../scripts/clipboard-history.nix { inherit config pkgs; })
+        (import ../../../scripts/screen-capture.nix { inherit config pkgs; })
+        (import ../../../scripts/lock-screen.nix { inherit config pkgs; })
         (import ../../../scripts/list-hypr-bindings.nix { inherit pkgs; })
       ]
       ++ lib.optionals (builtins.elem cfg.bar [
-        "noctalia"
         "quickshell"
-      ]) [ quickshell ];
+      ]) [ quickshell ]
+      ++ lib.optionals (cfg.bar != "noctalia") [
+        cliphist
+        wl-clipboard
+      ];
 
     stylix.targets.hyprland.enable = false;
 

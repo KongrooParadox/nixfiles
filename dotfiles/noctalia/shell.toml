@@ -1,0 +1,8 @@
+[shell]
+avatar_path = "~/Pictures/profile.png"
+clipboard_history_max_entries = 10000
+font_family = "JetBrainsMono NF"
+launch_apps_as_systemd_services = false
+settings_show_advanced = true
+settings_window_translucent = false
+

@@ -1,0 +1,12 @@
+[bar]
+order = ["main"]
+
+[bar.main]
+concave_edge_corners = false
+margin_ends = 0
+position = "right"
+scale = 1.10
+thickness = 42
+start = ["control-center", "wallpaper", "brightness", "notifications", "workspaces", "media", "keyboard_layout"]
+center = [ "active_window", "cpu", "mem", "disk"]
+end = [ "battery", "volume", "bluetooth", "network", "tray", "clock", "session"]
