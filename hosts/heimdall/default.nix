@@ -12,19 +12,6 @@ in
     inputs.apple-silicon.nixosModules.default
   ];
 
-  home-manager.users.ops.kp.openclaw = {
-    enable = true;
-    model = localModel;
-    contextWindow = 16384;
-    reserveTokens = 8192;
-    allowedTools = [
-      "read"
-      "write"
-      "edit"
-      "exec"
-    ];
-  };
-
   kp = {
     arr = {
       enable = true;

@@ -59,7 +59,6 @@ in
               "Documents"
             ]
             ++ lib.optionals (user != "fatiha") [
-              ".openclaw"
               "Desktop"
               "Downloads"
               "Music"

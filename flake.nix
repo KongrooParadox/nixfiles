@@ -22,10 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
-    nix-openclaw = {
-      url = "github:openclaw/nix-openclaw";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixpkgs-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";

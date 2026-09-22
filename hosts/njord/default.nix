@@ -19,18 +19,6 @@ in
       emacs.enable = false;
       pentest.enable = true;
       hyprland.bar = "noctalia";
-      openclaw = {
-        enable = false;
-        model = localModel;
-        contextWindow = contextSize;
-        reserveTokens = contextSize / 3;
-        allowedTools = [
-          "read"
-          "write"
-          "edit"
-          "exec"
-        ];
-      };
       opencode.enable = true;
     };
     kp = {
