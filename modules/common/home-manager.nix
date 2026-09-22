@@ -11,14 +11,6 @@
 }:
 let
   cfg = config.kp.home-manager;
-  modulesFromInputs = [
-    inputs.sops-nix.homeManagerModules.sops
-  ];
-  sopsKeyPath =
-    if config.kp.impermanence.enable then
-      map (user: "/persist/home/${user}/.ssh/id_ed25519") users
-    else
-      map (user: "${cfg.homeBaseDirectory}/${user}/.ssh/id_ed25519") users;
 in
 {
   imports =
@@ -54,17 +46,8 @@ in
 
   config = lib.mkIf cfg.enable {
     home-manager.sharedModules = [
-      {
-        sops = {
-          age = {
-            sshKeyPaths = sopsKeyPath;
-          };
-          defaultSopsFile = ../../secrets/secrets.yaml;
-          defaultSopsFormat = "yaml";
-        };
-      }
-    ]
-    ++ modulesFromInputs;
+      inputs.self.outputs.homeModules.default
+    ];
     home-manager = {
       backupCommand = "rm -f";
       extraSpecialArgs = {
@@ -78,11 +61,6 @@ in
       };
       useUserPackages = true;
       users = lib.genAttrs users (name: {
-        imports = [
-          inputs.nix-doom-emacs-unstraightened.homeModule
-          inputs.noctalia.homeModules.default
-          inputs.self.outputs.homeModules.default
-        ];
         home = {
           username = name;
           homeDirectory = lib.mkForce "${cfg.homeBaseDirectory}/${name}";

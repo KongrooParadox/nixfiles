@@ -14,6 +14,7 @@ in
     ./pentest.nix
     ./rclone.nix
     ./s3.nix
+    ./sops.nix
     ./terminal.nix
   ];
 

@@ -13,6 +13,9 @@ let
   wallpaperDirectory = "${config.home.homeDirectory}/Pictures/wallpapers";
 in
 {
+  imports = [
+    inputs.noctalia.homeModules.default
+  ];
   config = lib.mkIf noctaliaEnable {
     home.file = {
       "Pictures/wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${inputs.big-files}/wallpapers";

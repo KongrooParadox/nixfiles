@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -8,6 +9,10 @@
   options.kp.emacs = {
     enable = lib.mkEnableOption "Emacs";
   };
+
+  imports = [
+    inputs.nix-doom-emacs-unstraightened.homeModule
+  ];
 
   config = {
     editorconfig = {
