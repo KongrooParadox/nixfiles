@@ -54,6 +54,8 @@
       just-formatter
       just-lsp
       llvmPackages_20.clang-unwrapped
+      kulala-core
+      kulala-fmt
       lua-language-server
       nil
       nixd
