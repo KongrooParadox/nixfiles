@@ -348,7 +348,6 @@ return {
         pylsp = {},
         pyright = {},
         rust_analyzer = {},
-        terraformls = {},
         tofu_ls = {
           cmd = { 'tofu-ls', 'serve' },
           -- Base filetypes

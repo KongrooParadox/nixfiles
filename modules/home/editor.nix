@@ -65,8 +65,6 @@
       python313Packages.python-lsp-server
       pyright
       rust-analyzer
-      terraform
-      terraform-ls
       tofu-ls
       tree-sitter
       typescript-language-server
