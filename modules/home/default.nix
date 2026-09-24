@@ -34,9 +34,6 @@ in
     "libvirt" = {
       source = mkSymlink "${dotfiles}/libvirt/";
     };
-    "nvim" = {
-      source = mkSymlink "${dotfiles}/nvim";
-    };
     "quickshell" = {
       source = mkSymlink "${dotfiles}/quickshell";
     };

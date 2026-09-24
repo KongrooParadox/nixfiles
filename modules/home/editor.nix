@@ -12,6 +12,7 @@
 
   imports = [
     inputs.nix-doom-emacs-unstraightened.homeModule
+    inputs.nvim.homeModules.default
   ];
 
   config = {
@@ -42,39 +43,23 @@
     nixpkgs.config.allowUnfreePredicate = pkg: true;
 
     home.packages = with pkgs; [
-      # ansible-language-server #unmaintained in nixpkgs
-      bash-language-server
-      docker-compose-language-service
-      dockerfile-language-server
-      gopls
-      gitlab-ci-ls
-      harper
-      helm-ls
       just
-      just-formatter
-      just-lsp
-      llvmPackages_20.clang-unwrapped
-      kulala-core
-      kulala-fmt
-      lua-language-server
-      nil
-      nixd
-      nixfmt
       opentofu
-      postgres-language-server
-      python313Packages.python-lsp-server
-      pyright
-      rust-analyzer
-      tofu-ls
-      tree-sitter
-      typescript-language-server
-      vscode-langservers-extracted
-      yaml-language-server
     ];
 
-    # for nixd to source host-specific options in nvim config
     home.sessionVariables = {
+      EDITOR = "nvim";
+      # for nixd to source host-specific options in nvim config
       NIXFILES_DIR = "${config.home.homeDirectory}/nixfiles";
+    };
+
+    # Plugins, LSPs, TeX Live (vimtex) and zathura all come with the wrapper;
+    # it also provides the vi, vim and vimdiff commands.
+    wrappers.neovim = {
+      enable = true;
+      # Editable checkout of the config, searched by <leader>sn (falls back to
+      # the store copy when missing).
+      info.config_checkout = "${config.home.homeDirectory}/src/nvim";
     };
 
     programs = {
@@ -85,17 +70,6 @@
         # doomDir = "${config.home.homeDirectory}/.config/doom.d";
         # doomDir = "/nix/store/3z230glrjqibydmxv1v2r612jv8bn3pj-home-manager-files/.config/doom.d";
       };
-      neovim = {
-        defaultEditor = true;
-        enable = true;
-        sideloadInitLua = true;
-        viAlias = true;
-        vimAlias = true;
-        vimdiffAlias = true;
-        withPython3 = false;
-        withRuby = false;
-      };
-      zathura.enable = true;
     };
 
     services.emacs = {

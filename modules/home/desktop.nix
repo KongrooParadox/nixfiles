@@ -13,7 +13,6 @@ in
 {
   imports = [
     ./hyprland
-    ./tex.nix
   ];
 
   config = lib.mkIf cfg.enable {
