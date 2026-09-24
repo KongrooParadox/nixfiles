@@ -116,6 +116,30 @@
       nixosConfigurations = buildAll facts.nixosHosts;
       darwinConfigurations = buildAll facts.darwinHosts;
 
+      checks = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs-unstable.legacyPackages.${system};
+        in
+        {
+          zones = pkgs.runCommand "check-zones" { nativeBuildInputs = [ pkgs.bind ]; } ''
+            ${lib.concatStrings (
+              lib.mapAttrsToList (site: cfg: ''
+                named-checkzone ${helpers.domainOf site} ${pkgs.writeText "${site}.zone" ''
+                  $ORIGIN ${helpers.domainOf site}.
+                  $TTL 300
+                  @ IN SOA ns-check hostmaster ( 1 3600 900 604800 300 )
+                  @ IN NS ns-check
+                  ns-check IN A 127.0.0.1
+                  ${helpers.zoneOf site}
+                ''}
+              '') facts.sites
+            )}
+            touch $out
+          '';
+        }
+      );
+
       devShells = forAllSystems (system: {
         default = inputs.nixpkgs-unstable.legacyPackages.${system}.mkShellNoCC {
           packages = [ outputs.formatter.${system} ];
