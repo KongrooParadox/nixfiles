@@ -48,7 +48,7 @@ in
 
     (lib.mkIf cfg.libvirtd.enable {
       programs.virt-manager = {
-        enable = true;
+        enable = config.kp.desktop.enable;
       };
       users.users = builtins.listToAttrs (
         map (user: {
@@ -59,7 +59,8 @@ in
       virtualisation.libvirtd = {
         enable = true;
         qemu = {
-          package = pkgs.qemu;
+          # Servers only run native guests
+          package = if config.kp.desktop.enable then pkgs.qemu else pkgs.qemu_kvm;
           runAsRoot = true;
           swtpm.enable = true;
         };

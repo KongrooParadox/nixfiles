@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf (config.kp.stylix.enable) {
+  config = lib.mkIf (config.kp.stylix.enable && config.kp.desktop.enable) {
     # stylix.targets.qt.enable = false;
     stylix.cursor = {
       package = pkgs.bibata-cursors;

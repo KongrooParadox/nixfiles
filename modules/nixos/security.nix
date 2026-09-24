@@ -1,6 +1,5 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  environment.systemPackages = with pkgs; [ bitwarden-cli ];
   security = {
     sudo.wheelNeedsPassword = false;
     polkit = {

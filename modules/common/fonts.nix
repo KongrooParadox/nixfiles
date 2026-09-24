@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   isLinux,
@@ -14,7 +15,7 @@ in
 {
   imports = [ ] ++ (lib.optional isLinux ../nixos/fonts.nix);
 
-  fonts = {
+  fonts = lib.mkIf config.kp.desktop.enable {
     packages = with pkgs; [
       font-awesome
       twitter-color-emoji

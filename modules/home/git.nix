@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ osConfig, pkgs, ... }:
 let
   user = {
     email = "7790572+KongrooParadox@users.noreply.github.com";
@@ -23,7 +23,8 @@ in
     };
     git = {
       enable = true;
-      package = pkgs.gitFull;
+      # gitFull adds svn, send-email and the GUIs
+      package = if osConfig.kp.desktop.enable then pkgs.gitFull else pkgs.git;
       settings = {
         core = {
           editor = "nvim";

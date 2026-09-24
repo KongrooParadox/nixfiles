@@ -1,4 +1,10 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  osConfig,
+  pkgs,
+  ...
+}:
 let
   dotfiles = "${config.home.homeDirectory}/nixfiles/dotfiles";
   mkSymlink = path: config.lib.file.mkOutOfStoreSymlink path;
@@ -56,13 +62,6 @@ in
       };
     };
 
-    packages = with pkgs; [
-      ansible
-      # ansible-lint
-      cargo
-      fastfetch
-      rustc
-      starship
-    ];
+    packages = with pkgs; [ starship ] ++ lib.optionals osConfig.kp.desktop.enable [ fastfetch ];
   };
 }

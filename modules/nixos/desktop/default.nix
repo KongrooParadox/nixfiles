@@ -9,7 +9,6 @@
 }:
 let
   cfg = config.kp.desktop;
-  nixpkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   options.kp.desktop = {
@@ -65,28 +64,25 @@ in
         [
           adwaita-icon-theme
           android-tools
+          bitwarden-cli
+          cmake
           deluge-gtk
           element-desktop
+          gcc
+          gnumake
           evolution
           gimp
           gnupg
-          go
-          helmfile
           hugo
           hyprpicker
           inkscape
-          k9s
           kooha
-          krita
-          kubectl
-          kubectx
-          kubernetes-helm
           mesa
           mesa-demos
           moonlight-qt
           networkmanagerapplet
           nixos-anywhere
-          nixpkgs-stable.calibre
+          calibre
           nodejs_22
           parsec-bin
           pavucontrol
@@ -97,18 +93,20 @@ in
           remmina
           samba
           screenkey
-          talosctl
           teams-for-linux
           transmission_4
           usbutils
           vesktop
           virt-manager
+          virtualenv
           vlc
           vulkan-tools
           wireguard-tools
           xournalpp
+          yad
           zapzap
         ]
+        ++ lib.optionals config.kp.apps.krita.enable [ krita ]
         ++ lib.optionals usesDisplaylink [
           displaylink
         ];
@@ -129,6 +127,10 @@ in
         ];
       };
     };
+
+    # Only for screen readers and browser text-to-speech; drags in the mbrola voices.
+    # GNOME keeps it for its accessibility stack.
+    services.speechd.enable = lib.mkIf (cfg.environment != "gnome") false;
 
     # Apple usb
     services.usbmuxd.enable = true;

@@ -26,16 +26,16 @@ in
         mpv
         mumble
         nixpkgs-stable.libreoffice
-        prusa-slicer
         signal-desktop
         vlc
       ]
+      ++ lib.optionals osConfig.kp.apps.prusa-slicer.enable [ prusa-slicer ]
       ++ lib.optionals isLinux [
         brightnessctl
         playerctl
         pulseaudio
-        wineWow64Packages.waylandFull
         xdg-utils
-      ];
+      ]
+      ++ lib.optionals (isLinux && osConfig.kp.apps.wine.enable) [ wineWow64Packages.waylandFull ];
   };
 }

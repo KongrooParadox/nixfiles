@@ -34,7 +34,8 @@ in
   config = lib.mkIf (cfg.enable) {
     stylix = {
       enable = true;
-      autoEnable = true;
+      # Nothing to theme on servers (qt/kvantum, cursors, terminals)
+      autoEnable = config.kp.desktop.enable;
       base16Scheme = {
         base00 = "2E3440";
         base01 = "3B4252";

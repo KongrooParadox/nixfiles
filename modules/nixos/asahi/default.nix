@@ -31,8 +31,10 @@ in
     hardware = {
       asahi = {
         enable = true;
-        setupAsahiSound = true;
+        # Speakers and the ambient light sensor only matter on a desktop
+        setupAsahiSound = config.kp.desktop.enable;
       };
+      sensor.iio.enable = config.kp.desktop.enable;
       # Provide the Asahi Mesa GPU userspace (incl. the Honeykrisp Vulkan ICD in
       # /run/opengl-driver) so any Asahi host can use the GPU (e.g. llama.cpp).
       graphics.enable = lib.mkDefault true;

@@ -2,6 +2,7 @@
   config,
   domain,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -206,6 +207,7 @@ in
         group = "media";
         openFilesLimit = 2000;
         openFirewall = false;
+        package = pkgs.deluged; # no GTK client
         web = {
           enable = true;
           openFirewall = false;

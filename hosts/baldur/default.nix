@@ -13,6 +13,7 @@
   services.xserver.xkb.layout = lib.mkForce "fr,ara,us";
 
   kp = {
+    apps.wine.enable = true;
     desktop = {
       enable = true;
       environment = "gnome";

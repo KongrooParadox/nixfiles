@@ -1,12 +1,13 @@
 {
   config,
+  osConfig,
   pkgs,
   ...
 }:
 {
   programs = {
     alacritty = {
-      enable = true;
+      enable = osConfig.kp.desktop.enable;
       settings = {
         env.TERM = "alacritty";
         window = {
@@ -26,7 +27,7 @@
       enableBashIntegration = true;
       nix-direnv.enable = true;
     };
-    kitty.enable = true;
+    kitty.enable = osConfig.kp.desktop.enable;
     starship = {
       enable = true;
       enableZshIntegration = true;
@@ -120,7 +121,7 @@
         bindkey -s '^[o' "tmux-switcher ~/src/zellij\n"
         autoload -U +X bashcompinit && bashcompinit
         complete -F __start_kubectl k
-        complete -C $(which tofu) tofu
+        complete -C tofu tofu
         path+=('${config.home.homeDirectory}/go/bin')
         path+=('${config.home.homeDirectory}/.local/bin')
       '';

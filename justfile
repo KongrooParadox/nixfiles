@@ -18,6 +18,14 @@ boot:
 check:
     nix flake check |& nom
 
+# Build a host's system and report its closure size and 20 biggest store paths
+closure HOSTNAME:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    out=$(nix build --no-link --print-out-paths .#nixosConfigurations.{{HOSTNAME}}.config.system.build.toplevel)
+    nix path-info -Sh "$out"
+    nix path-info -rs "$out" | sort -k2 -n | tail -20 | numfmt --field=2 --to=iec --padding=8
+
 switch:
     nixos-rebuild switch --flake .# --sudo |& nom
 

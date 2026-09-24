@@ -52,9 +52,16 @@ in
       powertop.enable = true;
     };
 
-    # Dynamic timezone
+    # Dynamic timezone (pulls in geoclue, so desktops only)
     time.timeZone = lib.mkDefault "Europe/Paris";
-    services.automatic-timezoned.enable = true;
+    services.automatic-timezoned.enable = config.kp.desktop.enable;
+
+    # Keep man pages everywhere, drop the heavier docs and the NixOS manual on servers
+    documentation = {
+      doc.enable = lib.mkDefault config.kp.desktop.enable;
+      info.enable = lib.mkDefault config.kp.desktop.enable;
+      nixos.enable = lib.mkDefault config.kp.desktop.enable;
+    };
 
     # Select internationalisation properties.
     i18n = {
@@ -87,14 +94,11 @@ in
         attic-client
         bat
         btop
-        cmake
         curl
         direnv
         dnsutils
         fd
         fzf
-        gcc
-        gnumake
         ipcalc
         iptables
         jq
@@ -114,10 +118,8 @@ in
         traceroute
         tree
         unzip
-        virtualenv
         w3m
         wget
-        yad
         yq
         zip
       ];

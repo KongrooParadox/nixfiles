@@ -55,6 +55,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # 2.x is marked insecure on 26.05; 3.0 has breaking changes, so stay on 2.x for now
+    nixpkgs.config.permittedInsecurePackages = [ "immich-${pkgs.immich.version}" ];
+
     environment.sessionVariables = {
       LIBVA_DRIVER_NAME = "iHD";
     };

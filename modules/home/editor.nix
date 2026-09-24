@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  osConfig,
   pkgs,
   ...
 }:
@@ -42,10 +43,7 @@
 
     nixpkgs.config.allowUnfreePredicate = pkg: true;
 
-    home.packages = with pkgs; [
-      just
-      opentofu
-    ];
+    home.packages = [ pkgs.just ];
 
     home.sessionVariables = {
       EDITOR = "nvim";
@@ -60,6 +58,13 @@
       # Editable checkout of the config, searched by <leader>sn (falls back to
       # the store copy when missing).
       info.config_checkout = "${config.home.homeDirectory}/src/nvim";
+      settings.profile = if osConfig.kp.desktop.enable then "slim" else "light";
+      # kulala-core is only packaged on unstable. specWith only reads a set as a
+      # spec when it has `data`; mkIf false adds no definition.
+      specs.kulala = lib.mkIf (!(pkgs ? kulala-core)) {
+        enable = false;
+        data = lib.mkIf false null;
+      };
     };
 
     programs = {

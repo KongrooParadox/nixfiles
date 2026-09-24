@@ -1,6 +1,5 @@
 {
   config,
-  isLinux,
   lib,
   osConfig,
   pkgs,
@@ -10,14 +9,7 @@
   config = lib.mkIf osConfig.kp.desktop.enable (
     lib.mkMerge [
       {
-        home.packages =
-          with pkgs;
-          [
-            brave
-          ]
-          ++ lib.optionals isLinux [
-            chromium
-          ];
+        home.packages = [ pkgs.brave ];
         programs = {
           firefox = {
             configPath = "${config.xdg.configHome}/mozilla/firefox";

@@ -1,7 +1,7 @@
-{ ... }:
+{ config, ... }:
 {
   fonts = {
-    enableDefaultPackages = true;
+    enableDefaultPackages = config.kp.desktop.enable;
     fontconfig = {
       enable = true;
       defaultFonts = {
