@@ -17,6 +17,7 @@ keys:
   - &njord age1u25wwdktfywcrupcw0lxkwm5nqnfmps22ea8563txs73n2348uqqze3xkd
   - &njord-host age1wsdqdexlqzmzs8muh8t4rvxhudn4eentw0jp2mtk0ftm4p4yesfqj72kfs
   - &njord-mac age1s72rue0que3ecjzzc7mwhegd8gjemjqnyzws8fwrs3qlgc47pc2q3380nj
+  - &oci-arm age1k7tarhkz24pxgsgf50tcc9tww0xx4m7d2tqewv4yj5ret34unvuq4p9d4q
   - &robot age1dtjtjdg8dpe3xq7amg3u2v6ga0srl4x7nflznvtx2h9czw9qea8q7pypqp
   - &spare age13aaym2awn8zgz4zrt5dscyy6wcc5z2ntt8tfm8syflde0djqka4q5sncmg
   - &yggdrasil-ops age154vpafvshynw9jwp6gkege9eph8jwspfch3sd8vcuq2rt00zv50s4y806k
@@ -44,6 +45,7 @@ creation_rules:
           - *njord
           - *njord-host
           - *njord-mac
+          - *oci-arm
           - *robot
           - *spare
           - *yggdrasil-ops
