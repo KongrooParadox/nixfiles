@@ -3,6 +3,9 @@ architecture := `uname -a | awk '{ print $(NF-1) }'`
 build:
     nixos-rebuild build --flake .# --sudo |& nom
 
+boot:
+    nixos-rebuild boot --flake .# --sudo |& nom
+
 build-iso-arm:
     nix build .#nixosConfigurations.iso-arm.config.system.build.isoImage |& nom
 
@@ -11,9 +14,6 @@ build-iso-x86:
 
 build-remote HOSTNAME:
     nixos-rebuild build --flake .#{{HOSTNAME}} |& nom
-
-boot:
-    nixos-rebuild boot --flake .# --sudo |& nom
 
 check:
     nix flake check |& nom
@@ -26,9 +26,6 @@ closure HOSTNAME:
     nix path-info -Sh "$out"
     nix path-info -rs "$out" | sort -k2 -n | tail -20 | numfmt --field=2 --to=iec --padding=8
 
-switch:
-    nixos-rebuild switch --flake .# --sudo |& nom
-
 deploy-remote FQDN COMMAND:
     #!/usr/bin/env bash
     hostname=$(echo {{FQDN}} | awk -F '.' {'print $1'})
@@ -37,6 +34,12 @@ deploy-remote FQDN COMMAND:
         then nixos-rebuild {{COMMAND}} --flake .#$hostname --sudo --target-host {{FQDN}} |& nom
         else nixos-rebuild {{COMMAND}} --flake .#$hostname --sudo --build-host {{FQDN}} --target-host {{FQDN}} |& nom
     fi
+
+repl:
+    nixos-rebuild repl --flake .#
+
+switch:
+    nixos-rebuild switch --flake .# --sudo |& nom
 
 test:
     nixos-rebuild test --flake .# --sudo |& nom
