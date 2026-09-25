@@ -1,62 +1,69 @@
 --
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 hl.window_rule({
-  name        = "rofi-no-borders",
-  match       = { class = "^(rofi)$" },
+  name = "rofi-no-borders",
+  match = { class = "^(rofi)$" },
   border_size = 0,
 })
 hl.window_rule({
-  name         = "steam",
-  match        = { class = "^(steam)$" },
-  border_size  = 0,
+  name = "steam_apps",
+  match = { class = "^(steam_app_.*)$" },
+  border_size = 0,
+  workspace = 9,
   stay_focused = true,
 })
 hl.window_rule({
-  name  = "float-apps",
+  name = "steam",
+  match = { class = "^(steam)$" },
+  border_size = 0,
+  workspace = 10,
+  stay_focused = true,
+})
+hl.window_rule({
+  name = "float-apps",
   match = { class = "^(nm-connection-editor|nwg-look|qt5ct|mpv)$" },
   float = true,
 })
 hl.window_rule({
-  name  = "float-resized-apps",
+  name = "float-resized-apps",
   match = { class = "^(org.pulseaudio.pavucontrol|blueman-manager)$" },
   float = true,
-  size  = { "monitor_w * 0.5", "monitor_h * 0.7" },
+  size = { "monitor_w * 0.5", "monitor_h * 0.7" },
 })
 hl.window_rule({
-  name      = "terminal",
-  match     = { class = "^(Alacritty|kitty)$" },
+  name = "terminal",
+  match = { class = "^(Alacritty|kitty)$" },
   workspace = "1",
 })
 hl.window_rule({
-  name      = "firefox",
-  match     = { class = "^(firefox)$" },
-  opacity   = "1.0 0.9",
+  name = "firefox",
+  match = { class = "^(firefox)$" },
+  opacity = "1.0 0.9",
   workspace = "2",
 })
 hl.window_rule({
-  name      = "brave",
-  match     = { class = "^(brave-browser)$" },
-  opacity   = "1.0 0.9",
+  name = "brave",
+  match = { class = "^(brave-browser)$" },
+  opacity = "1.0 0.9",
   workspace = "3",
 })
 hl.window_rule({
-  name      = "thunar",
-  match     = { class = "^([Tt]hunar)$" },
-  opacity   = "0.9 0.7",
+  name = "thunar",
+  match = { class = "^([Tt]hunar)$" },
+  opacity = "0.9 0.7",
   workspace = "4",
 })
 hl.window_rule({
-  name      = "zathura",
-  match     = { class = "^org.pwmt.zathura$" },
-  opacity   = "0.9 0.7",
+  name = "zathura",
+  match = { class = "^org.pwmt.zathura$" },
+  opacity = "0.9 0.7",
   workspace = "4",
 })
 
-
 local suppressMaximizeRule = hl.window_rule({
   -- Ignore maximize requests from all apps. You'll probably like this.
-  name           = "suppress-maximize-events",
-  match          = { class = ".*" },
+  name = "suppress-maximize-events",
+  match = { class = ".*" },
 
   suppress_event = "maximize",
 })
@@ -64,14 +71,14 @@ local suppressMaximizeRule = hl.window_rule({
 
 hl.window_rule({
   -- Fix some dragging issues with XWayland
-  name     = "fix-xwayland-drags",
-  match    = {
-    class      = "^$",
-    title      = "^$",
-    xwayland   = true,
-    float      = true,
+  name = "fix-xwayland-drags",
+  match = {
+    class = "^$",
+    title = "^$",
+    xwayland = true,
+    float = true,
     fullscreen = false,
-    pin        = false,
+    pin = false,
   },
 
   no_focus = true,
@@ -79,9 +86,9 @@ hl.window_rule({
 
 -- Hyprland-run windowrule
 hl.window_rule({
-  name  = "move-hyprland-run",
+  name = "move-hyprland-run",
   match = { class = "hyprland-run" },
 
-  move  = "20 monitor_h-120",
+  move = "20 monitor_h-120",
   float = true,
 })
