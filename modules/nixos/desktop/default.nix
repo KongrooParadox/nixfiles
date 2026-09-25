@@ -103,7 +103,6 @@ in
           vesktop
           virt-manager
           virtualenv
-          vlc
           vulkan-tools
           wireguard-tools
           xournalpp

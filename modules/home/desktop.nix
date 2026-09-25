@@ -25,6 +25,8 @@ in
         keepassxc
         mpv
         mumble
+        # Pinned: unstable isn't built for aarch64 yet, and the stable copy duplicates
+        # parts of the Qt/python stack. Check with `just cached njord libreoffice`.
         nixpkgs-stable.libreoffice
         signal-desktop
         vlc

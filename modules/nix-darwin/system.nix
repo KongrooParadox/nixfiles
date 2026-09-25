@@ -11,23 +11,15 @@
       android-tools
       discord
       element-desktop
-      gimp
       gnupg
-      go
-      helmfile
       hugo
       inkscape
-      kubectl
-      kubectx
-      kubernetes-helm
-      k9s
       moonlight-qt
       nixos-anywhere
       nodejs_22
       protonmail-bridge
       python3
       # remmina
-      talosctl
       age
       bat
       btop
