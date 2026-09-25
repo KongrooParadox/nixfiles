@@ -8,6 +8,12 @@ hostName=$(echo "$chosenFQDN" | perl -pe 's|(.*?)\..*|\1|' )
 echo "$hostName"
 [ -n "$hostName" ] || exit 0
 
+# Drop the caller's direnv env (e.g. a devShell PATH): tmux gives a new
+# session the client's PATH, and direnv can't unload it there.
+if [ -n "${DIRENV_DIR-}" ]; then
+    eval "$(cd / && direnv export bash 2>/dev/null)"
+fi
+
 if ! tmux has-session -t="ssh_$hostName" 2> /dev/null; then
     tmux new-session -ds "ssh_$hostName" "ssh ${chosenFQDN}"
 fi
