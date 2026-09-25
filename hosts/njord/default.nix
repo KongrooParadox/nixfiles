@@ -21,6 +21,9 @@ in
       hyprland.bar = "noctalia";
       opencode.enable = true;
     };
+    # WiFi, BT and the rest load Apple vendor firmware from the ESP; linux-firmware
+    # (~0.8 GiB) had no users. Revisit if a USB device needs firmware.
+    hardware.enableRedistributableFirmware = false;
     kp = {
       asahi = {
         enable = true;

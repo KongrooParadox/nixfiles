@@ -56,6 +56,13 @@ in
     time.timeZone = lib.mkDefault "Europe/Paris";
     services.automatic-timezoned.enable = config.kp.desktop.enable;
 
+    # The registry and NIX_PATH entries pin a copy of the nixpkgs source (~200 MiB);
+    # servers fetch it on demand instead
+    nixpkgs.flake = {
+      setFlakeRegistry = config.kp.desktop.enable;
+      setNixPath = config.kp.desktop.enable;
+    };
+
     # Keep man pages everywhere, drop the heavier docs and the NixOS manual on servers
     documentation = {
       doc.enable = lib.mkDefault config.kp.desktop.enable;

@@ -82,7 +82,11 @@ in
           moonlight-qt
           networkmanagerapplet
           nixos-anywhere
-          calibre
+          # No TTS: speechSupport drops piper/speechd, espeak-ng (always linked) drops ~0.6 GiB of mbrola voices
+          (calibre.override {
+            speechSupport = false;
+            espeak-ng = espeak-ng.override { mbrolaSupport = false; };
+          })
           nodejs_22
           parsec-bin
           pavucontrol
