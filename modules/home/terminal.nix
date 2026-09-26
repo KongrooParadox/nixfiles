@@ -12,7 +12,11 @@
       enableBashIntegration = true;
       nix-direnv.enable = true;
     };
-    kitty.enable = osConfig.kp.desktop.enable;
+    kitty = {
+      enable = osConfig.kp.desktop.enable;
+      # Send CSI u for Shift+Enter so tmux/nvim can tell it apart from Enter
+      keybindings."shift+enter" = "send_text all \\x1b[13;2u";
+    };
     starship = {
       enable = true;
       enableZshIntegration = true;
