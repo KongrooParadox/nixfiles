@@ -12,6 +12,7 @@ in
 {
   imports = [
     ./browser.nix
+    ./claude.nix
     ./desktop.nix
     ./editor.nix
     ./git.nix
