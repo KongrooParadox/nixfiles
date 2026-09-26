@@ -6,21 +6,6 @@
 }:
 {
   programs = {
-    alacritty = {
-      enable = osConfig.kp.desktop.enable;
-      settings = {
-        env.TERM = "alacritty";
-        window = {
-          decorations = "full";
-          title = "Alacritty";
-          dynamic_title = true;
-          class = {
-            instance = "Alacritty";
-            general = "Alacritty";
-          };
-        };
-      };
-    };
     direnv = {
       enable = true;
       enableZshIntegration = true;

@@ -22,7 +22,7 @@ pkgs.writeShellScriptBin "list-hypr-bindings" ''
   " + Q" "Kill Focused Window" "killactive" \
   " + R" "App Launcher" "rofi" \
   " + S" "Take Screenshot" "screen-capture" \
-  " + T" "Terminal" "alacritty" \
+  " + T" "Terminal" "kitty" \
   " + V" "Search through clipboard history" "cliphist list" \
   " + W" "Launch Waybar" "waybar" \
   " + 1-0" "Move To Workspace 1 - 10" "workspace,X" \

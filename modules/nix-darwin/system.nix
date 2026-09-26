@@ -62,7 +62,7 @@
       dock = {
         persistent-apps =
           (lib.lists.concatMap (user: [
-            { app = "/Users/${user}/Applications/Home Manager Apps/Alacritty.app"; }
+            { app = "/Users/${user}/Applications/Home Manager Apps/Kitty.app"; }
             { app = "/Users/${user}/Applications/Home Manager Apps/Firefox.app"; }
           ]) users)
           ++ [
