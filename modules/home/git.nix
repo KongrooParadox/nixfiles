@@ -48,6 +48,14 @@ in
     jujutsu = {
       enable = true;
       settings = {
+        aliases.tug = [
+          "bookmark"
+          "move"
+          "--from"
+          "heads(::@- & bookmarks())"
+          "--to"
+          "@-"
+        ];
         ui = {
           default-command = "status";
           paginate = "never";
