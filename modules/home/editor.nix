@@ -43,7 +43,10 @@
 
     nixpkgs.config.allowUnfreePredicate = pkg: true;
 
-    home.packages = [ pkgs.just ];
+    home.packages = [
+      pkgs.just
+      pkgs.obsidian
+    ];
 
     home.sessionVariables = {
       EDITOR = "nvim";

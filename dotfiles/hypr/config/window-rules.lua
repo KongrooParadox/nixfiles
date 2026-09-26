@@ -6,6 +6,13 @@ hl.window_rule({
   border_size = 0,
 })
 hl.window_rule({
+  name = "obsidian",
+  match = { class = "^(md.obsidian.Obsidian)$" },
+  border_size = 0,
+  workspace = 10,
+  stay_focused = true,
+})
+hl.window_rule({
   name = "steam_apps",
   match = { class = "^(steam_app_.*)$" },
   border_size = 0,
@@ -16,7 +23,7 @@ hl.window_rule({
   name = "steam",
   match = { class = "^(steam)$" },
   border_size = 0,
-  workspace = 10,
+  workspace = 7,
   stay_focused = true,
 })
 hl.window_rule({
