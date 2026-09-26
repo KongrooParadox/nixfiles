@@ -54,13 +54,14 @@ in
           "--from"
           "heads(::@- & bookmarks())"
           "--to"
-          "@-"
+          "@"
         ];
         ui = {
           default-command = "status";
           paginate = "never";
         };
         user = user;
+        # revsets.bookmark-advance-to = "@-";
         signing = {
           backend = "gpg";
           backends.gpg.program = gpg.program;
