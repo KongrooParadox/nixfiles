@@ -6,13 +6,13 @@ terminal="kitty"
 # Pick repo
 configs="$({ echo ~/nixfiles; fd . ~/src --min-depth 1 --max-depth 1 --type d ; } | xargs -n1 basename)"
 [ -n "$configs" ] || exit 0
-chosen="$(printf '%s\n' "$configs" | rofi -dmenu -p 'Projects:')"
-[ -n "$chosen" ] || exit 0
+choice="$(printf '%s\n' "$configs" | rofi -dmenu -p 'Projects:')"
+[ -n "$choice" ] || exit 0
 
-if [ "$chosen" == "nixfiles" ]; then
-    dir="$HOME/$chosen"
+if [ "$choice" == "nixfiles" ]; then
+    dir="$HOME/$choice"
 else
-    dir="$HOME/src/$chosen"
+    dir="$HOME/src/$choice"
 fi
 
 # Drop the caller's direnv env (e.g. a devShell PATH): tmux gives a new
@@ -25,4 +25,5 @@ fi
 pkill $terminal 2>/dev/null || true
 sleep 0.1
 
-exec $terminal -e tmux new-session -As "$chosen" -c "$dir"
+session_name=${choice//./_}
+exec $terminal -e tmux new-session -As "$session_name" -c "$dir"
