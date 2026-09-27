@@ -347,7 +347,7 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "nvim",
+          "nvim-wrapper",
           "neovim-nightly-overlay",
           "nixpkgs"
         ]
@@ -562,7 +562,7 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "nixpkgs": [
-          "nvim",
+          "nvim-wrapper",
           "nixpkgs"
         ],
         "secrets": "secrets"
@@ -975,7 +975,7 @@
         "type": "github"
       }
     },
-    "nvim": {
+    "nvim-wrapper": {
       "inputs": {
         "latex-docs": "latex-docs",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
@@ -990,13 +990,13 @@
         "lastModified": 1790468395,
         "narHash": "sha256-8GpIq0nX4AgQt4Ipx5pg8CVyh7RfcpSrvoCORbahnZE=",
         "owner": "KongrooParadox",
-        "repo": "nvim",
+        "repo": "nvim-wrapper",
         "rev": "3b5ba5970211933e1e3301531c8cec08765a0571",
         "type": "github"
       },
       "original": {
         "owner": "KongrooParadox",
-        "repo": "nvim",
+        "repo": "nvim-wrapper",
         "type": "github"
       }
     },
@@ -1071,7 +1071,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-unstable-small": "nixpkgs-unstable-small",
         "noctalia": "noctalia",
-        "nvim": "nvim",
+        "nvim-wrapper": "nvim-wrapper",
         "proxmox-nixos": "proxmox-nixos",
         "sops-nix": "sops-nix",
         "steam-asahi": "steam-asahi",
@@ -1396,7 +1396,7 @@
     "wrappers": {
       "inputs": {
         "nixpkgs": [
-          "nvim",
+          "nvim-wrapper",
           "nixpkgs"
         ]
       },

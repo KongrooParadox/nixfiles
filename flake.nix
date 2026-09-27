@@ -28,8 +28,8 @@
     nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Neovim wrapped with its plugins, LSPs, TeX Live and zathura (modules/home/editor.nix)
-    nvim = {
-      url = "github:KongrooParadox/nvim";
+    nvim-wrapper = {
+      url = "github:KongrooParadox/nvim-wrapper";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     noctalia = {

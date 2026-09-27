@@ -13,7 +13,7 @@
 
   imports = [
     inputs.nix-doom-emacs-unstraightened.homeModule
-    inputs.nvim.homeModules.default
+    inputs.nvim-wrapper.homeModules.default
   ];
 
   config = {
@@ -60,7 +60,7 @@
       enable = true;
       # Editable checkout of the config, searched by <leader>sn (falls back to
       # the store copy when missing).
-      info.config_checkout = "${config.home.homeDirectory}/src/nvim";
+      info.config_checkout = "${config.home.homeDirectory}/src/nvim-wrapper";
       settings.profile = if osConfig.kp.desktop.enable then "slim" else "light";
       # kulala-core is only packaged on unstable. specWith only reads a set as a
       # spec when it has `data`; mkIf false adds no definition.
