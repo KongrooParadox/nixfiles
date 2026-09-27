@@ -25,7 +25,10 @@ in
       enable = true;
       settings = {
         config_version = 14;
-        include.files = [ "config/" ];
+        include.files = [
+          "config/"
+          "calendar/calendar.toml"
+        ];
         storage = {
           key_file = "${config.home.homeDirectory}/.config/noctalia/master_key";
           key_source = "file";
@@ -33,11 +36,17 @@ in
       };
     };
 
-    sops.secrets."noctalia/master_key" = { };
+    sops.secrets = {
+      "noctalia/calendar" = { };
+      "noctalia/master_key" = { };
+    };
 
     stylix.targets.${noctaliaName}.enable = false;
 
     xdg.configFile = {
+      "noctalia/calendar/calendar.toml".source =
+        config.lib.file.mkOutOfStoreSymlink
+          config.sops.secrets."noctalia/calendar".path;
       "noctalia/config".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixfiles/dotfiles/noctalia";
       "noctalia/master_key".source =
