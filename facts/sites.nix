@@ -25,6 +25,7 @@ builtins.mapAttrs (site: cfg: cfg) {
     };
     unmanagedHosts = {
       box.ipv4 = "192.168.2.1";
+      jetkvm.ipv4 = "192.168.2.6";
       tasmota-desk.ipv4 = "192.168.2.4";
       tasmota-grill.ipv4 = "192.168.2.2";
       tasmota-laptop.ipv4 = "192.168.2.5";
