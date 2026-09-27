@@ -1,0 +1,3 @@
+[brightness]
+enable_ddcutil = true
+sync_all_monitors = true

@@ -1,0 +1,20 @@
+--- a/src/sysfs/sysfs_base.c
++++ b/src/sysfs/sysfs_base.c
+@@ -1484,8 +1484,15 @@
+       if (!ignorable) {
+          uint32_t class = get_i2c_device_sysfs_class(busno);
+          DBGF(debug, "get_i2c_device_sysfs_class(%d) returned 0x%08x ", busno, class);
+-         if (class == 0)
+-            ignorable = true;
++         if (class == 0) {
++            // Non-PCI DDC adapters (evdi/DisplayLink, and anything on a SoC
++            // without a PCI video device) expose no class attribute. Fall back
++            // to the kernel's own statement of intent: the drm connector's
++            // ddc link.
++            char * connector_name = get_sys_drm_connector_name_by_busno(busno);
++            ignorable = !connector_name;
++            free(connector_name);
++         }
+          else {
+             DBGF(debug, "   class = 0x%08x", class);
+             uint32_t cl2 = class & 0xffff0000;

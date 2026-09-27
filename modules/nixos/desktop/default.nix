@@ -4,7 +4,9 @@
   lib,
   pkgs,
   stateVersion,
+  users,
   usesDisplaylink,
+  self,
   ...
 }:
 let
@@ -56,6 +58,8 @@ in
     system.stateVersion = stateVersion;
 
     hardware.graphics.package = pkgs.mesa;
+    # Needed for monitor brightness controls
+    hardware.i2c.enable = true;
 
     environment = {
       sessionVariables.GSK_RENDERER = "gl"; # Fix GTK apps : https://github.com/NixOS/nixpkgs/issues/353990
@@ -66,6 +70,7 @@ in
           android-tools
           bitwarden-cli
           cmake
+          ddcutil
           deluge-gtk
           element-desktop
           gcc
@@ -114,6 +119,18 @@ in
           displaylink
         ];
     };
+
+    nixpkgs.overlays = lib.mkIf usesDisplaylink [
+      self.overlays.ddcutil-evdi
+    ];
+
+    # Needed for monitor brightness controls
+    users.users = builtins.listToAttrs (
+      map (user: {
+        name = user;
+        value.extraGroups = [ "i2c" ];
+      }) users
+    );
 
     # Printer config
     services = {

@@ -45,6 +45,7 @@ in
     home.packages =
       with pkgs;
       [
+        (import ../../../scripts/brightness-control.nix { inherit config pkgs; })
         (import ../../../scripts/launcher.nix { inherit config pkgs; })
         (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
         (import ../../../scripts/clipboard-history.nix { inherit config pkgs; })

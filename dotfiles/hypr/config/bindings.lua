@@ -84,41 +84,11 @@ hl.bind(
   hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
   { locked = true, repeating = true }
 )
-hl.bind(
-  "XF86MonBrightnessUp",
-  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+;brightnessctl -e4 -n2 --device kbd_backlight set 5%+"),
-  { locked = true, repeating = true }
-)
-hl.bind(
-  "XF86MonBrightnessDown",
-  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-;brightnessctl -e4 -n2 --device kbd_backlight set 5%-"),
-  { locked = true, repeating = true }
-)
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightness-control up"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightness-control down"), { locked = true, repeating = true })
 
 -- Requires playerctl
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
-
-local function disableMonitor()
-  hl.monitor({ output = "eDP-1", disabled = true })
-end
--- hl.bind("switch:on:Apple SMC power/lid events", disableMonitor, { locked = true })
-
-local function enableMonitor()
-  hl.monitor({ output = "eDP-1", disabled = false })
-end
--- hl.bind("switch:off:Apple SMC power/lid events", enableMonitor, { locked = true })
-
-local function toggleInternalMonitor()
-  local lidIsClosed = IsLidClosed()
-  if lidIsClosed then
-    hl.monitor({ output = "eDP-1", disabled = true })
-  else
-    hl.monitor({ output = "eDP-1", disabled = false })
-  end
-end
-
-hl.bind("switch:Apple SMC power/lid events", toggleInternalMonitor, { locked = true })
--- toggleInternalMonitor()
