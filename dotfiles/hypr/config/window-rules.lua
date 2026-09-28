@@ -6,38 +6,6 @@ hl.window_rule({
   border_size = 0,
 })
 hl.window_rule({
-  name = "obsidian",
-  match = { class = "^(md.obsidian.Obsidian)$" },
-  border_size = 0,
-  workspace = 10,
-  stay_focused = true,
-})
-hl.window_rule({
-  name = "steam_apps",
-  match = { class = "^(steam_app_.*)$" },
-  border_size = 0,
-  workspace = 9,
-  stay_focused = true,
-})
-hl.window_rule({
-  name = "steam",
-  match = { class = "^(steam)$" },
-  border_size = 0,
-  workspace = 7,
-  stay_focused = true,
-})
-hl.window_rule({
-  name = "float-apps",
-  match = { class = "^(nm-connection-editor|nwg-look|qt5ct|mpv)$" },
-  float = true,
-})
-hl.window_rule({
-  name = "float-resized-apps",
-  match = { class = "^(org.pulseaudio.pavucontrol|blueman-manager)$" },
-  float = true,
-  size = { "monitor_w * 0.5", "monitor_h * 0.7" },
-})
-hl.window_rule({
   name = "terminal",
   match = { class = "^(Alacritty|kitty)$" },
   workspace = "1",
@@ -66,6 +34,44 @@ hl.window_rule({
   opacity = "0.9 0.7",
   workspace = "4",
 })
+hl.window_rule({
+  name = "chat",
+  match = { class = "^(com.rtosta.zapzap|element|signal)$" },
+  opacity = "0.9 0.7",
+  workspace = "5",
+})
+hl.window_rule({
+  name = "steam",
+  match = { class = "^(steam)$" },
+  border_size = 0,
+  workspace = 7,
+  stay_focused = true,
+})
+hl.window_rule({
+  name = "steam_apps",
+  match = { class = "^(steam_app_.*)$" },
+  border_size = 0,
+  workspace = 9,
+  stay_focused = true,
+})
+hl.window_rule({
+  name = "obsidian",
+  match = { class = "^(md.obsidian.Obsidian)$" },
+  border_size = 0,
+  workspace = 10,
+  stay_focused = true,
+})
+hl.window_rule({
+  name = "float-apps",
+  match = { class = "^(nm-connection-editor|nwg-look|qt5ct|mpv)$" },
+  float = true,
+})
+hl.window_rule({
+  name = "float-resized-apps",
+  match = { class = "^(org.pulseaudio.pavucontrol|blueman-manager)$" },
+  float = true,
+  size = { "monitor_w * 0.5", "monitor_h * 0.7" },
+})
 
 local suppressMaximizeRule = hl.window_rule({
   -- Ignore maximize requests from all apps. You'll probably like this.
@@ -90,7 +96,6 @@ hl.window_rule({
 
   no_focus = true,
 })
-
 -- Hyprland-run windowrule
 hl.window_rule({
   name = "move-hyprland-run",
