@@ -1,12 +1,12 @@
 { osConfig, pkgs, ... }:
 let
   user = {
-    email = "7790572+KongrooParadox@users.noreply.github.com";
+    email = "kongroo.git@proton.me";
     name = "Guillaume Nanty";
   };
   gpg = {
     program = "/run/current-system/sw/bin/gpg";
-    key = "2CD046115D337861";
+    key = "C88A44F2038BA759";
   };
 in
 {
