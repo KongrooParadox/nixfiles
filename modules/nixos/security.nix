@@ -1,7 +1,6 @@
 { ... }:
 {
   security = {
-    sudo.wheelNeedsPassword = false;
     polkit = {
       enable = true;
       extraConfig = ''
@@ -21,5 +20,6 @@
         })
       '';
     };
+    sudo.wheelNeedsPassword = false;
   };
 }

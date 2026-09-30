@@ -29,6 +29,7 @@
     ./storage.nix
     ./system.nix
     ./tailscale.nix
+    ./u2f.nix
     ./ups.nix
     ./users.nix
     ./virtualization
