@@ -45,7 +45,6 @@ hl.window_rule({
   match = { class = "^(steam)$" },
   border_size = 0,
   workspace = 7,
-  stay_focused = true,
 })
 hl.window_rule({
   name = "steam_apps",
@@ -59,7 +58,6 @@ hl.window_rule({
   match = { class = "^(md.obsidian.Obsidian)$" },
   border_size = 0,
   workspace = 10,
-  stay_focused = true,
 })
 hl.window_rule({
   name = "float-apps",
