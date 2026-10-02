@@ -32,7 +32,7 @@ show_value    = false
 [widget.disk]
 type = "sysmon"
 stat = "disk_free"
-path = "/"
+path = "/persist/"
 visualization = "graph"
 show_value    = false
 
