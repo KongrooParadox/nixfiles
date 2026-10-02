@@ -35,6 +35,7 @@ in
   };
 
   imports = [
+    ./emoji.nix
     ./noctalia.nix
     ./rofi.nix
     ./wlogout.nix
@@ -45,6 +46,7 @@ in
       with pkgs;
       [
         (import ../../../scripts/launcher.nix { inherit config pkgs; })
+        (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
         (import ../../../scripts/clipboard-history.nix { inherit config pkgs; })
         (import ../../../scripts/screen-capture.nix { inherit config pkgs; })
         (import ../../../scripts/lock-screen.nix { inherit config pkgs; })
