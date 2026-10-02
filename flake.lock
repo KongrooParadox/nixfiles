@@ -987,11 +987,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1790468395,
-        "narHash": "sha256-8GpIq0nX4AgQt4Ipx5pg8CVyh7RfcpSrvoCORbahnZE=",
+        "lastModified": 1790901640,
+        "narHash": "sha256-iQESgvWJ8+XDuGoAFGFF9L7GKEG41Ps41hPXEUpvyq0=",
         "owner": "KongrooParadox",
         "repo": "nvim-wrapper",
-        "rev": "3b5ba5970211933e1e3301531c8cec08765a0571",
+        "rev": "3952940d3e10ce2ab04987cb55451e95189410a0",
         "type": "github"
       },
       "original": {
