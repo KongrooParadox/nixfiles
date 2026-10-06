@@ -14,6 +14,7 @@ keys:
   - &lordi-robot age1xw7u99pjez0wjz8u607wt8xaa0x6h0stualezknh7zjctsa8r54sz0jev0
   - &midgard-ops age10t8nlfw57zkk6nwcya6qzhylyeckg29u5fuymnvp83j2a22suyvsljv595
   - &midgard-root age15qjtky92e0m33zld0mp2z9jenefgk2ems95au9537eey4udvsauq6kxl9v
+  - &mjolnir-host age16ms34vcjvssefmq8vsl6vta6mxew05c6l4kdk9r5sa84mrauz9rsnd40ds
   - &njord age1u25wwdktfywcrupcw0lxkwm5nqnfmps22ea8563txs73n2348uqqze3xkd
   - &njord-host age1wsdqdexlqzmzs8muh8t4rvxhudn4eentw0jp2mtk0ftm4p4yesfqj72kfs
   - &njord-mac age1s72rue0que3ecjzzc7mwhegd8gjemjqnyzws8fwrs3qlgc47pc2q3380nj
@@ -42,6 +43,7 @@ creation_rules:
           - *lordi-robot
           - *midgard-ops
           - *midgard-root
+          - *mjolnir-host
           - *njord
           - *njord-host
           - *njord-mac

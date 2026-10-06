@@ -1,6 +1,6 @@
 {
   config,
-  inputs,
+  ipv4,
   lib,
   pkgs,
   ...
@@ -53,6 +53,10 @@ in
             autoStart = true;
             capSysAdmin = true;
             openFirewall = true;
+            settings = {
+              system_tray = "disabled";
+              csrf_allowed_origins = "https://${ipv4}:47990";
+            };
           };
         };
       }

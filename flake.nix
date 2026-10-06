@@ -62,6 +62,15 @@
     agent-platform = {
       url = "github:KongrooParadox/agent-platform";
     };
+    bc-250 = {
+      # url = "github:TesseractCat/bc250-nixos";
+      url = "github:KongrooParadox/bc250-nixos/develop";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -91,6 +100,7 @@
           siteCfg = helpers.siteCfgOf site;
           sambaIp = facts.sambaIps.${site};
           gateway = helpers.ipv4AddressOf site "box";
+          # machineIp = helpers.ipv4AddressOf site name;
           nameservers = helpers.nameserversIpv4AddressOf site;
           zone = helpers.zoneOf site;
         in
@@ -101,6 +111,7 @@
               domain
               gateway
               inputs
+              # machineIp
               nameservers
               sambaIp
               self
@@ -109,6 +120,7 @@
               ;
             inherit (siteCfg) dns subnet workgroup;
             inherit (facts.managedHosts.${name})
+              ipv4
               isLinux
               isUnstable
               stateVersion

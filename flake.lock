@@ -178,6 +178,27 @@
         "type": "github"
       }
     },
+    "bc-250": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793650634,
+        "narHash": "sha256-Q0UgbyUtjJQpm2XRQzs7r2dY67K7RApi/0O41dPhaL8=",
+        "owner": "KongrooParadox",
+        "repo": "bc250-nixos",
+        "rev": "982f6c0075eea621e7c86ee7f9d240eec8ce5ac0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KongrooParadox",
+        "ref": "develop",
+        "repo": "bc250-nixos",
+        "type": "github"
+      }
+    },
     "big-files": {
       "flake": false,
       "locked": {
@@ -685,6 +706,27 @@
         "type": "github"
       }
     },
+    "jovian": {
+      "inputs": {
+        "nix-github-actions": "nix-github-actions",
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793262559,
+        "narHash": "sha256-UlCGeyKKt4eeY8VpPJFf4EXXzSM4eoG1FJL9xXj2gBk=",
+        "owner": "Jovian-Experiments",
+        "repo": "Jovian-NixOS",
+        "rev": "da68c2038839af4413fadb2b69b591893abddc74",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Jovian-Experiments",
+        "repo": "Jovian-NixOS",
+        "type": "github"
+      }
+    },
     "latex-docs": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -784,6 +826,27 @@
       "original": {
         "owner": "marienz",
         "repo": "nix-doom-emacs-unstraightened",
+        "type": "github"
+      }
+    },
+    "nix-github-actions": {
+      "inputs": {
+        "nixpkgs": [
+          "jovian",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737420293,
+        "narHash": "sha256-F1G5ifvqTpJq7fdkT34e/Jy9VCyzd5XfJ9TO8fHhJWE=",
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
+        "rev": "f4158fa080ef4503c8f4c820967d946c2af31ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-github-actions",
         "type": "github"
       }
     },
@@ -1325,11 +1388,13 @@
       "inputs": {
         "agent-platform": "agent-platform",
         "apple-silicon": "apple-silicon",
+        "bc-250": "bc-250",
         "big-files": "big-files",
         "disko": "disko",
         "home-manager": "home-manager_3",
         "home-manager-unstable": "home-manager-unstable",
         "impermanence": "impermanence",
+        "jovian": "jovian",
         "nix-darwin": "nix-darwin",
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened",
         "nixos-hardware": "nixos-hardware",

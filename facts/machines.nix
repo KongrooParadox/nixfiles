@@ -134,4 +134,9 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     site = "mrs";
     stateVersion = "26.11";
   };
+  mjolnir = {
+    ipv4 = "192.168.2.174";
+    isUnstable = true;
+    stateVersion = "26.11";
+  };
 }
