@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   ...
 }:
 let
@@ -56,6 +57,10 @@ in
         hostId = "720320e5";
       };
     };
+
+    # Disable this when on the go
+    time.timeZone = lib.mkForce "UTC";
+    services.automatic-timezoned.enable = lib.mkForce false;
 
     sops.secrets."wireguard/proton/ar-25" = { };
     networking.wg-quick.interfaces.wg-ar-25 = {
