@@ -62,6 +62,7 @@
     agent-platform = {
       url = "github:KongrooParadox/agent-platform";
     };
+    bc-250.url = "github:TesseractCat/bc250-nixos";
   };
 
   outputs =

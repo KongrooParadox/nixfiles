@@ -134,4 +134,8 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     site = "mrs";
     stateVersion = "26.11";
   };
+  mjolnir = {
+    isUnstable = true;
+    stateVersion = "26.11";
+  };
 }
