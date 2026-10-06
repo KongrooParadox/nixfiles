@@ -33,6 +33,7 @@
     };
   };
 
+  time.timeZone = "Europe/Paris";
   networking.firewall = {
     allowedUDPPortRanges = [
       {

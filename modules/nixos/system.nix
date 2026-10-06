@@ -53,7 +53,7 @@ in
     };
 
     # Dynamic timezone (pulls in geoclue, so desktops only)
-    time.timeZone = lib.mkDefault "Europe/Paris";
+    time.timeZone = lib.mkDefault "Africa/Casablanca";
     services.automatic-timezoned.enable = config.kp.desktop.enable;
 
     # The registry and NIX_PATH entries pin a copy of the nixpkgs source (~200 MiB);

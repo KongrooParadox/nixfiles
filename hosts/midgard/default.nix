@@ -111,6 +111,8 @@ in
     };
   };
 
+  time.timeZone = "Europe/Paris";
+
   services = {
     xserver.videoDrivers = [ "nvidia" ];
   };
