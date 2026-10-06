@@ -41,7 +41,7 @@ hl.window_rule({
 })
 hl.window_rule({
   name = "chat",
-  match = { class = "^(com.rtosta.zapzap|element|signal)$" },
+  match = { class = "^(com.rtosta.zapzap|element|signal|element-desktop)$" },
   opacity = "0.9 0.7",
   workspace = "5",
 })
@@ -54,6 +54,12 @@ hl.window_rule({
 hl.window_rule({
   name = "steam",
   match = { class = "^(steam|yad|zenity)$" },
+  border_size = 0,
+  workspace = 7,
+})
+hl.window_rule({
+  name = "moonlight",
+  match = { class = "^(com.moonlight_stream.Moonlight)$" },
   border_size = 0,
   workspace = 7,
 })
