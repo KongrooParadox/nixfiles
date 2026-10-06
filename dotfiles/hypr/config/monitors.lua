@@ -113,10 +113,10 @@ hl.workspace_rule({
   workspace = "8",
 })
 hl.workspace_rule({
-  monitor = laptopMonitor,
+  monitor = mainMonitor,
   workspace = "9",
 })
 hl.workspace_rule({
-  monitor = laptopMonitor,
+  monitor = portraitMonitor,
   workspace = "10",
 })
