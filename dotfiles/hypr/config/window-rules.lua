@@ -11,14 +11,20 @@ hl.window_rule({
   workspace = "1",
 })
 hl.window_rule({
-  name = "firefox",
-  match = { class = "^(firefox)$" },
+  name = "brave",
+  match = { class = "^(brave-browser)$" },
   opacity = "1.0 0.9",
   workspace = "2",
 })
 hl.window_rule({
-  name = "brave",
-  match = { class = "^(brave-browser)$" },
+  name = "firefox picture-in-picture",
+  match = { class = "^(firefox)$", initial_title = "Picture-in-Picture" },
+  opacity = "1.0 0.9",
+  workspace = "2",
+})
+hl.window_rule({
+  name = "firefox browser",
+  match = { class = "^(firefox)$", initial_title = "Mozilla Firefox" },
   opacity = "1.0 0.9",
   workspace = "3",
 })

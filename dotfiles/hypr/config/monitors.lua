@@ -70,7 +70,18 @@ hl.workspace_rule({
 })
 hl.workspace_rule({
   default = true,
-  layout = "scrolling",
+  layout = "master",
+  layout_opts = {
+    orientation = "bottom",
+  },
+  workspace = "m[" .. portraitMonitor .. "]",
+})
+hl.workspace_rule({
+  default = true,
+  layout = "master",
+  layout_opts = {
+    orientation = "bottom",
+  },
   monitor = portraitMonitor,
   persistent = true,
   workspace = "2",
