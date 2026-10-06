@@ -44,7 +44,7 @@
     proxmox-nixos.url = "github:KongrooParadox/proxmox-nixos/fix/pve-qemu-hash";
     sops-nix.url = "github:Mic92/sops-nix";
     steam-asahi = {
-      url = "github:KongrooParadox/steam-asahi/feature/desktop-shortcuts";
+      url = "github:KongrooParadox/steam-asahi/feat/dual-backend";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     stylix = {

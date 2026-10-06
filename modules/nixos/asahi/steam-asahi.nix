@@ -24,8 +24,8 @@ in
     programs.steam-asahi = {
       enable = true;
       backend = "arm64"; # "x86-fex"
-      memoryMiB = 10 * 1024; # 10 GiB for RAM
-      vramMiB = 8 * 1024; # GPU heap size reported inside the guest
+      memoryMiB = 8 * 1024; # 10 GiB for RAM
+      vramMiB = 6 * 1024; # GPU heap size reported inside the guest
     };
 
     users.users = builtins.listToAttrs (

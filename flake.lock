@@ -1348,16 +1348,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1789768924,
-        "narHash": "sha256-fWYniTgzXjh6rIPPXIH/GuDlpABvK3bMxwGLkSj26do=",
+        "lastModified": 1792210909,
+        "narHash": "sha256-cjawiZgWv3IoBF4jod933CKRNpjXQTV+DHE0APvXiRM=",
         "owner": "KongrooParadox",
         "repo": "steam-asahi",
-        "rev": "01a207c3bcc7018465496588373a591cff307243",
+        "rev": "e3f8c19bd94b3694ba30df30d27738adfd8b829a",
         "type": "github"
       },
       "original": {
         "owner": "KongrooParadox",
-        "ref": "feature/desktop-shortcuts",
+        "ref": "feat/dual-backend",
         "repo": "steam-asahi",
         "type": "github"
       }
