@@ -19,6 +19,7 @@ in
     home-manager.users.robot.kp = {
       claude.enable = true;
       emacs.enable = false;
+      obsidian.enable = true;
       pentest.enable = true;
       hyprland.bar = "noctalia";
       opencode.enable = true;

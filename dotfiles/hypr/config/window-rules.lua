@@ -63,6 +63,8 @@ hl.window_rule({
   name = "obsidian",
   match = { class = "^(md.obsidian.Obsidian)$" },
   border_size = 0,
+  -- Focus is needed for the Clipper web extension access to the system clipboard
+  focus_on_activate = true,
   workspace = 10,
 })
 hl.window_rule({

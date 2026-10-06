@@ -7,8 +7,13 @@
   ...
 }:
 {
-  options.kp.emacs = {
-    enable = lib.mkEnableOption "Emacs";
+  options.kp = {
+    emacs = {
+      enable = lib.mkEnableOption "Emacs";
+    };
+    obsidian = {
+      enable = lib.mkEnableOption "Obsidian";
+    };
   };
 
   imports = [
@@ -43,15 +48,19 @@
 
     nixpkgs.config.allowUnfreePredicate = pkg: true;
 
-    home.packages = [
-      pkgs.just
-      pkgs.obsidian
-    ];
+    home = {
+      packages = [
+        pkgs.just
+      ]
+      ++ lib.optionals config.kp.obsidian.enable [
+        pkgs.obsidian
+      ];
 
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      # for nixd to source host-specific options in nvim config
-      NIXFILES_DIR = "${config.home.homeDirectory}/nixfiles";
+      sessionVariables = {
+        EDITOR = "nvim";
+        # for nixd to source host-specific options in nvim config
+        NIXFILES_DIR = "${config.home.homeDirectory}/nixfiles";
+      };
     };
 
     # Plugins, LSPs, TeX Live (vimtex) and zathura all come with the wrapper;
