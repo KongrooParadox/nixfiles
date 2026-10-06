@@ -47,23 +47,36 @@ in
     })
 
     (lib.mkIf cfg.libvirtd.enable {
+      environment.systemPackages = with pkgs; [
+        gnome-boxes # VM management
+        dnsmasq # VM networking
+        phodav # Share files with guest VMs
+      ];
+
       programs.virt-manager = {
         enable = config.kp.desktop.enable;
       };
       users.users = builtins.listToAttrs (
         map (user: {
           name = user;
-          value.extraGroups = [ "libvirtd" ];
+          value.extraGroups = [
+            "kvm"
+            "libvirtd"
+          ];
         }) users
       );
-      virtualisation.libvirtd = {
-        enable = true;
-        qemu = {
-          # Servers only run native guests
-          package = if config.kp.desktop.enable then pkgs.qemu else pkgs.qemu_kvm;
-          runAsRoot = true;
-          swtpm.enable = true;
+      virtualisation = {
+        libvirtd = {
+          enable = true;
+          qemu = {
+            # Servers only run native guests
+            package = if config.kp.desktop.enable then pkgs.qemu else pkgs.qemu_kvm;
+            runAsRoot = true;
+            # TPM emulation
+            swtpm.enable = true;
+          };
         };
+        spiceUSBRedirection.enable = true;
       };
     })
   ];
