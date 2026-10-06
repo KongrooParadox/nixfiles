@@ -7,8 +7,18 @@
   ...
 }:
 let
-  nixpkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   cfg = osConfig.kp.desktop;
+  nixpkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgsWithOverrides = pkgs.extend (
+    prev: next: {
+      signal-desktop = next.signal-desktop.overrideAttrs (old: {
+        postInstall = ''
+          wrapProgram $out/bin/signal-desktop \
+            --add-flags "--use-tray-icon"
+        '';
+      });
+    }
+  );
 in
 {
   imports = [
@@ -28,7 +38,7 @@ in
         # Pinned: unstable isn't built for aarch64 yet, and the stable copy duplicates
         # parts of the Qt/python stack. Check with `just cached njord libreoffice`.
         nixpkgs-stable.libreoffice
-        signal-desktop
+        pkgsWithOverrides.signal-desktop
         vlc
       ]
       ++ lib.optionals osConfig.kp.apps.prusa-slicer.enable [ prusa-slicer ]
