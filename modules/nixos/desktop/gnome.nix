@@ -40,9 +40,10 @@ in
         ];
 
         environment.systemPackages = with pkgs; [
+          gnome-randr
           gnomeExtensions.dash-to-dock
           gnomeExtensions.open-bar
-          gnome-randr
+          gnomeExtensions.tactile
         ];
 
         time.timeZone = lib.mkForce null; # TZ will be set by desktop user
