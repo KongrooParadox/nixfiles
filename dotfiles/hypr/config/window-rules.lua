@@ -53,6 +53,12 @@ hl.window_rule({
   workspace = 7,
 })
 hl.window_rule({
+  name = "qemu",
+  match = { class = "^(qemu)$" },
+  border_size = 0,
+  workspace = 8,
+})
+hl.window_rule({
   name = "steam_apps",
   match = { class = "^(steam_app_.*)$" },
   border_size = 0,
