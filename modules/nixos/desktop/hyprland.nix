@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   users,
@@ -12,12 +13,16 @@ let
   ) users;
 in
 {
+  imports = [ inputs.noctalia-greeter.nixosModules.default ];
+
   config = lib.mkIf (config.kp.desktop.enable && (config.kp.desktop.environment == "hyprland")) {
     environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card1";
 
     kp = {
       impermanence = lib.mkIf config.kp.impermanence.enable {
-        extraDirectories = [ "/var/cache/tuigreet" ];
+        extraDirectories =
+          lib.optionals (!noctaliaEnable) [ "/var/cache/tuigreet" ]
+          ++ lib.optionals noctaliaEnable [ "/var/lib/noctalia-greeter/" ];
       };
     };
 
@@ -33,13 +38,26 @@ in
     };
 
     services = {
-      greetd = {
+      greetd = lib.mkIf (!noctaliaEnable) {
         enable = true;
         useTextGreeter = true;
         settings = {
           default_session = {
             command = "${pkgs.tuigreet}/bin/tuigreet --time --sessions ${config.services.displayManager.sessionData.desktops}/share/xsessions:${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --remember --remember-user-session --asterisks";
           };
+        };
+      };
+
+      displayManager.noctalia-greeter = lib.mkIf noctaliaEnable {
+        enable = true;
+        passwordless-sync-users = users;
+        settings = {
+          cursor = {
+            path = pkgs.bibata-cursors;
+            size = 24;
+            theme = "Bibata-Modern-Ice";
+          };
+          keyboard.layout = "us";
         };
       };
       gvfs.enable = true; # Mount, trash, and other functionalities
@@ -52,11 +70,5 @@ in
     xdg.portal.configPackages = [
       pkgs.xdg-desktop-portal-hyprland
     ];
-    nix.settings = lib.mkIf noctaliaEnable {
-      extra-substituters = [ "https://noctalia.cachix.org" ];
-      extra-trusted-public-keys = [
-        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-      ];
-    };
   };
 }

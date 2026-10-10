@@ -34,6 +34,11 @@
     };
     noctalia = {
       url = "github:noctalia-dev/noctalia/main";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # proxmox-nixos.url = "github:SaumonNet/proxmox-nixos";
     proxmox-nixos.url = "github:KongrooParadox/proxmox-nixos/fix/pve-qemu-hash";

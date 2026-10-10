@@ -6,3 +6,5 @@ launch_apps_as_systemd_services = false
 settings_show_advanced = true
 settings_window_translucent = false
 
+[shell.greeter_sync]
+auto_sync = true
