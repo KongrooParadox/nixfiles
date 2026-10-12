@@ -1,0 +1,48 @@
+diff --git a/gamescope-session b/gamescope-session
+--- a/gamescope-session
++++ b/gamescope-session
+@@ -32,2 +32,33 @@
+-# Plop GAMESCOPE_MODE_SAVE_FILE into $XDG_CONFIG_HOME (defaults to ~/.config).
+-export GAMESCOPE_MODE_SAVE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/modes.cfg"
++# Use the saved Steam output mode unless a Moonlight session supplied a supported mode.
++client_mode_dir="${XDG_RUNTIME_DIR:?}/gamescope-client-mode"
++if [[ -r "$client_mode_dir/active-mode" ]]; then
++  if ! read -r GAMESCOPE_SESSION_WIDTH GAMESCOPE_SESSION_HEIGHT < "$client_mode_dir/active-mode"; then
++    echo "Invalid Gamescope client mode state." >&2
++    exit 1
++  fi
++  case "$GAMESCOPE_SESSION_WIDTH:$GAMESCOPE_SESSION_HEIGHT" in
++    1920:1080 | 2560:1600)
++      ;;
++    *)
++      echo "Unsupported Gamescope client mode: ${GAMESCOPE_SESSION_WIDTH}x${GAMESCOPE_SESSION_HEIGHT}" >&2
++      exit 1
++      ;;
++  esac
++  if [[ ! -r "$client_mode_dir/modes.cfg" ]]; then
++    echo "Gamescope client mode file is missing." >&2
++    exit 1
++  fi
++  export GAMESCOPE_MODE_SAVE_FILE="$client_mode_dir/modes.cfg"
++  applied_mode_tmp="$(mktemp "$client_mode_dir/applied.XXXXXX")" || exit 1
++  if ! printf '%s %s\n' "$GAMESCOPE_SESSION_WIDTH" "$GAMESCOPE_SESSION_HEIGHT" > "$applied_mode_tmp" ||
++    ! chmod 0600 "$applied_mode_tmp" ||
++    ! mv -f -- "$applied_mode_tmp" "$client_mode_dir/applied-mode"; then
++    rm -f -- "$applied_mode_tmp"
++    echo "Couldn't record the applied Gamescope client mode." >&2
++    exit 1
++  fi
++else
++  GAMESCOPE_SESSION_WIDTH=1280
++  GAMESCOPE_SESSION_HEIGHT=800
++  export GAMESCOPE_MODE_SAVE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/modes.cfg"
++fi
+@@ -262 +293 @@
+-	-w 1280 -h 800 \
++	-w "${GAMESCOPE_SESSION_WIDTH}" -h "${GAMESCOPE_SESSION_HEIGHT}" \
+diff --git a/start-gamescope-session b/start-gamescope-session
+--- a/start-gamescope-session
++++ b/start-gamescope-session
+@@ -1,0 +2,2 @@
++# Stop Sunshine's KMS capture before Gamescope takes over the DRM output.
++systemctl --user stop sunshine.service
