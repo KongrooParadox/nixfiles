@@ -16,6 +16,7 @@ hl.bind(
   mainMod .. " + M",
   hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("fleeting-note"))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("rofi-project-picker"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("rofi-ssh-picker"))

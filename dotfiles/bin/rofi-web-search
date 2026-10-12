@@ -6,12 +6,12 @@ URLS=(
     [ YouTube]="https://www.youtube.com/results?search_query="
     [❄️ Unstable Packages]="https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query="
     [🦥 Arch Wiki]="https://wiki.archlinux.org/title/"
-    [🌎 Search]="https://search.brave.com/search?q="
+    [🦆 Duck Duck Go]="https://duckduckgo.com/?q="
     [🐃 Gentoo Wiki]="https://wiki.gentoo.org/index.php?title="
 )
 
 SORTED_KEYS=(
-    "🌎 Search"
+    "🦆 Duck Duck Go"
     "🦥 Arch Wiki"
     "❄️ Unstable Packages"
     "🐃 Gentoo Wiki"
@@ -30,7 +30,7 @@ main() {
     # Pass the list to rofi
     platform=$( (gen_list) | rofi -dmenu -i -p "Pick platform to search:" )
     if [[ -n "$platform" ]]; then
-        query=$( (echo ) | rofi -dmenu )
+        query=$( (echo ) | rofi -dmenu -p "🌎 Search query: " -theme-str 'listview { enabled: false; }' )
         if [[ -n "$query" ]]; then
             url=''${URLS[$platform]}$query
             xdg-open "$url"

@@ -46,12 +46,13 @@ in
       with pkgs;
       [
         (import ../../../scripts/brightness-control.nix { inherit config pkgs; })
-        (import ../../../scripts/launcher.nix { inherit config pkgs; })
-        (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
         (import ../../../scripts/clipboard-history.nix { inherit config pkgs; })
-        (import ../../../scripts/screen-capture.nix { inherit config pkgs; })
-        (import ../../../scripts/lock-screen.nix { inherit config pkgs; })
+        (import ../../../scripts/emoji-picker.nix { inherit pkgs; })
+        (import ../../../scripts/fleeting-note.nix { inherit pkgs; })
+        (import ../../../scripts/launcher.nix { inherit config pkgs; })
         (import ../../../scripts/list-hypr-bindings.nix { inherit pkgs; })
+        (import ../../../scripts/lock-screen.nix { inherit config pkgs; })
+        (import ../../../scripts/screen-capture.nix { inherit config pkgs; })
       ]
       ++ lib.optionals (builtins.elem cfg.bar [
         "quickshell"
