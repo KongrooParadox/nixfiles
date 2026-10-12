@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -9,7 +10,17 @@
     enable = lib.mkEnableOption "OpenCode AI coding agent";
   };
 
+  imports = [
+    inputs.agent-platform.homeModules.default
+  ];
+
   config = lib.mkIf config.kp.opencode.enable {
     home.packages = [ pkgs.opencode ];
+    programs.agentPlatform = {
+      enable = true;
+      allowedRepositories = [
+        "${config.home.homeDirectory}/src/agent-platform"
+      ];
+    };
   };
 }

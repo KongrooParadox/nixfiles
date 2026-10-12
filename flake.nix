@@ -59,6 +59,9 @@
       flake = false;
       url = "github:KongrooParadox/big-files";
     };
+    agent-platform = {
+      url = "github:KongrooParadox/agent-platform";
+    };
   };
 
   outputs =
