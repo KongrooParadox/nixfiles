@@ -15,7 +15,9 @@
   ];
 
   config = lib.mkIf config.kp.opencode.enable {
-    home.packages = [ pkgs.opencode ];
+    home.packages = [
+      inputs.agent-platform.inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ];
     programs.agentPlatform = {
       enable = true;
       allowedRepositories = [

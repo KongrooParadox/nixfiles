@@ -4,14 +4,15 @@
       "inputs": {
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_2",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "opencode": "opencode"
       },
       "locked": {
-        "lastModified": 1791730498,
-        "narHash": "sha256-vGLUCCVwmA+XrbjSMiRIAbEeSQGqpPRbD0pyDV8IN7c=",
+        "lastModified": 1792150978,
+        "narHash": "sha256-Rzq5itsTMCUS28Owmi9clEP/QpjPw0vjgzfCDBgG35g=",
         "owner": "KongrooParadox",
         "repo": "agent-platform",
-        "rev": "1eeb28e417d65555b34b2656d5e93b856a938204",
+        "rev": "7421251606b01fdfc101f64942db2d53431b2dc4",
         "type": "github"
       },
       "original": {
@@ -1169,6 +1170,28 @@
       "original": {
         "owner": "KongrooParadox",
         "repo": "nvim-wrapper",
+        "type": "github"
+      }
+    },
+    "opencode": {
+      "inputs": {
+        "nixpkgs": [
+          "agent-platform",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791634782,
+        "narHash": "sha256-CIZdrUVk/W5cUYU86Q71XMYIV3Y9+XEZn5eWw3UlNIo=",
+        "owner": "anomalyco",
+        "repo": "opencode",
+        "rev": "4617210822bdbb31e5749751afbfb4584ccedac8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "ref": "v2",
+        "repo": "opencode",
         "type": "github"
       }
     },
