@@ -48,7 +48,7 @@ hl.window_rule({
 })
 hl.window_rule({
   name = "steam",
-  match = { class = "^(steam)$" },
+  match = { class = "^(steam|yad)$" },
   border_size = 0,
   workspace = 7,
 })
