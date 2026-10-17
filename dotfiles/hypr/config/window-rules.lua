@@ -47,8 +47,14 @@ hl.window_rule({
   workspace = "5",
 })
 hl.window_rule({
+  name = "steam_no_class",
+  match = { title = "^(Steam)$" },
+  border_size = 0,
+  workspace = 7,
+})
+hl.window_rule({
   name = "steam",
-  match = { class = "^(steam|yad)$" },
+  match = { class = "^(steam|yad|zenity)$" },
   border_size = 0,
   workspace = 7,
 })
@@ -60,7 +66,7 @@ hl.window_rule({
 })
 hl.window_rule({
   name = "steam_apps",
-  match = { class = "^(steam_app_.*)$" },
+  match = { class = "^(ck3|steam_app_.*)$" },
   border_size = 0,
   workspace = 9,
   stay_focused = true,

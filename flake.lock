@@ -1371,11 +1371,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792210909,
-        "narHash": "sha256-cjawiZgWv3IoBF4jod933CKRNpjXQTV+DHE0APvXiRM=",
+        "lastModified": 1792345431,
+        "narHash": "sha256-g0Qs5KQucT8dcX0/jMLzvbye4QVWz/Yv5KkM5GFwFaQ=",
         "owner": "KongrooParadox",
         "repo": "steam-asahi",
-        "rev": "e3f8c19bd94b3694ba30df30d27738adfd8b829a",
+        "rev": "bfe201b75b188cdfe30b61c0ace8aa9aa722c730",
         "type": "github"
       },
       "original": {

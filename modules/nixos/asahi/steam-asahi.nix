@@ -24,8 +24,9 @@ in
     programs.steam-asahi = {
       enable = true;
       backend = "arm64"; # "x86-fex"
-      memoryMiB = 8 * 1024; # 10 GiB for RAM
-      vramMiB = 6 * 1024; # GPU heap size reported inside the guest
+      memoryMiB = 14 * 1024; # MiB for RAM
+      vramMiB = 4 * 1024; # GPU heap size reported inside the guest
+      x86Games = [ 1158310 ]; # Crusader Kings III runs only on x86
     };
 
     users.users = builtins.listToAttrs (
