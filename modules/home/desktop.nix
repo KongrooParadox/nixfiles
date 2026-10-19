@@ -49,5 +49,16 @@ in
         xdg-utils
       ]
       ++ lib.optionals (isLinux && osConfig.kp.apps.wine.enable) [ wineWow64Packages.waylandFull ];
+    xdg.configFile."autostart/remmina-applet.desktop" = lib.mkIf isLinux {
+      # Disable Remmina's tray applet without removing Remmina itself.
+      force = true;
+      text = ''
+        [Desktop Entry]
+        Type=Application
+        Name=Remmina Applet
+        Hidden=true
+      '';
+    };
+
   };
 }
