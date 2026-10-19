@@ -8,11 +8,11 @@
         "opencode": "opencode"
       },
       "locked": {
-        "lastModified": 1792150978,
-        "narHash": "sha256-Rzq5itsTMCUS28Owmi9clEP/QpjPw0vjgzfCDBgG35g=",
+        "lastModified": 1792427935,
+        "narHash": "sha256-sed0rupyi+3fIHzJR4Ov0ZJrR5ymvZhrhspWpCJMgiE=",
         "owner": "KongrooParadox",
         "repo": "agent-platform",
-        "rev": "7421251606b01fdfc101f64942db2d53431b2dc4",
+        "rev": "779ade2138fa9a9f255a44928fd8ddb6ed94fd95",
         "type": "github"
       },
       "original": {
