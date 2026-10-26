@@ -38,6 +38,7 @@
   };
 
   home-manager.users.fatiha.home.packages = with pkgs; [
+    anki
     zoom-us
   ];
 }
