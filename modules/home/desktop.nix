@@ -33,11 +33,9 @@ in
         # General desktop packages
         filezilla
         keepassxc
+        libreoffice
         mpv
         mumble
-        # Pinned: unstable isn't built for aarch64 yet, and the stable copy duplicates
-        # parts of the Qt/python stack. Check with `just cached njord libreoffice`.
-        nixpkgs-stable.libreoffice
         pkgsWithOverrides.signal-desktop
         vlc
       ]
