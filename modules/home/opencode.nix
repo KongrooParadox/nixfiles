@@ -22,6 +22,7 @@
       enable = true;
       allowedRepositories = [
         "${config.home.homeDirectory}/src/agent-platform"
+        "${config.home.homeDirectory}/src/bc250-nixos"
       ];
     };
   };

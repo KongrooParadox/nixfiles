@@ -2,17 +2,18 @@
   "nodes": {
     "agent-platform": {
       "inputs": {
+        "ecc": "ecc",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs_2",
         "opencode": "opencode"
       },
       "locked": {
-        "lastModified": 1792427935,
-        "narHash": "sha256-sed0rupyi+3fIHzJR4Ov0ZJrR5ymvZhrhspWpCJMgiE=",
+        "lastModified": 1793640682,
+        "narHash": "sha256-gnDi6bb9IXaTd4zjRKrEgRidnqpL4dFA/EzQ2+j24Lg=",
         "owner": "KongrooParadox",
         "repo": "agent-platform",
-        "rev": "779ade2138fa9a9f255a44928fd8ddb6ed94fd95",
+        "rev": "ac8f09792357fb5b0d6b9fd14fa34bd6a9866d4b",
         "type": "github"
       },
       "original": {
@@ -259,6 +260,22 @@
       "original": {
         "owner": "doomemacs",
         "repo": "modules",
+        "type": "github"
+      }
+    },
+    "ecc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792531703,
+        "narHash": "sha256-ps8WhgXaIJMQLRwa8JgbgjAntdTWIMF3j1hpU/RKb0E=",
+        "owner": "affaan-m",
+        "repo": "ECC",
+        "rev": "90606c8315ee09cafc303515c5f33024db6b9882",
+        "type": "github"
+      },
+      "original": {
+        "owner": "affaan-m",
+        "repo": "ECC",
         "type": "github"
       }
     },
