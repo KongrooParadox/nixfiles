@@ -2,13 +2,11 @@
   osConfig,
   lib,
   pkgs,
-  inputs,
   isLinux,
   ...
 }:
 let
   cfg = osConfig.kp.desktop;
-  nixpkgs-stable = inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   pkgsWithOverrides = pkgs.extend (
     prev: next: {
       signal-desktop = next.signal-desktop.overrideAttrs (old: {
@@ -34,7 +32,6 @@ in
         filezilla
         keepassxc
         libreoffice
-        mpv
         mumble
         pkgsWithOverrides.signal-desktop
         vlc
@@ -47,6 +44,10 @@ in
         xdg-utils
       ]
       ++ lib.optionals (isLinux && osConfig.kp.apps.wine.enable) [ wineWow64Packages.waylandFull ];
+    programs.mpv = {
+      enable = true;
+      scripts = [ pkgs.mpvScripts.mpris ];
+    };
     xdg.configFile."autostart/remmina-applet.desktop" = lib.mkIf isLinux {
       # Disable Remmina's tray applet without removing Remmina itself.
       force = true;

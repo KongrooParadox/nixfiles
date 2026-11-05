@@ -120,9 +120,7 @@ in
         ];
     };
 
-    nixpkgs.overlays = lib.mkIf usesDisplaylink [
-      self.overlays.ddcutil-evdi
-    ];
+    nixpkgs.overlays = lib.optionals usesDisplaylink [ self.overlays.ddcutil-evdi ];
 
     # Needed for monitor brightness controls
     users.users = builtins.listToAttrs (
