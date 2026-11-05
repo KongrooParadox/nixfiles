@@ -9,17 +9,14 @@
         "opencode": "opencode"
       },
       "locked": {
-        "lastModified": 1793640682,
-        "narHash": "sha256-gnDi6bb9IXaTd4zjRKrEgRidnqpL4dFA/EzQ2+j24Lg=",
-        "owner": "KongrooParadox",
-        "repo": "agent-platform",
-        "rev": "ac8f09792357fb5b0d6b9fd14fa34bd6a9866d4b",
-        "type": "github"
+        "lastModified": 1794055880,
+        "narHash": "sha256-L5V3oJQuM3vmGKmDdnNAr1WvvSGjsrKbNTJ0jK5kuus=",
+        "path": "/home/robot/src/agent-platform",
+        "type": "path"
       },
       "original": {
-        "owner": "KongrooParadox",
-        "repo": "agent-platform",
-        "type": "github"
+        "path": "/home/robot/src/agent-platform",
+        "type": "path"
       }
     },
     "apple-silicon": {

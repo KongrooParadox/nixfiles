@@ -60,7 +60,8 @@
       url = "github:KongrooParadox/big-files";
     };
     agent-platform = {
-      url = "github:KongrooParadox/agent-platform";
+      # url = "github:KongrooParadox/agent-platform/develop";
+      url = "path:/home/robot/src/agent-platform";
     };
     bc-250 = {
       # url = "github:TesseractCat/bc250-nixos";
