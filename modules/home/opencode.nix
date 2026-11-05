@@ -20,6 +20,16 @@
     ];
     programs.agentPlatform = {
       enable = true;
+      ecc = {
+        enable = true;
+        harnesses = [
+          "opencode"
+        ];
+        skills = true;
+        memory = true;
+        agents = true;
+        commands = true;
+      };
       allowedRepositories = [
         "${config.home.homeDirectory}/src/agent-platform"
         "${config.home.homeDirectory}/src/bc250-nixos"

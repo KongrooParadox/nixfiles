@@ -9,15 +9,16 @@
         "opencode": "opencode"
       },
       "locked": {
-        "lastModified": 1793640682,
-        "narHash": "sha256-gnDi6bb9IXaTd4zjRKrEgRidnqpL4dFA/EzQ2+j24Lg=",
+        "lastModified": 1793996400,
+        "narHash": "sha256-gof+l/fsCsJGn0o+eLbKGB+4HGhn4gmrUuFaCJn7Z1Y=",
         "owner": "KongrooParadox",
         "repo": "agent-platform",
-        "rev": "ac8f09792357fb5b0d6b9fd14fa34bd6a9866d4b",
+        "rev": "cab4f8fb90c2d7e0df91d8a0f992ea0c5de0ee7e",
         "type": "github"
       },
       "original": {
         "owner": "KongrooParadox",
+        "ref": "develop",
         "repo": "agent-platform",
         "type": "github"
       }
