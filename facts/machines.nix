@@ -96,6 +96,7 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
 
   # NixOS: unstable
   baldur = {
+    ipv4 = "192.168.2.160";
     isUnstable = true;
     stateVersion = "23.11";
     users = [
