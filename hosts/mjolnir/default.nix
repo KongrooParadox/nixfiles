@@ -88,7 +88,6 @@
     enableRedistributableFirmware = true;
   };
   services.cyan-skillfish-governor-smu.settings.gpu-usage.fix-freq = true;
-  services.desktopManager.plasma6.enable = true;
 
   jovian = {
     decky-loader.enable = false;
@@ -101,7 +100,6 @@
       has.amd.gpu = true;
       amd.gpu = {
         enableBacklightControl = false;
-        enableEarlyModesetting = false;
       };
     };
 
@@ -109,18 +107,11 @@
       enable = true;
       autoStart = true;
       user = "ops";
-      desktopSession = "plasma";
+      desktopSession = "gamescope-wayland";
     };
 
     steamos = {
-      useSteamOSConfig = false;
-      enableAutoMountUdevRules = false;
-      enableBluetoothConfig = false;
-      enableDefaultCmdlineConfig = false;
-      enableEarlyOOM = false;
       enableHdmiCecIntegration = false;
-      enableProductSerialAccess = false;
-      enableSysctlConfig = false;
       enableZram = false;
     };
 
@@ -138,6 +129,73 @@
     };
     networking.networkmanager.enable = true;
     tailscale.enable = false;
+  };
+  services.journald.settings.Journal.Storage = "persistent";
+  systemd.services.enp4s0-diagnostics = {
+    description = "Capture periodic diagnostics for enp4s0";
+    path = [
+      pkgs.coreutils
+      pkgs.ethtool
+      pkgs.gnugrep
+      pkgs.iproute2
+      pkgs.networkmanager
+      pkgs.pciutils
+      pkgs.systemd
+    ];
+    script = ''
+      run_check() {
+        label="$1"
+        shift
+        printf '\n--- %s ---\n' "$label"
+        if timeout --signal=TERM --kill-after=1s 2s "$@"; then
+          :
+        else
+          status=$?
+          printf '[command failed or timed out: status %s]\n' "$status"
+        fi
+      }
+
+      printf 'snapshot_time='
+      date --iso-8601=seconds
+      printf 'boot_id='
+      cat /proc/sys/kernel/random/boot_id
+
+      run_check 'carrier' cat /sys/class/net/enp4s0/carrier
+      run_check 'link statistics' ip -details -statistics link show dev enp4s0
+      run_check 'interface addresses' ip -brief address show dev enp4s0
+      run_check 'default routes' ip route show default
+      run_check 'ethtool link' ethtool enp4s0
+      run_check 'ethtool driver' ethtool -i enp4s0
+      run_check 'ethtool counters' ethtool -S enp4s0
+      run_check 'network manager state' nmcli -f GENERAL.STATE,GENERAL.CONNECTION,IP4.ADDRESS,IP4.GATEWAY device show enp4s0
+      run_check 'network service state' systemctl show -p ActiveState -p SubState dhcpcd.service NetworkManager.service tailscaled.service
+      run_check 'NIC PCI state' lspci -nnk -s 04:00.0
+      run_check 'NIC root-port PCI state' lspci -vv -s 00:15.1
+      run_check 'recent NIC kernel messages' /bin/sh -c '
+        journalctl -k --since "35 seconds ago" --no-pager -o short-precise |
+          grep -E "r8169|enp4s0|00:15\\.1|AER|PCIe Bus Error" ||
+          echo "(no matching kernel messages in the last 35 seconds)"
+      '
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      TimeoutStartSec = "28s";
+      StandardOutput = "journal";
+      StandardError = "journal";
+      SyslogIdentifier = "enp4s0-diagnostics";
+      ProtectSystem = "strict";
+      ProtectHome = true;
+      NoNewPrivileges = true;
+    };
+  };
+  systemd.timers.enp4s0-diagnostics = {
+    description = "Run enp4s0 diagnostics every 30 seconds";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "30s";
+      OnUnitActiveSec = "30s";
+      AccuracySec = "1s";
+    };
   };
   systemd.sleep.settings.Sleep.AllowSuspend = false;
   systemd.services.display-manager.serviceConfig.ExecStartPre = lib.mkForce [
