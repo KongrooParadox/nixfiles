@@ -3,6 +3,7 @@
   lib,
   inputs,
   pkgs,
+  usesDisplaylink,
   ...
 }:
 let
@@ -44,9 +45,22 @@ in
       })
     ];
 
-    environment = {
-      sessionVariables.AQ_DRM_DEVICES = lib.mkForce "/dev/dri/card2";
-    };
+    kp.desktop.hyprland.drmDevices = lib.mkForce (
+      [ "/dev/dri/asahi-display" ]
+      ++ lib.optionals usesDisplaylink [
+        # Aquamarine's startup allowlist must include EVDI devices already present at boot.
+        # Keep Apple KMS first; the EVDI paths are stable across DRM card-number changes.
+        "/dev/dri/by-path/platform-evdi.0-card"
+        "/dev/dri/by-path/platform-evdi.1-card"
+      ]
+    );
+
+    # AQ_DRM_DEVICES uses ':' as a separator, but the Apple by-path name contains one.
+    services.udev.extraRules =
+      lib.mkIf (config.kp.desktop.enable && config.kp.desktop.environment == "hyprland")
+        ''
+          SUBSYSTEM=="drm", KERNEL=="card[0-9]*", KERNELS=="soc:display-subsystem", SYMLINK+="dri/asahi-display"
+        '';
 
     hardware = {
       asahi = {

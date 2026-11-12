@@ -15,8 +15,17 @@ in
 {
   imports = [ inputs.noctalia-greeter.nixosModules.default ];
 
+  # Hardware modules can supply stable device paths without coupling Hyprland to their topology.
+  options.kp.desktop.hyprland.drmDevices = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    default = [ "/dev/dri/card1" ];
+    description = "DRM devices exposed to Aquamarine, in priority order.";
+  };
+
   config = lib.mkIf (config.kp.desktop.enable && (config.kp.desktop.environment == "hyprland")) {
-    environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault "/dev/dri/card1";
+    environment.sessionVariables.AQ_DRM_DEVICES = lib.mkDefault (
+      lib.concatStringsSep ":" config.kp.desktop.hyprland.drmDevices
+    );
 
     kp = {
       impermanence = lib.mkIf config.kp.impermanence.enable {
