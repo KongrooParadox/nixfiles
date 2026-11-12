@@ -67,6 +67,7 @@ in
             theme = "Bibata-Modern-Ice";
           };
           keyboard.layout = "us";
+          output.transforms = "Hewlett Packard HP E241i CN444907WG:90;";
         };
       };
       gvfs.enable = true; # Mount, trash, and other functionalities
