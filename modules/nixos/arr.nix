@@ -1,6 +1,7 @@
 {
   config,
   domain,
+  helpers,
   lib,
   pkgs,
   ...
@@ -8,6 +9,8 @@
 let
   cfg = config.kp.arr;
   withPodman = cfg.bazarr.subgen.enable || cfg.dispatcharr.enable;
+  oujdaDnsIp = helpers.ipv4AddressOf "oujda" (helpers.hostOf "oujda" "dns");
+  pernesDnsIp = helpers.ipv4AddressOf "pernes" (helpers.hostOf "pernes" "dns");
 in
 {
   options.kp.arr = {
@@ -270,8 +273,8 @@ in
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [
-            "192.168.2.103"
-            "192.168.1.100"
+            oujdaDnsIp
+            pernesDnsIp
           ];
           privateKeyFile = config.sops.secrets."wireguard/proton/arr-oujda".path;
           peers = [
@@ -291,8 +294,8 @@ in
           address = [ "10.2.0.2/32" ];
           autostart = true;
           dns = [
-            "192.168.1.100"
-            "192.168.2.103"
+            pernesDnsIp
+            oujdaDnsIp
             "10.2.0.1"
           ];
           privateKeyFile = config.sops.secrets."wireguard/proton/p2p-2".path;

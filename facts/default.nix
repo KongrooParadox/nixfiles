@@ -43,6 +43,32 @@ let
           }) ([ host ] ++ helpers.aliasesOf site host)
         ) hosts.${site}
       );
+    dhcpRangeOf =
+      site:
+      let
+        siteCfg = helpers.siteCfgOf site;
+      in
+      if siteCfg ? dhcp && siteCfg.dhcp ? range then
+        siteCfg.dhcp.range
+      else
+        throw "site ${site} has no DHCP range defined";
+    dhcpReservationsOf =
+      site:
+      let
+        reservedHosts = lib.filterAttrs (_: hostCfg: hostCfg.dhcpReservation or false) hosts.${site};
+      in
+      lib.mapAttrsToList (name: hostCfg: {
+        inherit name;
+        ipv4 = hostCfg.ipv4 or (throw "DHCP reservation ${name} on ${site} has no IPv4 address");
+      }) reservedHosts;
+    wiredInterfaceOf =
+      host: managedHosts.${host}.wiredInterface or (throw "host ${host} has no wired interface defined");
+    staticIpv4AddressesOf =
+      site:
+      lib.mapAttrsToList (name: hostCfg: {
+        inherit name;
+        ipv4 = hostCfg.ipv4;
+      }) (lib.filterAttrs (_: hostCfg: builtins.hasAttr "ipv4" hostCfg) hosts.${site});
     domainOf = site: "${site}.kongroo.ovh";
     duplicateEntriesOf =
       site:

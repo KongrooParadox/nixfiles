@@ -1,6 +1,5 @@
 {
   config,
-  domain,
   lib,
   zone,
   ...
