@@ -2,9 +2,29 @@
 
 terminal="kitty"
 
-hosts=$(cat ~/.ssh/known_hosts | awk '{print $1}' | grep -v 'github.com' | sort | uniq)
+
+if [[ ${1-} == --wait-ssh ]]; then
+    host=$2
+
+    ssh_config=$(ssh -G "$host" 2>/dev/null) || exit 1
+    connect_host=$(awk '$1 == "hostname" { print $2; exit }' <<< "$ssh_config")
+    port=$(awk '$1 == "port" { print $2; exit }' <<< "$ssh_config")
+
+    if [[ -z $connect_host || ! $port =~ ^[0-9]+$ ]] || (( 10#$port < 1 || 10#$port > 65535 )); then
+        printf 'Could not resolve SSH host and port for %s\n' "$host" >&2
+        exit 1
+    fi
+
+    until nc -z -w 2 "$connect_host" "$port"; do
+        sleep 2
+    done
+
+    exec ssh -t "$host" 'tmux -f /dev/null new-session -A -s ssh'
+fi
+
+hosts=$(cat ~/.ssh/known_hosts | awk '{print $1}' | grep -v -e '.com' -e '.shop' | sort | uniq)
 chosenFQDN=$(echo "$hosts" | rofi -dmenu -p 'Choose host to SSH into :')
-hostName=$(echo "$chosenFQDN" | perl -pe 's|(.*?)\..*|\1|' )
+hostName=$(echo "$chosenFQDN" | perl -pe 's|\.|_|g' )
 echo "$hostName"
 [ -n "$hostName" ] || exit 0
 
@@ -14,8 +34,11 @@ if [ -n "${DIRENV_DIR-}" ]; then
     eval "$(cd / && direnv export bash 2>/dev/null)"
 fi
 
-if ! tmux has-session -t="ssh_$hostName" 2> /dev/null; then
-    tmux new-session -ds "ssh_$hostName" "ssh ${chosenFQDN}"
+session="ssh_$hostName"
+
+if ! tmux has-session -t "$session" 2>/dev/null; then
+    printf -v pane_command 'exec %q --wait-ssh %q' "$0" "$chosenFQDN"
+    tmux new-session -d -s "$session" "$pane_command"
 fi
 
 if [ "${TMUX-}" ]; then

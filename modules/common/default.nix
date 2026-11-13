@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -19,10 +20,8 @@
   };
 
   config = {
+    environment.systemPackages = [ pkgs.tmux ];
     kp.stylix.enable = true;
-
-    sops.secrets."github/api-key" = { };
-
     nix = {
       extraOptions = ''
         !include ${config.sops.secrets."github/api-key".path}
@@ -38,5 +37,6 @@
         ];
       };
     };
+    sops.secrets."github/api-key" = { };
   };
 }
