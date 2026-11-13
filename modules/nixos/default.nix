@@ -12,6 +12,7 @@
     ./binary-cache.nix
     ./boot.nix
     ./desktop
+    ./dhcp-server
     ./dns-server.nix
     ./gaming.nix
     ./home-assistant.nix

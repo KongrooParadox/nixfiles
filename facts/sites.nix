@@ -23,13 +23,33 @@ builtins.mapAttrs (site: cfg: cfg) {
         "box"
       ];
     };
+    dhcp.range = {
+      start = "192.168.2.100";
+      end = "192.168.2.199";
+      leaseTime = "12h";
+    };
     unmanagedHosts = {
       box.ipv4 = "192.168.2.1";
-      jetkvm.ipv4 = "192.168.2.6";
-      tasmota-desk.ipv4 = "192.168.2.4";
-      tasmota-grill.ipv4 = "192.168.2.2";
-      tasmota-laptop.ipv4 = "192.168.2.5";
-      tasmota-window.ipv4 = "192.168.2.3";
+      jetkvm = {
+        dhcpReservation = true;
+        ipv4 = "192.168.2.6";
+      };
+      tasmota-desk = {
+        dhcpReservation = true;
+        ipv4 = "192.168.2.4";
+      };
+      tasmota-grill = {
+        dhcpReservation = true;
+        ipv4 = "192.168.2.2";
+      };
+      tasmota-laptop = {
+        dhcpReservation = true;
+        ipv4 = "192.168.2.5";
+      };
+      tasmota-window = {
+        dhcpReservation = true;
+        ipv4 = "192.168.2.3";
+      };
     };
     subnet = "192.168.2.0/24";
     workgroup = "SKYNET";

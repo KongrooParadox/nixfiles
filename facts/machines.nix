@@ -11,6 +11,8 @@ in
 builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
   # Darwin
   njord-mac = {
+    dhcpReservation = true;
+    ipv4 = "192.168.2.53";
     isLinux = false;
     isUnstable = true;
     stateVersion = "25.05";
@@ -27,16 +29,18 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     stateVersion = "24.05";
   };
   elnuevo-1 = {
+    dhcpReservation = true;
     aliases = [
       "nextcloud"
       "proxmox"
     ];
-    ipv4 = "192.168.2.99";
+    ipv4 = "192.168.2.20";
     stateVersion = "25.05";
   };
   elnuevo-2 = {
     aliases = [ "jellyfin" ];
-    ipv4 = "192.168.2.100";
+    dhcpReservation = true;
+    ipv4 = "192.168.2.21";
     stateVersion = "25.05";
   };
   frigg = {
@@ -52,6 +56,8 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     stateVersion = "25.05";
   };
   lordi = {
+    dhcpReservation = true;
+    ipv4 = "192.168.2.51";
     users = [
       "fatiha"
       "robot"
@@ -78,25 +84,30 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
   };
   vili = {
     aliases = [
+      "dhcp"
       "dns"
       "home-assistant"
     ];
-    ipv4 = "192.168.2.103";
+    dhcpReservation = true;
+    dhcpServerInterface = "end0";
+    ipv4 = "192.168.2.22";
     stateVersion = "25.11";
   };
   yggdrasil = {
+    dhcpReservation = true;
     aliases = [
       "dispatcharr"
       "gallery"
       "samba"
     ];
-    ipv4 = "192.168.2.101";
+    ipv4 = "192.168.2.23";
     stateVersion = "24.05";
   };
 
   # NixOS: unstable
   baldur = {
-    ipv4 = "192.168.2.160";
+    dhcpReservation = true;
+    ipv4 = "192.168.2.50";
     isUnstable = true;
     stateVersion = "23.11";
     users = [
@@ -106,6 +117,7 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     usesDisplaylink = true;
   };
   heimdall = {
+    dhcpReservation = true;
     aliases = [
       "bazarr"
       "deluge"
@@ -115,11 +127,13 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
       "radarr"
       "sonarr"
     ];
-    ipv4 = "192.168.2.102";
+    ipv4 = "192.168.2.24";
     isUnstable = true;
     stateVersion = "24.05";
   };
   njord = {
+    dhcpReservation = true;
+    ipv4 = "192.168.2.52";
     isUnstable = true;
     stateVersion = "24.11";
     users = [ "robot" ];
@@ -136,7 +150,8 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     stateVersion = "26.11";
   };
   mjolnir = {
-    ipv4 = "192.168.2.174";
+    dhcpReservation = true;
+    ipv4 = "192.168.2.25";
     isUnstable = true;
     stateVersion = "26.11";
   };

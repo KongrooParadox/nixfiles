@@ -1,4 +1,4 @@
-{ ... }:
+{ ipv4, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -19,7 +19,7 @@
       enable = true;
       proxmox = {
         enable = false;
-        ipAddress = "192.168.2.99";
+        ipAddress = ipv4;
       };
     };
     zfs = {

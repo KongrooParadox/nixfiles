@@ -111,8 +111,8 @@
             inherit
               domain
               gateway
+              helpers
               inputs
-              # machineIp
               nameservers
               sambaIp
               self
@@ -148,6 +148,24 @@
           pkgs = nixpkgs-unstable.legacyPackages.${system};
         in
         {
+          dhcp-facts =
+            assert helpers.dhcpReservationsOf "pernes" == [ ];
+            assert lib.all (reservation: builtins.elem reservation (helpers.staticIpv4AddressesOf "oujda")) (
+              helpers.dhcpReservationsOf "oujda"
+            );
+            pkgs.runCommand "check-dhcp-facts" { } "touch $out";
+          dhcp-reservations =
+            pkgs.runCommand "check-dhcp-reservations"
+              {
+                nativeBuildInputs = [ pkgs.python3 ];
+              }
+              ''
+                mkdir -p tests modules/nixos/dhcp-server
+                cp ${./tests/test_dhcp_reservations.py} tests/test_dhcp_reservations.py
+                cp ${./modules/nixos/dhcp-server/dhcp-reservations.py} modules/nixos/dhcp-server/dhcp-reservations.py
+                python3 -m unittest discover -s tests -v
+                touch $out
+              '';
           zones = pkgs.runCommand "check-zones" { nativeBuildInputs = [ pkgs.bind ]; } ''
             ${lib.concatStrings (
               lib.mapAttrsToList (site: cfg: ''
