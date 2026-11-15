@@ -33,6 +33,8 @@
       allowedRepositories = [
         "${config.home.homeDirectory}/src/agent-platform"
         "${config.home.homeDirectory}/src/bc250-nixos"
+        "${config.home.homeDirectory}/src/k8s-nix-catalog"
+        "${config.home.homeDirectory}/src/k8s-nix-infra"
       ];
     };
   };
