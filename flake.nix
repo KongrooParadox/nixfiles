@@ -23,6 +23,7 @@
     };
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     nixpkgs-stable-small.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";

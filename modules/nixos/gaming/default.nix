@@ -9,6 +9,8 @@ let
   cfg = config.kp.gaming;
 in
 {
+  imports = [ ./retrodeck.nix ];
+
   options.kp.gaming = {
     steam.enable = lib.mkEnableOption "Steam";
     sunshine = {

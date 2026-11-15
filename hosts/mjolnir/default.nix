@@ -121,6 +121,7 @@
   kp = {
     desktop.enable = false;
     gaming = {
+      retrodeck.enable = true;
       steam.enable = false; # Jovian supplies Steam
       sunshine = {
         enable = true;

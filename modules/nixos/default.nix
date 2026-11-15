@@ -14,7 +14,7 @@
     ./desktop
     ./dhcp-server
     ./dns-server.nix
-    ./gaming.nix
+    ./gaming
     ./home-assistant.nix
     ./immich.nix
     ./impermanence.nix
