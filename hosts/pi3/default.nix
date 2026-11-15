@@ -1,0 +1,4 @@
+{ ... }:
+{
+  imports = [ ../raspberry-pi.nix ];
+}

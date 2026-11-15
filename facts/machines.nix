@@ -103,6 +103,21 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     ipv4 = "192.168.2.23";
     stateVersion = "24.05";
   };
+  pi1 = {
+    dhcpReservation = true;
+    ipv4 = "192.168.2.41";
+    stateVersion = "26.05";
+  };
+  pi2 = {
+    dhcpReservation = true;
+    ipv4 = "192.168.2.42";
+    stateVersion = "26.05";
+  };
+  pi3 = {
+    dhcpReservation = true;
+    ipv4 = "192.168.2.43";
+    stateVersion = "26.05";
+  };
 
   # NixOS: unstable
   baldur = {

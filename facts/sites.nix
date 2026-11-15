@@ -30,6 +30,7 @@ builtins.mapAttrs (site: cfg: cfg) {
     };
     unmanagedHosts = {
       box.ipv4 = "192.168.2.1";
+      k8s.ipv4 = "192.168.2.40";
       jetkvm = {
         dhcpReservation = true;
         ipv4 = "192.168.2.6";

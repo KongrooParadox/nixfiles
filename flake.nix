@@ -17,6 +17,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     impermanence.url = "github:nix-community/impermanence";
+    k8s-nix-infra = {
+      url = "git+ssh://git@gitlab.com/mirai-gadget-laboratory/k8s-nix/k8s-nix-infra.git?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -129,6 +133,10 @@
               users
               usesDisplaylink
               ;
+            # sd-image is only needed for initial flashing or drive replacement.
+            # Passed as a specialArg (not read from config) to avoid infinite
+            # recursion between the option and the conditional import.
+            sdImageEnable = false;
           };
           modules = [ baseModule ];
         };
@@ -147,13 +155,121 @@
         system:
         let
           pkgs = nixpkgs-unstable.legacyPackages.${system};
+          piHosts = [ "pi1" "pi2" "pi3" ];
+          piPrivateCredentials = [
+            "etcdServerKey"
+            "apiserverEtcdKey"
+            "apiserverKey"
+            "controllerManagerKey"
+            "schedulerKey"
+            "apiserverKubeletKey"
+            "frontProxyKey"
+            "serviceAccountKey"
+            "kubeletServerKey"
+            "kubeletClientKey"
+            "kubeProxyKey"
+            "flannelKey"
+            "addonManagerKey"
+          ];
+          piPublicCredentials = [
+            "etcdCa"
+            "etcdServerCert"
+            "apiserverEtcdCert"
+            "kubernetesCa"
+            "apiserverCert"
+            "controllerManagerCert"
+            "schedulerCert"
+            "apiserverKubeletCert"
+            "frontProxyCert"
+            "kubeletServerCert"
+            "kubeletClientCert"
+            "kubeProxyCert"
+            "flannelCert"
+            "addonManagerCert"
+          ];
+          piClusterServices = [
+            "etcd"
+            "kube-apiserver"
+            "kube-controller-manager"
+            "kube-scheduler"
+            "kubelet"
+            "kube-proxy"
+            "flannel"
+            "haproxy"
+            "keepalived"
+            "nix-oci"
+            "kubernetes-test-secrets"
+            "kubernetes-agenix-secrets"
+          ];
+          piHostConfigs = map (name: self.nixosConfigurations.${name}.config) piHosts;
         in
         {
+          cluster-network =
+            assert lib.all (cfg:
+              !cfg.cluster.enable
+              && cfg.cluster.podCidr == "10.240.0.0/16"
+              && cfg.cluster.serviceCidr == "10.241.0.0/16"
+              && cfg.cluster.nodes.${cfg.networking.hostName}.interface == "end0"
+              && cfg.cluster.secrets.provider == "agenix"
+              && builtins.sort builtins.lessThan (builtins.attrNames cfg.cluster.secrets.ageFiles)
+                == builtins.sort builtins.lessThan (
+                  piPrivateCredentials
+                  ++ lib.optionals (cfg.networking.hostName == "pi1") [ "bootstrapKey" ]
+                )
+              && builtins.sort builtins.lessThan (builtins.attrNames cfg.cluster.secrets.publicFiles)
+                == builtins.sort builtins.lessThan (
+                  piPublicCredentials
+                  ++ lib.optionals (cfg.networking.hostName == "pi1") [ "bootstrapCert" ]
+                )
+              && !(builtins.hasAttr "adminKey" cfg.cluster.secrets.ageFiles)
+              && lib.all builtins.pathExists (
+                builtins.attrValues cfg.cluster.secrets.ageFiles
+                ++ builtins.attrValues cfg.cluster.secrets.publicFiles
+              )
+            ) piHostConfigs;
+            assert lib.all (cfg:
+              lib.all (name: !(builtins.hasAttr name cfg.systemd.services)) piClusterServices
+            ) piHostConfigs;
+            pkgs.runCommand "check-pi-cluster-network" { } "touch $out";
           dhcp-facts =
             assert helpers.dhcpReservationsOf "pernes" == [ ];
             assert lib.all (reservation: builtins.elem reservation (helpers.staticIpv4AddressesOf "oujda")) (
               helpers.dhcpReservationsOf "oujda"
             );
+            assert lib.all (address: builtins.elem address (helpers.staticIpv4AddressesOf "oujda")) [
+              {
+                name = "pi1";
+                ipv4 = "192.168.2.41";
+              }
+              {
+                name = "pi2";
+                ipv4 = "192.168.2.42";
+              }
+              {
+                name = "pi3";
+                ipv4 = "192.168.2.43";
+              }
+              {
+                name = "k8s";
+                ipv4 = "192.168.2.40";
+              }
+            ];
+            assert lib.all (reservation: builtins.elem reservation (helpers.dhcpReservationsOf "oujda")) [
+              {
+                name = "pi1";
+                ipv4 = "192.168.2.41";
+              }
+              {
+                name = "pi2";
+                ipv4 = "192.168.2.42";
+              }
+              {
+                name = "pi3";
+                ipv4 = "192.168.2.43";
+              }
+            ];
+            assert !(lib.any (reservation: reservation.name == "k8s") (helpers.dhcpReservationsOf "oujda"));
+            assert helpers.ipv4AddressOf "oujda" "k8s" == "192.168.2.40";
             pkgs.runCommand "check-dhcp-facts" { } "touch $out";
           dhcp-reservations =
             pkgs.runCommand "check-dhcp-reservations"
