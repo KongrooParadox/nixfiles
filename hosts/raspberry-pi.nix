@@ -92,6 +92,20 @@ in
     # kernelPackages = pkgs.linuxPackages;
     initrd.availableKernelModules = [ "uas" ];
     loader.systemd-boot.enable = lib.mkForce false;
+    # The sd-image base profile auto-enables zfs in boot.supportedFilesystems
+    # because zfs-user is available on aarch64, but the linux-rpi kernel has
+    # no zfs kernel module. Override supportedFilesystems to drop zfs.
+    supportedFilesystems = lib.mkForce [
+      "ext2"
+      "ext3"
+      "ext4"
+      "btrfs"
+      "cifs"
+      "f2fs"
+      "ntfs"
+      "vfat"
+      "xfs"
+    ];
   };
 
   cluster = {
