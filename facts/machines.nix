@@ -177,4 +177,11 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     isUnstable = true;
     stateVersion = "26.11";
   };
+  # NixOS VM (Android Terminal / AVF) on the Pixel 7 Pro; roams, reached over
+  # Tailscale. No site IPv4 or DHCP reservation.
+  sleipnir = {
+    isSmall = true;
+    isUnstable = true;
+    stateVersion = "26.11";
+  };
 }

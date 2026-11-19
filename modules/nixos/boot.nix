@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  usesDisplaylink,
+  ...
+}:
 {
   boot = {
     loader = {
@@ -8,9 +13,7 @@
         configurationLimit = 10;
       };
     };
-    extraModulePackages = with config.boot.kernelPackages; [
-      evdi
-    ];
+    extraModulePackages = lib.mkIf usesDisplaylink (with config.boot.kernelPackages; [ evdi ]);
     supportedFilesystems = [ "ntfs" ];
   };
 }
