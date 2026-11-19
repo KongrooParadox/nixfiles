@@ -1,4 +1,4 @@
 { ... }:
 {
-  imports = [ ../raspberry-pi.nix ];
+  imports = [ ../../modules/nixos/raspberry-pi/default.nix ];
 }
