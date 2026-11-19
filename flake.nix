@@ -89,8 +89,9 @@
     let
       inherit (nixpkgs-unstable) lib;
       inherit (self) outputs;
-      facts = (import ./facts { inherit lib; }).facts;
-      helpers = (import ./facts { inherit lib; }).helpers;
+      factsModule = import ./facts { inherit lib; };
+      facts = factsModule.facts;
+      helpers = factsModule.helpers;
       mkHost =
         name:
         let
@@ -155,7 +156,11 @@
         system:
         let
           pkgs = nixpkgs-unstable.legacyPackages.${system};
-          piHosts = [ "pi1" "pi2" "pi3" ];
+          piHosts = [
+            "pi1"
+            "pi2"
+            "pi3"
+          ];
           piPrivateCredentials = [
             "etcdServerKey"
             "apiserverEtcdKey"
@@ -203,21 +208,22 @@
         in
         {
           cluster-network =
-            assert lib.all (cfg:
+            assert lib.all (
+              cfg:
               cfg.cluster.enable
               && cfg.cluster.podCidr == "10.240.0.0/16"
               && cfg.cluster.serviceCidr == "10.241.0.0/16"
               && cfg.cluster.nodes.${cfg.networking.hostName}.interface == "end0"
               && cfg.cluster.secrets.provider == "agenix"
-              && builtins.sort builtins.lessThan (builtins.attrNames cfg.cluster.secrets.ageFiles)
+              &&
+                builtins.sort builtins.lessThan (builtins.attrNames cfg.cluster.secrets.ageFiles)
                 == builtins.sort builtins.lessThan (
-                  piPrivateCredentials
-                  ++ lib.optionals (cfg.networking.hostName == "pi1") [ "bootstrapKey" ]
+                  piPrivateCredentials ++ lib.optionals (cfg.networking.hostName == "pi1") [ "bootstrapKey" ]
                 )
-              && builtins.sort builtins.lessThan (builtins.attrNames cfg.cluster.secrets.publicFiles)
+              &&
+                builtins.sort builtins.lessThan (builtins.attrNames cfg.cluster.secrets.publicFiles)
                 == builtins.sort builtins.lessThan (
-                  piPublicCredentials
-                  ++ lib.optionals (cfg.networking.hostName == "pi1") [ "bootstrapCert" ]
+                  piPublicCredentials ++ lib.optionals (cfg.networking.hostName == "pi1") [ "bootstrapCert" ]
                 )
               && !(builtins.hasAttr "adminKey" cfg.cluster.secrets.ageFiles)
               && lib.all builtins.pathExists (
@@ -225,12 +231,11 @@
                 ++ builtins.attrValues cfg.cluster.secrets.publicFiles
               )
             ) piHostConfigs;
-            assert lib.all (cfg:
+            assert lib.all (
+              cfg:
               lib.all (name: builtins.hasAttr name cfg.systemd.services) piClusterServices
-              && (cfg.networking.hostName == "pi1"
-                -> builtins.hasAttr "nix-oci" cfg.systemd.services)
-              && (cfg.networking.hostName != "pi1"
-                -> !builtins.hasAttr "nix-oci" cfg.systemd.services)
+              && (cfg.networking.hostName == "pi1" -> builtins.hasAttr "nix-oci" cfg.systemd.services)
+              && (cfg.networking.hostName != "pi1" -> !builtins.hasAttr "nix-oci" cfg.systemd.services)
             ) piHostConfigs;
             pkgs.runCommand "check-pi-cluster-network" { } "touch $out";
           dhcp-facts =

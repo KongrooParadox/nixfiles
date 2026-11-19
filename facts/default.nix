@@ -2,7 +2,11 @@
 let
   sites = import ./sites.nix;
   siteList = builtins.attrNames sites;
-  managedHosts = import ./machines.nix;
+  # pi1 carries the "registry" role in k8s-nix-infra's stackedTopology; add the
+  # "registry" alias so the registry FQDN resolves to the registry node.
+  managedHosts = lib.recursiveUpdate (import ./machines.nix) {
+    pi1.aliases = [ "registry" ];
+  };
   managedHostsPerSite = builtins.listToAttrs (
     map (site: {
       name = site;
