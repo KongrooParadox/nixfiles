@@ -108,6 +108,14 @@ in
     ];
   };
 
+  # The Pis are wired-only: end0 carries the static cluster IP and wlan0 has no
+  # carrier. Left on the global DHCP default, dhcpcd probes wlan0 and sits
+  # through its 30s carrier timeout on every boot, which blocks
+  # network-online.target and everything ordered after it (etcd -> apiserver ->
+  # kubernetes.target). Excluding wlan0 keeps dhcpcd from managing it.
+  networking.interfaces.wlan0.useDHCP = false;
+  networking.dhcpcd.wait = "background";
+
   cluster = {
     domain = "cluster.local";
     enable = true;
