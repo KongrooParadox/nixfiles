@@ -165,6 +165,10 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
     stateVersion = "26.11";
   };
   mjolnir = {
+    aliases = [
+      "llm"
+      "mjolnir-llm"
+    ];
     dhcpReservation = true;
     ipv4 = "192.168.2.25";
     isUnstable = true;

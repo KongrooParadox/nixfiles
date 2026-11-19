@@ -71,5 +71,10 @@ repl:
 switch:
     nixos-rebuild switch --flake .# --sudo |& nom
 
+# Build mjolnir and set mjolnir-llm as the next boot entry (run from either role)
+mjolnir-llm:
+    nixos-rebuild boot --flake .#mjolnir --sudo |& nom
+    sudo /nix/var/nix/profiles/system/specialisation/mjolnir-llm/bin/switch-to-configuration boot
+
 test:
     nixos-rebuild test --flake .# --sudo |& nom

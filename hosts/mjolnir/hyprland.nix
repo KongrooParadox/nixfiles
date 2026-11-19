@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -44,23 +45,25 @@ let
     @theme "~/.config/rofi/themes/center.rasi" '';
 in
 {
-  programs.hyprland.enable = true;
+  config = lib.mkIf (config.mjolnir.role == "gaming") {
+    programs.hyprland.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    rofi
-    kitty
-    hyprpicker
-    playerctl
-  ];
+    environment.systemPackages = with pkgs; [
+      rofi
+      kitty
+      hyprpicker
+      playerctl
+    ];
 
-  # Hyprland + rofi config, managed by NixOS without Home Manager.
-  systemd.tmpfiles.rules = [
-    "d ${home}/.config/hypr - :ops :users - -"
-    "L+ ${home}/.config/hypr/hyprland.lua - - - - ${hyprlandLua}"
-    "L+ ${home}/.config/hypr/config - - - - ${dotfiles}/hypr/config"
-    "d ${home}/.config/rofi - :ops :users - -"
-    "d ${home}/.config/rofi/themes - :ops :users - -"
-    "L+ ${home}/.config/rofi/config.rasi - - - - ${rofiConfig}"
-    "L+ ${home}/.config/rofi/themes/center.rasi - - - - ${dotfiles}/rofi/center.rasi"
-  ];
+    # Hyprland + rofi config, managed by NixOS without Home Manager.
+    systemd.tmpfiles.rules = [
+      "d ${home}/.config/hypr - :ops :users - -"
+      "L+ ${home}/.config/hypr/hyprland.lua - - - - ${hyprlandLua}"
+      "L+ ${home}/.config/hypr/config - - - - ${dotfiles}/hypr/config"
+      "d ${home}/.config/rofi - :ops :users - -"
+      "d ${home}/.config/rofi/themes - :ops :users - -"
+      "L+ ${home}/.config/rofi/config.rasi - - - - ${rofiConfig}"
+      "L+ ${home}/.config/rofi/themes/center.rasi - - - - ${dotfiles}/rofi/center.rasi"
+    ];
+  };
 }

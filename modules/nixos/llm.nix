@@ -9,12 +9,23 @@ let
   cfg = config.kp.llm;
   lcfg = config.kp.llm.llamaCpp;
   useVulkan = lcfg.acceleration == "vulkan";
+  useRocm = lcfg.acceleration == "rocm";
+  llamaPackage =
+    if useRocm then
+      pkgs.llama-cpp.override {
+        rocmSupport = true;
+        rocmGpuTargets = [ "gfx1013" ];
+      }
+    else if useVulkan then
+      pkgs.llama-cpp.override { vulkanSupport = true; }
+    else
+      pkgs.llama-cpp;
   modelPath = "${lcfg.modelsDir}/${lcfg.modelFile}";
   llamaOptions =
     if isUnstable then
       {
         enable = true;
-        package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
+        package = llamaPackage;
         openFirewall = lcfg.openFirewall;
         settings = {
           alias = lcfg.alias;
@@ -33,7 +44,7 @@ let
       {
         enable = true;
         host = lcfg.host;
-        package = if useVulkan then pkgs.llama-cpp.override { vulkanSupport = true; } else pkgs.llama-cpp;
+        package = llamaPackage;
         openFirewall = lcfg.openFirewall;
         model = modelPath;
         port = lcfg.port;
@@ -65,11 +76,13 @@ in
         type = lib.types.enum [
           "cpu"
           "vulkan"
+          "rocm"
         ];
         default = "vulkan";
         description = ''
-          Inference backend. `vulkan` offloads to the Asahi GPU (requires the
-          asahi module's GPU userspace); `cpu` runs purely on CPU.
+          Inference backend. `vulkan` offloads to the GPU (RADV on the BC-250,
+          Asahi on Apple Silicon); `rocm` is experimental on gfx1013 and needs
+          the community bc250-rocm patches; `cpu` runs purely on CPU.
         '';
       };
 
@@ -116,7 +129,17 @@ in
       gpuLayers = lib.mkOption {
         type = lib.types.str;
         default = "auto";
-        description = "Number of layers to offload to the GPU (`-ngl`, only used with the vulkan backend).";
+        description = "Number of layers to offload to the GPU (`-ngl`; vulkan/rocm backends).";
+      };
+
+      hsaOverrideGfxVersion = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        example = "10.3.0";
+        description = ''
+          Value for `HSA_OVERRIDE_GFX_VERSION` when using the experimental ROCm
+          backend. The BC-250 GPU is gfx1013; community builds report `10.3.0`.
+        '';
       };
 
       flashAttention = lib.mkOption {
@@ -162,10 +185,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    warnings = lib.optional useRocm ''
+      kp.llm.llamaCpp.acceleration = "rocm" is experimental on the BC-250
+      (gfx1013). Stock nixpkgs ROCm does not support gfx1013; this path needs
+      the community patches from https://github.com/akandr/bc250-rocm. Use
+      "vulkan" unless you have validated the ROCm stack.
+    '';
+
     services.llama-cpp = lib.mkIf lcfg.enable llamaOptions;
     # Fetch the GGUF into the persisted models dir on first start (kept out of
     # the Nix store). Idempotent: skips when the file already exists.
-    systemd.services.llama-cpp-model-fetch = {
+    systemd.services.llama-cpp-model-fetch = lib.mkIf lcfg.enable {
       description = "Fetch llama.cpp model (${lcfg.modelFile})";
       before = [ "llama-cpp.service" ];
       requiredBy = [ "llama-cpp.service" ];
@@ -200,12 +230,20 @@ in
     };
 
     # The upstream service is heavily sandboxed and runs as a DynamicUser; relax
-    # the bits that block GPU (Vulkan) access on the Asahi stack.
-    systemd.services.llama-cpp = {
+    # the bits that block GPU access (Vulkan on Asahi/BC-250, or ROCm).
+    systemd.services.llama-cpp = lib.mkIf lcfg.enable {
       environment = {
         XDG_CACHE_HOME = "/var/cache/llama-cpp";
         MESA_SHADER_CACHE_DIR = "/var/cache/llama-cpp";
-      };
+      }
+      // lib.optionalAttrs useRocm (
+        {
+          HSA_ENABLE_SDMA = "0";
+        }
+        // lib.optionalAttrs (lcfg.hsaOverrideGfxVersion != null) {
+          HSA_OVERRIDE_GFX_VERSION = lcfg.hsaOverrideGfxVersion;
+        }
+      );
       serviceConfig = lib.mkMerge [
         (lib.mkIf useVulkan {
           SupplementaryGroups = [
@@ -220,10 +258,24 @@ in
           # GPU drivers / shader JIT need writable+executable memory.
           MemoryDenyWriteExecute = lib.mkForce false;
         })
+        (lib.mkIf useRocm {
+          SupplementaryGroups = [
+            "render"
+            "video"
+          ];
+          DeviceAllow = [
+            "char-drm rw"
+            "char-fb rw"
+            "char-kfd rw"
+            "/dev/dri rw"
+          ];
+          PrivateDevices = lib.mkForce false;
+          MemoryDenyWriteExecute = lib.mkForce false;
+        })
       ];
     };
 
-    kp.impermanence.extraDirectories = lib.mkIf config.kp.impermanence.enable [
+    kp.impermanence.extraDirectories = lib.mkIf (lcfg.enable && config.kp.impermanence.enable) [
       lcfg.modelsDir
     ];
   };
