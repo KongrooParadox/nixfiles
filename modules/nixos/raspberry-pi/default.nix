@@ -1,4 +1,5 @@
 {
+  config,
   host,
   inputs,
   lib,
@@ -46,6 +47,18 @@ let
   // lib.optionalAttrs (host == "pi1") {
     bootstrapCert = nodePki + "/bootstrap.crt";
   };
+  cfg = config.kp.raspberry-pi;
+  wifiBlacklist = lib.optionals (!cfg.wifi.enable) [
+    "brcmfmac"
+    "brcmfmac_cyw"
+  ];
+  btBlacklist = lib.optionals (!cfg.bluetooth.enable) [
+    "bluetooth"
+    "hci_uart"
+    "btbcm"
+    "btqca"
+    "btsdio"
+  ];
 in
 {
   imports = [
@@ -81,58 +94,67 @@ in
     };
   };
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-
-  # Disable the all-hardware profile to avoid pulling in Rockchip-specific modules
-  # (dw-hdmi, dw-mipi-dsi, rockchipdrm, etc.) that don't exist in the linux-rpi kernel.
-  hardware.enableAllHardware = lib.mkForce false;
-
-  boot = {
-    extraModulePackages = lib.mkForce [ ];
-    # kernelPackages = pkgs.linuxPackages;
-    initrd.availableKernelModules = [ "uas" ];
-    loader.systemd-boot.enable = lib.mkForce false;
-    # The sd-image base profile auto-enables zfs in boot.supportedFilesystems
-    # because zfs-user is available on aarch64, but the linux-rpi kernel has
-    # no zfs kernel module. Override supportedFilesystems to drop zfs.
-    supportedFilesystems = lib.mkForce [
-      "ext2"
-      "ext3"
-      "ext4"
-      "btrfs"
-      "cifs"
-      "f2fs"
-      "ntfs"
-      "vfat"
-      "xfs"
-    ];
+  options.kp.raspberry-pi = {
+    wifi.enable = lib.mkEnableOption "WiFi (brcmfmac) support";
+    bluetooth.enable = lib.mkEnableOption "Bluetooth support";
   };
 
-  # The Pis are wired-only: end0 carries the static cluster IP and wlan0 has no
-  # carrier. Left on the global DHCP default, dhcpcd probes wlan0 and sits
-  # through its 30s carrier timeout on every boot, which blocks
-  # network-online.target and everything ordered after it (etcd -> apiserver ->
-  # kubernetes.target). Excluding wlan0 keeps dhcpcd from managing it.
-  networking.interfaces.wlan0.useDHCP = false;
-  networking.dhcpcd.wait = "background";
+  config = {
+    nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  cluster = {
-    domain = "cluster.local";
-    enable = true;
-    name = "skynet";
-    podCidr = "10.240.0.0/16";
-    serviceCidr = "10.241.0.0/16";
-    secrets = {
-      provider = "agenix";
-      inherit ageFiles publicFiles;
+    # Disable the all-hardware profile to avoid pulling in Rockchip-specific modules
+    # (dw-hdmi, dw-mipi-dsi, rockchipdrm, etc.) that don't exist in the linux-rpi kernel.
+    hardware.enableAllHardware = lib.mkForce false;
+
+    boot = {
+      extraModulePackages = lib.mkForce [ ];
+      # kernelPackages = pkgs.linuxPackages;
+      initrd.availableKernelModules = [ "uas" ];
+      loader.systemd-boot.enable = lib.mkForce false;
+      # The sd-image base profile auto-enables zfs in boot.supportedFilesystems
+      # because zfs-user is available on aarch64, but the linux-rpi kernel has
+      # no zfs kernel module. Override supportedFilesystems to drop zfs.
+      supportedFilesystems = lib.mkForce [
+        "ext2"
+        "ext3"
+        "ext4"
+        "btrfs"
+        "cifs"
+        "f2fs"
+        "ntfs"
+        "vfat"
+        "xfs"
+      ];
+      blacklistedKernelModules = wifiBlacklist ++ btBlacklist;
     };
+
+    # The Pis are wired-only: end0 carries the static cluster IP and wlan0 has no
+    # carrier. Left on the global DHCP default, dhcpcd probes wlan0 and sits
+    # through its 30s carrier timeout on every boot, which blocks
+    # network-online.target and everything ordered after it (etcd -> apiserver ->
+    # kubernetes.target). Excluding wlan0 keeps dhcpcd from managing it.
+    networking.interfaces.wlan0.useDHCP = false;
+    networking.dhcpcd.wait = "background";
+
+    cluster = {
+      domain = "cluster.local";
+      enable = true;
+      name = "skynet";
+      podCidr = "10.240.0.0/16";
+      serviceCidr = "10.241.0.0/16";
+      secrets = {
+        provider = "agenix";
+        inherit ageFiles publicFiles;
+      };
+    };
+    hardware.raspberry-pi.firmware.uboot.enable = true;
+    hardware.bluetooth.enable = lib.mkIf (!cfg.bluetooth.enable) (lib.mkForce false);
+    kp = {
+      home-manager.enable = false;
+      tailscale.enable = false;
+    };
+    # sdImage settings are only valid when the sd-image module is loaded.
+    # This is handled by the conditional import above.
+    services.timesyncd.enable = true;
   };
-  hardware.raspberry-pi.firmware.uboot.enable = true;
-  kp = {
-    home-manager.enable = false;
-    tailscale.enable = false;
-  };
-  # sdImage settings are only valid when the sd-image module is loaded.
-  # This is handled by the conditional import above.
-  services.timesyncd.enable = true;
 }
