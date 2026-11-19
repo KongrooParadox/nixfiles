@@ -27,6 +27,7 @@
     inputs.bc-250.nixosModules.bc250
     inputs.jovian.nixosModules.default
     ./steam-streaming.nix
+    ./hyprland.nix
   ];
 
   hardware = {
@@ -107,7 +108,7 @@
       enable = true;
       autoStart = true;
       user = "ops";
-      desktopSession = "gamescope-wayland";
+      desktopSession = "hyprland";
     };
 
     steamos = {
