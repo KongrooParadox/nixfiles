@@ -197,8 +197,6 @@
             "flannel"
             "haproxy"
             "keepalived"
-            "nix-oci"
-            "kubernetes-test-secrets"
             "kubernetes-agenix-secrets"
           ];
           piHostConfigs = map (name: self.nixosConfigurations.${name}.config) piHosts;
@@ -206,7 +204,7 @@
         {
           cluster-network =
             assert lib.all (cfg:
-              !cfg.cluster.enable
+              cfg.cluster.enable
               && cfg.cluster.podCidr == "10.240.0.0/16"
               && cfg.cluster.serviceCidr == "10.241.0.0/16"
               && cfg.cluster.nodes.${cfg.networking.hostName}.interface == "end0"
@@ -228,7 +226,11 @@
               )
             ) piHostConfigs;
             assert lib.all (cfg:
-              lib.all (name: !(builtins.hasAttr name cfg.systemd.services)) piClusterServices
+              lib.all (name: builtins.hasAttr name cfg.systemd.services) piClusterServices
+              && (cfg.networking.hostName == "pi1"
+                -> builtins.hasAttr "nix-oci" cfg.systemd.services)
+              && (cfg.networking.hostName != "pi1"
+                -> !builtins.hasAttr "nix-oci" cfg.systemd.services)
             ) piHostConfigs;
             pkgs.runCommand "check-pi-cluster-network" { } "touch $out";
           dhcp-facts =
