@@ -46,3 +46,6 @@ diff --git a/start-gamescope-session b/start-gamescope-session
 @@ -1,0 +2,2 @@
 +# Stop Sunshine's KMS capture before Gamescope takes over the DRM output.
 +systemctl --user stop sunshine.service
+@@ -22,1 +24,1 @@
+-systemctl --user unset-environment DISPLAY XAUTHORITY
++systemctl --user unset-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
