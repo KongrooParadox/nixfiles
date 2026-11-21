@@ -128,13 +128,18 @@ in
       blacklistedKernelModules = wifiBlacklist ++ btBlacklist;
     };
 
-    # The Pis are wired-only: end0 carries the static cluster IP and wlan0 has no
-    # carrier. Left on the global DHCP default, dhcpcd probes wlan0 and sits
-    # through its 30s carrier timeout on every boot, which blocks
-    # network-online.target and everything ordered after it (etcd -> apiserver ->
-    # kubernetes.target). Excluding wlan0 keeps dhcpcd from managing it.
+    # The Pis are wired-only: end0 is a DHCP client, so its address and the
+    # default gateway come from the site's dnsmasq (reservations pin .41-.43).
+    # base.nix sets a static address with lib.mkDefault; NixOS's dhcpcd module
+    # ignores any interface that has static addresses and no explicit useDHCP,
+    # so remove the static address and set useDHCP = true explicitly.
+    networking.interfaces.end0.useDHCP = true;
+    networking.interfaces.end0.ipv4.addresses = lib.mkForce [ ];
+    # wlan0 has no carrier. Left on the global DHCP default, dhcpcd probes it
+    # and sits through its 30s carrier timeout, blocking network-online.target
+    # and everything ordered after it. Excluding wlan0 keeps dhcpcd off it.
     networking.interfaces.wlan0.useDHCP = false;
-    networking.dhcpcd.wait = "background";
+    networking.dhcpcd.wait = "any";
 
     cluster = {
       domain = "cluster.local";
