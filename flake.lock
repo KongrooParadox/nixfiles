@@ -777,11 +777,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795110788,
-        "narHash": "sha256-woQAZqhLyf+Iesg0yZr+F3VdeCqxYQRvB4w+Vj4IW00=",
+        "lastModified": 1795248924,
+        "narHash": "sha256-cjqRI6523Jt3ykyLWQTEx6QsNbHZxu/zlB3hMDqlSFU=",
         "ref": "main",
-        "rev": "d1de4ca2a273a8499786ff121d0c574ea9d3909d",
-        "revCount": 16,
+        "rev": "c379b0955994bc7210bcca22271f0249f810f835",
+        "revCount": 25,
         "type": "git",
         "url": "ssh://git@gitlab.com/mirai-gadget-laboratory/k8s-nix/k8s-nix-infra.git"
       },
