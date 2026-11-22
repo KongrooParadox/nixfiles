@@ -4,6 +4,7 @@
   inputs,
   lib,
   modulesPath,
+  pkgs,
   sdImageEnable ? false,
   ...
 }:
@@ -108,7 +109,7 @@ in
 
     boot = {
       extraModulePackages = lib.mkForce [ ];
-      # kernelPackages = pkgs.linuxPackages;
+      kernelPackages = pkgs.linuxPackages_7_3;
       initrd.availableKernelModules = [ "uas" ];
       loader.systemd-boot.enable = lib.mkForce false;
       # The sd-image base profile auto-enables zfs in boot.supportedFilesystems

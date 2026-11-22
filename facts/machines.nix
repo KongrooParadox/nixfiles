@@ -106,16 +106,19 @@ builtins.mapAttrs (_: machineCfg: defaults // machineCfg) {
   pi1 = {
     dhcpReservation = true;
     ipv4 = "192.168.2.41";
+    isUnstable = true;
     stateVersion = "26.05";
   };
   pi2 = {
     dhcpReservation = true;
     ipv4 = "192.168.2.42";
+    isUnstable = true;
     stateVersion = "26.05";
   };
   pi3 = {
     dhcpReservation = true;
     ipv4 = "192.168.2.43";
+    isUnstable = true;
     stateVersion = "26.05";
   };
 

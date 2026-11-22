@@ -19,7 +19,7 @@
     impermanence.url = "github:nix-community/impermanence";
     k8s-nix-infra = {
       url = "git+ssh://git@gitlab.com/mirai-gadget-laboratory/k8s-nix/k8s-nix-infra.git?ref=main";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
