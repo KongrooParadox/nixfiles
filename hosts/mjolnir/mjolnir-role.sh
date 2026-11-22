@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-specialisation="/run/current-system/specialisation/mjolnir-llm"
+llm_specialisation="/run/current-system/specialisation/mjolnir-llm"
+rocm_specialisation="/run/current-system/specialisation/mjolnir-llm-rocm"
 
 current_role() {
-  if [ -e "$specialisation" ]; then
-    echo gaming
-  else
+  if [ -e "$rocm_specialisation" ]; then
+    echo llm-rocm
+  elif [ -e "$llm_specialisation" ]; then
     echo llm
+  else
+    echo gaming
   fi
 }
 
@@ -23,7 +26,10 @@ boot_role() {
 
   case "$role" in
     llm)
-      "$specialisation/bin/switch-to-configuration" boot
+      "$llm_specialisation/bin/switch-to-configuration" boot
+      ;;
+    llm-rocm)
+      "$rocm_specialisation/bin/switch-to-configuration" boot
       ;;
     gaming)
       /nix/var/nix/profiles/system/bin/switch-to-configuration boot
@@ -38,11 +44,11 @@ case "${1:-status}" in
   status)
     current_role
     ;;
-  llm | gaming)
+  llm | llm-rocm | gaming)
     boot_role "$1"
     ;;
   *)
-    echo "usage: mjolnir-role [status|llm|gaming]" >&2
+    echo "usage: mjolnir-role [status|llm|llm-rocm|gaming]" >&2
     exit 2
     ;;
 esac

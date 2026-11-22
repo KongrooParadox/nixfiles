@@ -24,7 +24,6 @@
       enable = true;
       llamaCpp = {
         enable = true;
-        acceleration = "vulkan";
         alias = "qwen2.5-coder-7b-instruct";
         modelFile = "qwen2.5-coder-7b-instruct-q4_k_m.gguf";
         modelUrl = "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/resolve/main/qwen2.5-coder-7b-instruct-q4_k_m.gguf";

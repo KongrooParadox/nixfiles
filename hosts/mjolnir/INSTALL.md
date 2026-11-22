@@ -55,16 +55,18 @@ cat /sys/module/zswap/parameters/enabled
 
 ## Roles: gaming vs LLM
 
-`mjolnir` builds two systemd-boot entries from one generation:
+`mjolnir` builds systemd-boot entries from one generation:
 
 - `NixOS` — gaming (default; Hyprland, Steam/Jovian, Sunshine)
 - `NixOS (mjolnir-llm)` — headless llama.cpp server (Vulkan, nginx + DNS)
+- `NixOS (mjolnir-llm-rocm)` — headless llama.cpp server (ROCm, nginx + DNS; experimental)
 
 Pick the entry in the systemd-boot menu, or switch from SSH:
 
 ```shell
-sudo mjolnir-role status   # gaming | llm
+sudo mjolnir-role status   # gaming | llm | llm-rocm
 sudo mjolnir-role llm      # set the next boot to mjolnir-llm and reboot
+sudo mjolnir-role llm-rocm # set the next boot to mjolnir-llm-rocm and reboot
 sudo mjolnir-role gaming   # set the next boot back to the gaming generation
 ```
 
@@ -79,13 +81,15 @@ vulkaninfo --summary
 ```
 
 The model is downloaded on first start into `/var/lib/llm/models` (not the
-Nix store). `kp.llm.llamaCpp.acceleration` is `vulkan`; the `rocm` value is an
-experimental seam that requires the community `bc250-rocm` patches for gfx1013.
+Nix store). `kp.llm.llamaCpp.acceleration` is `vulkan` for `mjolnir-llm` and
+`rocm` for `mjolnir-llm-rocm`; the `rocm` value is an experimental seam that
+requires the community `bc250-rocm` patches for gfx1013.
 
-Rebuild both roles from one parent generation:
+Rebuild the LLM specialisations from one parent generation:
 
 ```shell
-just mjolnir-llm   # build the parent + specialisation, mark mjolnir-llm next boot
+just mjolnir-llm     # build the parent + specialisation, mark mjolnir-llm next boot
+just mjolnir-llm-rocm # build the parent + specialisation, mark mjolnir-llm-rocm next boot
 ```
 
 From the gaming role, `just switch` / `just boot` also rebuild the

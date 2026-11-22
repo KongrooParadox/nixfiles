@@ -30,5 +30,18 @@
         mjolnir.role = "llm";
       };
     };
+
+    # ROCm variant of the LLM specialisation: same headless llama.cpp server,
+    # AMD HSA backend instead of Vulkan, to test the gfx1013 ROCm path and
+    # benchmark it against the Vulkan build. Experimental; needs the community
+    # bc250-rocm patches.
+    specialisation.mjolnir-llm-rocm = {
+      inheritParentConfig = true;
+      configuration = {
+        mjolnir.role = "llm";
+        kp.llm.llamaCpp.acceleration = "rocm";
+        kp.llm.llamaCpp.hsaOverrideGfxVersion = "10.3.0";
+      };
+    };
   };
 }
