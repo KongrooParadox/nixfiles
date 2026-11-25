@@ -65,4 +65,8 @@ in
 
     packages = with pkgs; [ starship ] ++ lib.optionals osConfig.kp.desktop.enable [ fastfetch ];
   };
+
+  # wayprompt was removed from nixpkgs; disable its stylix target so the
+  # removed-option stub is not triggered.
+  stylix.targets.wayprompt.enable = false;
 }

@@ -154,5 +154,7 @@ in
     programs.zsh.enable = true;
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
+    # gtk2 is marked broken in current unstable; allow it until dependents migrate.
+    nixpkgs.config.problems.handlers."gtk+".broken = "warn";
   };
 }

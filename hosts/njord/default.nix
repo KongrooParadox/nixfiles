@@ -53,9 +53,8 @@ in
       };
       virtualization.enable = true;
       wireguard.enable = true;
-      zfs = {
+      btrfs = {
         enable = true;
-        hostId = "720320e5";
       };
     };
 

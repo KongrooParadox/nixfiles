@@ -28,7 +28,14 @@
         skills = true;
         memory = true;
         agents = true;
-        commands = true;
+        commands = [
+          "build-fix"
+          "code-review"
+          "ecc-guide"
+          "harness-audit"
+          "plan"
+          "test-coverage"
+        ];
       };
       allowedRepositories = [
         "${config.home.homeDirectory}/src/agent-platform"

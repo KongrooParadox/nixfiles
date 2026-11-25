@@ -41,65 +41,62 @@
       };
       root = {
         type = "disk";
-        destroy = false;
+        # One-time migration: wipe the old zpool on p6. Flip back to false
+        # after the btrfs install is verified, so future disko runs are safe.
+        destroy = true;
         device = "/dev/disk/by-path/platform-27bcc0000.nvme-nvme-1-part6";
         content = {
           type = "gpt";
           partitions = {
-            zfs = {
+            luks = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zpool";
+                type = "luks";
+                name = "root"; # -> /dev/mapper/root
+                # Interactive passphrase at boot (no keyFile/passwordFile).
+                settings = {
+                  allowDiscards = true;
+                };
+                extraFormatArgs = [
+                  "--type"
+                  "luks2"
+                  "--pbkdf"
+                  "argon2id"
+                ];
+                content = {
+                  type = "btrfs";
+                  subvolumes = {
+                    "@root" = {
+                      mountpoint = "/";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "@home" = {
+                      mountpoint = "/home";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "@nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "@persist" = {
+                      mountpoint = "/persist";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                  };
+                };
               };
-            };
-          };
-        };
-      };
-    };
-    zpool = {
-      zpool = {
-        type = "zpool";
-        rootFsOptions = {
-          acltype = "posixacl";
-          atime = "off";
-          mountpoint = "none";
-          encryption = "aes-256-gcm";
-          keyformat = "passphrase";
-          keylocation = "prompt";
-          compression = "zstd";
-          xattr = "sa";
-        };
-        options = {
-          ashift = "12";
-          cachefile = "none";
-        };
-
-        datasets = {
-          "nix" = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options."com.sun:auto-snapshot" = "false";
-          };
-          "persist" = {
-            type = "zfs_fs";
-            mountpoint = "/persist";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
-          };
-          "root" = {
-            type = "zfs_fs";
-            mountpoint = "/";
-            options."com.sun:auto-snapshot" = "false";
-            postCreateHook = "zfs snapshot zpool/root@blank";
-          };
-          "home" = {
-            type = "zfs_fs";
-            mountpoint = "/home";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-              mountpoint = "legacy";
             };
           };
         };

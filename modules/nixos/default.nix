@@ -11,6 +11,7 @@
     ./audio.nix
     ./binary-cache.nix
     ./boot.nix
+    ./btrfs.nix
     ./desktop
     ./dhcp-server
     ./dns-server.nix

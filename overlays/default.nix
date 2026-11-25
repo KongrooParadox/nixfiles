@@ -18,9 +18,4 @@ let
 in
 {
   default = final: prev: (stable-packages final prev) // (unstable-packages final prev);
-  ddcutil-evdi = final: prev: {
-    ddcutil = prev.ddcutil.overrideAttrs (old: {
-      patches = (old.patches or [ ]) ++ [ ./ddcutil-evdi.patch ];
-    });
-  };
 }

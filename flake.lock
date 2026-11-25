@@ -50,11 +50,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1795613473,
-        "narHash": "sha256-lG/ngNsJcG/pstWNRu4JxsfzmTa3MJPWN1CGDb4SyrI=",
+        "lastModified": 1795644028,
+        "narHash": "sha256-9bZRZelE8aYtZYr79Kw9TftHWXhuxPNMBH+p2yircrQ=",
         "owner": "KongrooParadox",
         "repo": "nixos-apple-silicon",
-        "rev": "110bab4911c2f4c9b930850a9d43816cb029796f",
+        "rev": "2cc0398f71b7d8370c75c861ec063a4590bb9de3",
         "type": "github"
       },
       "original": {
